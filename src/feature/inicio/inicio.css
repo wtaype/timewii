@@ -1,0 +1,416 @@
+/* src/feature/inicio/inicio.css */
+/* Estilos maestros del Dashboard TimeWii (Wellcare Advisor Toolkit) */
+
+:root {
+  --sidebar-w: 240px;
+  --sidebar-col: 74px;
+  --topbar-h: 70px;
+}
+
+.dashboard-app {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+/* ── Sidebar Lateral Teams ──────────────────────────────── */
+.dashboard-sidebar {
+  width: var(--sidebar-w);
+  background-color: var(--wb);
+  border-right: 1px solid var(--brd);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width var(--tr_m);
+  position: relative;
+  z-index: 100;
+}
+
+.dashboard-sidebar.collapsed {
+  width: var(--sidebar-col);
+}
+
+.sidebar-header {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  border-bottom: 1px solid var(--brd);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.brand-badge-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r_m);
+  background: var(--mco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(0, 161, 165, 0.35);
+  flex-shrink: 0;
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  transition: opacity var(--tr_m);
+}
+.dashboard-sidebar.collapsed .brand-info {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--tx1);
+  letter-spacing: 0.5px;
+}
+.brand-title span {
+  color: var(--mco);
+}
+
+.brand-sub {
+  font-size: var(--fz_s2);
+  color: var(--tx3);
+}
+
+/* Navegación */
+.sidebar-menu {
+  flex: 1;
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.menu-label {
+  font-size: var(--fz_s1);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--tx3);
+  font-weight: 600;
+  padding: 8px 12px 4px;
+  white-space: nowrap;
+}
+.dashboard-sidebar.collapsed .menu-label {
+  opacity: 0;
+}
+
+.nav-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--r_m);
+  color: var(--tx2);
+  background: transparent;
+  border: 1px solid transparent;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: var(--fz_s4);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--tr_f);
+  white-space: nowrap;
+}
+
+.nav-tab-btn i {
+  font-size: var(--fz_m1);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--tx3);
+  transition: color var(--tr_f);
+}
+
+.nav-tab-btn:hover {
+  background: var(--inp);
+  color: var(--tx1);
+}
+.nav-tab-btn:hover i {
+  color: var(--mco);
+}
+
+.nav-tab-btn.active {
+  background: var(--mbg);
+  color: var(--mco);
+  border-color: rgba(0, 161, 165, 0.25);
+  font-weight: 600;
+}
+.nav-tab-btn.active i {
+  color: var(--mco);
+}
+
+.dashboard-sidebar.collapsed .nav-tab-text {
+  display: none;
+}
+
+/* Footer del Sidebar */
+.sidebar-bottom {
+  padding: 12px 10px;
+  border-top: 1px solid var(--brd);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--r_m);
+  background: transparent;
+  border: 1px solid var(--brd);
+  color: var(--tx2);
+  font-size: var(--fz_s3);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--tr_f);
+}
+.btn-sidebar-toggle:hover {
+  background: var(--inp);
+  color: var(--tx1);
+  border-color: var(--mco);
+}
+.dashboard-sidebar.collapsed .btn-sidebar-toggle span {
+  display: none;
+}
+
+.secure-advisor-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--r_s);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--success);
+  font-size: var(--fz_s2);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.secure-advisor-badge i {
+  font-size: var(--fz_s3);
+  flex-shrink: 0;
+}
+.dashboard-sidebar.collapsed .secure-advisor-badge span {
+  display: none;
+}
+
+/* ── Main View Area ────────────────────────────────────── */
+.dashboard-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Topbar Rediseñado: Reloj de Dispositivo Gigante y Cambio de Tema */
+.dashboard-topbar {
+  min-height: var(--topbar-h);
+  background: var(--wb);
+  border-bottom: 1px solid var(--brd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px;
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.topbar-header-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.topbar-header-wrap h1 {
+  font-size: var(--fz_m3);
+  font-weight: 700;
+  color: var(--tx1);
+  margin: 0;
+}
+.topbar-header-wrap p {
+  font-size: var(--fz_s3);
+  color: var(--tx3);
+  margin: 0;
+}
+
+/* Attendance Device Clock Central (PROMINENTE) */
+.device-attendance-clock {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 6px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.attendance-badge-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.attendance-label {
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--mco);
+  letter-spacing: 0.5px;
+}
+
+.attendance-date {
+  font-size: var(--fz_s2);
+  color: var(--tx3);
+  white-space: nowrap;
+}
+
+.attendance-time-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--ff_P);
+}
+
+.attendance-time-display .time-main {
+  font-size: clamp(1.4rem, 2.4vh, 1.9rem);
+  font-weight: 800;
+  color: var(--tx1);
+  letter-spacing: 1px;
+}
+
+.attendance-time-display .time-ampm {
+  font-size: var(--fz_m);
+  font-weight: 700;
+  color: var(--mco);
+}
+
+/* Acciones del Topbar (Theme switcher + Ticker de Zonas) */
+.topbar-actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.live-ticker-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1200px) {
+  .live-ticker-strip {
+    display: none;
+  }
+}
+
+.ticker-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_full);
+  padding: 4px 10px;
+  font-size: var(--fz_s2);
+  white-space: nowrap;
+}
+.ticker-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.ticker-pill.eastern .dot  { background: #ef4444; }
+.ticker-pill.central .dot  { background: #f59e0b; }
+.ticker-pill.mountain .dot { background: #10b981; }
+.ticker-pill.pacific .dot  { background: #f97316; }
+
+.ticker-pill .tag {
+  font-weight: 600;
+  color: var(--tx2);
+}
+.ticker-pill .time {
+  font-weight: 700;
+  color: var(--tx1);
+  font-family: monospace;
+}
+
+/* Botón de Cambio de Tema en Topbar */
+.btn-theme-toggle {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  color: var(--tx1);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r_m);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m2);
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.btn-theme-toggle:hover {
+  border-color: var(--mco);
+  color: var(--mco);
+  background: var(--wb);
+}
+
+/* Paneles de Vista */
+.dashboard-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.view-panel {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+  animation: viewFade 0.2s ease-out;
+}
+.view-panel.active {
+  display: flex;
+}
+
+@keyframes viewFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Toast flotante */
+.toast-msg {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--success);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: var(--r_m);
+  font-weight: 600;
+  font-size: var(--fz_s4);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-xl);
+  z-index: 99999;
+}

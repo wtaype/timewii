@@ -1,0 +1,152 @@
+/* src/feature/inicio/secciones/02-usa/usa.css */
+/* Estilos del Módulo de Geografía y Directorio de Estados */
+
+.usa-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.usa-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.usa-card-title {
+  font-size: var(--fz_m3);
+  font-weight: 600;
+  color: var(--tx1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.usa-card-title i {
+  color: var(--mco);
+}
+
+.search-filter-box {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.search-input-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tx3);
+  font-size: var(--fz_m);
+}
+
+.input-search {
+  width: 100%;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 10px 14px 10px 38px;
+  color: var(--tx1);
+  font-size: var(--fz_m);
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--tr_f);
+}
+
+.input-search:focus {
+  border-color: var(--mco);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.btn-filter {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  color: var(--tx2);
+  padding: 0.8vh 1.4vh;
+  font-size: var(--fz_s3);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--tr_f);
+}
+
+.btn-filter:hover,
+.btn-filter.active {
+  background: var(--mbg);
+  border-color: var(--mco);
+  color: var(--mco);
+  font-weight: 600;
+}
+
+/* Tabla de Estados */
+.states-table-container {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  overflow-x: auto;
+}
+
+.states-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--fz_s4);
+}
+
+.states-table th {
+  padding: 12px 16px;
+  background: var(--inp);
+  color: var(--tx3);
+  font-size: var(--fz_s3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--brd);
+}
+
+.states-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--brd);
+  color: var(--tx1);
+}
+
+.states-table tr:hover td {
+  background: var(--bg-card-hover);
+}
+
+.badge-zone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3vh 0.9vh;
+  border-radius: var(--r_full);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+}
+
+.badge-zone.eastern  { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.badge-zone.central  { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.badge-zone.mountain { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.badge-zone.pacific  { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+.badge-zone.alaska   { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
+.badge-zone.hawaii   { background: rgba(168, 85, 247, 0.15); color: #a855f7; }

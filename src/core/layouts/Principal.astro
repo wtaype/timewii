@@ -1,0 +1,61 @@
+---
+// src/core/layouts/Principal.astro
+// 🌟 Layout Maestro Unificado TimeWii (Cero Bloqueo, 100% Local y Seguro)
+import witemaCss from '../wicss/witema.css?raw';
+import appCss from '../wicss/app.css?raw';
+import googleCss from '../../../public/google/fonts.min.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
+
+const globalCss = googleCss + '\n' + awesomeCss + '\n' + witemaCss + '\n' + appCss;
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+}
+
+const { 
+  titulo = 'Timewii - Smart tools for you | Wellcare Support',
+  descripcion = 'Herramienta de apoyo y productividad para asesores de atención telefónica Wellcare Medicare Advantage en Teleperformance.'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="futuro" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>{titulo}</title>
+  <meta name="description" content={descripcion} />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Anti-FOUC Inmediato (0ms de parpadeo) -->
+  <script is:inline>
+    try {
+      const guardado = localStorage.getItem('wiTema');
+      document.documentElement.dataset.theme = guardado || 'futuro';
+    } catch(e) {}
+  </script>
+
+  <!-- Estilos Globales Inlined (0 peticiones de red externas) -->
+  <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
+
+  <slot name="head" />
+</head>
+
+<body>
+  <!-- Contenido Principal -->
+  <slot />
+
+  <!-- Script de Interactividad del Tema -->
+  <script is:inline>
+    window.cambiarTemaGlobal = function(nuevoTema) {
+      document.documentElement.dataset.theme = nuevoTema;
+      try {
+        localStorage.setItem('wiTema', nuevoTema);
+      } catch(e) {}
+      window.dispatchEvent(new CustomEvent('witema-changed', { detail: nuevoTema }));
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+---
+// src/feature/inicio/inicioPage.astro
+// Orquestador Principal del Dashboard TimeWii · Wellcare Advisor Toolkit (Teleperformance Centene Campaign)
+import Time from './secciones/01-time/Time.astro';
+import Usa from './secciones/02-usa/Usa.astro';
+import English from './secciones/03-english/English.astro';
+import Wellcare from './secciones/04-wellcare/Wellcare.astro';
+import Timers from './secciones/05-timers/Timers.astro';
+import Plantillas from './secciones/06-doc/Plantillas.astro';
+import Learn from './secciones/07-learn/Learn.astro';
+
+// Estilos inlined por sección (0 peticiones bloqueantes, máximo rendimiento)
+import inicioCss from './inicio.css?raw';
+import timeCss from './secciones/01-time/time.css?raw';
+import usaCss from './secciones/02-usa/usa.css?raw';
+import englishCss from './secciones/03-english/english.css?raw';
+import wellcareCss from './secciones/04-wellcare/wellcare.css?raw';
+import timersCss from './secciones/05-timers/timers.css?raw';
+import plantillasCss from './secciones/06-doc/plantillas.css?raw';
+import learnCss from './secciones/07-learn/learn.css?raw';
+
+const dashboardCss = inicioCss + '\n' + timeCss + '\n' + usaCss + '\n' + englishCss + '\n' + wellcareCss + '\n' + timersCss + '\n' + plantillasCss + '\n' + learnCss;
+---
+
+<style is:global set:html={dashboardCss}></style>
+
+<div class="dashboard-app">
+  
+  <!-- ========================================== -->
+  <!-- 1. SIDEBAR LATERAL ESTILO TEAMS           -->
+  <!-- ========================================== -->
+  <aside class="dashboard-sidebar" id="dashboardSidebar">
+    
+    <div class="sidebar-header">
+      <div class="brand-badge-icon">
+        <i class="fa-solid fa-bolt"></i>
+      </div>
+      <div class="brand-info">
+        <div class="brand-title">TIME<span>WII</span></div>
+        <div class="brand-sub">Smart tools for you</div>
+      </div>
+    </div>
+
+    <!-- Navegación de Herramientas -->
+    <nav class="sidebar-menu">
+      <div class="menu-label">Herramientas Asesor</div>
+      
+      <button class="nav-tab-btn active" data-view="panel-time">
+        <i class="fa-solid fa-clock"></i>
+        <span class="nav-tab-text">Time</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-usa">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span class="nav-tab-text">United States</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-english">
+        <i class="fa-solid fa-comments"></i>
+        <span class="nav-tab-text">English Phrases</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-wellcare">
+        <i class="fa-solid fa-shield-heart"></i>
+        <span class="nav-tab-text">Wellcare PDP</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-timers">
+        <i class="fa-solid fa-stopwatch-20"></i>
+        <span class="nav-tab-text">Timers</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-plantillas">
+        <i class="fa-solid fa-file-signature"></i>
+        <span class="nav-tab-text">Plantillas</span>
+      </button>
+
+      <button class="nav-tab-btn" data-view="panel-learn">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span class="nav-tab-text">Learn & Phonetics</span>
+      </button>
+    </nav>
+
+    <!-- Footer del Sidebar -->
+    <div class="sidebar-bottom">
+      <div class="secure-advisor-badge">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>100% Local · Teleperformance</span>
+      </div>
+
+      <button class="btn-sidebar-toggle" id="btnToggleSidebar">
+        <i class="fa-solid fa-arrow-left-to-line" id="sidebarToggleIcon"></i>
+        <span>Colapsar</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- 2. VIEWPORT PRINCIPAL                      -->
+  <!-- ========================================== -->
+  <div class="dashboard-viewport">
+    
+    <!-- Topbar Rediseñado: Reloj Grande de Asistencia y Switcher de Tema -->
+    <header class="dashboard-topbar">
+      <div class="topbar-header-wrap">
+        <h1 id="viewMainTitle">U.S. Time & Clocks</h1>
+        <p id="viewMainSub">Horarios oficiales en tiempo real de todos los husos horarios de EE.UU.</p>
+      </div>
+
+      <!-- Reloj Prominente del Dispositivo del Asesor (Asistencia / Log-in / Log-out) -->
+      <div class="device-attendance-clock" title="Hora de tu computadora (Asistencia / Clock-in)">
+        <div class="attendance-badge-col">
+          <span class="attendance-label">Mi Dispositivo</span>
+          <span class="attendance-date" id="deviceDate">-- --- ----</span>
+        </div>
+        <div class="attendance-time-display">
+          <span class="time-main" id="deviceClockDigits">00:00:00</span>
+          <span class="time-ampm" id="deviceClockAmPm">AM</span>
+        </div>
+      </div>
+
+      <!-- Ticker superior y Cambio de Tema -->
+      <div class="topbar-actions-wrap">
+        <div class="live-ticker-strip">
+          <div class="ticker-pill eastern">
+            <span class="dot"></span>
+            <span class="tag">EDT:</span>
+            <span class="time" id="tickerEDT">--:--:--</span>
+          </div>
+          <div class="ticker-pill central">
+            <span class="dot"></span>
+            <span class="tag">CDT:</span>
+            <span class="time" id="tickerCDT">--:--:--</span>
+          </div>
+          <div class="ticker-pill mountain">
+            <span class="dot"></span>
+            <span class="tag">MDT:</span>
+            <span class="time" id="tickerMDT">--:--:--</span>
+          </div>
+          <div class="ticker-pill pacific">
+            <span class="dot"></span>
+            <span class="tag">PDT:</span>
+            <span class="time" id="tickerPDT">--:--:--</span>
+          </div>
+        </div>
+
+        <!-- Botón de Tema en Cabecera -->
+        <button class="btn-theme-toggle" id="btnThemeToggle" title="Cambiar Tema (Claro / Oscuro)">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenedor con Scroll de las Secciones -->
+    <main class="dashboard-content-scroll">
+      
+      <div class="view-panel active" id="panel-time">
+        <Time />
+      </div>
+
+      <div class="view-panel" id="panel-usa">
+        <Usa />
+      </div>
+
+      <div class="view-panel" id="panel-english">
+        <English />
+      </div>
+
+      <div class="view-panel" id="panel-wellcare">
+        <Wellcare />
+      </div>
+
+      <div class="view-panel" id="panel-timers">
+        <Timers />
+      </div>
+
+      <div class="view-panel" id="panel-plantillas">
+        <Plantillas />
+      </div>
+
+      <div class="view-panel" id="panel-learn">
+        <Learn />
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+<!-- Toast flotante de confirmación -->
+<div class="toast-msg" id="globalToast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="globalToastText">¡Acción realizada con éxito!</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- ⚙️ SCRIPT CLIENT-SIDE LOCAL Y REACTIVO                        -->
+<!-- ============================================================ -->
+<script>
+  import { ESTADOS_DATA, ZONAS_HORARIAS } from './lib/estadosData.js';
+  import { FRASES_DATA } from './lib/frasesData.js';
+  import { US_STATE_PHONETICS } from './lib/phoneticData.js';
+
+  // 1. RELOJ PROMINENTE DEL DISPOSITIVO Y RELOJES DE EE.UU.
+  function formatTime(tz?: string) {
+    const d = new Date();
+    const opts: Intl.DateTimeFormatOptions = {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    };
+    if (tz) opts.timeZone = tz;
+
+    const formatter = new Intl.DateTimeFormat('en-US', opts);
+    const parts = formatter.formatToParts(d);
+    let h = '', m = '', s = '', ap = '';
+    parts.forEach(p => {
+      if (p.type === 'hour') h = p.value;
+      if (p.type === 'minute') m = p.value;
+      if (p.type === 'second') s = p.value;
+      if (p.type === 'dayPeriod') ap = p.value.toUpperCase();
+    });
+    return { time: `${h}:${m}:${s}`, ampm: ap };
+  }
+
+  function updateAllClocks() {
+    // Reloj del dispositivo del asesor
+    const local = formatTime();
+    const devDigits = document.getElementById('deviceClockDigits');
+    const devAmPm = document.getElementById('deviceClockAmPm');
+    const devDate = document.getElementById('deviceDate');
+
+    if (devDigits) devDigits.textContent = local.time;
+    if (devAmPm) devAmPm.textContent = local.ampm;
+    if (devDate) {
+      const now = new Date();
+      devDate.textContent = now.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+    }
+
+    // Relojes de EE.UU.
+    const e = formatTime(ZONAS_HORARIAS.eastern);
+    const c = formatTime(ZONAS_HORARIAS.central);
+    const m = formatTime(ZONAS_HORARIAS.mountain);
+    const p = formatTime(ZONAS_HORARIAS.pacific);
+    const a = formatTime(ZONAS_HORARIAS.alaska);
+    const hw = formatTime(ZONAS_HORARIAS.hawaii);
+
+    const elE = document.getElementById('clockEastern');
+    const elC = document.getElementById('clockCentral');
+    const elM = document.getElementById('clockMountain');
+    const elP = document.getElementById('clockPacific');
+    const elA = document.getElementById('clockAlaska');
+    const elH = document.getElementById('clockHawaii');
+
+    if (elE) elE.innerHTML = `${e.time} <span class="clock-ampm">${e.ampm}</span>`;
+    if (elC) elC.innerHTML = `${c.time} <span class="clock-ampm">${c.ampm}</span>`;
+    if (elM) elM.innerHTML = `${m.time} <span class="clock-ampm">${m.ampm}</span>`;
+    if (elP) elP.innerHTML = `${p.time} <span class="clock-ampm">${p.ampm}</span>`;
+    if (elA) elA.innerHTML = `${a.time} <span class="clock-ampm">${a.ampm}</span>`;
+    if (elH) elH.innerHTML = `${hw.time} <span class="clock-ampm">${hw.ampm}</span>`;
+
+    // Ticker superior
+    const tE = document.getElementById('tickerEDT');
+    const tC = document.getElementById('tickerCDT');
+    const tM = document.getElementById('tickerMDT');
+    const tP = document.getElementById('tickerPDT');
+    if (tE) tE.textContent = `${e.time} ${e.ampm}`;
+    if (tC) tC.textContent = `${c.time} ${c.ampm}`;
+    if (tM) tM.textContent = `${m.time} ${m.ampm}`;
+    if (tP) tP.textContent = `${p.time} ${p.ampm}`;
+  }
+
+  setInterval(updateAllClocks, 1000);
+  updateAllClocks();
+
+  // 2. CAMBIO DE TEMA EN EL HEADER
+  const btnTheme = document.getElementById('btnThemeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function syncThemeIcon() {
+    const current = document.documentElement.dataset.theme || 'futuro';
+    if (themeIcon) {
+      themeIcon.className = current === 'futuro' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+  }
+
+  syncThemeIcon();
+
+  btnTheme?.addEventListener('click', () => {
+    const current = document.documentElement.dataset.theme || 'futuro';
+    const next = current === 'futuro' ? 'luz' : 'futuro';
+    if ((window as any).cambiarTemaGlobal) {
+      (window as any).cambiarTemaGlobal(next);
+    } else {
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem('wiTema', next);
+    }
+    syncThemeIcon();
+  });
+
+  // 3. NAVEGACIÓN ENTRE PESTAÑAS DEL SIDEBAR
+  const navBtns = document.querySelectorAll('.nav-tab-btn');
+  const panels = document.querySelectorAll('.view-panel');
+  const mainTitle = document.getElementById('viewMainTitle');
+  const mainSub = document.getElementById('viewMainSub');
+
+  const VIEW_HEADERS: Record<string, { t: string; s: string }> = {
+    'panel-time': { t: 'U.S. Time & Clocks', s: 'Horarios oficiales en tiempo real de todos los husos horarios de EE.UU.' },
+    'panel-usa': { t: 'United States Geography', s: 'Directorio de 50 estados, capitales, zonas horarias, clima y curiosidades para rapport' },
+    'panel-english': { t: 'English Call Center Scripts', s: 'Frases de Wellcare con soporte formativo en español y copiado de 1-click' },
+    'panel-wellcare': { t: 'Wellcare PDP Support', s: 'Ley IRA ($2,000 OOP Cap, Insulina $35), Probing Questions y glosario de farmacia' },
+    'panel-timers': { t: 'Timers Operativos', s: 'Hold Timer regulado a 2 minutos con aviso visual y cronómetro AHT' },
+    'panel-plantillas': { t: 'Plantillas CRM', s: 'Formatos oficiales de documentación para llamadas fantasma, transferencias y reclamos' },
+    'panel-learn': { t: 'Learn & Phonetics', s: 'Alfabeto fonético por estados ("W as in Washington"), reglas MBI y Driver\'s License' }
+  };
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-view') || '';
+      navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      panels.forEach(p => p.classList.remove('active'));
+      document.getElementById(target)?.classList.add('active');
+
+      if (VIEW_HEADERS[target]) {
+        if (mainTitle) mainTitle.textContent = VIEW_HEADERS[target].t;
+        if (mainSub) mainSub.textContent = VIEW_HEADERS[target].s;
+      }
+    });
+  });
+
+  // 4. COLAPSO DEL SIDEBAR
+  const sidebar = document.getElementById('dashboardSidebar');
+  const btnToggle = document.getElementById('btnToggleSidebar');
+  const toggleIcon = document.getElementById('sidebarToggleIcon');
+
+  btnToggle?.addEventListener('click', () => {
+    sidebar?.classList.toggle('collapsed');
+    const isCol = sidebar?.classList.contains('collapsed');
+    if (toggleIcon) {
+      toggleIcon.className = isCol ? 'fa-solid fa-arrow-right-to-line' : 'fa-solid fa-arrow-left-to-line';
+    }
+  });
+
+  // 5. TOAST GLOBAL DE COPIADO
+  function showToast(msg: string) {
+    const toast = document.getElementById('globalToast');
+    const toastText = document.getElementById('globalToastText');
+    if (toast && toastText) {
+      toastText.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+  }
+
+  // Delegación de copiado rápido data-copy
+  document.addEventListener('click', (e) => {
+    const target = (e.target as HTMLElement).closest('[data-copy]') as HTMLElement | null;
+    if (target) {
+      const text = target.getAttribute('data-copy') || '';
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Copiado al portapapeles');
+        });
+      }
+    }
+  });
+
+  // 6. MAPA TOOLTIP
+  const mapStates = document.querySelectorAll('.map-state');
+  const tooltip = document.getElementById('mapTooltip');
+  const mapWrapper = document.querySelector('.us-map-wrapper');
+
+  mapStates.forEach(st => {
+    st.addEventListener('mousemove', (ev) => {
+      const e = ev as MouseEvent;
+      const name = st.getAttribute('data-name');
+      const abbr = st.getAttribute('data-abbr');
+      const zone = st.getAttribute('data-zone') || 'Eastern';
+      const cap = st.getAttribute('data-cap');
+
+      let tz = ZONAS_HORARIAS.eastern;
+      if (zone.includes('Central')) tz = ZONAS_HORARIAS.central;
+      if (zone.includes('Mountain')) tz = ZONAS_HORARIAS.mountain;
+      if (zone.includes('Pacific')) tz = ZONAS_HORARIAS.pacific;
+      if (zone.includes('Alaska')) tz = ZONAS_HORARIAS.alaska;
+      if (zone.includes('Hawaii')) tz = ZONAS_HORARIAS.hawaii;
+
+      const time = formatTime(tz);
+
+      if (tooltip && mapWrapper) {
+        tooltip.innerHTML = `
+          <strong>${name} (${abbr})</strong><br/>
+          <span style="color: var(--tx3);">Zona:</span> ${zone}<br/>
+          <span style="color: var(--tx3);">Hora:</span> <span style="color: var(--mco); font-weight: bold;">${time.time} ${time.ampm}</span><br/>
+          <span style="color: var(--tx3);">Capital:</span> ${cap}
+        `;
+        const rect = mapWrapper.getBoundingClientRect();
+        tooltip.style.left = `${e.clientX - rect.left}px`;
+        tooltip.style.top = `${e.clientY - rect.top}px`;
+        tooltip.style.display = 'block';
+      }
+    });
+
+    st.addEventListener('mouseleave', () => {
+      if (tooltip) tooltip.style.display = 'none';
+    });
+  });
+
+  // 7. TABLA DE ESTADOS CON CLIMA Y CURIOSIDADES
+  const statesTbody = document.getElementById('statesTableBody');
+  const stateInput = document.getElementById('stateSearchInput') as HTMLInputElement | null;
+  const filterBtns = document.querySelectorAll('#section-usa .btn-filter');
+  let currentZoneFilter = 'all';
+
+  function renderStates(query = '', zone = 'all') {
+    if (!statesTbody) return;
+    statesTbody.innerHTML = '';
+    const q = query.toLowerCase().trim();
+
+    const filtered = ESTADOS_DATA.filter(st => {
+      const matchZone = zone === 'all' || st.zone.toLowerCase().includes(zone.toLowerCase());
+      const matchQuery = st.name.toLowerCase().includes(q) ||
+                         st.abbr.toLowerCase().includes(q) ||
+                         st.cap.toLowerCase().includes(q) ||
+                         st.codes.includes(q) ||
+                         st.weather.toLowerCase().includes(q) ||
+                         st.fact.toLowerCase().includes(q);
+      return matchZone && matchQuery;
+    });
+
+    filtered.forEach(st => {
+      let tz = ZONAS_HORARIAS.eastern;
+      if (st.zone === 'Central') tz = ZONAS_HORARIAS.central;
+      if (st.zone === 'Mountain') tz = ZONAS_HORARIAS.mountain;
+      if (st.zone === 'Pacific') tz = ZONAS_HORARIAS.pacific;
+      if (st.zone === 'Alaska') tz = ZONAS_HORARIAS.alaska;
+      if (st.zone === 'Hawaii') tz = ZONAS_HORARIAS.hawaii;
+      const t = formatTime(tz);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong style="color: var(--mco);">${st.abbr}</strong></td>
+        <td><strong>${st.name}</strong></td>
+        <td><span class="badge-zone ${st.zone.toLowerCase()}">${st.zone}</span></td>
+        <td><span style="font-family: monospace; font-weight: bold;">${t.time} ${t.ampm}</span></td>
+        <td style="color: var(--tx2);">${st.cap}</td>
+        <td style="color: var(--tx3); font-size: var(--fz_s3);">${st.codes}</td>
+        <td><span style="font-size: var(--fz_s2); color: var(--tx1); background: var(--inp); padding: 2px 6px; border-radius: 4px;">${st.weather}</span></td>
+        <td style="font-size: var(--fz_s2); color: var(--tx2); line-height: 1.35;">${st.fact}</td>
+      `;
+      statesTbody.appendChild(tr);
+    });
+  }
+
+  renderStates();
+
+  stateInput?.addEventListener('input', (e) => {
+    renderStates((e.target as HTMLInputElement).value, currentZoneFilter);
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentZoneFilter = btn.getAttribute('data-filter') || 'all';
+      renderStates(stateInput?.value || '', currentZoneFilter);
+    });
+  });
+
+  // 8. FRASES EN INGLÉS CON COPIADO DE 1-CLICK
+  const phrasesGrid = document.getElementById('phrasesGrid');
+  const phraseInput = document.getElementById('phraseSearchInput') as HTMLInputElement | null;
+  const phraseCatBtns = document.querySelectorAll('#section-english .btn-filter');
+  let currentPhraseCat = 'all';
+
+  function renderPhrases(query = '', cat = 'all') {
+    if (!phrasesGrid) return;
+    phrasesGrid.innerHTML = '';
+    const q = query.toLowerCase().trim();
+
+    const filtered = FRASES_DATA.filter(f => {
+      const matchCat = cat === 'all' || f.cat === cat;
+      const matchQuery = f.en.toLowerCase().includes(q) ||
+                         f.es.toLowerCase().includes(q) ||
+                         f.catLabel.toLowerCase().includes(q) ||
+                         f.tip.toLowerCase().includes(q);
+      return matchCat && matchQuery;
+    });
+
+    filtered.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'phrase-card';
+      card.innerHTML = `
+        <div class="phrase-card-top">
+          <span class="phrase-badge ${f.badgeClass}">${f.catLabel}</span>
+        </div>
+        <div class="phrase-en-text">"${f.en}"</div>
+        <div class="phrase-es-text">${f.es}</div>
+        <div class="phrase-tip"><i class="fa-solid fa-lightbulb" style="color: var(--warning);"></i> ${f.tip}</div>
+        <button class="btn-copy-phrase" data-copy="${f.en.replace(/"/g, '&quot;')}">
+          <i class="fa-solid fa-copy"></i> Copiar frase
+        </button>
+      `;
+      phrasesGrid.appendChild(card);
+    });
+  }
+
+  renderPhrases();
+
+  phraseInput?.addEventListener('input', (e) => {
+    renderPhrases((e.target as HTMLInputElement).value, currentPhraseCat);
+  });
+
+  phraseCatBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      phraseCatBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPhraseCat = btn.getAttribute('data-cat') || 'all';
+      renderPhrases(phraseInput?.value || '', currentPhraseCat);
+    });
+  });
+
+  // 9. TIMERS (HOLD TIMER 2 MINUTOS & AHT STOPWATCH)
+  // A. Hold Timer
+  const HOLD_DURATION = 120; // 2 minutos
+  let holdRemaining = HOLD_DURATION;
+  let holdInterval: any = null;
+  let isHoldRunning = false;
+
+  const holdDigits = document.getElementById('holdDigits');
+  const holdDisplayBox = document.getElementById('holdDisplayBox');
+  const holdIndicator = document.getElementById('holdIndicator');
+  const holdStatusText = document.getElementById('holdStatusText');
+  const btnHoldStart = document.getElementById('btnHoldStart') as HTMLButtonElement | null;
+  const btnHoldPause = document.getElementById('btnHoldPause') as HTMLButtonElement | null;
+  const btnHoldReset = document.getElementById('btnHoldReset') as HTMLButtonElement | null;
+
+  function renderHoldDisplay() {
+    const mins = Math.floor(holdRemaining / 60).toString().padStart(2, '0');
+    const secs = (holdRemaining % 60).toString().padStart(2, '0');
+    if (holdDigits) holdDigits.textContent = `${mins}:${secs}`;
+
+    if (holdDisplayBox) {
+      holdDisplayBox.classList.remove('warning-state', 'danger-state');
+      if (holdRemaining <= 0) {
+        holdDisplayBox.classList.add('danger-state');
+        if (holdStatusText) holdStatusText.textContent = '¡LÍMITE EXCEDIDO (2 MIN)! Regresa de Hold de inmediato';
+        if (holdIndicator) {
+          holdIndicator.textContent = '¡ALERTA!';
+          holdIndicator.style.background = 'var(--error)';
+          holdIndicator.style.color = '#fff';
+        }
+      } else if (holdRemaining <= 30) {
+        holdDisplayBox.classList.add('warning-state');
+        if (holdStatusText) holdStatusText.textContent = 'Quedan menos de 30 segundos de espera';
+        if (holdIndicator) {
+          holdIndicator.textContent = 'Aviso 1:30';
+          holdIndicator.style.background = 'var(--warning)';
+          holdIndicator.style.color = '#fff';
+        }
+      } else {
+        if (holdStatusText) holdStatusText.textContent = 'Tiempo de espera en curso';
+        if (holdIndicator) {
+          holdIndicator.textContent = isHoldRunning ? 'En Pausa' : 'Listo';
+          holdIndicator.style.background = 'var(--inp)';
+          holdIndicator.style.color = 'var(--tx2)';
+        }
+      }
+    }
+  }
+
+  btnHoldStart?.addEventListener('click', () => {
+    if (isHoldRunning) return;
+    isHoldRunning = true;
+    if (btnHoldStart) btnHoldStart.disabled = true;
+    if (btnHoldPause) btnHoldPause.disabled = false;
+
+    holdInterval = setInterval(() => {
+      holdRemaining--;
+      renderHoldDisplay();
+    }, 1000);
+  });
+
+  btnHoldPause?.addEventListener('click', () => {
+    isHoldRunning = false;
+    clearInterval(holdInterval);
+    if (btnHoldStart) btnHoldStart.disabled = false;
+    if (btnHoldPause) btnHoldPause.disabled = true;
+  });
+
+  btnHoldReset?.addEventListener('click', () => {
+    isHoldRunning = false;
+    clearInterval(holdInterval);
+    holdRemaining = HOLD_DURATION;
+    renderHoldDisplay();
+    if (btnHoldStart) btnHoldStart.disabled = false;
+    if (btnHoldPause) btnHoldPause.disabled = true;
+    if (holdStatusText) holdStatusText.textContent = 'Tiempo máximo permitido';
+  });
+
+  // B. AHT Stopwatch
+  let ahtSeconds = 0;
+  let ahtInterval: any = null;
+  let isAhtRunning = false;
+
+  const ahtDigits = document.getElementById('ahtDigits');
+  const ahtIndicator = document.getElementById('ahtIndicator');
+  const btnAhtStart = document.getElementById('btnAhtStart') as HTMLButtonElement | null;
+  const btnAhtPause = document.getElementById('btnAhtPause') as HTMLButtonElement | null;
+  const btnAhtReset = document.getElementById('btnAhtReset') as HTMLButtonElement | null;
+
+  function renderAhtDisplay() {
+    const mins = Math.floor(ahtSeconds / 60).toString().padStart(2, '0');
+    const secs = (ahtSeconds % 60).toString().padStart(2, '0');
+    if (ahtDigits) ahtDigits.textContent = `${mins}:${secs}`;
+  }
+
+  btnAhtStart?.addEventListener('click', () => {
+    if (isAhtRunning) return;
+    isAhtRunning = true;
+    if (btnAhtStart) btnAhtStart.disabled = true;
+    if (btnAhtPause) btnAhtPause.disabled = false;
+    if (ahtIndicator) {
+      ahtIndicator.textContent = 'Llamada Activa';
+      ahtIndicator.style.background = 'rgba(0, 161, 165, 0.2)';
+      ahtIndicator.style.color = 'var(--mco)';
+    }
+
+    ahtInterval = setInterval(() => {
+      ahtSeconds++;
+      renderAhtDisplay();
+    }, 1000);
+  });
+
+  btnAhtPause?.addEventListener('click', () => {
+    isAhtRunning = false;
+    clearInterval(ahtInterval);
+    if (btnAhtStart) btnAhtStart.disabled = false;
+    if (btnAhtPause) btnAhtPause.disabled = true;
+    if (ahtIndicator) {
+      ahtIndicator.textContent = 'Pausada';
+      ahtIndicator.style.background = 'var(--inp)';
+      ahtIndicator.style.color = 'var(--tx2)';
+    }
+  });
+
+  btnAhtReset?.addEventListener('click', () => {
+    isAhtRunning = false;
+    clearInterval(ahtInterval);
+    ahtSeconds = 0;
+    renderAhtDisplay();
+    if (btnAhtStart) btnAhtStart.disabled = false;
+    if (btnAhtPause) btnAhtPause.disabled = true;
+    if (ahtIndicator) {
+      ahtIndicator.textContent = 'Inactivo';
+      ahtIndicator.style.background = 'var(--inp)';
+      ahtIndicator.style.color = 'var(--tx2)';
+    }
+  });
+
+  // 10. DELETREADOR DE ESTADOS (STATE PHONETICS SPELLER)
+  const spellerInput = document.getElementById('spellerInput') as HTMLInputElement | null;
+  const spellerOutput = document.getElementById('spellerOutput');
+  const spellerClearBtn = document.getElementById('spellerClearBtn');
+
+  function updateSpeller() {
+    const val = spellerInput?.value.toUpperCase().trim() || '';
+    if (!spellerOutput) return;
+    spellerOutput.innerHTML = '';
+
+    if (!val) {
+      spellerOutput.innerHTML = '<span class="speller-empty-hint">El desglose fonético ("W as in Washington, C as in California") aparecerá aquí en tiempo real...</span>';
+      return;
+    }
+
+    for (const char of val) {
+      const match = (US_STATE_PHONETICS as any)[char];
+      if (match) {
+        const token = document.createElement('div');
+        token.className = 'speller-token';
+        token.innerHTML = `
+          <span class="token-char">${char}</span>
+          <span class="token-word">${match.word}</span>
+          <span class="token-phrase">${match.example}</span>
+        `;
+        spellerOutput.appendChild(token);
+      } else if (char === ' ') {
+        const space = document.createElement('div');
+        space.style.width = '16px';
+        spellerOutput.appendChild(space);
+      } else {
+        const raw = document.createElement('div');
+        raw.className = 'speller-token';
+        raw.innerHTML = `
+          <span class="token-char">${char}</span>
+          <span class="token-word">Símbolo</span>
+        `;
+        spellerOutput.appendChild(raw);
+      }
+    }
+  }
+
+  spellerInput?.addEventListener('input', updateSpeller);
+
+  spellerClearBtn?.addEventListener('click', () => {
+    if (spellerInput) {
+      spellerInput.value = '';
+      updateSpeller();
+      spellerInput.focus();
+    }
+  });
+
+</script>

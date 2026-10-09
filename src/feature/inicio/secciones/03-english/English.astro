@@ -1,0 +1,43 @@
+---
+// src/feature/inicio/secciones/03-english/English.astro
+// Sección de frases de atención telefónica con apoyo formativo en español
+---
+
+<section class="english-card" id="section-english">
+  <div class="english-card-header">
+    <div class="english-card-title">
+      <i class="fa-solid fa-headset"></i>
+      <span>Frases de Atención Telefónica · Wellcare Medicare Advantage</span>
+    </div>
+    <span style="font-size: var(--fz_s3); color: var(--mco); font-weight: 500;">
+      <i class="fa-solid fa-bolt"></i> 1-Click para copiar al portapapeles
+    </span>
+  </div>
+
+  <!-- Buscador y Filtros -->
+  <div class="search-filter-box">
+    <div class="search-input-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input 
+        type="text" 
+        class="input-search" 
+        id="phraseSearchInput" 
+        placeholder="Buscar frases en inglés o palabras en español..." 
+      />
+    </div>
+
+    <div class="filter-tabs">
+      <button class="btn-filter active" data-cat="all">Todas</button>
+      <button class="btn-filter" data-cat="opening">Apertura</button>
+      <button class="btn-filter" data-cat="hipaa">HIPAA</button>
+      <button class="btn-filter" data-cat="hold">Hold (Espera)</button>
+      <button class="btn-filter" data-cat="empathy">Empatía</button>
+      <button class="btn-filter" data-cat="closing">Cierre</button>
+    </div>
+  </div>
+
+  <!-- Grid de Frases Dinámico -->
+  <div class="phrase-category-grid" id="phrasesGrid">
+    <!-- Renderizado por cliente -->
+  </div>
+</section>

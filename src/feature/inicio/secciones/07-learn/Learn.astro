@@ -1,0 +1,109 @@
+---
+// src/feature/inicio/secciones/07-learn/Learn.astro
+// Sección de Fonética Adaptada (Estados de EE.UU.), Validación MBI y Reglas Driver's License
+import { US_STATE_PHONETICS, ID_VALIDATION_RULES } from '../../lib/phoneticData.js';
+---
+
+<section class="learn-wrapper" id="section-learn">
+  
+  <!-- DELETREADOR INTERACTIVO CON ESTADOS DE EE.UU. -->
+  <div class="speller-card">
+    <div class="speller-card-title">
+      <i class="fa-solid fa-spell-check"></i>
+      <span>Deletreador Amigable para Miembros ("W as in Washington")</span>
+    </div>
+    <p class="speller-desc">
+      A diferencia del código militar (Whiskey, Sierra), los miembros mayores entienden mucho mejor nombres de estados y ciudades familiares como <strong>Texas, California, Florida</strong>. Escribe aquí cualquier código, MBI o apellido:
+    </p>
+
+    <div class="speller-input-box">
+      <input 
+        type="text" 
+        class="speller-input" 
+        id="spellerInput" 
+        placeholder="ESCRIBE AQUÍ (EJ: 1EG4-TE5 o JOHNSON)" 
+      />
+      <button class="speller-clear-btn" id="spellerClearBtn" title="Limpiar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="speller-output" id="spellerOutput">
+      <span class="speller-empty-hint">El desglose fonético ("W as in Washington, C as in California") aparecerá aquí en tiempo real...</span>
+    </div>
+  </div>
+
+  <!-- GUÍA DE VALIDACIÓN MBI Y DRIVER'S LICENSE -->
+  <div class="validation-guide-grid">
+    
+    <!-- MBI Card -->
+    <div class="validation-card">
+      <div class="val-header">
+        <span class="val-badge mbi-badge">Regla Crítica CMS</span>
+        <h3 class="val-title">{ID_VALIDATION_RULES.mbi.name}</h3>
+      </div>
+      <div class="val-pattern">Formato: <code>{ID_VALIDATION_RULES.mbi.pattern}</code></div>
+      
+      <div class="val-excluded-box">
+        <div class="excluded-label">
+          <i class="fa-solid fa-ban"></i>
+          <span>Letras Prohibidas en MBI:</span>
+        </div>
+        <div class="excluded-letters-row">
+          {ID_VALIDATION_RULES.mbi.excludedLetters.map(letter => (
+            <span class="excluded-letter-pill">{letter}</span>
+          ))}
+        </div>
+      </div>
+
+      <p class="val-desc">{ID_VALIDATION_RULES.mbi.reason}</p>
+      <div class="val-tip">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>{ID_VALIDATION_RULES.mbi.keyRule}</span>
+      </div>
+    </div>
+
+    <!-- DL Card -->
+    <div class="validation-card">
+      <div class="val-header">
+        <span class="val-badge dl-badge">Identificación Secundaria</span>
+        <h3 class="val-title">{ID_VALIDATION_RULES.dl.name}</h3>
+      </div>
+      <p class="val-desc">{ID_VALIDATION_RULES.dl.tip}</p>
+      <div class="val-tip">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{ID_VALIDATION_RULES.dl.recommendation}</span>
+      </div>
+
+      <div class="val-subhead">Abreviaciones USPS comunes en direcciones:</div>
+      <div class="abbr-grid">
+        {ID_VALIDATION_RULES.address.abbreviations.slice(0, 10).map(a => (
+          <div class="abbr-item">
+            <span class="abbr-code">{a.abbr}</span>
+            <span class="abbr-name">{a.term}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TABLA COMPLETA DEL ALFABETO DE ESTADOS -->
+  <div class="phonetic-table-card">
+    <div class="speller-card-title">
+      <i class="fa-solid fa-flag-usa"></i>
+      <span>Alfabeto Fonético por Estados y Ciudades de EE.UU. (A-Z)</span>
+    </div>
+
+    <div class="phonetic-grid" id="phoneticGrid">
+      {Object.entries(US_STATE_PHONETICS).map(([key, val]) => (
+        <div class="phonetic-cell">
+          <div class="cell-key">{key}</div>
+          <div class="cell-word">{val.word}</div>
+          <div class="cell-example">{val.example}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+</section>

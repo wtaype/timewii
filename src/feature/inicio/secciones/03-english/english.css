@@ -1,0 +1,137 @@
+/* src/feature/inicio/secciones/03-english/english.css */
+/* Estilos del Módulo de Frases en Inglés para Call Center Wellcare */
+
+.english-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.english-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.english-card-title {
+  font-size: var(--fz_m3);
+  font-weight: 600;
+  color: var(--tx1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.english-card-title i {
+  color: var(--mco);
+}
+
+.phrase-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.phrase-card {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color var(--tr_m), transform var(--tr_m);
+}
+
+.phrase-card:hover {
+  border-color: var(--mco);
+  transform: translateY(-0.2vh);
+}
+
+.phrase-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phrase-badge {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  padding: 0.3vh 0.8vh;
+  border-radius: var(--r_xs);
+  background: var(--mbg);
+  color: var(--mco);
+}
+
+.phrase-badge.hipaa {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.phrase-badge.hold {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.phrase-badge.empathy {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.phrase-en-text {
+  font-size: var(--fz_m2);
+  font-weight: 600;
+  color: var(--tx1);
+  line-height: 1.45;
+}
+
+.phrase-es-text {
+  font-size: var(--fz_s4);
+  color: var(--tx2);
+  font-style: italic;
+  border-left: 2px solid var(--mco);
+  padding-left: 8px;
+}
+
+.phrase-tip {
+  font-size: var(--fz_s2);
+  color: var(--tx3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-copy-phrase {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  color: var(--tx2);
+  padding: 0.6vh 1.2vh;
+  font-size: var(--fz_s3);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all var(--tr_f);
+}
+
+.btn-copy-phrase:hover {
+  background: var(--mco);
+  color: #ffffff;
+  border-color: var(--mco);
+}
+
+.btn-copy-phrase.copied {
+  background: var(--success);
+  color: #ffffff;
+  border-color: var(--success);
+}

@@ -1,0 +1,67 @@
+// src/feature/inicio/lib/estadosData.js
+// Directorio de los 50 estados de EE.UU. con zonas horarias, capitales, códigos de área,
+// y curiosidades / clima clave para rapport empático con miembros senior.
+
+export const ZONAS_HORARIAS = {
+  eastern: 'America/New_York',
+  central: 'America/Chicago',
+  mountain: 'America/Denver',
+  pacific: 'America/Los_Angeles',
+  alaska: 'America/Anchorage',
+  hawaii: 'Pacific/Honolulu'
+};
+
+export const ESTADOS_DATA = [
+  { abbr: 'AL', name: 'Alabama', zone: 'Central', cap: 'Montgomery', codes: '205, 251, 256, 334', weather: 'Cálido/Húmedo', fact: 'Cuna del movimiento de derechos civiles en Montgomery; clima sureño.' },
+  { abbr: 'AK', name: 'Alaska', zone: 'Alaska', cap: 'Juneau', codes: '907', weather: 'Frío / Nieve', fact: 'El estado más extenso de EE.UU.; muchas comunidades dependen de correo aéreo.' },
+  { abbr: 'AZ', name: 'Arizona', zone: 'Mountain', cap: 'Phoenix', codes: '480, 520, 602, 928', weather: 'Desértico / Caluroso', fact: '¡No cambia al horario de verano (sin DST, excepto Nación Navajo)!' },
+  { abbr: 'AR', name: 'Arkansas', zone: 'Central', cap: 'Little Rock', codes: '479, 501, 870', weather: 'Templado / Húmedo', fact: 'Famoso por las montañas Ozark y sus aguas termales en Hot Springs.' },
+  { abbr: 'CA', name: 'California', zone: 'Pacific', cap: 'Sacramento', codes: '213, 310, 415, 619, 818', weather: 'Mediterráneo / Soleado', fact: 'El estado más poblado de la nación; gran diversidad de redes de farmacias.' },
+  { abbr: 'CO', name: 'Colorado', zone: 'Mountain', cap: 'Denver', codes: '303, 719, 970', weather: 'Montañoso / Seco / Nieve', fact: 'Ciudades a gran altitud (Denver es "The Mile High City").' },
+  { abbr: 'CT', name: 'Connecticut', zone: 'Eastern', cap: 'Hartford', codes: '203, 860', weather: '4 estaciones / Invierno frío', fact: 'Conocido como la capital de los seguros históricos en Hartford.' },
+  { abbr: 'DE', name: 'Delaware', zone: 'Eastern', cap: 'Dover', codes: '302', weather: 'Costero templado', fact: 'El "First State" en ratificar la Constitución; sin impuesto estatal sobre ventas.' },
+  { abbr: 'FL', name: 'Florida', zone: 'Eastern', cap: 'Tallahassee', codes: '305, 407, 786, 813, 904', weather: 'Cálido / Tormentas de verano', fact: 'Estado con mayor concentración de jubilados y miembros Medicare de Wellcare.' },
+  { abbr: 'GA', name: 'Georgia', zone: 'Eastern', cap: 'Atlanta', codes: '404, 678, 706, 770', weather: 'Cálido sureño', fact: 'El estado del melocotón ("Peach State"); hub médico y logístico en Atlanta.' },
+  { abbr: 'HI', name: 'Hawaii', zone: 'Hawaii', cap: 'Honolulu', codes: '808', weather: 'Tropical / Agradable', fact: 'Cadena de islas volcánicas; no utiliza horario de verano (HST permanente).' },
+  { abbr: 'ID', name: 'Idaho', zone: 'Mountain', cap: 'Boise', codes: '208', weather: 'Seco / Cuatro estaciones', fact: 'Famoso por su agricultura y paisajes montañosos; parte norte en Pacific Time.' },
+  { abbr: 'IL', name: 'Illinois', zone: 'Central', cap: 'Springfield', codes: '312, 630, 708, 773, 847', weather: 'Inviernos fríos / Veranos cálidos', fact: 'Chicago es "The Windy City"; gran centro de interconexión ferroviaria y aérea.' },
+  { abbr: 'IN', name: 'Indiana', zone: 'Eastern', cap: 'Indianapolis', codes: '219, 260, 317, 812', weather: 'Continental templado', fact: 'Famoso por las 500 Millas de Indianápolis; mayoría en hora Eastern.' },
+  { abbr: 'IA', name: 'Iowa', zone: 'Central', cap: 'Des Moines', codes: '319, 515, 563, 712', weather: 'Medio Oeste continental', fact: 'Líder en producción de maíz; comunidades muy tranquilas y amables.' },
+  { abbr: 'KS', name: 'Kansas', zone: 'Central', cap: 'Topeka', codes: '316, 785, 913', weather: 'Llanuras ventosas', fact: 'El corazón geográfico de los Estados Unidos contiguos.' },
+  { abbr: 'KY', name: 'Kentucky', zone: 'Eastern', cap: 'Frankfort', codes: '270, 502, 606, 859', weather: 'Colinas templadas', fact: 'Famoso por sus pastos de bluegrass, caballos de carreras y música folk.' },
+  { abbr: 'LA', name: 'Louisiana', zone: 'Central', cap: 'Baton Rouge', codes: '225, 318, 337, 504', weather: 'Húmedo subtropical', fact: 'Cultura cajún/criolla única; parroquias en vez de condados ("Parishes").' },
+  { abbr: 'ME', name: 'Maine', zone: 'Eastern', cap: 'Augusta', codes: '207', weather: 'Costero frío / Marítimo', fact: 'El estado más oriental; famoso por faros, langostas y bosques de pinos.' },
+  { abbr: 'MD', name: 'Maryland', zone: 'Eastern', cap: 'Annapolis', codes: '240, 301, 410, 443', weather: 'Templado de costa', fact: 'Hogar de la bahía de Chesapeake y de la sede de CMS (Medicare) en Baltimore.' },
+  { abbr: 'MA', name: 'Massachusetts', zone: 'Eastern', cap: 'Boston', codes: '508, 617, 781, 978', weather: 'Invierno frío de costa', fact: 'Gran centro de medicina y hospitales de investigación en Boston.' },
+  { abbr: 'MI', name: 'Michigan', zone: 'Eastern', cap: 'Lansing', codes: '248, 313, 586, 616, 734', weather: 'Grandes Lagos / Nieve', fact: 'Rodeado por 4 de los 5 Grandes Lagos; industria automotriz en Detroit.' },
+  { abbr: 'MN', name: 'Minnesota', zone: 'Central', cap: 'Saint Paul', codes: '218, 320, 507, 612, 651', weather: 'Inviernos muy fríos', fact: 'La "Tierra de los 10,000 Lagos"; famosa por la reconocida Mayo Clinic.' },
+  { abbr: 'MS', name: 'Mississippi', zone: 'Central', cap: 'Jackson', codes: '228, 601, 662', weather: 'Cálido sureño húmedo', fact: 'Cuna del blues estadounidense a lo largo del gran río Mississippi.' },
+  { abbr: 'MO', name: 'Missouri', zone: 'Central', cap: 'Jefferson City', codes: '314, 417, 573, 636, 816', weather: 'Continental variable', fact: 'Conocido como "Gateway to the West" con el famoso arco en St. Louis.' },
+  { abbr: 'MT', name: 'Montana', zone: 'Mountain', cap: 'Helena', codes: '406', weather: 'Montañoso / Fresco', fact: 'Conocido como "Big Sky Country" por sus horizontes despejados.' },
+  { abbr: 'NE', name: 'Nebraska', zone: 'Central', cap: 'Lincoln', codes: '308, 402', weather: 'Llanuras continentales', fact: 'Gran territorio ganadero; único estado con legislatura unicameral.' },
+  { abbr: 'NV', name: 'Nevada', zone: 'Pacific', cap: 'Carson City', codes: '702, 775', weather: 'Desértico árido', fact: 'Conocido por Las Vegas y el lago Tahoe; en horario del Pacífico.' },
+  { abbr: 'NH', name: 'New Hampshire', zone: 'Eastern', cap: 'Concord', codes: '603', weather: 'Otoño colorido / Invierno frío', fact: 'Lema estatal: "Live Free or Die"; sin impuesto general sobre ingresos.' },
+  { abbr: 'NJ', name: 'New Jersey', zone: 'Eastern', cap: 'Trenton', codes: '201, 609, 732, 856, 908', weather: 'Templado atlántico', fact: 'El "Garden State"; mayor densidad poblacional por milla cuadrada.' },
+  { abbr: 'NM', name: 'New Mexico', zone: 'Mountain', cap: 'Santa Fe', codes: '505, 575', weather: 'Desértico alto / Soleado', fact: '"Land of Enchantment"; rica herencia hispana e indígena pueblo.' },
+  { abbr: 'NY', name: 'New York', zone: 'Eastern', cap: 'Albany', codes: '212, 347, 516, 718, 917', weather: 'Invierno frío / Verano templado', fact: 'Desde la gran metrópoli de NYC hasta los bosques de los Adirondacks.' },
+  { abbr: 'NC', name: 'North Carolina', zone: 'Eastern', cap: 'Raleigh', codes: '252, 336, 704, 828, 919', weather: 'Agradable / Playas y montes', fact: 'El "Research Triangle" en Raleigh/Durham y montañas Blue Ridge.' },
+  { abbr: 'ND', name: 'North Dakota', zone: 'Central', cap: 'Bismarck', codes: '701', weather: 'Frío extremo invernal', fact: 'Grandes praderas del norte; clima de temperaturas bajas en invierno.' },
+  { abbr: 'OH', name: 'Ohio', zone: 'Eastern', cap: 'Columbus', codes: '216, 330, 419, 513, 614', weather: 'Cuatro estaciones', fact: 'Hogar del Salón de la Fama del Rock and Roll y la Cleveland Clinic.' },
+  { abbr: 'OK', name: 'Oklahoma', zone: 'Central', cap: 'Oklahoma City', codes: '405, 580, 918', weather: 'Llanuras / Soleado', fact: 'Corazón de la Ruta 66 histórica; rica cultura de naciones nativas.' },
+  { abbr: 'OR', name: 'Oregon', zone: 'Pacific', cap: 'Salem', codes: '503, 541, 971', weather: 'Lluvioso en costa / Boscoso', fact: 'Paisajes verdes en el Pacífico Noroeste; sin impuesto a las ventas.' },
+  { abbr: 'PA', name: 'Pennsylvania', zone: 'Eastern', cap: 'Harrisburg', codes: '215, 267, 412, 610, 717', weather: 'Colinas y bosques templados', fact: 'Cuna de la Campana de la Libertad e independencia en Philadelphia.' },
+  { abbr: 'RI', name: 'Rhode Island', zone: 'Eastern', cap: 'Providence', codes: '401', weather: 'Costero fresco', fact: 'El estado más pequeño en superficie pero con más de 400 millas de costa.' },
+  { abbr: 'SC', name: 'South Carolina', zone: 'Eastern', cap: 'Columbia', codes: '803, 843, 864', weather: 'Cálido subtropical', fact: 'Playas históricas como Myrtle Beach y arquitectura colonial en Charleston.' },
+  { abbr: 'SD', name: 'South Dakota', zone: 'Central', cap: 'Pierre', codes: '605', weather: 'Viento / Llanuras y colinas', fact: 'Hogar de las famosas esculturas presidenciales del Monte Rushmore.' },
+  { abbr: 'TN', name: 'Tennessee', zone: 'Central', cap: 'Nashville', codes: '423, 615, 731, 865, 901', weather: 'Templado / Colinas verdes', fact: 'Capital de la música country en Nashville y blues/rock en Memphis.' },
+  { abbr: 'TX', name: 'Texas', zone: 'Central', cap: 'Austin', codes: '210, 214, 512, 713, 832, 972', weather: 'Caluroso / Soleado', fact: 'El "Lone Star State"; segundo estado más grande y con más miembros.' },
+  { abbr: 'UT', name: 'Utah', zone: 'Mountain', cap: 'Salt Lake City', codes: '435, 801', weather: 'Seco / Montañas rocosas', fact: 'Famoso por sus 5 Parques Nacionales ("Mighty 5") y nieve en cañones.' },
+  { abbr: 'VT', name: 'Vermont', zone: 'Eastern', cap: 'Montpelier', codes: '802', weather: 'Inviernos fríos / Otoño dorado', fact: 'Conocido por su jarabe de arce puro y pintorescos pueblos de montaña.' },
+  { abbr: 'VA', name: 'Virginia', zone: 'Eastern', cap: 'Richmond', codes: '276, 434, 540, 703, 804', weather: 'Templado atlántico', fact: 'Famoso por su historia colonial, bahías y cercanía con la capital Washington D.C.' },
+  { abbr: 'WA', name: 'Washington', zone: 'Pacific', cap: 'Olympia', codes: '206, 253, 360, 425, 509', weather: 'Lluvioso en costa / Frío templado', fact: 'Hogar de la icónica aguja Space Needle de Seattle y del monte Rainier.' },
+  { abbr: 'WV', name: 'West Virginia', zone: 'Eastern', cap: 'Charleston', codes: '304, 681', weather: 'Montañoso boscoso', fact: '"Mountain State", atravesado íntegramente por los montes Apalaches.' },
+  { abbr: 'WI', name: 'Wisconsin', zone: 'Central', cap: 'Madison', codes: '262, 414, 608, 715, 920', weather: 'Inviernos fríos / Veranos verdes', fact: 'La capital de los quesos y lácteos ("America\'s Dairyland").' },
+  { abbr: 'WY', name: 'Wyoming', zone: 'Mountain', cap: 'Cheyenne', codes: '307', weather: 'Seco montañoso / Ventoso', fact: 'Menor población de EE.UU.; hogar del histórico Parque Nacional Yellowstone.' }
+];
+
+export default { ESTADOS_DATA, ZONAS_HORARIAS };

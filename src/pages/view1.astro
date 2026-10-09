@@ -1,0 +1,2198 @@
+---
+// C:\mipro\timewii\timewii-web\src\pages\view1.astro
+// Timewii - Smart tools for you (Teleperformance / Wellcare Advisor Toolkit)
+// 100% Autónomo, seguro, client-side, sin conexión a base de datos.
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="futuro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timewii - Smart tools for you | Wellcare Support</title>
+  
+  <!-- Favicon y Recursos Locales -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/google/fonts.min.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+
+  <style>
+    /* ============================================================ */
+    /* 🎨 DESIGN SYSTEM TIMEWII - DARK DASHBOARD PREMIUM (IMAGEN 3) */
+    /* ============================================================ */
+    :root {
+      --font-main: 'Poppins', system-ui, -apple-system, sans-serif;
+      --font-head: 'Outfit', 'Poppins', sans-serif;
+
+      /* Dark Theme Principal (Inspirado en Imagen 3) */
+      --bg-app: #080c14;
+      --bg-sidebar: #0e1320;
+      --bg-card: #131929;
+      --bg-card-hover: #192237;
+      --bg-card-alt: #161e31;
+      --bg-input: #0b0f19;
+
+      --border-subtle: #1c263c;
+      --border-focus: #ff6600;
+
+      --text-main: #f3f4f6;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Acentos cromáticos */
+      --accent-orange: #ff6600;
+      --accent-orange-hover: #ff7d26;
+      --accent-orange-soft: rgba(255, 102, 0, 0.15);
+      
+      --accent-blue: #38bdf8;
+      --accent-blue-soft: rgba(56, 189, 248, 0.15);
+      
+      --accent-green: #10b981;
+      --accent-green-soft: rgba(16, 185, 129, 0.15);
+
+      --accent-yellow: #f59e0b;
+      --accent-yellow-soft: rgba(245, 158, 11, 0.15);
+
+      --accent-purple: #a855f7;
+      --accent-purple-soft: rgba(168, 85, 247, 0.15);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
+
+      --sidebar-width: 250px;
+      --sidebar-collapsed: 74px;
+      --topbar-height: 64px;
+      --trans-speed: 0.25s ease;
+    }
+
+    /* Reset global */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Scrollbar estilizada */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-app);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #243049;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-orange);
+    }
+
+    /* ============================================================ */
+    /* 🏛️ LAYOUT: SIDEBAR + MAIN VIEW                               */
+    /* ============================================================ */
+    .app-layout {
+      display: flex;
+      width: 100vw;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar lateral */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width var(--trans-speed);
+      position: relative;
+      z-index: 100;
+    }
+
+    .sidebar.collapsed {
+      width: var(--sidebar-collapsed);
+    }
+
+    /* Header del Sidebar */
+    .sidebar-brand {
+      height: var(--topbar-height);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .brand-logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff6600, #ff8c00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(255, 102, 0, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+      transition: opacity var(--trans-speed);
+    }
+    .sidebar.collapsed .brand-info {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .brand-name {
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .brand-name span {
+      color: var(--accent-orange);
+    }
+
+    .brand-slogan {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    /* Lista de Navegación */
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-dim);
+      font-weight: 600;
+      padding: 8px 12px 4px;
+      white-space: nowrap;
+      transition: opacity var(--trans-speed);
+    }
+    .sidebar.collapsed .nav-label {
+      opacity: 0;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      font-size: 13.5px;
+      transition: all var(--trans-speed);
+      white-space: nowrap;
+    }
+
+    .nav-item i {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+      color: var(--text-dim);
+      transition: color var(--trans-speed);
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .nav-item:hover i {
+      color: var(--accent-orange);
+    }
+
+    .nav-item.active {
+      background: var(--accent-orange-soft);
+      color: var(--accent-orange);
+      border-color: rgba(255, 102, 0, 0.3);
+      font-weight: 600;
+    }
+    .nav-item.active i {
+      color: var(--accent-orange);
+    }
+
+    .sidebar.collapsed .nav-text {
+      display: none;
+    }
+
+    /* Footer del Sidebar */
+    .sidebar-footer {
+      padding: 12px 10px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-collapse {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all var(--trans-speed);
+    }
+    .btn-collapse:hover {
+      background: var(--bg-card);
+      color: #fff;
+      border-color: var(--accent-orange);
+    }
+    .sidebar.collapsed .btn-collapse span {
+      display: none;
+    }
+
+    .safe-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--accent-green);
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .safe-badge i {
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .sidebar.collapsed .safe-badge span {
+      display: none;
+    }
+
+    /* ============================================================ */
+    /* 🖥️ MAIN VIEW CONTAINER                                      */
+    /* ============================================================ */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-app);
+    }
+
+    /* Topbar Superior */
+    .topbar {
+      height: var(--topbar-height);
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .view-title-wrap h1 {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .view-title-wrap p {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Ticker en vivo de Zonas Horarias */
+    .time-ticker-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+
+    .zone-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .zone-pill .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+    .zone-pill.eastern .pill-dot { background: #ef4444; }
+    .zone-pill.central .pill-dot { background: #eab308; }
+    .zone-pill.mountain .pill-dot { background: #10b981; }
+    .zone-pill.pacific .pill-dot { background: #f97316; }
+
+    .zone-pill .pill-tag {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .zone-pill .pill-time {
+      font-weight: 700;
+      color: #fff;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-action-primary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 102, 0, 0.25);
+      transition: all var(--trans-speed);
+    }
+    .btn-action-primary:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Área de Vistas con Scroll */
+    .view-content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .view-panel {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .view-panel.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tarjetas Generales */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title i {
+      color: var(--accent-orange);
+    }
+
+    /* ============================================================ */
+    /* 🕒 VISTA 1: TIME (RELOJES Y MAPA OFICIAL TIPO TIME.GOV)      */
+    /* ============================================================ */
+    .time-grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .clock-card {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--trans-speed);
+    }
+    .clock-card:hover {
+      border-color: rgba(255, 102, 0, 0.4);
+      transform: translateY(-2px);
+    }
+    .clock-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .clock-card.eastern::before { background: #ef4444; }
+    .clock-card.central::before { background: #eab308; }
+    .clock-card.mountain::before { background: #10b981; }
+    .clock-card.pacific::before { background: #f97316; }
+    .clock-card.alaska::before { background: #06b6d4; }
+    .clock-card.hawaii::before { background: #a855f7; }
+
+    .clock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .clock-zone-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .clock-zone-tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .clock-digital-time {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'Outfit', monospace;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .clock-digital-time .clock-ampm {
+      font-size: 13px;
+      color: var(--accent-orange);
+      font-weight: 700;
+    }
+
+    .clock-cities {
+      font-size: 11px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Contenedor del Mapa US Zonas Horarias */
+    .map-container-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .map-legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      transition: background var(--trans-speed);
+    }
+    .map-legend-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+    .map-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .us-map-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 380px;
+      background: #0b0f19;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .us-map-svg {
+      width: 100%;
+      max-height: 480px;
+      height: auto;
+    }
+
+    .map-state {
+      stroke: #080c14;
+      stroke-width: 1.2;
+      transition: filter 0.2s, stroke-width 0.2s, opacity 0.2s;
+      cursor: pointer;
+    }
+    .map-state:hover {
+      filter: brightness(1.25);
+      stroke: #ffffff;
+      stroke-width: 2;
+    }
+
+    /* Clases por Zona para Mapa */
+    .st-eastern { fill: #dc2626; }
+    .st-central { fill: #d97706; }
+    .st-mountain { fill: #059669; }
+    .st-pacific { fill: #ea580c; }
+    .st-alaska { fill: #0891b2; }
+    .st-hawaii { fill: #9333ea; }
+    .st-arizona { fill: #047857; stroke-dasharray: 2; } /* Arizona MST permanente */
+
+    /* Tooltip interactivo flotante en mapa */
+    .map-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: #1e293b;
+      border: 1px solid var(--accent-orange);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #fff;
+      display: none;
+      z-index: 50;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      transform: translate(-50%, -120%);
+    }
+
+    /* ============================================================ */
+    /* 🗺️ VISTA 2: UNITED STATES (GEOGRAFÍA & BUSCADOR)            */
+    /* ============================================================ */
+    .search-filter-box {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .input-search {
+      flex: 1;
+      min-width: 260px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px 10px 38px;
+      color: #fff;
+      font-size: 13.5px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--trans-speed);
+    }
+    .input-search:focus {
+      border-color: var(--accent-orange);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+    .search-input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .btn-filter {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all var(--trans-speed);
+    }
+    .btn-filter:hover, .btn-filter.active {
+      background: var(--accent-orange-soft);
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+      font-weight: 600;
+    }
+
+    /* Tabla / Directorio de Estados */
+    .states-table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+    }
+
+    .states-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .states-table th {
+      padding: 14px 18px;
+      background: #0f1422;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .states-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+    .states-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    .badge-zone {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-zone.eastern { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .badge-zone.central { background: rgba(234, 179, 8, 0.15); color: #facc15; }
+    .badge-zone.mountain { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-zone.pacific { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
+
+    /* ============================================================ */
+    /* 💬 VISTA 3: ENGLISH (CALL CENTER COMMON PHRASES)            */
+    /* ============================================================ */
+    .phrase-category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 18px;
+    }
+
+    .phrase-card {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all var(--trans-speed);
+    }
+    .phrase-card:hover {
+      border-color: rgba(255, 102, 0, 0.35);
+    }
+
+    .phrase-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .phrase-category-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--accent-blue-soft);
+      color: var(--accent-blue);
+    }
+    .phrase-category-badge.hipaa {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+    .phrase-category-badge.hold {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+
+    .phrase-english-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.45;
+    }
+
+    .phrase-spanish-trans {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .btn-copy-phrase {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .btn-copy-phrase:hover {
+      background: var(--accent-orange);
+      color: #fff;
+      border-color: var(--accent-orange);
+    }
+    .btn-copy-phrase.copied {
+      background: var(--accent-green);
+      color: #fff;
+      border-color: var(--accent-green);
+    }
+
+    /* ============================================================ */
+    /* 🏥 VISTA 4: WELLCARE SUPPORT & NOTEPAD (IMAGEN 3 NOTEPAD)    */
+    /* ============================================================ */
+    .wellcare-layout-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .wellcare-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .term-card {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+    .term-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .term-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Notepad Rápido (Exacto a la Imagen 3) */
+    .notepad-box {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: fit-content;
+    }
+    .notepad-title {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .notepad-textarea {
+      width: 100%;
+      height: 220px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      resize: vertical;
+      outline: none;
+    }
+    .notepad-textarea:focus {
+      border-color: var(--accent-orange);
+    }
+    .notepad-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-save-note {
+      flex: 1;
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-save-note:hover {
+      background: var(--accent-orange-hover);
+    }
+    .btn-clear-note {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-clear-note:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    /* ============================================================ */
+    /* 🎓 VISTA 5: LEARN (NATO PHONETIC ALPHABET & SPELLER)         */
+    /* ============================================================ */
+    .speller-interactive-card {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--accent-orange-soft);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .speller-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-orange);
+      outline: none;
+      width: 100%;
+    }
+    .speller-input:focus {
+      border-color: var(--accent-orange);
+    }
+    .speller-output {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 48px;
+      align-items: center;
+      background: var(--bg-app);
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-subtle);
+    }
+    .speller-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .speller-pill span {
+      color: var(--accent-orange);
+    }
+
+    .nato-alphabet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
+    .nato-item {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nato-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: var(--accent-orange-soft);
+      color: var(--accent-orange);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .nato-word {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Notificación Toast flotante */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 9999;
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-layout">
+    
+    <!-- ========================================== -->
+    <!-- 1. SIDEBAR LATERAL ESTILO TEAMS (IMAGEN 1 & 3) -->
+    <!-- ========================================== -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- Marca Principal -->
+      <div class="sidebar-brand">
+        <div class="brand-logo-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div class="brand-info">
+          <div class="brand-name">TIME<span>WII</span></div>
+          <div class="brand-slogan">Smart tools for you</div>
+        </div>
+      </div>
+
+      <!-- Navegación de Vistas -->
+      <nav class="sidebar-nav">
+        <div class="nav-label">Herramientas Asesor</div>
+        
+        <button class="nav-item active" data-view="view-time">
+          <i class="fa-solid fa-clock"></i>
+          <span class="nav-text">Time (U.S. Clock)</span>
+        </button>
+
+        <button class="nav-item" data-view="view-usa">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span class="nav-text">United States</span>
+        </button>
+
+        <button class="nav-item" data-view="view-english">
+          <i class="fa-solid fa-comments"></i>
+          <span class="nav-text">English Phrases</span>
+        </button>
+
+        <button class="nav-item" data-view="view-customer">
+          <i class="fa-solid fa-shield-heart"></i>
+          <span class="nav-text">Wellcare Support</span>
+        </button>
+
+        <button class="nav-item" data-view="view-learn">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="nav-text">Learn & NATO</span>
+        </button>
+      </nav>
+
+      <!-- Footer del Sidebar -->
+      <div class="sidebar-footer">
+        <div class="safe-badge">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>100% Local · Empresa Segura</span>
+        </div>
+
+        <button class="btn-collapse" id="btnCollapse">
+          <i class="fa-solid fa-arrow-left-to-line" id="collapseIcon"></i>
+          <span>Colapsar</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- 2. CONTENEDOR PRINCIPAL                     -->
+    <!-- ========================================== -->
+    <div class="main-wrapper">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="view-title-wrap">
+            <h1 id="topbarTitle">U.S. Time & Clocks</h1>
+            <p id="topbarSubtitle">Horarios en tiempo real sincronizados con los 50 estados</p>
+          </div>
+        </div>
+
+        <!-- Barra Rápida de Horas en Topbar -->
+        <div class="time-ticker-bar">
+          <div class="zone-pill eastern">
+            <span class="pill-dot"></span>
+            <span class="pill-tag">EDT:</span>
+            <span class="pill-time" id="tickerEDT">--:--:--</span>
+          </div>
+          <div class="zone-pill central">
+            <span class="pill-dot"></span>
+            <span class="pill-tag">CDT:</span>
+            <span class="pill-time" id="tickerCDT">--:--:--</span>
+          </div>
+          <div class="zone-pill mountain">
+            <span class="pill-dot"></span>
+            <span class="pill-tag">MDT:</span>
+            <span class="pill-time" id="tickerMDT">--:--:--</span>
+          </div>
+          <div class="zone-pill pacific">
+            <span class="pill-dot"></span>
+            <span class="pill-tag">PDT:</span>
+            <span class="pill-time" id="tickerPDT">--:--:--</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn-action-primary" onclick="irAWellcareNotepad()">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Notepad Rápido</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Área de Contenido Dinámico -->
+      <main class="view-content-area">
+
+        <!-- ======================================== -->
+        <!-- VISTA 1: TIME (RELOJES Y MAPA OFICIAL)  -->
+        <!-- ======================================== -->
+        <section class="view-panel active" id="view-time">
+          
+          <!-- Grid de Relojes con Segundos -->
+          <div class="time-grid-cards">
+            
+            <div class="clock-card eastern">
+              <div class="clock-header">
+                <span class="clock-zone-name">Eastern Time</span>
+                <span class="clock-zone-tag">EDT / UTC-4</span>
+              </div>
+              <div class="clock-digital-time" id="clockEastern">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">FL, NY, GA, NC, PA, OH, VA</div>
+            </div>
+
+            <div class="clock-card central">
+              <div class="clock-header">
+                <span class="clock-zone-name">Central Time</span>
+                <span class="clock-zone-tag">CDT / UTC-5</span>
+              </div>
+              <div class="clock-digital-time" id="clockCentral">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">TX, IL, MO, TN, AL, LA, WI</div>
+            </div>
+
+            <div class="clock-card mountain">
+              <div class="clock-header">
+                <span class="clock-zone-name">Mountain Time</span>
+                <span class="clock-zone-tag">MDT / UTC-6</span>
+              </div>
+              <div class="clock-digital-time" id="clockMountain">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">CO, UT, NM, AZ*, WY, MT</div>
+            </div>
+
+            <div class="clock-card pacific">
+              <div class="clock-header">
+                <span class="clock-zone-name">Pacific Time</span>
+                <span class="clock-zone-tag">PDT / UTC-7</span>
+              </div>
+              <div class="clock-digital-time" id="clockPacific">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">CA, WA, OR, NV</div>
+            </div>
+
+            <div class="clock-card alaska">
+              <div class="clock-header">
+                <span class="clock-zone-name">Alaska Time</span>
+                <span class="clock-zone-tag">AKDT / UTC-8</span>
+              </div>
+              <div class="clock-digital-time" id="clockAlaska">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">Anchorage, Fairbanks, Juneau</div>
+            </div>
+
+            <div class="clock-card hawaii">
+              <div class="clock-header">
+                <span class="clock-zone-name">Hawaii-Aleutian</span>
+                <span class="clock-zone-tag">HST / UTC-10</span>
+              </div>
+              <div class="clock-digital-time" id="clockHawaii">
+                00:00:00 <span class="clock-ampm">AM</span>
+              </div>
+              <div class="clock-cities">Honolulu, Hilo, Maui</div>
+            </div>
+
+          </div>
+
+          <!-- Mapa Visual Oficial (Inspirado en Imagen 2: time.gov) -->
+          <div class="map-container-card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-map"></i>
+                <span>Mapa Oficial de Zonas Horarias de EE.UU. (Interactivo)</span>
+              </div>
+              <span style="font-size: 12px; color: var(--text-dim);">Pasa el mouse sobre un estado para ver hora y zona</span>
+            </div>
+
+            <div class="map-legend-row">
+              <div class="map-legend-item" onclick="filtrarZonaEnMapa('all')">
+                <span class="map-legend-dot" style="background: #fff;"></span>
+                <span>Todos los estados</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #dc2626;"></span>
+                <span>Eastern Time (EDT)</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #d97706;"></span>
+                <span>Central Time (CDT)</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #059669;"></span>
+                <span>Mountain Time (MDT)</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #ea580c;"></span>
+                <span>Pacific Time (PDT)</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #0891b2;"></span>
+                <span>Alaska (AKDT)</span>
+              </div>
+              <div class="map-legend-item">
+                <span class="map-legend-dot" style="background: #9333ea;"></span>
+                <span>Hawaii (HST)</span>
+              </div>
+            </div>
+
+            <!-- SVG Vectorial Proporcional de USA -->
+            <div class="us-map-wrapper">
+              <svg class="us-map-svg" viewBox="0 0 960 600" id="usMapSvg">
+                
+                <!-- PACIFIC ZONE (PDT) Naranja -->
+                <g class="zone-group pacific-group">
+                  <path class="map-state st-pacific" data-abbr="WA" data-name="Washington" data-zone="Pacific" data-cap="Olympia" d="M125,50 L200,60 L195,115 L145,110 L125,50 Z" />
+                  <path class="map-state st-pacific" data-abbr="OR" data-name="Oregon" data-zone="Pacific" data-cap="Salem" d="M115,110 L195,115 L190,195 L110,185 Z" />
+                  <path class="map-state st-pacific" data-abbr="CA" data-name="California" data-zone="Pacific" data-cap="Sacramento" d="M110,185 L180,195 L225,320 L165,375 L135,325 Z" />
+                  <path class="map-state st-pacific" data-abbr="NV" data-name="Nevada" data-zone="Pacific" data-cap="Carson City" d="M180,195 L255,210 L235,335 L175,200 Z" />
+                </g>
+
+                <!-- MOUNTAIN ZONE (MDT) Verde -->
+                <g class="zone-group mountain-group">
+                  <path class="map-state st-mountain" data-abbr="ID" data-name="Idaho" data-zone="Mountain" data-cap="Boise" d="M200,60 L245,65 L235,160 L260,165 L255,210 L195,115 Z" />
+                  <path class="map-state st-mountain" data-abbr="MT" data-name="Montana" data-zone="Mountain" data-cap="Helena" d="M245,65 L415,85 L405,175 L235,160 Z" />
+                  <path class="map-state st-mountain" data-abbr="WY" data-name="Wyoming" data-zone="Mountain" data-cap="Cheyenne" d="M260,165 L395,178 L385,255 L250,240 Z" />
+                  <path class="map-state st-mountain" data-abbr="UT" data-name="Utah" data-zone="Mountain" data-cap="Salt Lake City" d="M250,210 L325,215 L320,315 L245,310 Z" />
+                  <path class="map-state st-mountain" data-abbr="CO" data-name="Colorado" data-zone="Mountain" data-cap="Denver" d="M325,215 L450,225 L445,320 L320,315 Z" />
+                  <path class="map-state st-mountain st-arizona" data-abbr="AZ" data-name="Arizona (MST - Sin horario verano)" data-zone="Mountain (MST Fijo)" data-cap="Phoenix" d="M235,320 L320,325 L315,435 L215,415 Z" />
+                  <path class="map-state st-mountain" data-abbr="NM" data-name="New Mexico" data-zone="Mountain" data-cap="Santa Fe" d="M320,325 L435,330 L430,440 L315,435 Z" />
+                </g>
+
+                <!-- CENTRAL ZONE (CDT) Amarillo/Dorado -->
+                <g class="zone-group central-group">
+                  <path class="map-state st-central" data-abbr="ND" data-name="North Dakota" data-zone="Central" data-cap="Bismarck" d="M415,85 L525,95 L520,175 L405,175 Z" />
+                  <path class="map-state st-central" data-abbr="SD" data-name="South Dakota" data-zone="Central" data-cap="Pierre" d="M405,175 L525,175 L520,245 L395,245 Z" />
+                  <path class="map-state st-central" data-abbr="NE" data-name="Nebraska" data-zone="Central" data-cap="Lincoln" d="M395,245 L530,250 L525,315 L445,315 Z" />
+                  <path class="map-state st-central" data-abbr="KS" data-name="Kansas" data-zone="Central" data-cap="Topeka" d="M445,315 L565,320 L560,380 L440,375 Z" />
+                  <path class="map-state st-central" data-abbr="OK" data-name="Oklahoma" data-zone="Central" data-cap="Oklahoma City" d="M435,380 L560,380 L555,445 L430,445 Z" />
+                  <path class="map-state st-central" data-abbr="TX" data-name="Texas" data-zone="Central" data-cap="Austin" d="M430,445 L555,445 L575,540 L490,590 L420,490 Z" />
+                  <path class="map-state st-central" data-abbr="MN" data-name="Minnesota" data-zone="Central" data-cap="Saint Paul" d="M525,95 L595,105 L585,225 L520,225 Z" />
+                  <path class="map-state st-central" data-abbr="IA" data-name="Iowa" data-zone="Central" data-cap="Des Moines" d="M525,225 L605,230 L595,295 L520,295 Z" />
+                  <path class="map-state st-central" data-abbr="MO" data-name="Missouri" data-zone="Central" data-cap="Jefferson City" d="M530,295 L615,300 L605,385 L530,385 Z" />
+                  <path class="map-state st-central" data-abbr="AR" data-name="Arkansas" data-zone="Central" data-cap="Little Rock" d="M545,385 L615,385 L610,465 L545,465 Z" />
+                  <path class="map-state st-central" data-abbr="LA" data-name="Louisiana" data-zone="Central" data-cap="Baton Rouge" d="M545,465 L615,465 L625,530 L565,535 Z" />
+                  <path class="map-state st-central" data-abbr="WI" data-name="Wisconsin" data-zone="Central" data-cap="Madison" d="M585,150 L645,155 L635,245 L580,245 Z" />
+                  <path class="map-state st-central" data-abbr="IL" data-name="Illinois" data-zone="Central" data-cap="Springfield" d="M605,245 L655,250 L640,360 L600,355 Z" />
+                  <path class="map-state st-central" data-abbr="MS" data-name="Mississippi" data-zone="Central" data-cap="Jackson" d="M610,410 L660,410 L655,510 L615,510 Z" />
+                  <path class="map-state st-central" data-abbr="AL" data-name="Alabama" data-zone="Central" data-cap="Montgomery" d="M660,410 L715,410 L705,510 L655,510 Z" />
+                  <path class="map-state st-central" data-abbr="TN" data-name="Tennessee" data-zone="Central" data-cap="Nashville" d="M615,360 L735,365 L725,410 L610,405 Z" />
+                </g>
+
+                <!-- EASTERN ZONE (EDT) Rojo -->
+                <g class="zone-group eastern-group">
+                  <path class="map-state st-eastern" data-abbr="MI" data-name="Michigan" data-zone="Eastern" data-cap="Lansing" d="M645,155 L715,160 L705,245 L645,245 Z" />
+                  <path class="map-state st-eastern" data-abbr="IN" data-name="Indiana" data-zone="Eastern" data-cap="Indianapolis" d="M655,250 L700,250 L695,345 L650,345 Z" />
+                  <path class="map-state st-eastern" data-abbr="OH" data-name="Ohio" data-zone="Eastern" data-cap="Columbus" d="M700,240 L765,245 L755,325 L695,320 Z" />
+                  <path class="map-state st-eastern" data-abbr="KY" data-name="Kentucky" data-zone="Eastern" data-cap="Frankfort" d="M655,340 L755,345 L745,385 L650,380 Z" />
+                  <path class="map-state st-eastern" data-abbr="GA" data-name="Georgia" data-zone="Eastern" data-cap="Atlanta" d="M710,410 L785,410 L765,505 L705,505 Z" />
+                  <path class="map-state st-eastern" data-abbr="FL" data-name="Florida" data-zone="Eastern" data-cap="Tallahassee" d="M705,505 L795,505 L820,580 L765,585 Z" />
+                  <path class="map-state st-eastern" data-abbr="NC" data-name="North Carolina" data-zone="Eastern" data-cap="Raleigh" d="M735,365 L835,370 L815,420 L730,415 Z" />
+                  <path class="map-state st-eastern" data-abbr="SC" data-name="South Carolina" data-zone="Eastern" data-cap="Columbia" d="M745,415 L815,420 L790,470 L735,465 Z" />
+                  <path class="map-state st-eastern" data-abbr="VA" data-name="Virginia" data-zone="Eastern" data-cap="Richmond" d="M755,315 L845,325 L825,370 L745,365 Z" />
+                  <path class="map-state st-eastern" data-abbr="WV" data-name="West Virginia" data-zone="Eastern" data-cap="Charleston" d="M740,290 L790,295 L775,345 L735,340 Z" />
+                  <path class="map-state st-eastern" data-abbr="PA" data-name="Pennsylvania" data-zone="Eastern" data-cap="Harrisburg" d="M765,225 L850,230 L840,285 L760,280 Z" />
+                  <path class="map-state st-eastern" data-abbr="NY" data-name="New York" data-zone="Eastern" data-cap="Albany" d="M785,150 L875,155 L855,230 L775,225 Z" />
+                  <path class="map-state st-eastern" data-abbr="ME" data-name="Maine" data-zone="Eastern" data-cap="Augusta" d="M885,90 L925,95 L915,160 L875,155 Z" />
+                  <path class="map-state st-eastern" data-abbr="VT" data-name="Vermont" data-zone="Eastern" data-cap="Montpelier" d="M860,140 L885,140 L880,185 L855,185 Z" />
+                  <path class="map-state st-eastern" data-abbr="NH" data-name="New Hampshire" data-zone="Eastern" data-cap="Concord" d="M880,140 L900,140 L895,190 L875,190 Z" />
+                  <path class="map-state st-eastern" data-abbr="MA" data-name="Massachusetts" data-zone="Eastern" data-cap="Boston" d="M875,185 L925,185 L920,210 L870,210 Z" />
+                </g>
+
+                <!-- ALASKA & HAWAII INSETS -->
+                <g class="zone-group alaska-group">
+                  <path class="map-state st-alaska" data-abbr="AK" data-name="Alaska" data-zone="Alaska" data-cap="Juneau" d="M60,460 L140,460 L120,550 L50,540 Z" />
+                  <text x="75" y="505" fill="#fff" font-size="12" font-weight="bold">ALASKA</text>
+                </g>
+
+                <g class="zone-group hawaii-group">
+                  <path class="map-state st-hawaii" data-abbr="HI" data-name="Hawaii" data-zone="Hawaii" data-cap="Honolulu" d="M160,530 L220,530 L210,570 L150,570 Z" />
+                  <text x="165" y="555" fill="#fff" font-size="11" font-weight="bold">HAWAII</text>
+                </g>
+
+              </svg>
+
+              <!-- Tooltip del Mapa -->
+              <div class="map-tooltip" id="mapTooltip"></div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ======================================== -->
+        <!-- VISTA 2: UNITED STATES (GEOGRAFÍA/ESTADOS) -->
+        <!-- ======================================== -->
+        <section class="view-panel" id="view-usa">
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-flag-usa"></i>
+                <span>Directorio Rápido de Estados y Códigos de Área</span>
+              </div>
+            </div>
+
+            <!-- Buscador Reactivo y Filtro de Zona -->
+            <div class="search-filter-box">
+              <div class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input 
+                  type="text" 
+                  class="input-search" 
+                  id="stateSearchInput" 
+                  placeholder="Buscar estado, abreviatura (FL, TX, CA), capital o ciudad..." 
+                />
+              </div>
+
+              <div class="filter-tabs">
+                <button class="btn-filter active" onclick="filtrarEstados('all', this)">Todos (50)</button>
+                <button class="btn-filter" onclick="filtrarEstados('Eastern', this)">Eastern (EDT)</button>
+                <button class="btn-filter" onclick="filtrarEstados('Central', this)">Central (CDT)</button>
+                <button class="btn-filter" onclick="filtrarEstados('Mountain', this)">Mountain (MDT)</button>
+                <button class="btn-filter" onclick="filtrarEstados('Pacific', this)">Pacific (PDT)</button>
+              </div>
+            </div>
+
+            <!-- Tabla de Estados -->
+            <div class="states-table-container">
+              <table class="states-table" id="statesTable">
+                <thead>
+                  <tr>
+                    <th>Abrev</th>
+                    <th>Estado</th>
+                    <th>Zona Horaria</th>
+                    <th>Hora Actual</th>
+                    <th>Capital</th>
+                    <th>Prefijos / Área Común</th>
+                  </tr>
+                </thead>
+                <tbody id="statesTableBody">
+                  <!-- Inyectado dinámicamente con JS -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ======================================== -->
+        <!-- VISTA 3: ENGLISH (FRASES CALL CENTER)   -->
+        <!-- ======================================== -->
+        <section class="view-panel" id="view-english">
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-headset"></i>
+                <span>Frases Clave de Atención Telefónica (Wellcare Customer Care)</span>
+              </div>
+              <span style="font-size: 12px; color: var(--accent-orange);">
+                Haz clic en "Copiar frase" para pegarla al instante
+              </span>
+            </div>
+
+            <!-- Filtros de categoría -->
+            <div class="search-filter-box">
+              <div class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input 
+                  type="text" 
+                  class="input-search" 
+                  id="phraseSearchInput" 
+                  placeholder="Filtrar frases en inglés o español..." 
+                />
+              </div>
+
+              <div class="filter-tabs">
+                <button class="btn-filter active" onclick="filtrarFrases('all', this)">Todas</button>
+                <button class="btn-filter" onclick="filtrarFrases('opening', this)">Apertura</button>
+                <button class="btn-filter" onclick="filtrarFrases('hipaa', this)">HIPAA / Verificación</button>
+                <button class="btn-filter" onclick="filtrarFrases('hold', this)">Hold (Espera)</button>
+                <button class="btn-filter" onclick="filtrarFrases('empathy', this)">Empatía</button>
+                <button class="btn-filter" onclick="filtrarFrases('closing', this)">Cierre</button>
+              </div>
+            </div>
+
+            <!-- Grid de Frases -->
+            <div class="phrase-category-grid" id="phrasesGrid">
+              <!-- Renderizado dinámicamente vía JS -->
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ======================================== -->
+        <!-- VISTA 4: WELLCARE SUPPORT & NOTEPAD     -->
+        <!-- ======================================== -->
+        <section class="view-panel" id="view-customer">
+          
+          <div class="wellcare-layout-grid">
+            
+            <!-- Columna Izquierda: Cheat Sheet Wellcare -->
+            <div style="display: flex; flex-direction: column; gap: 18px;">
+              
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <i class="fa-solid fa-notes-medical"></i>
+                    <span>Wellcare Medicare Advantage · Términos Fundamentales</span>
+                  </div>
+                </div>
+
+                <div class="terms-grid">
+                  
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-circle-dollar-to-slot"></i> Co-pay (Copago)</div>
+                    <div class="term-desc">Monto fijo en dólares que el miembro paga por un servicio cubierto (ej: <strong>$5 por médico primario, $25 por especialista</strong>).</div>
+                  </div>
+
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-percent"></i> Co-insurance (Coseguro)</div>
+                    <div class="term-desc">Porcentaje que el miembro paga después de alcanzar su deducible (ej: <strong>20% del costo del tratamiento médico</strong>).</div>
+                  </div>
+
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-shield"></i> Deductible (Deducible)</div>
+                    <div class="term-desc">Cantidad que el miembro debe pagar de su bolsillo antes de que el plan comience a cubrir ciertos servicios o medicamentos.</div>
+                  </div>
+
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-hand-holding-dollar"></i> MOOP (Out-of-Pocket Max)</div>
+                    <div class="term-desc">El límite máximo anual de gastos médicos del miembro. Una vez alcanzado, el plan cubre el <strong>100%</strong> de servicios aprobados.</div>
+                  </div>
+
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-pills"></i> Formulary (Formulario RX)</div>
+                    <div class="term-desc">Lista oficial de medicamentos cubiertos divididos en niveles (Tier 1 Genéricos hasta Tier 5 Medicamentos de Especialidad).</div>
+                  </div>
+
+                  <div class="term-card">
+                    <div class="term-title"><i class="fa-solid fa-file-signature"></i> Prior Authorization (PA)</div>
+                    <div class="term-desc">Aprobación requerida por el seguro antes de recibir un servicio médico especializado o fármaco de alto costo.</div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Checklist de Protocolo de Llamada -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Checklist de Calidad en Llamada</span>
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 13px;">
+                  <label style="display: flex; gap: 8px; align-items: center; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--accent-orange);" /> 1. Saludo Wellcare + Nombre
+                  </label>
+                  <label style="display: flex; gap: 8px; align-items: center; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--accent-orange);" /> 2. Aviso de llamada grabada
+                  </label>
+                  <label style="display: flex; gap: 8px; align-items: center; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--accent-orange);" /> 3. Autenticación HIPAA 3 puntos
+                  </label>
+                  <label style="display: flex; gap: 8px; align-items: center; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--accent-orange);" /> 4. Permiso de Hold cada 2 min
+                  </label>
+                  <label style="display: flex; gap: 8px; align-items: center; color: var(--text-muted); cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--accent-orange);" /> 5. Cierre con número de caso
+                  </label>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Columna Derecha: Notepad Rápido Local (Inspirado en Imagen 3) -->
+            <div class="notepad-box" id="notepadBox">
+              <div class="notepad-title">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <i class="fa-solid fa-book-bookmark" style="color: var(--accent-orange);"></i>
+                  Notepad Rápido
+                </span>
+                <span style="font-size: 11px; color: var(--accent-green); font-weight: 500;">
+                  <i class="fa-solid fa-cloud-arrow-down"></i> LocalStorage Seguro
+                </span>
+              </div>
+              <p style="font-size: 11.5px; color: var(--text-dim);">
+                Apunta Member ID, RX#, Nombre o notas durante la llamada. Se guarda localmente en tu equipo.
+              </p>
+              
+              <textarea 
+                class="notepad-textarea" 
+                id="notepadText" 
+                placeholder="Ejemplo:
+Member Name: John Doe
+DOB: 04/15/1952
+Member ID: W12345678
+Inquiry: Claim denial for Tier 2 medication..."
+              ></textarea>
+
+              <div class="notepad-actions">
+                <button class="btn-save-note" id="btnSaveNote" onclick="guardarNotaLocal()">
+                  <i class="fa-solid fa-floppy-disk"></i> Guardar en Notepad
+                </button>
+                <button class="btn-clear-note" title="Limpiar notas" onclick="limpiarNotaLocal()">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ======================================== -->
+        <!-- VISTA 5: LEARN (NATO PHONETIC ALPHABET) -->
+        <!-- ======================================== -->
+        <section class="view-panel" id="view-learn">
+          
+          <div class="speller-interactive-card">
+            <div class="card-title">
+              <i class="fa-solid fa-spell-check"></i>
+              <span>Speller Fonético Instantáneo (Escribe cualquier código o Member ID)</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-dim);">
+              Escribe el número de póliza, nombre o código de autorización del miembro para deletrearlo sin dudar:
+            </p>
+            <input 
+              type="text" 
+              class="speller-input" 
+              id="spellerInput" 
+              placeholder="ESCRIBE AQUÍ (EJ: W984251XZ)" 
+            />
+            <div class="speller-output" id="spellerOutput">
+              <span style="color: var(--text-dim); font-size: 13px;">Las palabras fonéticas aparecerán aquí...</span>
+            </div>
+          </div>
+
+          <!-- Tabla Alfabeto Fonético ICAO / NATO -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-table-list"></i>
+                <span>Alfabeto Fonético NATO Oficial (A-Z)</span>
+              </div>
+            </div>
+
+            <div class="nato-alphabet-grid" id="natoGrid">
+              <!-- Inyectado por JS -->
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Toast flotante de confirmación -->
+  <div class="toast-msg" id="toastMsg">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastText">¡Frase copiada al portapapeles!</span>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ⚙️ JAVASCRIPT LOCAL Y AUTÓNOMO (CLIENT-SIDE)                 -->
+  <!-- ============================================================ -->
+  <script is:inline>
+    // -------------------------------------------------------------
+    // 1. GESTOR DE RELOJES EN VIVO (USA TIME ZONES)
+    // -------------------------------------------------------------
+    const ZONAS = {
+      eastern: 'America/New_York',
+      central: 'America/Chicago',
+      mountain: 'America/Denver',
+      pacific: 'America/Los_Angeles',
+      alaska: 'America/Anchorage',
+      hawaii: 'Pacific/Honolulu'
+    };
+
+    function obtenerHoraFormateada(timeZone) {
+      const ahora = new Date();
+      const opciones = {
+        timeZone,
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      const formateador = new Intl.DateTimeFormat('en-US', opciones);
+      const partes = formateador.formatToParts(ahora);
+      
+      let hora = '', minuto = '', segundo = '', ampm = '';
+      partes.forEach(p => {
+        if (p.type === 'hour') hora = p.value;
+        if (p.type === 'minute') minuto = p.value;
+        if (p.type === 'second') segundo = p.value;
+        if (p.type === 'dayPeriod') ampm = p.value.toUpperCase();
+      });
+
+      return {
+        digital: `${hora}:${minuto}:${segundo}`,
+        ampm: ampm || ''
+      };
+    }
+
+    function actualizarRelojes() {
+      // 1. Relojes detallados en Vista Time
+      const eastern = obtenerHoraFormateada(ZONAS.eastern);
+      const central = obtenerHoraFormateada(ZONAS.central);
+      const mountain = obtenerHoraFormateada(ZONAS.mountain);
+      const pacific = obtenerHoraFormateada(ZONAS.pacific);
+      const alaska = obtenerHoraFormateada(ZONAS.alaska);
+      const hawaii = obtenerHoraFormateada(ZONAS.hawaii);
+
+      const elE = document.getElementById('clockEastern');
+      const elC = document.getElementById('clockCentral');
+      const elM = document.getElementById('clockMountain');
+      const elP = document.getElementById('clockPacific');
+      const elA = document.getElementById('clockAlaska');
+      const elH = document.getElementById('clockHawaii');
+
+      if (elE) elE.innerHTML = `${eastern.digital} <span class="clock-ampm">${eastern.ampm}</span>`;
+      if (elC) elC.innerHTML = `${central.digital} <span class="clock-ampm">${central.ampm}</span>`;
+      if (elM) elM.innerHTML = `${mountain.digital} <span class="clock-ampm">${mountain.ampm}</span>`;
+      if (elP) elP.innerHTML = `${pacific.digital} <span class="clock-ampm">${pacific.ampm}</span>`;
+      if (elA) elA.innerHTML = `${alaska.digital} <span class="clock-ampm">${alaska.ampm}</span>`;
+      if (elH) elH.innerHTML = `${hawaii.digital} <span class="clock-ampm">${hawaii.ampm}</span>`;
+
+      // 2. Tickers superiores en Topbar
+      const tE = document.getElementById('tickerEDT');
+      const tC = document.getElementById('tickerCDT');
+      const tM = document.getElementById('tickerMDT');
+      const tP = document.getElementById('tickerPDT');
+
+      if (tE) tE.textContent = `${eastern.digital} ${eastern.ampm}`;
+      if (tC) tC.textContent = `${central.digital} ${central.ampm}`;
+      if (tM) tM.textContent = `${mountain.digital} ${mountain.ampm}`;
+      if (tP) tP.textContent = `${pacific.digital} ${pacific.ampm}`;
+    }
+
+    setInterval(actualizarRelojes, 1000);
+    actualizarRelojes();
+
+    // -------------------------------------------------------------
+    // 2. CONTROL DE NAVEGACIÓN ENTRE VISTAS (SIDEBAR)
+    // -------------------------------------------------------------
+    const navItems = document.querySelectorAll('.nav-item');
+    const viewPanels = document.querySelectorAll('.view-panel');
+    const topbarTitle = document.getElementById('topbarTitle');
+    const topbarSubtitle = document.getElementById('topbarSubtitle');
+
+    const TITULOS_VISTAS = {
+      'view-time': { titulo: 'U.S. Time & Clocks', subtitulo: 'Horarios oficiales en tiempo real de todos los husos horarios de EE.UU.' },
+      'view-usa': { titulo: 'United States Geography', subtitulo: 'Directorio de 50 estados, capitales, husos horarios y prefijos telefónicos' },
+      'view-english': { titulo: 'English Call Center Scripts', subtitulo: 'Frases comunes de Wellcare listas para copiar al portapapeles' },
+      'view-customer': { titulo: 'Wellcare Customer Support', subtitulo: 'Cheat sheet de términos de Medicare, checklist de llamada y bloc de notas' },
+      'view-learn': { titulo: 'Learn & NATO Phonetic', subtitulo: 'Alfabeto fonético internacional y deletreador interactivo de pólizas' }
+    };
+
+    navItems.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetView = btn.getAttribute('data-view');
+        
+        // Actualizar botón activo
+        navItems.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Cambiar panel activo
+        viewPanels.forEach(p => p.classList.remove('active'));
+        const activePanel = document.getElementById(targetView);
+        if (activePanel) activePanel.classList.add('active');
+
+        // Actualizar títulos
+        if (TITULOS_VISTAS[targetView]) {
+          topbarTitle.textContent = TITULOS_VISTAS[targetView].titulo;
+          topbarSubtitle.textContent = TITULOS_VISTAS[targetView].subtitulo;
+        }
+      });
+    });
+
+    // -------------------------------------------------------------
+    // 3. COLAPSO DEL SIDEBAR
+    // -------------------------------------------------------------
+    const sidebar = document.getElementById('sidebar');
+    const btnCollapse = document.getElementById('btnCollapse');
+    const collapseIcon = document.getElementById('collapseIcon');
+
+    btnCollapse.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        collapseIcon.className = 'fa-solid fa-arrow-right-to-line';
+      } else {
+        collapseIcon.className = 'fa-solid fa-arrow-left-to-line';
+      }
+    });
+
+    // -------------------------------------------------------------
+    // 4. MAPA INTERACTIVO DE ESTADOS UNIDOS (HOVER Y TOOLTIP)
+    // -------------------------------------------------------------
+    const mapStates = document.querySelectorAll('.map-state');
+    const tooltip = document.getElementById('mapTooltip');
+    const mapWrapper = document.querySelector('.us-map-wrapper');
+
+    mapStates.forEach(st => {
+      st.addEventListener('mousemove', (e) => {
+        const name = st.getAttribute('data-name');
+        const abbr = st.getAttribute('data-abbr');
+        const zone = st.getAttribute('data-zone');
+        const cap = st.getAttribute('data-cap');
+
+        // Obtener hora actual en la zona de ese estado
+        let tz = ZONAS.eastern;
+        if (zone.includes('Central')) tz = ZONAS.central;
+        if (zone.includes('Mountain')) tz = ZONAS.mountain;
+        if (zone.includes('Pacific')) tz = ZONAS.pacific;
+        if (zone.includes('Alaska')) tz = ZONAS.alaska;
+        if (zone.includes('Hawaii')) tz = ZONAS.hawaii;
+
+        const timeObj = obtenerHoraFormateada(tz);
+
+        tooltip.innerHTML = `
+          <strong>${name} (${abbr})</strong><br/>
+          <span style="color: #94a3b8;">Zona:</span> ${zone}<br/>
+          <span style="color: #94a3b8;">Hora:</span> <span style="color: #ff6600; font-weight: bold;">${timeObj.digital} ${timeObj.ampm}</span><br/>
+          <span style="color: #94a3b8;">Capital:</span> ${cap}
+        `;
+
+        const rect = mapWrapper.getBoundingClientRect();
+        tooltip.style.left = `${e.clientX - rect.left}px`;
+        tooltip.style.top = `${e.clientY - rect.top}px`;
+        tooltip.style.display = 'block';
+      });
+
+      st.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    });
+
+    // -------------------------------------------------------------
+    // 5. DIRECTORIO COMPLETO DE ESTADOS (DATOS LOCALES)
+    // -------------------------------------------------------------
+    const DATOS_ESTADOS = [
+      { abbr: 'AL', name: 'Alabama', zone: 'Central', cap: 'Montgomery', codes: '205, 251, 256, 334' },
+      { abbr: 'AK', name: 'Alaska', zone: 'Alaska', cap: 'Juneau', codes: '907' },
+      { abbr: 'AZ', name: 'Arizona', zone: 'Mountain', cap: 'Phoenix', codes: '480, 520, 602, 928 (Sin DST)' },
+      { abbr: 'AR', name: 'Arkansas', zone: 'Central', cap: 'Little Rock', codes: '479, 501, 870' },
+      { abbr: 'CA', name: 'California', zone: 'Pacific', cap: 'Sacramento', codes: '213, 310, 415, 619, 818' },
+      { abbr: 'CO', name: 'Colorado', zone: 'Mountain', cap: 'Denver', codes: '303, 719, 970' },
+      { abbr: 'CT', name: 'Connecticut', zone: 'Eastern', cap: 'Hartford', codes: '203, 860' },
+      { abbr: 'DE', name: 'Delaware', zone: 'Eastern', cap: 'Dover', codes: '302' },
+      { abbr: 'FL', name: 'Florida', zone: 'Eastern', cap: 'Tallahassee', codes: '305, 407, 786, 813, 904' },
+      { abbr: 'GA', name: 'Georgia', zone: 'Eastern', cap: 'Atlanta', codes: '404, 678, 706, 770' },
+      { abbr: 'HI', name: 'Hawaii', zone: 'Hawaii', cap: 'Honolulu', codes: '808' },
+      { abbr: 'ID', name: 'Idaho', zone: 'Mountain', cap: 'Boise', codes: '208' },
+      { abbr: 'IL', name: 'Illinois', zone: 'Central', cap: 'Springfield', codes: '312, 630, 708, 773, 847' },
+      { abbr: 'IN', name: 'Indiana', zone: 'Eastern', cap: 'Indianapolis', codes: '219, 260, 317, 812' },
+      { abbr: 'IA', name: 'Iowa', zone: 'Central', cap: 'Des Moines', codes: '319, 515, 563, 712' },
+      { abbr: 'KS', name: 'Kansas', zone: 'Central', cap: 'Topeka', codes: '316, 785, 913' },
+      { abbr: 'KY', name: 'Kentucky', zone: 'Eastern', cap: 'Frankfort', codes: '270, 502, 606, 859' },
+      { abbr: 'LA', name: 'Louisiana', zone: 'Central', cap: 'Baton Rouge', codes: '225, 318, 337, 504' },
+      { abbr: 'ME', name: 'Maine', zone: 'Eastern', cap: 'Augusta', codes: '207' },
+      { abbr: 'MD', name: 'Maryland', zone: 'Eastern', cap: 'Annapolis', codes: '240, 301, 410, 443' },
+      { abbr: 'MA', name: 'Massachusetts', zone: 'Eastern', cap: 'Boston', codes: '508, 617, 781, 978' },
+      { abbr: 'MI', name: 'Michigan', zone: 'Eastern', cap: 'Lansing', codes: '248, 313, 586, 616, 734' },
+      { abbr: 'MN', name: 'Minnesota', zone: 'Central', cap: 'Saint Paul', codes: '218, 320, 507, 612, 651' },
+      { abbr: 'MS', name: 'Mississippi', zone: 'Central', cap: 'Jackson', codes: '228, 601, 662' },
+      { abbr: 'MO', name: 'Missouri', zone: 'Central', cap: 'Jefferson City', codes: '314, 417, 573, 636, 816' },
+      { abbr: 'MT', name: 'Montana', zone: 'Mountain', cap: 'Helena', codes: '406' },
+      { abbr: 'NE', name: 'Nebraska', zone: 'Central', cap: 'Lincoln', codes: '308, 402' },
+      { abbr: 'NV', name: 'Nevada', zone: 'Pacific', cap: 'Carson City', codes: '702, 775' },
+      { abbr: 'NH', name: 'New Hampshire', zone: 'Eastern', cap: 'Concord', codes: '603' },
+      { abbr: 'NJ', name: 'New Jersey', zone: 'Eastern', cap: 'Trenton', codes: '201, 609, 732, 856, 908' },
+      { abbr: 'NM', name: 'New Mexico', zone: 'Mountain', cap: 'Santa Fe', codes: '505, 575' },
+      { abbr: 'NY', name: 'New York', zone: 'Eastern', cap: 'Albany', codes: '212, 347, 516, 718, 917' },
+      { abbr: 'NC', name: 'North Carolina', zone: 'Eastern', cap: 'Raleigh', codes: '252, 336, 704, 828, 919' },
+      { abbr: 'ND', name: 'North Dakota', zone: 'Central', cap: 'Bismarck', codes: '701' },
+      { abbr: 'OH', name: 'Ohio', zone: 'Eastern', cap: 'Columbus', codes: '216, 330, 419, 513, 614' },
+      { abbr: 'OK', name: 'Oklahoma', zone: 'Central', cap: 'Oklahoma City', codes: '405, 580, 918' },
+      { abbr: 'OR', name: 'Oregon', zone: 'Pacific', cap: 'Salem', codes: '503, 541, 971' },
+      { abbr: 'PA', name: 'Pennsylvania', zone: 'Eastern', cap: 'Harrisburg', codes: '215, 267, 412, 610, 717' },
+      { abbr: 'RI', name: 'Rhode Island', zone: 'Eastern', cap: 'Providence', codes: '401' },
+      { abbr: 'SC', name: 'South Carolina', zone: 'Eastern', cap: 'Columbia', codes: '803, 843, 864' },
+      { abbr: 'SD', name: 'South Dakota', zone: 'Central', cap: 'Pierre', codes: '605' },
+      { abbr: 'TN', name: 'Tennessee', zone: 'Central', cap: 'Nashville', codes: '423, 615, 731, 865, 901' },
+      { abbr: 'TX', name: 'Texas', zone: 'Central', cap: 'Austin', codes: '210, 214, 512, 713, 832, 972' },
+      { abbr: 'UT', name: 'Utah', zone: 'Mountain', cap: 'Salt Lake City', codes: '435, 801' },
+      { abbr: 'VT', name: 'Vermont', zone: 'Eastern', cap: 'Montpelier', codes: '802' },
+      { abbr: 'VA', name: 'Virginia', zone: 'Eastern', cap: 'Richmond', codes: '276, 434, 540, 703, 804' },
+      { abbr: 'WA', name: 'Washington', zone: 'Pacific', cap: 'Olympia', codes: '206, 253, 360, 425, 509' },
+      { abbr: 'WV', name: 'West Virginia', zone: 'Eastern', cap: 'Charleston', codes: '304, 681' },
+      { abbr: 'WI', name: 'Wisconsin', zone: 'Central', cap: 'Madison', codes: '262, 414, 608, 715, 920' },
+      { abbr: 'WY', name: 'Wyoming', zone: 'Mountain', cap: 'Cheyenne', codes: '307' }
+    ];
+
+    function renderizarTablaEstados(filtroTexto = '', filtroZona = 'all') {
+      const tbody = document.getElementById('statesTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const filtrados = DATOS_ESTADOS.filter(st => {
+        const coincideZona = filtroZona === 'all' || st.zone.toLowerCase().includes(filtroZona.toLowerCase());
+        const coincideTexto = st.name.toLowerCase().includes(filtroTexto.toLowerCase()) ||
+                              st.abbr.toLowerCase().includes(filtroTexto.toLowerCase()) ||
+                              st.cap.toLowerCase().includes(filtroTexto.toLowerCase()) ||
+                              st.codes.includes(filtroTexto);
+        return coincideZona && coincideTexto;
+      });
+
+      filtrados.forEach(st => {
+        let tz = ZONAS.eastern;
+        if (st.zone === 'Central') tz = ZONAS.central;
+        if (st.zone === 'Mountain') tz = ZONAS.mountain;
+        if (st.zone === 'Pacific') tz = ZONAS.pacific;
+        if (st.zone === 'Alaska') tz = ZONAS.alaska;
+        if (st.zone === 'Hawaii') tz = ZONAS.hawaii;
+
+        const time = obtenerHoraFormateada(tz);
+        const zoneClass = st.zone.toLowerCase();
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="color: #ff6600;">${st.abbr}</strong></td>
+          <td><strong style="color: #fff;">${st.name}</strong></td>
+          <td><span class="badge-zone ${zoneClass}">${st.zone}</span></td>
+          <td><span style="font-family: monospace; font-weight: bold; color: #fff;">${time.digital} ${time.ampm}</span></td>
+          <td style="color: #94a3b8;">${st.cap}</td>
+          <td style="color: #64748b; font-size: 12px;">${st.codes}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    renderizarTablaEstados();
+
+    const stateSearchInput = document.getElementById('stateSearchInput');
+    let zonaFiltroActual = 'all';
+
+    stateSearchInput.addEventListener('input', (e) => {
+      renderizarTablaEstados(e.target.value, zonaFiltroActual);
+    });
+
+    function filtrarEstados(zona, btn) {
+      zonaFiltroActual = zona;
+      document.querySelectorAll('#view-usa .btn-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderizarTablaEstados(stateSearchInput.value, zona);
+    }
+
+    // -------------------------------------------------------------
+    // 6. FRASES EN INGLÉS PARA CALL CENTER (WELLCARE)
+    // -------------------------------------------------------------
+    const FRASES_DATA = [
+      {
+        cat: 'opening',
+        catLabel: 'Apertura',
+        badgeClass: '',
+        en: 'Thank you for calling Wellcare Medicare Advantage. My name is [Your Name], how may I assist you today?',
+        es: 'Gracias por llamar a Wellcare Medicare Advantage. Mi nombre es [Tu Nombre], ¿cómo puedo ayudarle hoy?'
+      },
+      {
+        cat: 'opening',
+        catLabel: 'Llamada Grabada',
+        badgeClass: '',
+        en: 'For quality and training purposes, this call may be recorded or monitored.',
+        es: 'Por motivos de calidad y entrenamiento, esta llamada puede ser grabada o monitoreada.'
+      },
+      {
+        cat: 'hipaa',
+        catLabel: 'HIPAA Verification',
+        badgeClass: 'hipaa',
+        en: 'To protect your health privacy, may I please verify your full name, date of birth, and Member ID number?',
+        es: 'Para proteger su privacidad de salud, ¿podría verificar su nombre completo, fecha de nacimiento y número de Member ID?'
+      },
+      {
+        cat: 'hipaa',
+        catLabel: 'HIPAA Address',
+        badgeClass: 'hipaa',
+        en: 'Could you also please confirm your current residential address including the zip code?',
+        es: '¿Podría también confirmar su dirección de residencia actual incluyendo el código postal?'
+      },
+      {
+        cat: 'hold',
+        catLabel: 'Poner en Espera',
+        badgeClass: 'hold',
+        en: 'May I place you on a brief hold for 2 to 3 minutes while I review your account details?',
+        es: '¿Puedo ponerlo en una breve espera de 2 a 3 minutos mientras reviso los detalles de su cuenta?'
+      },
+      {
+        cat: 'hold',
+        catLabel: 'Retomar Llamada',
+        badgeClass: 'hold',
+        en: 'Thank you so much for your patience while holding. I have that information ready for you.',
+        es: 'Muchas gracias por su paciencia en la espera. Ya tengo esa información lista para usted.'
+      },
+      {
+        cat: 'empathy',
+        catLabel: 'Empatía / Molestia',
+        badgeClass: '',
+        en: 'I completely understand how frustrating this situation can be, and I am here to help you get this resolved.',
+        es: 'Entiendo perfectamente lo frustrante que puede ser esta situación, y estoy aquí para ayudarle a resolverlo.'
+      },
+      {
+        cat: 'empathy',
+        catLabel: 'Aclaración de Cobertura',
+        badgeClass: '',
+        en: 'I will personally look into your benefits to ensure you get the exact coverage you are entitled to.',
+        es: 'Revisaré personalmente sus beneficios para asegurarme de que obtenga la cobertura exacta a la que tiene derecho.'
+      },
+      {
+        cat: 'closing',
+        catLabel: 'Cierre de Llamada',
+        badgeClass: '',
+        en: 'Is there anything else I can assist you with regarding your Wellcare benefits today?',
+        es: '¿Hay algo más en lo que pueda ayudarle con respecto a sus beneficios de Wellcare hoy?'
+      },
+      {
+        cat: 'closing',
+        catLabel: 'Despedida Formal',
+        badgeClass: '',
+        en: 'Thank you for choosing Wellcare. Your reference number for this call is [Ref#]. Have a wonderful rest of your day!',
+        es: 'Gracias por elegir Wellcare. Su número de referencia para esta llamada es [Ref#]. ¡Que tenga un maravilloso día!'
+      }
+    ];
+
+    function renderizarFrases(filtroTexto = '', filtroCat = 'all') {
+      const grid = document.getElementById('phrasesGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filtradas = FRASES_DATA.filter(f => {
+        const coincideCat = filtroCat === 'all' || f.cat === filtroCat;
+        const coincideTexto = f.en.toLowerCase().includes(filtroTexto.toLowerCase()) ||
+                              f.es.toLowerCase().includes(filtroTexto.toLowerCase()) ||
+                              f.catLabel.toLowerCase().includes(filtroTexto.toLowerCase());
+        return coincideCat && coincideTexto;
+      });
+
+      filtradas.forEach(f => {
+        const card = document.createElement('div');
+        card.className = 'phrase-card';
+        card.innerHTML = `
+          <div class="phrase-card-header">
+            <span class="phrase-category-badge ${f.badgeClass}">${f.catLabel}</span>
+          </div>
+          <div class="phrase-english-text">"${f.en}"</div>
+          <div class="phrase-spanish-trans">${f.es}</div>
+          <button class="btn-copy-phrase" onclick="copiarTexto(this, \`${f.en.replace(/'/g, "\\'")}\`)">
+            <i class="fa-solid fa-copy"></i> Copiar frase
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    renderizarFrases();
+
+    const phraseSearchInput = document.getElementById('phraseSearchInput');
+    let fraseCatActual = 'all';
+
+    phraseSearchInput.addEventListener('input', (e) => {
+      renderizarFrases(e.target.value, fraseCatActual);
+    });
+
+    function filtrarFrases(cat, btn) {
+      fraseCatActual = cat;
+      document.querySelectorAll('#view-english .btn-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderizarFrases(phraseSearchInput.value, cat);
+    }
+
+    // Copiar al portapapeles con feedback
+    function copiarTexto(btn, texto) {
+      navigator.clipboard.writeText(texto).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
+        
+        mostrarToast('¡Frase copiada al portapapeles!');
+
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copiar frase';
+        }, 2000);
+      });
+    }
+
+    function mostrarToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      const toastText = document.getElementById('toastText');
+      if (!toast) return;
+      toastText.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+
+    // -------------------------------------------------------------
+    // 7. NOTEPAD RÁPIDO (LOCALSTORAGE CLIENT-SIDE SEGURO)
+    // -------------------------------------------------------------
+    const NOTEPAD_KEY = 'timewii_advisor_notes_v1';
+    const notepadText = document.getElementById('notepadText');
+
+    // Cargar nota guardada al inicio
+    if (localStorage.getItem(NOTEPAD_KEY)) {
+      notepadText.value = localStorage.getItem(NOTEPAD_KEY);
+    }
+
+    function guardarNotaLocal() {
+      localStorage.setItem(NOTEPAD_KEY, notepadText.value);
+      mostrarToast('Nota guardada localmente en tu equipo');
+    }
+
+    function limpiarNotaLocal() {
+      if (confirm('¿Deseas limpiar el bloc de notas rápido?')) {
+        notepadText.value = '';
+        localStorage.removeItem(NOTEPAD_KEY);
+        mostrarToast('Bloc de notas limpiado');
+      }
+    }
+
+    function irAWellcareNotepad() {
+      // Activar vista Customer / Wellcare y hacer foco en el notepad
+      const btn = document.querySelector('[data-view="view-customer"]');
+      if (btn) btn.click();
+      setTimeout(() => {
+        notepadText.focus();
+      }, 100);
+    }
+
+    // -------------------------------------------------------------
+    // 8. APRENDIZAJE: SPELLER FONÉTICO & NATO ALPHABET
+    // -------------------------------------------------------------
+    const NATO_ALFABETO = {
+      'A': 'Alpha',   'B': 'Bravo',    'C': 'Charlie', 'D': 'Delta',
+      'E': 'Echo',    'F': 'Foxtrot',  'G': 'Golf',    'H': 'Hotel',
+      'I': 'India',   'J': 'Juliett',  'K': 'Kilo',    'L': 'Lima',
+      'M': 'Mike',    'N': 'November', 'O': 'Oscar',   'P': 'Papa',
+      'Q': 'Quebec',  'R': 'Romeo',    'S': 'Sierra',  'T': 'Tango',
+      'U': 'Uniform', 'V': 'Victor',   'W': 'Whiskey', 'X': 'X-ray',
+      'Y': 'Yankee',  'Z': 'Zulu',
+      '0': 'Zero',    '1': 'One',      '2': 'Two',     '3': 'Three',
+      '4': 'Four',    '5': 'Five',     '6': 'Six',     '7': 'Seven',
+      '8': 'Eight',   '9': 'Nine'
+    };
+
+    // Renderizar cuadrícula NATO
+    const natoGrid = document.getElementById('natoGrid');
+    if (natoGrid) {
+      Object.entries(NATO_ALFABETO).forEach(([letra, palabra]) => {
+        const item = document.createElement('div');
+        item.className = 'nato-item';
+        item.innerHTML = `
+          <div class="nato-letter">${letra}</div>
+          <div class="nato-word">${palabra}</div>
+        `;
+        natoGrid.appendChild(item);
+      });
+    }
+
+    // Deletreador en vivo
+    const spellerInput = document.getElementById('spellerInput');
+    const spellerOutput = document.getElementById('spellerOutput');
+
+    spellerInput.addEventListener('input', (e) => {
+      const texto = e.target.value.toUpperCase().trim();
+      spellerOutput.innerHTML = '';
+
+      if (!texto) {
+        spellerOutput.innerHTML = '<span style="color: var(--text-dim); font-size: 13px;">Las palabras fonéticas aparecerán aquí...</span>';
+        return;
+      }
+
+      for (let char of texto) {
+        if (NATO_ALFABETO[char]) {
+          const pill = document.createElement('div');
+          pill.className = 'speller-pill';
+          pill.innerHTML = `<span>${char}:</span> ${NATO_ALFABETO[char]}`;
+          spellerOutput.appendChild(pill);
+        } else if (char === ' ') {
+          const espacio = document.createElement('div');
+          espacio.style.width = '12px';
+          spellerOutput.appendChild(espacio);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

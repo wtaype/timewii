@@ -1,0 +1,55 @@
+---
+// src/feature/inicio/secciones/02-usa/Usa.astro
+// Sección de Geografía de Estados Unidos y Directorio de los 50 estados con Clima y Curiosidades para Rapport
+---
+
+<section class="usa-card" id="section-usa">
+  <div class="usa-card-header">
+    <div class="usa-card-title">
+      <i class="fa-solid fa-flag-usa"></i>
+      <span>Directorio de Estados: Horarios, Clima & Curiosidades para Rapport</span>
+    </div>
+  </div>
+
+  <!-- Buscador Reactivo y Filtro de Zona -->
+  <div class="search-filter-box">
+    <div class="search-input-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input 
+        type="text" 
+        class="input-search" 
+        id="stateSearchInput" 
+        placeholder="Buscar estado, abreviatura (FL, TX, CA), capital, prefijo o clima..." 
+      />
+    </div>
+
+    <div class="filter-tabs">
+      <button class="btn-filter active" data-filter="all">Todos (50)</button>
+      <button class="btn-filter" data-filter="Eastern">Eastern (EDT)</button>
+      <button class="btn-filter" data-filter="Central">Central (CDT)</button>
+      <button class="btn-filter" data-filter="Mountain">Mountain (MDT)</button>
+      <button class="btn-filter" data-filter="Pacific">Pacific (PDT)</button>
+    </div>
+  </div>
+
+  <!-- Tabla de Estados Mejorada con Clima y Curiosidad -->
+  <div class="states-table-container">
+    <table class="states-table" id="statesTable">
+      <thead>
+        <tr>
+          <th>Abrev</th>
+          <th>Estado</th>
+          <th>Zona Horaria</th>
+          <th>Hora Local</th>
+          <th>Capital</th>
+          <th>Códigos de Área</th>
+          <th>Clima Típico</th>
+          <th>Dato Curioso / Rapport</th>
+        </tr>
+      </thead>
+      <tbody id="statesTableBody">
+        <!-- Generado dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,120 @@
+---
+// src/feature/inicio/secciones/01-time/Time.astro
+// Sección U.S. Time: Relojes sincronizados y mapa oficial
+import MapaSvg from './MapaSvg.astro';
+---
+
+<section class="time-section-wrapper" id="section-time">
+  
+  <!-- Grid de Relojes con Segundos -->
+  <div class="time-grid-cards">
+    
+    <div class="clock-card eastern">
+      <div class="clock-header">
+        <span class="clock-zone-name">Eastern Time</span>
+        <span class="clock-zone-tag">EDT / UTC-4</span>
+      </div>
+      <div class="clock-digital-time" id="clockEastern">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">FL, NY, GA, NC, PA, OH, VA</div>
+    </div>
+
+    <div class="clock-card central">
+      <div class="clock-header">
+        <span class="clock-zone-name">Central Time</span>
+        <span class="clock-zone-tag">CDT / UTC-5</span>
+      </div>
+      <div class="clock-digital-time" id="clockCentral">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">TX, IL, MO, TN, AL, LA, WI</div>
+    </div>
+
+    <div class="clock-card mountain">
+      <div class="clock-header">
+        <span class="clock-zone-name">Mountain Time</span>
+        <span class="clock-zone-tag">MDT / UTC-6</span>
+      </div>
+      <div class="clock-digital-time" id="clockMountain">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">CO, UT, NM, AZ*, WY, MT</div>
+    </div>
+
+    <div class="clock-card pacific">
+      <div class="clock-header">
+        <span class="clock-zone-name">Pacific Time</span>
+        <span class="clock-zone-tag">PDT / UTC-7</span>
+      </div>
+      <div class="clock-digital-time" id="clockPacific">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">CA, WA, OR, NV</div>
+    </div>
+
+    <div class="clock-card alaska">
+      <div class="clock-header">
+        <span class="clock-zone-name">Alaska Time</span>
+        <span class="clock-zone-tag">AKDT / UTC-8</span>
+      </div>
+      <div class="clock-digital-time" id="clockAlaska">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">Anchorage, Fairbanks, Juneau</div>
+    </div>
+
+    <div class="clock-card hawaii">
+      <div class="clock-header">
+        <span class="clock-zone-name">Hawaii-Aleutian</span>
+        <span class="clock-zone-tag">HST / UTC-10</span>
+      </div>
+      <div class="clock-digital-time" id="clockHawaii">
+        00:00:00 <span class="clock-ampm">AM</span>
+      </div>
+      <div class="clock-cities">Honolulu, Hilo, Maui</div>
+    </div>
+
+  </div>
+
+  <!-- Mapa Visual Oficial (time.gov) -->
+  <div class="map-container-card">
+    <div class="map-card-header">
+      <div class="map-card-title">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>Mapa Oficial de Zonas Horarias de EE.UU. (Interactivo)</span>
+      </div>
+      <span style="font-size: var(--fz_s3); color: var(--tx3);">Pasa el cursor sobre un estado para consultar la hora en vivo</span>
+    </div>
+
+    <div class="map-legend-row">
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #dc2626;"></span>
+        <span>Eastern Time (EDT)</span>
+      </div>
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #d97706;"></span>
+        <span>Central Time (CDT)</span>
+      </div>
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #059669;"></span>
+        <span>Mountain Time (MDT)</span>
+      </div>
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #ea580c;"></span>
+        <span>Pacific Time (PDT)</span>
+      </div>
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #0891b2;"></span>
+        <span>Alaska (AKDT)</span>
+      </div>
+      <div class="map-legend-item">
+        <span class="map-legend-dot" style="background: #9333ea;"></span>
+        <span>Hawaii (HST)</span>
+      </div>
+    </div>
+
+    <MapaSvg />
+  </div>
+
+</section>

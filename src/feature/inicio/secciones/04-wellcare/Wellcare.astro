@@ -1,0 +1,130 @@
+---
+// src/feature/inicio/secciones/04-wellcare/Wellcare.astro
+// Sección de soporte Wellcare PDP (Medicare Part D): Ley IRA, Probing Questions, Glosario y Manejo de Objeciones
+import { IRA_MEDICARE_RULES, PROBING_ACTIVE_LISTENING, TERMINOS_WELLCARE, CHECKLIST_LLAMADA } from '../../lib/wellcareData.js';
+---
+
+<section class="wellcare-layout-grid" id="section-wellcare">
+  
+  <!-- Columna Principal: Ley IRA y Probing Questions -->
+  <div class="wellcare-main-column">
+    
+    <!-- Reformas Clave Ley IRA Medicare Parte D -->
+    <div class="wellcare-box">
+      <div class="wellcare-box-title">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <span>Wellcare PDP · Reglas Clave Ley IRA (Medicare Part D)</span>
+      </div>
+      <p class="wellcare-box-desc">
+        Puntos críticos que todo asesor debe conocer para explicar cobertura de medicamentos a miembros senior.
+      </p>
+
+      <div class="ira-cards-grid">
+        {IRA_MEDICARE_RULES.map(rule => (
+          <div class="ira-card">
+            <div class="ira-card-header">
+              <span class="ira-badge">{rule.badge}</span>
+              <button class="btn-copy-script" data-copy={rule.scriptEn} title="Copiar explicación en inglés">
+                <i class="fa-regular fa-copy"></i> Copy English
+              </button>
+            </div>
+            <div class="ira-title">{rule.title}</div>
+            <div class="ira-desc">{rule.desc}</div>
+            <div class="ira-script-quote">
+              <i class="fa-solid fa-quote-left"></i>
+              <span>"{rule.scriptEn}"</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Probing Questions & Active Listening -->
+    <div class="wellcare-box">
+      <div class="wellcare-box-title">
+        <i class="fa-solid fa-headset"></i>
+        <span>Probing Questions & Active Listening (Preguntas de Sondeo)</span>
+      </div>
+      <p class="wellcare-box-desc">
+        Estructura verbal para cotizar medicamentos exactos, manejar objeciones de precios y momentos de lentitud técnica.
+      </p>
+
+      <div class="probing-grid">
+        {PROBING_ACTIVE_LISTENING.map(item => (
+          <div class="probing-card">
+            <div class="probing-top">
+              <span class="probing-type-tag">{item.type}</span>
+              <button class="btn-copy-script" data-copy={item.questionEn} title="Copiar al portapapeles">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+            <div class="probing-title">{item.title}</div>
+            <div class="probing-question-en">"{item.questionEn}"</div>
+            <div class="probing-reason-es">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>{item.reasonEs}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Glosario de Términos PDP -->
+    <div class="wellcare-box">
+      <div class="wellcare-box-title">
+        <i class="fa-solid fa-book-medical"></i>
+        <span>Glosario de Términos Farmacia (PDP Tiers & Restrictions)</span>
+      </div>
+
+      <div class="terms-grid">
+        {TERMINOS_WELLCARE.map(t => (
+          <div class="term-card">
+            <div class="term-title">
+              <i class={`fa-solid ${t.icon}`}></i>
+              <span>{t.en} ({t.es})</span>
+            </div>
+            <div class="term-desc-en">{t.descEn}</div>
+            <div class="term-desc-es">{t.descEs}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Columna Lateral: Checklist de Calidad y Consejos -->
+  <div class="wellcare-side-column">
+    
+    <!-- Checklist de Llamada -->
+    <div class="wellcare-box sticky-box">
+      <div class="wellcare-box-title">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Checklist de Calidad (QA)</span>
+      </div>
+      <p class="wellcare-box-desc">
+        Protocolo obligatorio durante cada interacción en Teleperformance Wellcare.
+      </p>
+
+      <div class="checklist-container">
+        {CHECKLIST_LLAMADA.map(c => (
+          <label class="checklist-item">
+            <input type="checkbox" id={c.id} />
+            <span>{c.label}</span>
+          </label>
+        ))}
+      </div>
+
+      <div class="qa-reminder-box">
+        <div class="qa-reminder-title">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Regla de Oro HIPAA</span>
+        </div>
+        <p class="qa-reminder-text">
+          Nunca divulgues PHI (cobertura o reclamos) sin haber confirmado Nombre, Fecha de Nacimiento y Member ID o MBI.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>

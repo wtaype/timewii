@@ -1,0 +1,237 @@
+/* src/feature/inicio/secciones/01-time/time.css */
+/* Estilos del Módulo Time & Relojes de EE.UU. */
+
+.time-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.time-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.clock-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--tr_m), transform var(--tr_m);
+}
+
+.clock-card:hover {
+  border-color: var(--mco);
+  transform: translateY(-0.2vh);
+}
+
+.clock-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.clock-card.eastern::before  { background: #ef4444; }
+.clock-card.central::before  { background: #f59e0b; }
+.clock-card.mountain::before { background: #10b981; }
+.clock-card.pacific::before  { background: #f97316; }
+.clock-card.alaska::before   { background: #06b6d4; }
+.clock-card.hawaii::before   { background: #a855f7; }
+
+.clock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.clock-zone-name {
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  color: var(--tx1);
+}
+
+.clock-zone-tag {
+  font-size: var(--fz_s3);
+  padding: 0.3vh 0.8vh;
+  border-radius: var(--r_xs);
+  background: var(--inp);
+  color: var(--tx2);
+  font-weight: 600;
+}
+
+.clock-digital-time {
+  font-size: clamp(1.4rem, 2.2vh, 1.8rem);
+  font-weight: 700;
+  color: var(--tx1);
+  font-family: var(--ff_P);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.clock-digital-time .clock-ampm {
+  font-size: var(--fz_m);
+  color: var(--mco);
+  font-weight: 700;
+}
+
+.clock-cities {
+  font-size: var(--fz_s3);
+  color: var(--tx3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Contenedor del Mapa US Zonas Horarias */
+.map-container-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.map-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.map-card-title {
+  font-size: var(--fz_m3);
+  font-weight: 600;
+  color: var(--tx1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-card-title i {
+  color: var(--mco);
+}
+
+.map-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--brd);
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fz_s3);
+  color: var(--tx2);
+  cursor: pointer;
+  padding: 0.4vh 0.8vh;
+  border-radius: var(--r_s);
+  transition: background-color var(--tr_f);
+}
+
+.map-legend-item:hover {
+  background: var(--inp);
+  color: var(--tx1);
+}
+
+.map-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r_xs);
+}
+
+.us-map-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: var(--bg);
+  border-radius: var(--r_m);
+  border: 1px solid var(--brd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.us-map-svg {
+  width: 100%;
+  max-height: 480px;
+  height: auto;
+}
+
+.map-state {
+  stroke: var(--bg);
+  stroke-width: 1.2;
+  transition: filter var(--tr_f), stroke var(--tr_f);
+  cursor: pointer;
+}
+
+.map-state:hover {
+  filter: brightness(1.22);
+  stroke: var(--white);
+  stroke-width: 2;
+}
+
+.state-label {
+  fill: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--ff_P);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.inset-title {
+  fill: var(--tx2);
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--ff_P);
+}
+
+/* Colores Oficiales por Zona (time.gov) */
+.st-eastern  { fill: #dc2626; }
+.st-central  { fill: #d97706; }
+.st-mountain { fill: #059669; }
+.st-pacific  { fill: #ea580c; }
+.st-alaska   { fill: #0891b2; }
+.st-hawaii   { fill: #9333ea; }
+.st-arizona  { fill: #047857; stroke-dasharray: 2; }
+
+/* Tooltip interactivo flotante en mapa */
+.map-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: #0f172a;
+  border: 1px solid var(--mco);
+  padding: 8px 12px;
+  border-radius: var(--r_s);
+  font-size: var(--fz_s3);
+  color: #ffffff;
+  display: none;
+  z-index: 50;
+  box-shadow: var(--shadow-xl);
+  transform: translate(-50%, -120%);
+}

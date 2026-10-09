@@ -1,0 +1,318 @@
+/* src/feature/inicio/secciones/07-learn/learn.css */
+/* Estilos del Módulo Fonética de Estados, Validación MBI y DL */
+
+.learn-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.speller-card, .phonetic-table-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.speller-card-title {
+  font-size: var(--fz_m3);
+  font-weight: 600;
+  color: var(--tx1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.speller-card-title i {
+  color: var(--mco);
+}
+
+.speller-desc {
+  font-size: var(--fz_s3);
+  color: var(--tx2);
+  line-height: 1.45;
+  margin: -6px 0 0 0;
+}
+
+.speller-desc strong {
+  color: var(--mco);
+}
+
+.speller-input-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speller-input {
+  flex: 1;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 12px 16px;
+  font-size: var(--fz_m2);
+  font-family: var(--ff_P);
+  font-weight: 600;
+  color: var(--tx1);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  outline: none;
+  transition: border-color var(--tr_f);
+}
+
+.speller-input:focus {
+  border-color: var(--mco);
+}
+
+.speller-clear-btn {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 12px 16px;
+  color: var(--tx3);
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.speller-clear-btn:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+
+.speller-output {
+  background: var(--bg);
+  border: 1px dashed var(--brd);
+  border-radius: var(--r_m);
+  padding: 18px;
+  min-height: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.speller-empty-hint {
+  color: var(--tx3);
+  font-size: var(--fz_s3);
+  font-style: italic;
+}
+
+.speller-token {
+  background: var(--wb);
+  border: 1px solid var(--mco);
+  border-radius: var(--r_s);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  box-shadow: 0 2px 6px rgba(0, 161, 165, 0.1);
+}
+
+.token-char {
+  font-size: var(--fz_m3);
+  font-weight: 800;
+  color: var(--mco);
+}
+
+.token-word {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--tx1);
+}
+
+.token-phrase {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+}
+
+/* Guía de Validación (MBI & DL) */
+.validation-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 18px;
+}
+
+.validation-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.val-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.val-badge {
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  padding: 0.2vh 0.7vh;
+  border-radius: var(--r_xs);
+  width: fit-content;
+}
+
+.mbi-badge {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--error);
+}
+
+.dl-badge {
+  background: rgba(0, 161, 165, 0.12);
+  color: var(--mco);
+}
+
+.val-title {
+  font-size: var(--fz_m2);
+  font-weight: 600;
+  color: var(--tx1);
+  margin: 0;
+}
+
+.val-pattern code {
+  background: var(--inp);
+  color: var(--mco);
+  padding: 3px 8px;
+  border-radius: var(--r_xs);
+  font-weight: 700;
+  font-size: var(--fz_s3);
+}
+
+.val-excluded-box {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--r_s);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.excluded-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  color: var(--error);
+}
+
+.excluded-letters-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.excluded-letter-pill {
+  background: var(--error);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: var(--fz_s3);
+  padding: 2px 10px;
+  border-radius: var(--r_xs);
+}
+
+.val-desc {
+  font-size: var(--fz_s3);
+  color: var(--tx2);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.val-tip {
+  background: var(--bg);
+  border-left: 3px solid var(--mco);
+  border-radius: 0 var(--r_xs) var(--r_xs) 0;
+  padding: 8px 12px;
+  font-size: var(--fz_s3);
+  color: var(--tx1);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.val-tip i {
+  color: var(--mco);
+  margin-top: 2px;
+}
+
+.val-subhead {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--tx1);
+  margin-top: 4px;
+}
+
+.abbr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.abbr-item {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_xs);
+  padding: 6px 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fz_s2);
+}
+
+.abbr-code {
+  font-weight: 700;
+  color: var(--mco);
+}
+
+.abbr-name {
+  color: var(--tx2);
+}
+
+/* Tabla Fonética Completa */
+.phonetic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.phonetic-cell {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+  transition: border-color var(--tr_f);
+}
+
+.phonetic-cell:hover {
+  border-color: var(--mco);
+}
+
+.cell-key {
+  font-size: var(--fz_m2);
+  font-weight: 800;
+  color: var(--mco);
+}
+
+.cell-word {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--tx1);
+}
+
+.cell-example {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+  font-style: italic;
+}

@@ -1,0 +1,110 @@
+---
+// src/feature/inicio/secciones/05-timers/Timers.astro
+// Módulo oficial de Cronómetros y Hold Timer para asesores de Teleperformance Wellcare
+---
+
+<section class="timers-layout-grid" id="section-timers">
+  
+  <!-- HOLD TIMER 2 MINUTOS (MÉTRICA CRÍTICA TELEPERFORMANCE) -->
+  <div class="timer-card hold-card" id="holdCard">
+    <div class="timer-header">
+      <div class="timer-title-box">
+        <span class="timer-badge hold-badge">KPI Calidad</span>
+        <h3 class="timer-title">Hold Timer (Control de Espera)</h3>
+      </div>
+      <div class="hold-indicator" id="holdIndicator">Listo</div>
+    </div>
+
+    <p class="timer-desc">
+      En Wellcare/TP el tiempo máximo de hold recomendado por llamada es de <strong>2 minutos (02:00)</strong>. Alerta ámbar visual al minuto 1:30 y pulso rojo al llegar a los 2 minutos (sin sonido en audífonos).
+    </p>
+
+    <!-- Display Reloj Regresivo -->
+    <div class="timer-display-box" id="holdDisplayBox">
+      <div class="timer-digits" id="holdDigits">02:00</div>
+      <div class="timer-subtitle" id="holdStatusText">Tiempo máximo permitido</div>
+    </div>
+
+    <!-- Botones de Control Hold -->
+    <div class="timer-actions">
+      <button class="timer-btn btn-primary" id="btnHoldStart">
+        <i class="fa-solid fa-play"></i> Iniciar Hold (2m)
+      </button>
+      <button class="timer-btn btn-pause" id="btnHoldPause" disabled>
+        <i class="fa-solid fa-pause"></i> Pausar
+      </button>
+      <button class="timer-btn btn-reset" id="btnHoldReset">
+        <i class="fa-solid fa-rotate-right"></i> Reiniciar
+      </button>
+    </div>
+
+    <!-- Guía de Frases de Hold -->
+    <div class="hold-scripts-box">
+      <div class="hold-script-item">
+        <span class="script-tag">Pedir Hold:</span>
+        <span class="script-text">"May I please place you on a brief hold for about 1 to 2 minutes while I review your medication formulary?"</span>
+        <button class="btn-copy-mini" data-copy="May I please place you on a brief hold for about 1 to 2 minutes while I review your medication formulary?">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+      <div class="hold-script-item">
+        <span class="script-tag">Regresar de Hold:</span>
+        <span class="script-text">"Thank you so much for your patience while holding, Mr./Ms. [Last Name]. I have the information right here."</span>
+        <button class="btn-copy-mini" data-copy="Thank you so much for your patience while holding, Mr./Ms. [Last Name]. I have the information right here.">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AHT CRONÓMETRO DE LLAMADA (AVERAGE HANDLING TIME) -->
+  <div class="timer-card aht-card" id="ahtCard">
+    <div class="timer-header">
+      <div class="timer-title-box">
+        <span class="timer-badge aht-badge">Productividad AHT</span>
+        <h3 class="timer-title">Call Duration Stopwatch</h3>
+      </div>
+      <div class="aht-indicator" id="ahtIndicator">Inactivo</div>
+    </div>
+
+    <p class="timer-desc">
+      Cronómetro progresivo para monitorear tu Tiempo Promedio Operativo (AHT) en vivo desde que contestas hasta la documentación.
+    </p>
+
+    <!-- Display Reloj Progresivo -->
+    <div class="timer-display-box aht-display-box">
+      <div class="timer-digits" id="ahtDigits">00:00</div>
+      <div class="timer-subtitle" id="ahtStatusText">Duración de llamada en curso</div>
+    </div>
+
+    <!-- Botones de Control AHT -->
+    <div class="timer-actions">
+      <button class="timer-btn btn-primary" id="btnAhtStart">
+        <i class="fa-solid fa-phone"></i> Iniciar Llamada
+      </button>
+      <button class="timer-btn btn-pause" id="btnAhtPause" disabled>
+        <i class="fa-solid fa-pause"></i> Pausar
+      </button>
+      <button class="timer-btn btn-reset" id="btnAhtReset">
+        <i class="fa-solid fa-rotate-right"></i> Resetear
+      </button>
+    </div>
+
+    <!-- Metas de Referencia AHT -->
+    <div class="aht-targets-grid">
+      <div class="target-item">
+        <span class="target-label">Meta Óptima PDP</span>
+        <span class="target-value">&lt; 07:00 min</span>
+      </div>
+      <div class="target-item">
+        <span class="target-label">Límite Atención Normal</span>
+        <span class="target-value">09:00 min</span>
+      </div>
+      <div class="target-item">
+        <span class="target-label">Complejo (Prior Auth/Tier)</span>
+        <span class="target-value">12:00 min</span>
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,498 @@
+/* ============================================================ */
+/* 🎨 SISTEMA WITEMA V3.0 - FUENTE ÚNICA DE VERDAD              */
+/*    Wellcare Advisor Toolkit · Teleperformance                */
+/*    Optimizado para mínimo consumo de RAM y 60 FPS constantes */
+/* ============================================================ */
+
+/* 1. TOKENS GLOBALES Y ESTRUCTURALES (Invariables por tema) */
+:root {
+  /* Tipografía Oficial Exclusiva (csswin) */
+  --ff_P: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Escala Tipográfica Fluida */
+  --fz_s1: clamp(0.65rem, 0.8vh, 0.75rem);
+  --fz_s2: clamp(0.70rem, 0.85vh, 0.80rem);
+  --fz_s3: clamp(0.75rem, 0.9vh, 0.85rem);
+  --fz_s4: clamp(0.80rem, 1vh, 0.90rem);
+  --fz_m:  clamp(0.85rem, 1.05vh, 0.95rem);
+  --fz_m1: clamp(0.90rem, 1.1vh, 1.00rem);
+  --fz_m2: clamp(0.95rem, 1.15vh, 1.05rem);
+  --fz_m3: clamp(1.00rem, 1.2vh, 1.10rem);
+  --fz_m4: clamp(1.10rem, 1.3vh, 1.20rem);
+  --fz_m5: clamp(1.20rem, 1.5vh, 1.35rem);
+  --fz_l1: clamp(1.50rem, 2vh, 1.75rem);
+  --fz_l2: clamp(1.80rem, 2.3vh, 2.10rem);
+  --fz_x1: clamp(2.20rem, 3vh, 2.70rem);
+  --fz_x2: clamp(2.60rem, 3.8vh, 3.40rem);
+  --fz_x3: clamp(3.00rem, 5vh, 4.00rem);
+
+  /* Radios de Borde Estándar (Basados en 1vh según csswin) */
+  --r_xs: 0.5vh;
+  --r_s:  0.8vh;
+  --r_m:  1.0vh;
+  --r_l:  1.5vh;
+  --r_xl: 2.0vh;
+  --r_full: 9999px;
+
+  /* Transiciones Suaves y Eficientes (Bajo cómputo) */
+  --tr_f: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --tr_m: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --tr_s: 0.40s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Colores Utilitarios de Estado */
+  --success: #10b981;
+  --error:   #ef4444;
+  --warning: #f59e0b;
+  --info:    #0284c7;
+  --wa:      #25d366;
+  --white:   #ffffff;
+  --offline: #94a3b8;
+  --pdf:     #dc2626;
+
+  /* Indicadores del Selector de Tema */
+  --luz:     #f4f8f9;
+  --futuro:  #080d15;
+}
+
+/* ============================================================ */
+/* ☀️ TEMA LUZ (LIGHT) - IDENTIDAD OFICIAL WELLCARE             */
+/* ============================================================ */
+:root[data-theme="luz"] {
+  /* 1. Lienzos y Superficies */
+  --bg:                  #f4f8f9;
+  --bg1:                 #f4f8f9;
+  --bg2:                 #ffffff;
+  --bg3:                 #e8f4f6;
+  --bg4:                 #dcf0f2;
+  --bg5:                 #cfecee;
+  --bg-body:             #f4f8f9;
+  --bg_body:             #f4f8f9;
+  --wb:                  #ffffff;
+  --surface:             #ffffff;
+  --bg-surface:          #ffffff;
+  --raised:              #e8f4f6;
+  --bg-surface-elevated: #e8f4f6;
+  --bg-card:             #ffffff;
+  --bg_card:             #ffffff;
+  --bg-card-hover:       #f0f9fa;
+  --bg_card_hv:          #f0f9fa;
+  --bg-subtle:           rgba(0, 156, 166, 0.05);
+  --line:                #d4e3e6;
+  --brd:                 #d4e3e6;
+  --border:              #d4e3e6;
+  --border-card:         #d4e3e6;
+  --border_card:         #d4e3e6;
+  --border-accent:       rgba(0, 156, 166, 0.35);
+  --border_accent:       rgba(0, 156, 166, 0.35);
+
+  /* 2. Tipografía y Textos */
+  --tx:                  #0f172a;
+  --tx1:                 #0f172a;
+  --tx2:                 #334155;
+  --tx3:                 #64748b;
+  --txa:                 #ffffff;
+  --txe:                 #009ca6;
+  --ink:                 #0f172a;
+  --muted:               #64748b;
+  --text-main:           #0f172a;
+  --text_main:           #0f172a;
+  --text-muted:          #64748b;
+  --text_muted:          #64748b;
+  --text-bright:         #020617;
+
+  /* 3. Colores de Identidad y Marca (Wellcare Oficial) */
+  --mco:                 #00a1a5;
+  --mbg:                 #e6f7f8;
+  --p_v1:                #00a1a5;
+  --p_v2:                #00898c;
+  --primary:             #00a1a5;
+  --primary-hover:       #00898c;
+  --primary_hv:          #00898c;
+  --brand-primary:       #00a1a5;
+  --brand-primary-hover: #00898c;
+  --brand-soft:          #e6f7f8;
+  --brand-accent:        #00a1a5;
+  --brand-accent-soft:   #eff9fa;
+  --brand-teal:          #00a1a5;
+  --brand-blue:          #241f48;
+  --brand-blue-hover:    #1d193d;
+  --brand-sky:           #0284c7;
+  --brand-sky-hover:     #0369a1;
+  --brand-orange:        #ff6600;
+  --brand-orange-hover:  #ea580c;
+  --accent:              #00a1a5;
+  --accent-hover:        #00898c;
+  --accent_hv:           #00898c;
+  --accent-cyan:         #00a1a5;
+  --accent-gold:         #f59e0b;
+  --accent-emerald:      #10b981;
+  --bt:                  #00a1a5;
+  --hv:                  #00898c;
+  --hva:                 #00b8bc;
+
+  /* 4. Inputs, Formularios y Diálogos */
+  --inp:                 #edf5f6;
+  --input-bg:            #edf5f6;
+  --inp_brd:             #d4e3e6;
+  --modal-bg:            #ffffff;
+  --modal_bg:            #ffffff;
+  --modal_card:          #ffffff;
+
+  /* 5. Cabeceras y Sombras Ligeras (Sin sobrecarga GPU) */
+  --header-bg:           #ffffff;
+  --header_bg:           #ffffff;
+  --topbar-bg:           #009ca6;
+  --topbar_bg:           #009ca6;
+  --topbar-text:         #ffffff;
+  --glass-bg:            #ffffff;
+  --glass_bg:            #ffffff;
+  --glass-brd:           #d4e3e6;
+  --glass_brd:           #d4e3e6;
+  --glass-shd:           0 0.5vh 1.5vh rgba(15, 23, 42, 0.05);
+  --glass_shd:           0 0.5vh 1.5vh rgba(15, 23, 42, 0.05);
+  --shadow-card:         0 0.4vh 1.2vh rgba(15, 23, 42, 0.04);
+  --shd_card:            0 0.4vh 1.2vh rgba(15, 23, 42, 0.04);
+  --shadow-hover:        0 0.8vh 2vh rgba(0, 156, 166, 0.12);
+  --shd_hover:           0 0.8vh 2vh rgba(0, 156, 166, 0.12);
+  --shadow-xl:           0 1.2vh 3vh rgba(15, 23, 42, 0.08);
+}
+
+/* ============================================================ */
+/* 🌙 TEMA FUTURO (DARK) - WELLCARE SLATE & LUMINOUS TEAL       */
+/* ============================================================ */
+:root[data-theme="futuro"] {
+  /* 1. Lienzos y Superficies */
+  --bg:                  #080d15;
+  --bg1:                 #080d15;
+  --bg2:                 #101726;
+  --bg3:                 #162033;
+  --bg4:                 #1c2940;
+  --bg5:                 #22324e;
+  --bg-body:             #080d15;
+  --bg_body:             #080d15;
+  --wb:                  #101726;
+  --surface:             #101726;
+  --bg-surface:          #101726;
+  --raised:              #162033;
+  --bg-surface-elevated: #162033;
+  --bg-card:             #101726;
+  --bg_card:             #101726;
+  --bg-card-hover:       #162033;
+  --bg_card_hv:          #162033;
+  --bg-subtle:           rgba(0, 180, 216, 0.06);
+  --line:                #1c283c;
+  --brd:                 #1c283c;
+  --border:              #1c283c;
+  --border-card:         #1c283c;
+  --border_card:         #1c283c;
+  --border-accent:       rgba(0, 180, 216, 0.35);
+  --border_accent:       rgba(0, 180, 216, 0.35);
+
+  /* 2. Tipografía y Textos */
+  --tx:                  #f8fafc;
+  --tx1:                 #f8fafc;
+  --tx2:                 #94a3b8;
+  --tx3:                 #64748b;
+  --txa:                 #080d15;
+  --txe:                 #00b4d8;
+  --ink:                 #f8fafc;
+  --muted:               #94a3b8;
+  --text-main:           #f8fafc;
+  --text_main:           #f8fafc;
+  --text-muted:          #94a3b8;
+  --text_muted:          #94a3b8;
+  --text-bright:         #ffffff;
+
+  /* 3. Colores de Identidad y Marca (Wellcare Dark) */
+  --mco:                 #00b4d8;
+  --mbg:                 rgba(0, 180, 216, 0.12);
+  --p_v1:                #00b4d8;
+  --p_v2:                #38bdf8;
+  --primary:             #00b4d8;
+  --primary-hover:       #38bdf8;
+  --primary_hv:          #38bdf8;
+  --brand-primary:       #00b4d8;
+  --brand-primary-hover: #38bdf8;
+  --brand-soft:          rgba(0, 180, 216, 0.12);
+  --brand-accent:        #00b4d8;
+  --brand-accent-soft:   rgba(0, 180, 216, 0.18);
+  --brand-teal:          #00b4d8;
+  --brand-blue:          #162033;
+  --brand-blue-hover:    #1c2940;
+  --brand-sky:           #38bdf8;
+  --brand-sky-hover:     #7dd3fc;
+  --brand-orange:        #ff6600;
+  --brand-orange-hover:  #ff8533;
+  --accent:              #00b4d8;
+  --accent-hover:        #38bdf8;
+  --accent_hv:           #38bdf8;
+  --accent-cyan:         #00b4d8;
+  --accent-gold:         #f59e0b;
+  --accent-emerald:      #10b981;
+  --bt:                  #00b4d8;
+  --hv:                  #38bdf8;
+  --hva:                 #7dd3fc;
+
+  /* 4. Inputs, Formularios y Diálogos */
+  --inp:                 #0b101b;
+  --input-bg:            #0b101b;
+  --inp_brd:             #1c283c;
+  --modal-bg:            #101726;
+  --modal_bg:            #101726;
+  --modal_card:          #101726;
+
+  /* 5. Cabeceras y Sombras Ligeras */
+  --header-bg:           #101726;
+  --header_bg:           #101726;
+  --topbar-bg:           #101726;
+  --topbar_bg:           #101726;
+  --topbar-text:         #f8fafc;
+  --glass-bg:            #101726;
+  --glass_bg:            #101726;
+  --glass-brd:           #1c283c;
+  --glass_brd:           #1c283c;
+  --glass-shd:           0 0.6vh 2vh rgba(0, 0, 0, 0.4);
+  --glass_shd:           0 0.6vh 2vh rgba(0, 0, 0, 0.4);
+  --shadow-card:         0 0.6vh 1.8vh rgba(0, 0, 0, 0.35);
+  --shd_card:            0 0.6vh 1.8vh rgba(0, 0, 0, 0.35);
+  --shadow-hover:        0 1vh 2.5vh rgba(0, 0, 0, 0.5);
+  --shd_hover:           0 1vh 2.5vh rgba(0, 0, 0, 0.5);
+  --shadow-xl:           0 1.5vh 3.5vh rgba(0, 0, 0, 0.55);
+}
+
+/* ==================== RESET Y ESTILOS BASE ==================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--ff_P);
+  color: var(--tx1);
+}
+
+body {
+  background-color: var(--bg);
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: background-color var(--tr_m), color var(--tr_m);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Scrollbar fluida y ligera */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brd);
+  border-radius: var(--r_full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mco);
+}
+
+/* ── Widget de Cambio de Tema (#wiTema) ─────────────────── */
+#wiTema {
+  display: flex;
+  gap: 0.4vh;
+  padding: 0.6vh 0.4vw;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  position: fixed;
+  flex-direction: column;
+  bottom: 2vh;
+  right: 1.5vw;
+  z-index: 999;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--tr_m);
+}
+
+#wiTema:hover {
+  transform: translateY(-0.2vh);
+}
+
+.tema {
+  width: var(--fz_l1);
+  height: var(--fz_l1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--tr_f);
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.tema:hover {
+  transform: scale(1.08);
+}
+
+.tema.mtha {
+  border-color: var(--mco);
+  box-shadow: 0 0 0.8vh var(--mco);
+}
+
+.tema[data-ths^="futuro"] { background: var(--futuro); border: 1px solid #334155; }
+.tema[data-ths^="luz"]    { background: var(--luz); border: 1px solid #cbd5e1; }
+
+/* ============================================================ */
+/* ⚙️ COMPONENTES REUTILIZABLES WIDEV (OPT-RAM)                */
+/* ============================================================ */
+
+/* ── 1. TOASTS Y NOTIFICACIONES (widev/mensajes.js) ────────── */
+.widev-toast {
+  position: fixed;
+  top: 3vh;
+  left: 50%;
+  transform: translate(-50%, -2vh);
+  padding: 1.2vh 2.2vh;
+  border-radius: var(--r_m);
+  background: var(--wb);
+  color: var(--tx1);
+  border: 1px solid var(--brd);
+  box-shadow: var(--shadow-xl);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 1.2vh;
+  min-width: 280px;
+  max-width: 90%;
+  opacity: 0;
+  transition: opacity var(--tr_m), transform var(--tr_m);
+  pointer-events: auto;
+}
+
+.widev-toast.active {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.widev-toast--success { border-left: 5px solid var(--success); }
+.widev-toast--error   { border-left: 5px solid var(--error); }
+.widev-toast--warning { border-left: 5px solid var(--warning); }
+.widev-toast--info    { border-left: 5px solid var(--info); }
+
+.widev-toast i { font-size: var(--fz_m1); }
+.widev-toast--success i { color: var(--success); }
+.widev-toast--error   i { color: var(--error); }
+.widev-toast--warning i { color: var(--warning); }
+.widev-toast--info    i { color: var(--info); }
+
+.widev-toast span {
+  flex: 1;
+  font-size: var(--fz_m);
+  font-weight: 500;
+  color: var(--tx1);
+}
+
+/* ── 2. TOOLTIPS WITIP() (widev/witip.js) ─────────────────── */
+.wiTip {
+  position: fixed;
+  color: #ffffff;
+  background: #0f172a;
+  border: 1px solid var(--mco);
+  z-index: 99999;
+  padding: 0.8vh 1.4vh;
+  border-radius: var(--r_s);
+  font-size: var(--fz_s4);
+  font-weight: 500;
+  max-width: min(360px, 85vw);
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.15s, transform 0.15s;
+  pointer-events: none;
+}
+
+.wiTip.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── 3. MODALES WI_MODAL (widev/modales.js) ────────────────── */
+.wi_modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 13, 21, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 2vh;
+  opacity: 0;
+  transition: opacity var(--tr_m);
+}
+
+.wi_modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.wi_modal_body {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 2.5vh;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+}
+
+/* ── 4. CLASES DE BOTONES E INTERACTIVIDAD (csswin) ────────── */
+.btn-mco {
+  background: var(--mco);
+  color: #ffffff;
+  border: none;
+  padding: 1vh 2vh;
+  border-radius: var(--r_m);
+  font-weight: 600;
+  font-size: var(--fz_m);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8vh;
+  transition: all var(--tr_f);
+}
+
+.btn-mco:hover {
+  filter: brightness(1.08);
+  transform: translateY(-0.2vh);
+}
+
+.btn-navy {
+  background: var(--brand-blue);
+  color: #ffffff;
+  border: none;
+  padding: 1vh 2vh;
+  border-radius: var(--r_m);
+  font-weight: 600;
+  font-size: var(--fz_m);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8vh;
+  transition: all var(--tr_f);
+}
+
+.btn-navy:hover {
+  filter: brightness(1.15);
+  transform: translateY(-0.2vh);
+}
