@@ -135,3 +135,13 @@
   color: #ffffff;
   border-color: var(--success);
 }
+
+@media (max-width: 768px) {
+  .english-card {
+    padding: 14px;
+  }
+  .phrase-category-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

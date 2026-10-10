@@ -546,15 +546,273 @@
 }
 
 /* ── Responsive Breakpoints ─────────────────────────────────── */
-@media (max-width: 1300px) {
+
+/* Laptops & Pantallas Medianas (<= 1200px) */
+@media (max-width: 1200px) {
   .gen-bottom-row {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
-@media (max-width: 900px) {
-  .gen-top-row,
+/* Tablets (<= 992px) */
+@media (max-width: 992px) {
+  .general-layout-grid {
+    gap: 14px;
+  }
+
+  .gen-top-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .gen-bottom-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .gen-card {
+    height: auto;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .gen-card--estados {
+    height: auto;
+    min-height: 380px;
+  }
+
+  .gen-card--estados .gen-table-scroll {
+    height: 320px;
+    max-height: 45vh;
+  }
+
+  .gen-card--deletreador {
+    height: auto;
+    min-height: 320px;
+  }
+
+  .gen-card--deletreador .gen-spell-display {
+    height: auto;
+    min-height: 140px;
+    max-height: 280px;
+  }
+
+  .gen-card--direcciones,
+  .gen-card--unidades,
+  .gen-card--numeros,
+  .gen-card--monedas {
+    height: auto;
+    min-height: 340px;
+  }
+
+  .gen-card--direcciones .gen-pill-grid,
+  .gen-card--unidades .gen-pill-grid,
+  .gen-card--numeros .gen-pill-grid,
+  .gen-card--monedas .gen-pill-grid,
+  .gen-table-scroll--sm {
+    height: auto;
+    max-height: 250px;
+  }
+}
+
+/* Móviles & Dispositivos Táctiles (<= 768px) */
+@media (max-width: 768px) {
+  .general-layout-grid {
+    gap: 12px;
+  }
+
+  .gen-top-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gen-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gen-card {
+    padding: 12px 14px;
+    border-radius: var(--r_m);
+    height: auto;
+    min-height: auto;
+  }
+
+  .gen-card-header {
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+
+  .gen-header-title {
+    font-size: 0.95rem;
+    gap: 6px;
+  }
+
+  .gen-icon-mco {
+    font-size: 1.05rem;
+  }
+
+  .gen-badge-counter,
+  .gen-badge-tip,
+  .gen-badge-tag {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .gen-search-box {
+    padding: 5px 8px;
+    margin-bottom: 8px;
+  }
+
+  .gen-input-search {
+    font-size: 0.82rem;
+  }
+
+  /* Cuadro Estados Móvil */
+  .gen-card--estados {
+    height: auto;
+  }
+
+  .gen-card--estados .gen-table-scroll {
+    height: 280px;
+    max-height: 40vh;
+    border-radius: var(--r_s);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gen-table th,
+  .gen-table td {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .gen-table-abbr {
+    font-size: 0.75rem;
+    padding: 2px 5px;
+  }
+
+  .gen-table-zip {
+    font-size: 0.7rem;
+    padding: 2px 5px;
+  }
+
+  .gen-table-city-badge {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+  }
+
+  /* Cuadro Deletreador Móvil */
+  .gen-card--deletreador {
+    height: auto;
+  }
+
+  .gen-spell-input-box {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+  }
+
+  .gen-input-spell {
+    font-size: 0.95rem;
+  }
+
+  .gen-spell-display {
+    height: auto;
+    min-height: 110px;
+    max-height: 240px;
+    padding: 8px;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gen-spell-card {
+    flex: 1 1 calc(25% - 6px);
+    min-width: 62px;
+    max-width: 90px;
+    padding: 6px 4px;
+  }
+
+  .gen-spell-letter {
+    font-size: 1.1rem;
+  }
+
+  .gen-spell-word {
+    font-size: 0.72rem;
+  }
+
+  .gen-spell-tip {
+    font-size: 0.62rem;
+  }
+
+  /* Cuadros Direcciones, Unidades, Números, Monedas Móvil */
+  .gen-card--direcciones,
+  .gen-card--unidades,
+  .gen-card--numeros,
+  .gen-card--monedas {
+    height: auto;
+  }
+
+  .gen-pill-grid {
+    height: auto;
+    max-height: 240px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gen-pill-item {
+    height: auto;
+    min-height: 36px;
+    padding: 6px 8px;
+    border-radius: var(--r_s);
+  }
+
+  .gen-pill-code {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+  }
+
+  .gen-pill-text {
+    font-size: 0.68rem;
+  }
+
+  .gen-interactive-reader-box {
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+
+  .gen-reader-input-row {
+    padding: 5px 8px;
+  }
+
+  .gen-input-reader {
+    font-size: 0.85rem;
+  }
+
+  .gen-reader-result-card {
+    padding: 6px 8px;
+    gap: 2px;
+  }
+
+  .gen-reader-live-text,
+  .gen-money-text-main {
+    font-size: 0.92rem;
+  }
+
+  .gen-money-text-sub {
+    font-size: 0.72rem;
+  }
+}
+
+/* Móviles Muy Pequeños (<= 400px) */
+@media (max-width: 400px) {
+  .gen-spell-card {
+    flex: 1 1 calc(33.33% - 6px);
+    min-width: 58px;
+  }
+
+  .gen-pill-grid {
     grid-template-columns: 1fr;
   }
 }

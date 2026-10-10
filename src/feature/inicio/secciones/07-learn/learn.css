@@ -316,3 +316,13 @@
   color: var(--tx3);
   font-style: italic;
 }
+
+@media (max-width: 768px) {
+  .speller-card, .phonetic-table-card {
+    padding: 14px;
+  }
+  .phonetic-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 6px;
+  }
+}

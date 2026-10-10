@@ -158,3 +158,17 @@
 .st-col-codes { color: var(--tx3); font-size: var(--fz_s3); }
 .st-col-weather { font-size: var(--fz_s2); color: var(--tx1); background: var(--inp); padding: 2px 6px; border-radius: 4px; }
 .st-col-fact { font-size: var(--fz_s2); color: var(--tx2); line-height: 1.35; }
+
+@media (max-width: 768px) {
+  .usa-card {
+    padding: 14px;
+  }
+  .search-input-wrap {
+    min-width: 100%;
+  }
+  .states-table th,
+  .states-table td {
+    padding: 8px 10px;
+    font-size: var(--fz_s3);
+  }
+}

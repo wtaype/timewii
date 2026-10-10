@@ -271,3 +271,16 @@
   font-weight: 700;
   color: var(--tx1);
 }
+
+@media (max-width: 768px) {
+  .timers-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .timer-card {
+    padding: 16px;
+  }
+  .display-time {
+    font-size: 2.2rem;
+  }
+}
