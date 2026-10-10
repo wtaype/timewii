@@ -7,14 +7,10 @@
   <div class="gen-card-header">
     <div class="gen-header-title">
       <i class="fa-solid fa-spell-check gen-icon-mco"></i>
-      <span>Deletreador Amigable ("W as in Washington")</span>
+      <span>Deletreador Amigable</span>
     </div>
-    <span class="gen-badge-tip">1-Click Copiar</span>
+    <span class="gen-badge-tip">Lectura Directa</span>
   </div>
-
-  <p class="gen-card-desc">
-    Para miembros senior usa nombres familiares de ciudades y estados (Texas, California, Florida) en lugar de código militar.
-  </p>
 
   <!-- Input de Deletreo -->
   <div class="gen-speller-input-wrap">
@@ -22,7 +18,7 @@
       type="text" 
       class="gen-speller-input" 
       id="genSpellerInput" 
-      placeholder="ESCRIBE MBI, CÓDIGO O APELLIDO (EJ: 1EG4-TE5 O SMITH)..."
+      placeholder="ESCRIBE MBI, CÓDIGO O APELLIDO (EJ: 1EG4-TE5 O WILDER)..." 
       autocomplete="off"
       spellcheck="false"
     />
@@ -31,16 +27,12 @@
     </button>
   </div>
 
-  <!-- Barra de Acciones y Copiado -->
+  <!-- Barra Informativa -->
   <div class="gen-speller-actions-bar">
-    <span class="gen-speller-hint" id="genSpellerCountHint">Ingresa letras o números arriba</span>
-    <button class="gen-btn-copy-mini" id="genBtnCopySpeller" title="Copiar desglose completo al portapapeles">
-      <i class="fa-regular fa-copy"></i>
-      <span>Copiar Todo</span>
-    </button>
+    <span class="gen-speller-hint" id="genSpellerCountHint">Ingresa letras o números arriba para ver el desglose fonético</span>
   </div>
 
-  <!-- Resultado Reactivo en Fichas -->
+  <!-- Resultado Reactivo en Fichas Horizontales -->
   <div class="gen-speller-output-box" id="genSpellerOutput">
     <span class="gen-empty-state-text">
       Escribe en la caja de arriba para ver el desglose fonético en tiempo real...

@@ -1,16 +1,16 @@
 /* src/feature/inicio/inicio.css */
 /* Estilos maestros del Dashboard TimeWii (Wellcare Advisor Toolkit) */
+/* Cero CSS Inline · 100% clases y variables del sistema witema.css */
 
 :root {
-  --sidebar-w: 240px;
-  --sidebar-col: 74px;
-  --topbar-h: 70px;
+  --sidebar-w: 11vw;
+  --sidebar-col: 60px;
 }
 
 .dashboard-app {
   display: flex;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   background-color: var(--bg);
 }
@@ -18,41 +18,46 @@
 /* ── Sidebar Lateral Teams ──────────────────────────────── */
 .dashboard-sidebar {
   width: var(--sidebar-w);
+  min-width: 140px;
   background-color: var(--wb);
   border-right: 1px solid var(--brd);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  height: 100vh;
   transition: width var(--tr_m);
   position: relative;
   z-index: 100;
+  overflow: hidden;
 }
 
 .dashboard-sidebar.collapsed {
   width: var(--sidebar-col);
+  min-width: var(--sidebar-col);
 }
 
 .sidebar-header {
-  height: var(--topbar-h);
+  height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  gap: 12px;
+  padding: 0 10px;
+  gap: 8px;
   border-bottom: 1px solid var(--brd);
   overflow: hidden;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .brand-badge-icon {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--r_m);
   background: var(--mco);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   box-shadow: 0 4px 14px rgba(0, 160, 164, 0.35);
   flex-shrink: 0;
@@ -62,55 +67,62 @@
   display: flex;
   flex-direction: column;
   transition: opacity var(--tr_m);
+  overflow: hidden;
 }
 .dashboard-sidebar.collapsed .brand-info {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .brand-title {
-  font-size: var(--fz_m2);
+  font-size: var(--fz_m);
   font-weight: 700;
   color: var(--tx1);
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
+
 .brand-title span {
   color: var(--mco);
 }
 
 .brand-sub {
-  font-size: var(--fz_s2);
+  font-size: clamp(0.6rem, 0.7vw, 0.72rem);
   color: var(--tx3);
+  white-space: nowrap;
 }
 
 /* Navegación */
 .sidebar-menu {
   flex: 1;
-  padding: 16px 10px;
+  padding: 8px 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
 }
 
 .menu-label {
-  font-size: var(--fz_s1);
+  font-size: clamp(0.55rem, 0.65vw, 0.68rem);
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   color: var(--tx3);
-  font-weight: 600;
-  padding: 8px 12px 4px;
+  font-weight: 700;
+  padding: 4px 8px 2px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .dashboard-sidebar.collapsed .menu-label {
-  opacity: 0;
+  display: none;
 }
 
 .nav-tab-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: 8px;
+  padding: 7px 10px;
   border-radius: var(--r_m);
   color: var(--tx2);
   background: transparent;
@@ -118,16 +130,16 @@
   width: 100%;
   text-align: left;
   font-family: inherit;
-  font-size: var(--fz_s4);
-  font-weight: 500;
+  font-size: clamp(0.72rem, 0.8vw, 0.82rem);
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--tr_f);
   white-space: nowrap;
 }
 
 .nav-tab-btn i {
-  font-size: var(--fz_m1);
-  width: 20px;
+  font-size: var(--fz_s3);
+  width: 18px;
   text-align: center;
   flex-shrink: 0;
   color: var(--tx3);
@@ -146,7 +158,7 @@
   background: var(--mbg);
   color: var(--mco);
   border-color: rgba(0, 161, 165, 0.25);
-  font-weight: 600;
+  font-weight: 700;
 }
 .nav-tab-btn.active i {
   color: var(--mco);
@@ -156,61 +168,69 @@
   display: none;
 }
 
+.dashboard-sidebar.collapsed .nav-tab-btn {
+  justify-content: center;
+  padding: 8px 0;
+}
+
 /* Footer del Sidebar */
 .sidebar-bottom {
-  padding: 12px 10px;
+  padding: 8px 6px;
   border-top: 1px solid var(--brd);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
+  background: var(--wb);
+  flex-shrink: 0;
 }
 
-.btn-sidebar-toggle {
+.sidebar-action-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
-  padding: 10px 14px;
+  padding: 6px 10px;
   border-radius: var(--r_m);
   background: transparent;
   border: 1px solid var(--brd);
   color: var(--tx2);
-  font-size: var(--fz_s3);
+  font-size: clamp(0.68rem, 0.75vw, 0.78rem);
   cursor: pointer;
   font-family: inherit;
+  font-weight: 600;
   transition: all var(--tr_f);
+  white-space: nowrap;
 }
-.btn-sidebar-toggle:hover {
+
+.sidebar-action-btn i {
+  font-size: var(--fz_s3);
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--tx3);
+  transition: color var(--tr_f);
+}
+
+.sidebar-action-btn:hover {
   background: var(--inp);
   color: var(--tx1);
   border-color: var(--mco);
 }
-.dashboard-sidebar.collapsed .btn-sidebar-toggle span {
+
+.sidebar-action-btn:hover i {
+  color: var(--mco);
+}
+
+.dashboard-sidebar.collapsed .sidebar-action-btn {
+  justify-content: center;
+  padding: 7px 0;
+}
+
+.dashboard-sidebar.collapsed .sidebar-action-btn span {
   display: none;
 }
 
-.secure-advisor-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: var(--r_s);
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: var(--success);
-  font-size: var(--fz_s2);
-  font-weight: 500;
-  white-space: nowrap;
-}
-.secure-advisor-badge i {
-  font-size: var(--fz_s3);
-  flex-shrink: 0;
-}
-.dashboard-sidebar.collapsed .secure-advisor-badge span {
-  display: none;
-}
-
-/* ── Main View Area ────────────────────────────────────── */
+/* ── Main View Area (100vh Full Vertical) ────────────────── */
 .dashboard-viewport {
   flex: 1;
   display: flex;
@@ -220,172 +240,17 @@
   background: var(--bg);
 }
 
-/* Topbar Rediseñado: Reloj de Dispositivo Gigante y Cambio de Tema */
-.dashboard-topbar {
-  min-height: var(--topbar-h);
-  background: var(--wb);
-  border-bottom: 1px solid var(--brd);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 24px;
-  flex-shrink: 0;
-  gap: 16px;
-}
-
-.topbar-header-wrap {
-  display: flex;
-  flex-direction: column;
-  min-width: 200px;
-}
-
-.topbar-header-wrap h1 {
-  font-size: var(--fz_m3);
-  font-weight: 700;
-  color: var(--tx1);
-  margin: 0;
-}
-.topbar-header-wrap p {
-  font-size: var(--fz_s3);
-  color: var(--tx3);
-  margin: 0;
-}
-
-/* Attendance Device Clock Central (PROMINENTE) */
-.device-attendance-clock {
-  background: var(--bg);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_m);
-  padding: 6px 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.attendance-badge-col {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.attendance-label {
-  font-size: var(--fz_s1);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--mco);
-  letter-spacing: 0.5px;
-}
-
-.attendance-date {
-  font-size: var(--fz_s2);
-  color: var(--tx3);
-  white-space: nowrap;
-}
-
-.attendance-time-display {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  font-family: var(--ff_P);
-}
-
-.attendance-time-display .time-main {
-  font-size: clamp(1.4rem, 2.4vh, 1.9rem);
-  font-weight: 800;
-  color: var(--tx1);
-  letter-spacing: 1px;
-}
-
-.attendance-time-display .time-ampm {
-  font-size: var(--fz_m);
-  font-weight: 700;
-  color: var(--mco);
-}
-
-/* Acciones del Topbar (Theme switcher + Ticker de Zonas) */
-.topbar-actions-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.live-ticker-strip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-@media (max-width: 1200px) {
-  .live-ticker-strip {
-    display: none;
-  }
-}
-
-.ticker-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_full);
-  padding: 4px 10px;
-  font-size: var(--fz_s2);
-  white-space: nowrap;
-}
-.ticker-pill .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-.ticker-pill.eastern .dot  { background: #ef4444; }
-.ticker-pill.central .dot  { background: #f59e0b; }
-.ticker-pill.mountain .dot { background: #10b981; }
-.ticker-pill.pacific .dot  { background: #f97316; }
-
-.ticker-pill .tag {
-  font-weight: 600;
-  color: var(--tx2);
-}
-.ticker-pill .time {
-  font-weight: 700;
-  color: var(--tx1);
-  font-family: monospace;
-}
-
-/* Botón de Cambio de Tema en Topbar */
-.btn-theme-toggle {
-  background: var(--inp);
-  border: 1px solid var(--brd);
-  color: var(--tx1);
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r_m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fz_m2);
-  cursor: pointer;
-  transition: all var(--tr_f);
-}
-
-.btn-theme-toggle:hover {
-  border-color: var(--mco);
-  color: var(--mco);
-  background: var(--wb);
-}
-
-/* Paneles de Vista */
 .dashboard-content-scroll {
   flex: 1;
+  height: 100vh;
   overflow-y: auto;
-  padding: 24px;
+  padding: 16px 20px;
 }
 
 .view-panel {
   display: none;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   animation: viewFade 0.2s ease-out;
 }
 .view-panel.active {
@@ -395,6 +260,109 @@
 @keyframes viewFade {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal About Nativo (widev/modales.js) */
+.wi_modal_about {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wi_modal_about.open,
+.wi_modal_about.active {
+  display: flex;
+}
+
+.about-modal-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  max-width: 520px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  animation: viewFade 0.25s ease-out;
+}
+
+.about-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-title-row h3 {
+  font-size: var(--fz_m2);
+  color: var(--tx1);
+  margin: 0;
+}
+
+.modal-close-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--tx3);
+  font-size: var(--fz_m2);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: color var(--tr_f);
+}
+
+.modal-close-icon-btn:hover {
+  color: var(--error);
+}
+
+.about-modal-body {
+  font-size: var(--fz_s3);
+  color: var(--tx2);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 12px 14px;
+}
+
+.about-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--fz_s2);
+}
+
+.about-feature-item i {
+  color: var(--mco);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.about-modal-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Toast flotante */

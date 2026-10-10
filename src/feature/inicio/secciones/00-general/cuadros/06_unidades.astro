@@ -1,0 +1,31 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/06_unidades.astro
+// 💊 Cuadro 6: Unidades Farmacéuticas & Formas de Medicamentos en 2 Columnas
+---
+
+<div class="gen-card gen-card--unidades" id="cuadroUnidades">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-pills gen-icon-mco"></i>
+      <span>Unidades & Medicamentos</span>
+    </div>
+    <span class="gen-badge-tag">Dosificación CMS</span>
+  </div>
+
+  <!-- Buscador de Unidades -->
+  <div class="gen-search-box gen-search-box--sm">
+    <i class="fa-solid fa-magnifying-glass gen-search-icon"></i>
+    <input 
+      type="text" 
+      class="gen-input-search" 
+      id="genUnidadSearchInput" 
+      placeholder="Filtrar (ej: mL, Tab, Cap, mg, puff, units)..." 
+      autocomplete="off"
+    />
+  </div>
+
+  <!-- Cuadrícula de Unidades en 2 columnas (Idéntico a Direcciones) -->
+  <div class="gen-pill-grid" id="genUnidadesGrid">
+    <!-- Renderizado reactivamente por JS cliente -->
+  </div>
+</div>

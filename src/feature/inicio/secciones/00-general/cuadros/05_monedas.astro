@@ -1,0 +1,48 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/05_monedas.astro
+// 💵 Cuadro 5: Monedas & Copagos con Deletreador Interactivo y Fichas en 2 Columnas
+---
+
+<div class="gen-card gen-card--monedas" id="cuadroMonedas">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-hand-holding-dollar gen-icon-mco"></i>
+      <span>Monedas & Copagos</span>
+    </div>
+    <span class="gen-badge-tag">Medicare / IRA</span>
+  </div>
+
+  <!-- Input Interactivo Deletreador de Monedas -->
+  <div class="gen-interactive-reader-box">
+    <div class="gen-reader-input-row">
+      <span class="gen-currency-symbol">$</span>
+      <input 
+        type="text" 
+        class="gen-input-reader" 
+        id="genMoneyInput" 
+        placeholder="Escribe monto (ej: 5.30, 5.60, 35, 2000)..." 
+        autocomplete="off"
+      />
+      <button class="gen-btn-clear" id="genMoneyClearBtn" title="Limpiar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Salida en Vivo de la Moneda -->
+    <div class="gen-reader-result-card" id="genMoneyResultCard">
+      <div class="gen-money-out-row">
+        <span class="gen-money-tag">Habla Rápida:</span>
+        <span class="gen-money-text-main" id="genMoneyLiveRapido">Five thirty (o Five point thirty)</span>
+      </div>
+      <div class="gen-money-out-row">
+        <span class="gen-money-tag">Formal CMS:</span>
+        <span class="gen-money-text-sub" id="genMoneyLiveFormal">$5.30 · Five dollars and thirty cents</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fichas de Copagos Comunes en 2 Columnas (Sin tablas ni th) -->
+  <div class="gen-pill-grid gen-pill-grid--compact" id="genMonedaGrid">
+    <!-- Renderizado por JS cliente -->
+  </div>
+</div>

@@ -7,7 +7,7 @@
 .general-layout-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.8vh;
+  gap: 1.2vh;
   width: 100%;
 }
 
@@ -15,15 +15,15 @@
 .gen-top-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.8vh;
+  gap: 1.2vh;
   width: 100%;
 }
 
-/* ── Fila Inferior: 3 Columnas Iguales ──────────────────────── */
+/* ── Fila Inferior: 4 Columnas Iguales ──────────────────────── */
 .gen-bottom-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.8vh;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2vh;
   width: 100%;
 }
 
@@ -32,7 +32,7 @@
   background: var(--wb);
   border: 1px solid var(--brd);
   border-radius: var(--r_l);
-  padding: 2vh 1.6vw;
+  padding: 1.2vh 1.1vw;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
@@ -51,15 +51,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.8vh;
-  gap: 1vh;
+  margin-bottom: 0.6vh;
+  gap: 0.8vh;
+  flex-shrink: 0;
 }
 
 .gen-header-title {
   display: flex;
   align-items: center;
-  gap: 0.8vh;
-  font-size: var(--fz_m2);
+  gap: 0.6vh;
+  font-size: var(--fz_m1);
   font-weight: 700;
   color: var(--tx1);
   letter-spacing: -0.2px;
@@ -67,14 +68,7 @@
 
 .gen-icon-mco {
   color: var(--mco);
-  font-size: var(--fz_m3);
-}
-
-.gen-card-desc {
-  font-size: var(--fz_s2);
-  color: var(--tx3);
-  margin-bottom: 1.4vh;
-  line-height: 1.4;
+  font-size: var(--fz_m2);
 }
 
 /* Insignias y Badges */
@@ -91,60 +85,49 @@
   color: var(--mco);
   border: 1px solid var(--border-accent);
   white-space: nowrap;
+  text-decoration: none;
 }
 
-.gen-live-badge {
+.gen-badge-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5vh;
-  font-size: var(--fz_s1);
-  font-weight: 800;
-  color: var(--mco);
-  background: var(--mbg);
-  padding: 0.3vh 0.8vh;
-  border-radius: var(--r_full);
-  border: 1px solid var(--border-accent);
+  cursor: pointer;
+  transition: all var(--tr_f);
 }
 
-.gen-live-dot {
-  width: 0.7vh;
-  height: 0.7vh;
-  border-radius: 50%;
+.gen-badge-link:hover {
   background: var(--mco);
-  box-shadow: 0 0 0.8vh var(--mco);
-  animation: pulseDot 2s infinite ease-in-out;
+  color: #ffffff;
+  border-color: var(--mco);
 }
 
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.85); }
-}
-
-/* ── Buscador Reactivo Estándar ─────────────────────────────── */
+/* ── Input y Buscadores Generales ───────────────────────────── */
 .gen-search-box {
   display: flex;
   align-items: center;
   background: var(--inp);
   border: 1px solid var(--brd);
   border-radius: var(--r_m);
-  padding: 0 1vh;
-  gap: 0.8vh;
-  margin-bottom: 1.2vh;
+  padding: 0.4vh 1vh;
+  gap: 0.6vh;
+  margin-bottom: 0.8vh;
   transition: border-color var(--tr_f), box-shadow var(--tr_f);
+  flex-shrink: 0;
 }
 
 .gen-search-box:focus-within {
   border-color: var(--mco);
-  box-shadow: 0 0 0 2px var(--border-accent);
+  box-shadow: 0 0 0 3px rgba(0, 161, 165, 0.15);
 }
 
 .gen-search-box--sm {
-  margin-bottom: 1vh;
+  margin-bottom: 0.6vh;
 }
 
 .gen-search-icon {
   color: var(--tx3);
-  font-size: var(--fz_s3);
+  font-size: var(--fz_s2);
 }
 
 .gen-input-search {
@@ -152,7 +135,7 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 0.9vh 0;
+  padding: 0.5vh 0;
   font-family: var(--ff_P);
   font-size: var(--fz_s3);
   color: var(--tx1);
@@ -163,7 +146,7 @@
   border: none;
   color: var(--tx3);
   cursor: pointer;
-  padding: 0.4vh;
+  padding: 0.3vh;
   border-radius: 50%;
   font-size: var(--fz_s2);
   transition: color var(--tr_f);
@@ -174,15 +157,15 @@
 }
 
 /* ============================================================ */
-/* 📍 CUADRO 1: TABLA DE ESTADOS CON SCROLL                     */
+/* 📍 CUADRO 1: TABLA DE ESTADOS CON ZIP CODES & CIUDADES       */
 /* ============================================================ */
 .gen-card--estados {
-  min-height: 44vh;
+  height: 48.5vh;
 }
 
 .gen-table-scroll {
   flex: 1;
-  max-height: 32vh;
+  height: 40vh;
   overflow-y: auto;
   border: 1px solid var(--brd);
   border-radius: var(--r_m);
@@ -200,7 +183,7 @@
   background: var(--wb);
   color: var(--tx3);
   font-weight: 700;
-  padding: 0.9vh 0.8vw;
+  padding: 0.7vh 0.7vw;
   border-bottom: 1px solid var(--brd);
   position: sticky;
   top: 0;
@@ -209,7 +192,7 @@
 }
 
 .gen-states-table td {
-  padding: 0.7vh 0.8vw;
+  padding: 0.6vh 0.7vw;
   border-bottom: 1px solid var(--brd);
   color: var(--tx2);
   white-space: nowrap;
@@ -227,6 +210,21 @@
 .st-col-name {
   font-weight: 600;
   color: var(--tx1);
+}
+
+.st-col-zip {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--mco);
+  background: var(--inp);
+  padding: 0.2vh 0.6vh;
+  border-radius: var(--r_xs);
+  border: 1px solid var(--brd);
+}
+
+.st-col-cities {
+  color: var(--tx1);
+  font-size: var(--fz_s2);
 }
 
 .st-col-time {
@@ -248,23 +246,25 @@
 /* 🔤 CUADRO 2: DELETREADOR FONÉTICO AMIGABLE                   */
 /* ============================================================ */
 .gen-card--speller {
-  min-height: 44vh;
+  height: 48.5vh;
 }
 
 .gen-speller-input-wrap {
   display: flex;
   align-items: center;
   background: var(--inp);
-  border: 2px solid var(--brd);
+  border: 2px solid var(--border-accent);
   border-radius: var(--r_m);
-  padding: 0 1.2vh;
+  padding: 0.4vh 1.2vh;
   gap: 1vh;
+  margin-bottom: 0.5vh;
   transition: border-color var(--tr_f), box-shadow var(--tr_f);
+  flex-shrink: 0;
 }
 
 .gen-speller-input-wrap:focus-within {
   border-color: var(--mco);
-  box-shadow: 0 0 0.8vh var(--border-accent);
+  box-shadow: 0 0 0 4px rgba(0, 161, 165, 0.2);
 }
 
 .gen-speller-input {
@@ -272,11 +272,12 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 1.2vh 0;
-  font-family: var(--ff_P);
-  font-size: var(--fz_m);
-  font-weight: 700;
-  letter-spacing: 1px;
+  padding: 0.6vh 0;
+  font-family: monospace;
+  font-size: var(--fz_m1);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: var(--tx1);
 }
 
@@ -284,12 +285,11 @@
   background: transparent;
   border: none;
   color: var(--tx3);
-  font-size: var(--fz_m);
   cursor: pointer;
   padding: 0.4vh;
-  transition: color var(--tr_f);
+  border-radius: 50%;
+  font-size: var(--fz_s2);
 }
-
 .gen-speller-clear-btn:hover {
   color: var(--error);
 }
@@ -298,416 +298,261 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1vh 0;
+  margin-bottom: 0.5vh;
+  flex-shrink: 0;
 }
 
 .gen-speller-hint {
   font-size: var(--fz_s2);
   color: var(--tx3);
-  font-weight: 500;
-}
-
-.gen-btn-copy-mini {
-  background: var(--mbg);
-  color: var(--mco);
-  border: 1px solid var(--border-accent);
-  padding: 0.5vh 1vh;
-  border-radius: var(--r_s);
-  font-size: var(--fz_s2);
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6vh;
-  transition: all var(--tr_f);
-}
-
-.gen-btn-copy-mini:hover {
-  background: var(--mco);
-  color: #ffffff;
-  transform: translateY(-0.15vh);
 }
 
 .gen-speller-output-box {
   flex: 1;
-  max-height: 25vh;
+  height: 34vh;
   overflow-y: auto;
   background: var(--bg);
   border: 1px solid var(--brd);
   border-radius: var(--r_m);
-  padding: 1.2vh;
+  padding: 0.9vh 0.8vw;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8vh;
   align-content: flex-start;
+  gap: 0.8vh;
 }
 
 .gen-empty-state-text {
-  font-size: var(--fz_s2);
   color: var(--tx3);
+  font-size: var(--fz_s3);
   font-style: italic;
   margin: auto;
   text-align: center;
-  padding: 2vh 0;
+  width: 100%;
 }
 
-.gen-speller-token {
+.gen-spell-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: var(--wb);
   border: 1px solid var(--brd);
-  border-left: 3px solid var(--mco);
-  border-radius: var(--r_s);
-  padding: 0.6vh 1vh;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8vh;
-  box-shadow: var(--shadow-card);
-  transition: transform var(--tr_f);
+  border-radius: var(--r_m);
+  padding: 0.7vh 0.9vw;
+  min-width: 76px;
+  text-align: center;
+  gap: 0.2vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: border-color var(--tr_f), transform var(--tr_f);
 }
 
-.gen-speller-token:hover {
-  transform: translateY(-0.15vh);
+.gen-spell-card:hover {
   border-color: var(--mco);
+  transform: translateY(-2px);
 }
 
-.gen-token-char {
+.gen-spell-char {
+  font-family: monospace;
   font-size: var(--fz_m2);
   font-weight: 900;
   color: var(--mco);
 }
 
-.gen-token-word {
+.gen-spell-word {
   font-size: var(--fz_s3);
   font-weight: 700;
   color: var(--tx1);
+  white-space: nowrap;
 }
 
-.gen-token-phrase {
+.gen-spell-phrase {
   font-size: var(--fz_s1);
   color: var(--tx3);
-  font-style: italic;
+  white-space: nowrap;
 }
 
 /* ============================================================ */
-/* 📬 CUADRO 3: DIRECCIONES USPS & LICENCIA DL                  */
+/* 📬 CUADROS INFERIORES EN 2 COLUMNAS (DIRECCIONES, UNIDADES,   */
+/*    NÚMEROS Y MONEDAS - ESTILO COMPACTO Y SIN TH)            */
 /* ============================================================ */
-.gen-card--direcciones {
-  min-height: 38vh;
+.gen-card--direcciones,
+.gen-card--unidades,
+.gen-card--numeros,
+.gen-card--monedas {
+  height: 46vh;
 }
 
-.gen-abbr-grid {
+/* Cuadrícula genérica de 2 columnas para items rápidos */
+.gen-pill-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.6vh;
-  max-height: 18vh;
-  overflow-y: auto;
-  margin-bottom: 1.2vh;
-}
-
-.gen-abbr-item {
-  background: var(--inp);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_s);
-  padding: 0.6vh 0.8vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--fz_s2);
-  transition: border-color var(--tr_f);
-}
-
-.gen-abbr-item:hover {
-  border-color: var(--mco);
-}
-
-.gen-abbr-code {
-  font-weight: 800;
-  color: var(--mco);
-  min-width: 45px;
-}
-
-.gen-abbr-name {
-  color: var(--tx1);
-  font-weight: 500;
-  flex: 1;
-}
-
-.gen-btn-copy-item {
-  background: transparent;
-  border: none;
-  color: var(--tx3);
-  cursor: pointer;
-  padding: 0.3vh;
-  font-size: var(--fz_s2);
-  transition: color var(--tr_f);
-}
-
-.gen-btn-copy-item:hover {
-  color: var(--mco);
-}
-
-.gen-dl-box {
-  background: var(--bg);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_m);
-  padding: 1vh;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6vh;
-}
-
-.gen-dl-title {
-  display: flex;
-  align-items: center;
-  gap: 0.6vh;
-  font-size: var(--fz_s2);
-  font-weight: 700;
-  color: var(--tx1);
-}
-
-.gen-dl-pills-row {
-  display: flex;
-  flex-wrap: wrap;
+  grid-auto-rows: max-content;
+  align-content: start;
   gap: 0.5vh;
-}
-
-.gen-dl-pill {
-  font-size: var(--fz_s1);
-  background: var(--wb);
-  border: 1px solid var(--brd);
-  padding: 0.2vh 0.6vh;
-  border-radius: var(--r_xs);
-  color: var(--tx2);
-}
-
-.gen-dl-tip {
-  display: flex;
-  align-items: center;
-  gap: 0.6vh;
-  font-size: var(--fz_s1);
-  color: var(--tx3);
-}
-
-.gen-dl-tip i {
-  color: var(--warning);
-}
-
-/* ============================================================ */
-/* 🔢 CUADRO 4: NÚMEROS & MONEDAS EN INGLÉS                     */
-/* ============================================================ */
-.gen-card--numeros {
-  min-height: 38vh;
-}
-
-.gen-tabs-toggle {
-  display: flex;
-  background: var(--inp);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_s);
-  padding: 0.2vh;
-  gap: 0.2vh;
-}
-
-.gen-tab-toggle-btn {
-  background: transparent;
-  border: none;
-  font-family: var(--ff_P);
-  font-size: var(--fz_s2);
-  font-weight: 600;
-  color: var(--tx3);
-  padding: 0.4vh 1vh;
-  border-radius: var(--r_xs);
-  cursor: pointer;
-  transition: all var(--tr_f);
-}
-
-.gen-tab-toggle-btn.active {
-  background: var(--wb);
-  color: var(--mco);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.gen-subtab-view {
-  display: none;
-  flex-direction: column;
   flex: 1;
-}
-
-.gen-subtab-view.active {
-  display: flex;
-}
-
-.gen-subtable-scroll {
-  flex: 1;
-  max-height: 22vh;
+  height: 38vh;
   overflow-y: auto;
   border: 1px solid var(--brd);
   border-radius: var(--r_m);
+  padding: 0.6vh;
   background: var(--bg);
 }
 
-.gen-num-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--fz_s2);
+.gen-pill-grid--compact {
+  height: 27vh;
 }
 
-.gen-num-table th {
+.gen-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6vh;
   background: var(--wb);
-  color: var(--tx3);
-  font-weight: 700;
-  padding: 0.7vh 0.8vw;
-  border-bottom: 1px solid var(--brd);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  padding: 0.45vh 0.6vh;
+  font-size: var(--fz_s2);
+  height: 3.4vh;
+  box-sizing: border-box;
+  transition: border-color var(--tr_f), background-color var(--tr_f);
 }
 
-.gen-num-table td {
-  padding: 0.7vh 0.8vw;
-  border-bottom: 1px solid var(--brd);
-  color: var(--tx2);
-}
-
-.gen-num-table tr:hover td {
+.gen-pill-item:hover {
+  border-color: var(--mco);
   background: var(--bg-card-hover);
 }
 
-.th-num-val, .td-num-val {
+.gen-pill-code {
   font-weight: 800;
   color: var(--mco);
-  white-space: nowrap;
-  width: 25%;
+  font-family: monospace;
+  min-width: 38px;
+  flex-shrink: 0;
 }
 
-.th-num-en, .td-num-en {
+.gen-pill-text {
+  color: var(--tx1);
   font-weight: 600;
-  color: var(--tx1);
-  width: 60%;
-}
-
-.th-num-action, .td-num-action {
-  text-align: center;
-  width: 15%;
-}
-
-/* ============================================================ */
-/* 🕐 CUADRO 5: RELOJ DIGITAL GRANDE & 3 ZONAS USA              */
-/* ============================================================ */
-.gen-card--relojes {
-  min-height: 38vh;
-}
-
-.gen-big-clock-box {
-  background: linear-gradient(135deg, var(--inp), var(--bg));
-  border: 1px solid var(--border-accent);
-  border-radius: var(--r_m);
-  padding: 1.4vh 1.2vw;
-  margin-bottom: 1.2vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.gen-big-clock-meta {
-  display: flex;
-  align-items: center;
-  gap: 1vh;
-  font-size: var(--fz_s1);
-  color: var(--tx3);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 0.4vh;
-}
-
-.gen-big-clock-display {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6vh;
-}
-
-.gen-digits-main {
-  font-family: monospace;
-  font-size: var(--fz_x1);
-  font-weight: 900;
-  color: var(--tx1);
-  letter-spacing: 1px;
-}
-
-.gen-digits-ampm {
-  font-size: var(--fz_m2);
-  font-weight: 800;
-  color: var(--mco);
-}
-
-.gen-priority-zones-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8vh;
-}
-
-.gen-zone-card {
-  background: var(--bg);
-  border: 1px solid var(--brd);
-  border-radius: var(--r_m);
-  padding: 0.9vh 0.6vw;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3vh;
-  text-align: center;
-  transition: transform var(--tr_f), border-color var(--tr_f);
-}
-
-.gen-zone-card:hover {
-  transform: translateY(-0.2vh);
-  border-color: var(--mco);
-}
-
-.gen-zone-card--pacific { border-top: 3px solid #ea580c; }
-.gen-zone-card--central { border-top: 3px solid #d97706; }
-.gen-zone-card--eastern { border-top: 3px solid #dc2626; }
-
-.gen-zone-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.gen-zone-tag {
-  font-size: var(--fz_s1);
-  font-weight: 700;
-  color: var(--tx1);
-}
-
-.gen-zone-sub {
-  font-size: clamp(0.55rem, 0.7vh, 0.65rem);
-  color: var(--tx3);
-}
-
-.gen-zone-time {
-  font-family: monospace;
-  font-size: var(--fz_m);
-  font-weight: 800;
-  color: var(--tx1);
-  padding: 0.2vh 0;
-}
-
-.gen-zone-ampm {
-  font-size: var(--fz_s1);
-  color: var(--mco);
-}
-
-.gen-zone-states {
-  font-size: clamp(0.55rem, 0.7vh, 0.65rem);
-  color: var(--tx3);
+  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* ── Responsive Mobile/Tablet Breakpoints ───────────────────── */
-@media (max-width: 1024px) {
+.gen-pill-sub {
+  font-size: clamp(0.55rem, 0.65vh, 0.68rem);
+  color: var(--tx3);
+  white-space: nowrap;
+}
+
+/* ── Cajas Interactivas para Números y Monedas ──────────────── */
+.gen-interactive-reader-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+  margin-bottom: 0.6vh;
+  flex-shrink: 0;
+}
+
+.gen-reader-input-row {
+  display: flex;
+  align-items: center;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 0.3vh 0.8vh;
+  gap: 0.6vh;
+  transition: border-color var(--tr_f), box-shadow var(--tr_f);
+}
+
+.gen-reader-input-row:focus-within {
+  border-color: var(--mco);
+  box-shadow: 0 0 0 3px rgba(0, 161, 165, 0.15);
+}
+
+.gen-reader-icon,
+.gen-currency-symbol {
+  color: var(--mco);
+  font-size: var(--fz_m);
+  font-weight: 800;
+}
+
+.gen-input-reader {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.5vh 0;
+  font-family: var(--ff_P);
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--tx1);
+}
+
+.gen-reader-result-card {
+  background: linear-gradient(135deg, var(--inp), var(--bg));
+  border: 1px solid var(--border-accent);
+  border-radius: var(--r_m);
+  padding: 0.6vh 0.8vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+}
+
+.gen-reader-live-label {
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+}
+
+.gen-reader-live-text {
+  font-size: var(--fz_m);
+  font-weight: 800;
+  color: var(--mco);
+  line-height: 1.2;
+}
+
+.gen-reader-live-sub {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+  line-height: 1.15;
+}
+
+.gen-money-out-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1vh;
+}
+
+.gen-money-tag {
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+}
+
+.gen-money-text-main {
+  font-size: var(--fz_m);
+  font-weight: 800;
+  color: var(--mco);
+  line-height: 1.2;
+}
+
+.gen-money-text-sub {
+  font-size: var(--fz_s2);
+  font-weight: 600;
+  color: var(--tx1);
+  line-height: 1.2;
+}
+
+/* ── Responsive Breakpoints ─────────────────────────────────── */
+@media (max-width: 1300px) {
+  .gen-bottom-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
   .gen-top-row,
   .gen-bottom-row {
     grid-template-columns: 1fr;

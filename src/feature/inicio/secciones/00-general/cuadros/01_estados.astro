@@ -1,6 +1,6 @@
 ---
 // src/feature/inicio/secciones/00-general/cuadros/01_estados.astro
-// 📍 Cuadro 1: Directorio de Estados con Búsqueda Reactiva & Horarios en Vivo
+// 📍 Cuadro 1: Directorio de Estados con Búsqueda Reactiva & Códigos ZIP
 ---
 
 <div class="gen-card gen-card--estados" id="cuadroEstados">
@@ -12,10 +12,6 @@
     <span class="gen-badge-counter" id="genStateCounter">50 estados</span>
   </div>
 
-  <p class="gen-card-desc">
-    Búsqueda instantánea por nombre, sigla (FL, TX, CA), prefijo o clima para rapport rápido.
-  </p>
-
   <!-- Buscador Reactivo -->
   <div class="gen-search-box">
     <i class="fa-solid fa-magnifying-glass gen-search-icon"></i>
@@ -23,7 +19,7 @@
       type="text" 
       class="gen-input-search" 
       id="genStateSearchInput" 
-      placeholder="Buscar (ej. FL, Texas, 305, Miami, cálido)..." 
+      placeholder="Buscar (ej. NV, Las Vegas, Florida, 33101, Dallas, Miami)..." 
       autocomplete="off"
     />
     <button class="gen-btn-clear" id="genStateClearBtn" title="Limpiar búsqueda">
@@ -38,11 +34,13 @@
         <tr>
           <th class="th-abbr">Sigla</th>
           <th class="th-name">Estado</th>
-          <th class="th-zone">Huso</th>
-          <th class="th-time">Hora Local</th>
-          <th class="th-cap">Capital</th>
+          <th class="th-zip">ZIP Code</th>
+          <th class="th-cities">Ciudades Clave</th>
           <th class="th-codes">Prefijos</th>
+          <th class="th-time">Hora Local</th>
+          <th class="th-zone">Huso</th>
           <th class="th-weather">Clima</th>
+          <th class="th-cap">Capital</th>
         </tr>
       </thead>
       <tbody id="genStatesTableBody">

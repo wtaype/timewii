@@ -1,11 +1,10 @@
 ---
 // src/feature/inicio/inicioPage.astro
-// Orquestador Principal del Dashboard TimeWii · Wellcare Advisor Toolkit (Teleperformance Centene Campaign)
+// Orquestador Principal del Dashboard TimeWii · Wellcare Advisor Toolkit
 import General from './secciones/00-general/General.astro';
 import Time from './secciones/01-time/Time.astro';
 import Usa from './secciones/02-usa/Usa.astro';
 import English from './secciones/03-english/English.astro';
-import Wellcare from './secciones/04-wellcare/Wellcare.astro';
 import Timers from './secciones/05-timers/Timers.astro';
 import Learn from './secciones/07-learn/Learn.astro';
 
@@ -15,7 +14,6 @@ import './secciones/00-general/general.css';
 import './secciones/01-time/time.css';
 import './secciones/02-usa/usa.css';
 import './secciones/03-english/english.css';
-import './secciones/04-wellcare/wellcare.css';
 import './secciones/05-timers/timers.css';
 import './secciones/07-learn/learn.css';
 ---
@@ -29,7 +27,7 @@ import './secciones/07-learn/learn.css';
     
     <div class="sidebar-header">
       <div class="brand-badge-icon">
-        <i class="fa-solid fa-bolt"></i>
+        <i class="fa-solid fa-heart-pulse"></i>
       </div>
       <div class="brand-info">
         <div class="brand-title">TIME<span>WII</span></div>
@@ -43,112 +41,64 @@ import './secciones/07-learn/learn.css';
       
       <button class="nav-tab-btn active" data-view="panel-general">
         <i class="fa-solid fa-gauge-high"></i>
-        <span class="nav-tab-text">General</span>
+        <span class="nav-tab-text">GENERAL</span>
       </button>
 
       <button class="nav-tab-btn" data-view="panel-time">
         <i class="fa-solid fa-clock"></i>
-        <span class="nav-tab-text">Time</span>
+        <span class="nav-tab-text">TIME US</span>
       </button>
 
       <button class="nav-tab-btn" data-view="panel-usa">
         <i class="fa-solid fa-map-location-dot"></i>
-        <span class="nav-tab-text">United States</span>
+        <span class="nav-tab-text">STATES50</span>
       </button>
 
       <button class="nav-tab-btn" data-view="panel-english">
         <i class="fa-solid fa-comments"></i>
-        <span class="nav-tab-text">English Phrases</span>
-      </button>
-
-      <button class="nav-tab-btn" data-view="panel-wellcare">
-        <i class="fa-solid fa-shield-heart"></i>
-        <span class="nav-tab-text">Wellcare PDP</span>
+        <span class="nav-tab-text">PHRASES</span>
       </button>
 
       <button class="nav-tab-btn" data-view="panel-timers">
         <i class="fa-solid fa-stopwatch-20"></i>
-        <span class="nav-tab-text">Timers</span>
+        <span class="nav-tab-text">TIMERS</span>
       </button>
 
       <button class="nav-tab-btn" data-view="panel-learn">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span class="nav-tab-text">Learn & Phonetics</span>
+        <i class="fa-solid fa-spell-check"></i>
+        <span class="nav-tab-text">SPELLED</span>
       </button>
     </nav>
 
-    <!-- Footer del Sidebar -->
+    <!-- Footer del Sidebar Reorganizado -->
     <div class="sidebar-bottom">
-      <div class="secure-advisor-badge">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span>100% Local · Teleperformance</span>
-      </div>
+      <!-- Botón Cambio de Tema (Luz / Futuro) -->
+      <button class="sidebar-action-btn" id="btnThemeToggle" title="Cambiar Tema (Claro / Futuro)">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+        <span id="themeBtnText">Tema</span>
+      </button>
 
-      <button class="btn-sidebar-toggle" id="btnToggleSidebar">
-        <i class="fa-solid fa-arrow-left-to-line" id="sidebarToggleIcon"></i>
-        <span>Colapsar</span>
+      <!-- Botón About / Privacidad y Soporte -->
+      <button class="sidebar-action-btn" id="btnAboutModal" title="Acerca de TimeWii">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>ABOUT</span>
+      </button>
+
+      <!-- Botón Colapsar Sidebar -->
+      <button class="sidebar-action-btn" id="btnToggleSidebar" title="Colapsar menú lateral">
+        <i class="fa-solid fa-angles-left" id="sidebarToggleIcon"></i>
+        <span>COLLAPSE</span>
       </button>
     </div>
 
   </aside>
 
   <!-- ========================================== -->
-  <!-- 2. VIEWPORT PRINCIPAL                      -->
+  <!-- 2. VIEWPORT PRINCIPAL (100VH VERTICAL)     -->
   <!-- ========================================== -->
   <div class="dashboard-viewport">
     
-    <!-- Topbar Rediseñado: Reloj Grande de Asistencia y Switcher de Tema -->
-    <header class="dashboard-topbar">
-      <div class="topbar-header-wrap">
-        <h1 id="viewMainTitle">Panel General de Operaciones</h1>
-        <p id="viewMainSub">Acceso rápido a estados, deletreador amigable, direcciones USPS, números, copagos y horarios clave</p>
-      </div>
-
-      <!-- Reloj Prominente del Dispositivo del Asesor (Asistencia / Log-in / Log-out) -->
-      <div class="device-attendance-clock" title="Hora de tu computadora (Asistencia / Clock-in)">
-        <div class="attendance-badge-col">
-          <span class="attendance-label">Mi Dispositivo</span>
-          <span class="attendance-date" id="deviceDate">-- --- ----</span>
-        </div>
-        <div class="attendance-time-display">
-          <span class="time-main" id="deviceClockDigits">00:00:00</span>
-          <span class="time-ampm" id="deviceClockAmPm">AM</span>
-        </div>
-      </div>
-
-      <!-- Ticker superior y Cambio de Tema -->
-      <div class="topbar-actions-wrap">
-        <div class="live-ticker-strip">
-          <div class="ticker-pill eastern">
-            <span class="dot"></span>
-            <span class="tag">EDT:</span>
-            <span class="time" id="tickerEDT">--:--:--</span>
-          </div>
-          <div class="ticker-pill central">
-            <span class="dot"></span>
-            <span class="tag">CDT:</span>
-            <span class="time" id="tickerCDT">--:--:--</span>
-          </div>
-          <div class="ticker-pill mountain">
-            <span class="dot"></span>
-            <span class="tag">MDT:</span>
-            <span class="time" id="tickerMDT">--:--:--</span>
-          </div>
-          <div class="ticker-pill pacific">
-            <span class="dot"></span>
-            <span class="tag">PDT:</span>
-            <span class="time" id="tickerPDT">--:--:--</span>
-          </div>
-        </div>
-
-        <!-- Botón de Tema en Cabecera -->
-        <button class="btn-theme-toggle" id="btnThemeToggle" title="Cambiar Tema (Claro / Oscuro)">
-          <i class="fa-solid fa-moon" id="themeIcon"></i>
-        </button>
-      </div>
-    </header>
-
-    <!-- Contenedor con Scroll de las Secciones -->
+    <!-- Contenedor con Scroll de las Secciones (Sin header superior para máximo espacio) -->
     <main class="dashboard-content-scroll">
       
       <div class="view-panel active" id="panel-general">
@@ -167,10 +117,6 @@ import './secciones/07-learn/learn.css';
         <English />
       </div>
 
-      <div class="view-panel" id="panel-wellcare">
-        <Wellcare />
-      </div>
-
       <div class="view-panel" id="panel-timers">
         <Timers />
       </div>
@@ -183,6 +129,58 @@ import './secciones/07-learn/learn.css';
 
   </div>
 
+</div>
+
+<!-- ========================================== -->
+<!-- 3. MODAL ABOUT (widev/modales.js)          -->
+<!-- ========================================== -->
+<div class="wi_modal_about modal-overlay" id="modalAbout">
+  <div class="about-modal-card">
+    <div class="about-modal-header">
+      <div class="about-title-row">
+        <div class="brand-badge-icon">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <div>
+          <h3>Acerca de TimeWii</h3>
+          <span class="gen-badge-tag">Versión 2.0 · Professional Toolkit</span>
+        </div>
+      </div>
+      <button class="modal-close-icon-btn" data-modal-close title="Cerrar modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="about-modal-body">
+      <p>
+        <strong>TimeWii</strong> es una estación de trabajo de alta velocidad desarrollada específicamente para optimizar el rendimiento y la precisión de asesores telefónicos en campañas de salud Medicare / Wellcare.
+      </p>
+
+      <div class="about-features-list">
+        <div class="about-feature-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div><strong>100% Local & Seguro:</strong> No almacena datos en la nube ni transmite información sensible a servidores de terceros. Toda la ejecución ocurre en tu propio navegador.</div>
+        </div>
+
+        <div class="about-feature-item">
+          <i class="fa-solid fa-bolt-lightning"></i>
+          <div><strong>Cero Latencia:</strong> Búsqueda instantánea de estados, rangos de Códigos ZIP, deletreador de nombres y conversión fonética de números y copagos en milisegundos.</div>
+        </div>
+
+        <div class="about-feature-item">
+          <i class="fa-solid fa-user-doctor"></i>
+          <div><strong>Fines Educativos & Operativos:</strong> Diseñado como apoyo ergonómico en llamada conforme a las mejores prácticas de servicio al cliente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-modal-footer">
+      <button class="sidebar-action-btn" data-modal-close>
+        <i class="fa-solid fa-check"></i>
+        <span>Entendido</span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- Toast flotante de confirmación -->
@@ -198,8 +196,10 @@ import './secciones/07-learn/learn.css';
   import { ESTADOS_DATA, ZONAS_HORARIAS } from './lib/estadosData.js';
   import { FRASES_DATA } from './lib/frasesData.js';
   import { US_STATE_PHONETICS } from './lib/phoneticData.js';
-  import { NUMEROS_DATA, MONEDAS_DATA } from './lib/numerosMonedasData.js';
+  import { NUMEROS_DATA, MONEDAS_DATA, numeroAIngles, numeroAInglesColoquial, monedaAIngles } from './lib/numerosMonedasData.js';
+  import { UNIDADES_MED_DATA } from './lib/unidadesMedData.js';
   import { wicopy } from '../../core/widev/widev.js';
+  import { abrirModal } from '../../core/widev/modales.js';
 
   // 1. FORMATEO DE HORAS Y RELOJES EN TIEMPO REAL
   function formatTime(tz?: string) {
@@ -225,34 +225,11 @@ import './secciones/07-learn/learn.css';
   }
 
   function updateAllClocks() {
-    // A. Reloj del dispositivo del asesor
     const local = formatTime();
-    const devDigits = document.getElementById('deviceClockDigits');
-    const devAmPm = document.getElementById('deviceClockAmPm');
-    const devDate = document.getElementById('deviceDate');
-
-    if (devDigits) devDigits.textContent = local.time;
-    if (devAmPm) devAmPm.textContent = local.ampm;
-    if (devDate) {
-      const now = new Date();
-      devDate.textContent = now.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
-    }
-
     // Actualizar <title> dinámico en vivo en la pestaña
     document.title = `${local.time} ${local.ampm} · Timewii`;
 
-    // B. Reloj Cuadro 5 (Sección General)
-    const genDevDigits = document.getElementById('genDeviceDigits');
-    const genDevAmPm = document.getElementById('genDeviceAmPm');
-    const genDevDate = document.getElementById('genDeviceDateText');
-    if (genDevDigits) genDevDigits.textContent = local.time;
-    if (genDevAmPm) genDevAmPm.textContent = local.ampm;
-    if (genDevDate) {
-      const now = new Date();
-      genDevDate.textContent = now.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
-    }
-
-    // C. Husos Horarios Principales de EE.UU.
+    // Panel Time (Relojes de Estados Unidos)
     const e = formatTime(ZONAS_HORARIAS.eastern);
     const c = formatTime(ZONAS_HORARIAS.central);
     const m = formatTime(ZONAS_HORARIAS.mountain);
@@ -260,15 +237,6 @@ import './secciones/07-learn/learn.css';
     const a = formatTime(ZONAS_HORARIAS.alaska);
     const hw = formatTime(ZONAS_HORARIAS.hawaii);
 
-    // Cuadro 5 (3 Zonas Principales)
-    const gP = document.getElementById('genTimePacific');
-    const gC = document.getElementById('genTimeCentral');
-    const gE = document.getElementById('genTimeEastern');
-    if (gP) gP.innerHTML = `${p.time} <span class="gen-zone-ampm">${p.ampm}</span>`;
-    if (gC) gC.innerHTML = `${c.time} <span class="gen-zone-ampm">${c.ampm}</span>`;
-    if (gE) gE.innerHTML = `${e.time} <span class="gen-zone-ampm">${e.ampm}</span>`;
-
-    // Panel Time (Todos los relojes)
     const elE = document.getElementById('clockEastern');
     const elC = document.getElementById('clockCentral');
     const elM = document.getElementById('clockMountain');
@@ -282,29 +250,23 @@ import './secciones/07-learn/learn.css';
     if (elP) elP.innerHTML = `${p.time} <span class="clock-ampm">${p.ampm}</span>`;
     if (elA) elA.innerHTML = `${a.time} <span class="clock-ampm">${a.ampm}</span>`;
     if (elH) elH.innerHTML = `${hw.time} <span class="clock-ampm">${hw.ampm}</span>`;
-
-    // Ticker superior
-    const tE = document.getElementById('tickerEDT');
-    const tC = document.getElementById('tickerCDT');
-    const tM = document.getElementById('tickerMDT');
-    const tP = document.getElementById('tickerPDT');
-    if (tE) tE.textContent = `${e.time} ${e.ampm}`;
-    if (tC) tC.textContent = `${c.time} ${c.ampm}`;
-    if (tM) tM.textContent = `${m.time} ${m.ampm}`;
-    if (tP) tP.textContent = `${p.time} ${p.ampm}`;
   }
 
   setInterval(updateAllClocks, 1000);
   updateAllClocks();
 
-  // 2. CAMBIO DE TEMA EN EL HEADER
+  // 2. CAMBIO DE TEMA EN EL FOOTER DEL SIDEBAR
   const btnTheme = document.getElementById('btnThemeToggle');
   const themeIcon = document.getElementById('themeIcon');
+  const themeBtnText = document.getElementById('themeBtnText');
 
   function syncThemeIcon() {
     const current = document.documentElement.dataset.theme || 'futuro';
     if (themeIcon) {
       themeIcon.className = current === 'futuro' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+    if (themeBtnText) {
+      themeBtnText.textContent = current === 'futuro' ? 'Modo Luz' : 'Futuro';
     }
   }
 
@@ -322,21 +284,15 @@ import './secciones/07-learn/learn.css';
     syncThemeIcon();
   });
 
-  // 3. NAVEGACIÓN ENTRE PESTAÑAS DEL SIDEBAR
+  // 3. MODAL ABOUT CON WIDEV
+  const btnAbout = document.getElementById('btnAboutModal');
+  btnAbout?.addEventListener('click', () => {
+    abrirModal('modalAbout');
+  });
+
+  // 4. NAVEGACIÓN ENTRE PESTAÑAS DEL SIDEBAR
   const navBtns = document.querySelectorAll('.nav-tab-btn');
   const panels = document.querySelectorAll('.view-panel');
-  const mainTitle = document.getElementById('viewMainTitle');
-  const mainSub = document.getElementById('viewMainSub');
-
-  const VIEW_HEADERS: Record<string, { t: string; s: string }> = {
-    'panel-general': { t: 'Panel General de Operaciones', s: 'Acceso rápido a estados, deletreador amigable, direcciones USPS, números, copagos y horarios clave' },
-    'panel-time': { t: 'U.S. Time & Clocks', s: 'Horarios oficiales en tiempo real de todos los husos horarios de EE.UU.' },
-    'panel-usa': { t: 'United States Geography', s: 'Directorio de 50 estados, capitales, zonas horarias, clima y curiosidades para rapport' },
-    'panel-english': { t: 'English Call Center Scripts', s: 'Frases de Wellcare con soporte formativo en español y copiado de 1-click' },
-    'panel-wellcare': { t: 'Wellcare PDP Support', s: 'Ley IRA ($2,000 OOP Cap, Insulina $35), Probing Questions y glosario de farmacia' },
-    'panel-timers': { t: 'Timers Operativos', s: 'Hold Timer regulado a 2 minutos con aviso visual y cronómetro AHT' },
-    'panel-learn': { t: 'Learn & Phonetics', s: 'Alfabeto fonético por estados ("W as in Washington"), reglas MBI y Driver\'s License' }
-  };
 
   navBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -346,15 +302,10 @@ import './secciones/07-learn/learn.css';
 
       panels.forEach(p => p.classList.remove('active'));
       document.getElementById(target)?.classList.add('active');
-
-      if (VIEW_HEADERS[target]) {
-        if (mainTitle) mainTitle.textContent = VIEW_HEADERS[target].t;
-        if (mainSub) mainSub.textContent = VIEW_HEADERS[target].s;
-      }
     });
   });
 
-  // 4. COLAPSO DEL SIDEBAR
+  // 5. COLAPSO DEL SIDEBAR
   const sidebar = document.getElementById('dashboardSidebar');
   const btnToggle = document.getElementById('btnToggleSidebar');
   const toggleIcon = document.getElementById('sidebarToggleIcon');
@@ -363,11 +314,11 @@ import './secciones/07-learn/learn.css';
     sidebar?.classList.toggle('collapsed');
     const isCol = sidebar?.classList.contains('collapsed');
     if (toggleIcon) {
-      toggleIcon.className = isCol ? 'fa-solid fa-arrow-right-to-line' : 'fa-solid fa-arrow-left-to-line';
+      toggleIcon.className = isCol ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left';
     }
   });
 
-  // 5. TOAST GLOBAL DE COPIADO
+  // 6. TOAST GLOBAL DE COPIADO (Para secciones donde aún se use)
   function showToast(msg: string) {
     const toast = document.getElementById('globalToast');
     const toastText = document.getElementById('globalToastText');
@@ -378,7 +329,6 @@ import './secciones/07-learn/learn.css';
     }
   }
 
-  // Delegación de copiado rápido data-copy con widev/copy.js
   document.addEventListener('click', (e) => {
     const target = (e.target as HTMLElement).closest('[data-copy]') as HTMLElement | null;
     if (target) {
@@ -391,7 +341,7 @@ import './secciones/07-learn/learn.css';
     }
   });
 
-  // 6. SECCIÓN GENERAL - CUADRO 1: ESTADOS CON BÚSQUEDA
+  // 7. SECCIÓN GENERAL - CUADRO 1: ESTADOS CON ZIP CODE & BÚSQUEDA
   const genStatesBody = document.getElementById('genStatesTableBody');
   const genStateInput = document.getElementById('genStateSearchInput') as HTMLInputElement | null;
   const genStateClear = document.getElementById('genStateClearBtn');
@@ -402,13 +352,42 @@ import './secciones/07-learn/learn.css';
     genStatesBody.innerHTML = '';
     const q = query.toLowerCase().trim();
 
-    const filtered = ESTADOS_DATA.filter(st => {
-      return st.name.toLowerCase().includes(q) ||
-             st.abbr.toLowerCase().includes(q) ||
-             st.cap.toLowerCase().includes(q) ||
-             st.codes.includes(q) ||
-             st.weather.toLowerCase().includes(q);
+    // Filtrar con asignación de peso de relevancia para que siglas (ej. NV) o ciudades salgan primero
+    const matches: { st: typeof ESTADOS_DATA[0]; score: number }[] = [];
+
+    ESTADOS_DATA.forEach(st => {
+      const abbrLow = st.abbr.toLowerCase();
+      const nameLow = st.name.toLowerCase();
+      const citiesLow = (st.cities || '').toLowerCase();
+      const zipLow = (st.zip || '').toLowerCase();
+      const capLow = (st.cap || '').toLowerCase();
+      const codesLow = st.codes.toLowerCase();
+      const weatherLow = st.weather.toLowerCase();
+
+      if (!q) {
+        matches.push({ st, score: 99 });
+        return;
+      }
+
+      // Prioridad 1: Coincidencia exacta o inicio en sigla (ej. NV -> Nevada primero)
+      if (abbrLow === q) {
+        matches.push({ st, score: 1 });
+      } else if (abbrLow.startsWith(q)) {
+        matches.push({ st, score: 2 });
+      } else if (nameLow.startsWith(q)) {
+        matches.push({ st, score: 3 });
+      } else if (nameLow.includes(q)) {
+        matches.push({ st, score: 4 });
+      } else if (citiesLow.includes(q)) {
+        matches.push({ st, score: 5 });
+      } else if (zipLow.includes(q) || capLow.includes(q) || codesLow.includes(q) || weatherLow.includes(q)) {
+        matches.push({ st, score: 6 });
+      }
     });
+
+    // Ordenar de menor score (más relevante) a mayor score
+    matches.sort((a, b) => a.score - b.score);
+    const filtered = matches.map(m => m.st);
 
     if (genStateCounter) {
       genStateCounter.textContent = `${filtered.length} estados`;
@@ -424,14 +403,17 @@ import './secciones/07-learn/learn.css';
       const t = formatTime(tz);
 
       const tr = document.createElement('tr');
+      // Orden: Sigla | Estado | ZIP Code | Ciudades | Prefijos | Hora Local | Huso | Clima | Capital
       tr.innerHTML = `
         <td class="st-col-abbr">${st.abbr}</td>
         <td class="st-col-name">${st.name}</td>
-        <td><span class="badge-zone ${st.zone.toLowerCase()}">${st.zone}</span></td>
-        <td class="st-col-time">${t.time} ${t.ampm}</td>
-        <td>${st.cap}</td>
+        <td><span class="st-col-zip">${st.zip}</span></td>
+        <td class="st-col-cities">${st.cities || '-'}</td>
         <td>${st.codes}</td>
+        <td class="st-col-time">${t.time} ${t.ampm}</td>
+        <td><span class="badge-zone ${st.zone.toLowerCase()}">${st.zone}</span></td>
         <td><span class="st-col-weather">${st.weather}</span></td>
+        <td>${st.cap}</td>
       `;
       genStatesBody.appendChild(tr);
     });
@@ -451,62 +433,54 @@ import './secciones/07-learn/learn.css';
     }
   });
 
-  // 7. SECCIÓN GENERAL - CUADRO 2: DELETREADOR AMIGABLE
+  // 8. SECCIÓN GENERAL - CUADRO 2: DELETREADOR AMIGABLE (SIN BOTONES COPIAR)
   const genSpellerInput = document.getElementById('genSpellerInput') as HTMLInputElement | null;
   const genSpellerOutput = document.getElementById('genSpellerOutput');
   const genSpellerClear = document.getElementById('genSpellerClearBtn');
-  const genBtnCopySpeller = document.getElementById('genBtnCopySpeller');
   const genSpellerHint = document.getElementById('genSpellerCountHint');
-
-  let currentSpelledText = '';
 
   function updateGeneralSpeller() {
     const val = genSpellerInput?.value.toUpperCase().trim() || '';
     if (!genSpellerOutput) return;
     genSpellerOutput.innerHTML = '';
-    currentSpelledText = '';
 
     if (!val) {
       genSpellerOutput.innerHTML = '<span class="gen-empty-state-text">Escribe en la caja de arriba para ver el desglose fonético en tiempo real...</span>';
-      if (genSpellerHint) genSpellerHint.textContent = 'Ingresa letras o números arriba';
+      if (genSpellerHint) genSpellerHint.textContent = 'Ingresa letras o números arriba para ver el desglose fonético';
       return;
     }
 
     if (genSpellerHint) {
-      genSpellerHint.textContent = `${val.length} caracteres desglosados`;
+      genSpellerHint.textContent = `${val.length} caracteres listos para lectura directa`;
     }
-
-    const phraseTokens: string[] = [];
 
     for (const char of val) {
       const match = (US_STATE_PHONETICS as any)[char];
       if (match) {
-        phraseTokens.push(match.example);
-        const token = document.createElement('div');
-        token.className = 'gen-speller-token';
-        token.innerHTML = `
-          <span class="gen-token-char">${char}</span>
-          <span class="gen-token-word">${match.word}</span>
-          <span class="gen-token-phrase">"${match.example}"</span>
+        const card = document.createElement('div');
+        card.className = 'gen-spell-card';
+        card.innerHTML = `
+          <span class="gen-spell-char">${char}</span>
+          <span class="gen-spell-word">${match.word}</span>
+          <span class="gen-spell-phrase">${match.example}</span>
         `;
-        genSpellerOutput.appendChild(token);
+        genSpellerOutput.appendChild(card);
       } else if (char === ' ') {
         const space = document.createElement('div');
-        space.style.width = '14px';
+        space.style.width = '12px';
+        space.style.display = 'inline-block';
         genSpellerOutput.appendChild(space);
       } else {
-        phraseTokens.push(char);
-        const raw = document.createElement('div');
-        raw.className = 'gen-speller-token';
-        raw.innerHTML = `
-          <span class="gen-token-char">${char}</span>
-          <span class="gen-token-word">Símbolo</span>
+        const card = document.createElement('div');
+        card.className = 'gen-spell-card';
+        card.innerHTML = `
+          <span class="gen-spell-char">${char}</span>
+          <span class="gen-spell-word">${char}</span>
+          <span class="gen-spell-phrase">Símbolo</span>
         `;
-        genSpellerOutput.appendChild(raw);
+        genSpellerOutput.appendChild(card);
       }
     }
-
-    currentSpelledText = phraseTokens.join(', ');
   }
 
   genSpellerInput?.addEventListener('input', updateGeneralSpeller);
@@ -519,17 +493,9 @@ import './secciones/07-learn/learn.css';
     }
   });
 
-  genBtnCopySpeller?.addEventListener('click', () => {
-    if (currentSpelledText) {
-      wicopy(currentSpelledText, (ok) => {
-        if (ok) showToast('Desglose fonético copiado');
-      });
-    }
-  });
-
-  // 8. SECCIÓN GENERAL - CUADRO 3: FILTRO DIRECCIONES USPS
+  // 9. SECCIÓN GENERAL - CUADRO 3: DIRECCIONES USPS (SIN BOTONES COPIAR)
   const genUspsInput = document.getElementById('genUspsSearchInput') as HTMLInputElement | null;
-  const genAbbrItems = document.querySelectorAll('.gen-abbr-item');
+  const genAbbrItems = document.querySelectorAll('#genAbbrGrid .gen-pill-item');
 
   genUspsInput?.addEventListener('input', (e) => {
     const q = (e.target as HTMLInputElement).value.toLowerCase().trim();
@@ -544,76 +510,144 @@ import './secciones/07-learn/learn.css';
     });
   });
 
-  // 9. SECCIÓN GENERAL - CUADRO 4: NÚMEROS & MONEDAS
-  const genTabNumBtn = document.getElementById('genTabNumerosBtn');
-  const genTabMonBtn = document.getElementById('genTabMonedasBtn');
-  const genSubNumeros = document.getElementById('genSubtabNumeros');
-  const genSubMonedas = document.getElementById('genSubtabMonedas');
-  const genNumSearch = document.getElementById('genNumSearchInput') as HTMLInputElement | null;
-  const genNumTableBody = document.getElementById('genNumTableBody');
-  const genMonTableBody = document.getElementById('genMonedaTableBody');
+  // 10. SECCIÓN GENERAL - CUADRO 4: NÚMEROS & CIFRAS EN 2 COLUMNAS
+  const genNumberInput = document.getElementById('genNumberInput') as HTMLInputElement | null;
+  const genNumberClearBtn = document.getElementById('genNumberClearBtn');
+  const genNumberLiveText = document.getElementById('genNumberLiveText');
+  const genNumberLiveSub = document.getElementById('genNumberLiveSub');
+  const genNumGrid = document.getElementById('genNumGrid');
 
-  let activeSubtab: 'numeros' | 'monedas' = 'numeros';
+  function updateNumberReader() {
+    const raw = genNumberInput?.value.trim() || '';
+    if (!genNumberLiveText || !genNumberLiveSub) return;
 
-  genTabNumBtn?.addEventListener('click', () => {
-    activeSubtab = 'numeros';
-    genTabNumBtn.classList.add('active');
-    genTabMonBtn?.classList.remove('active');
-    genSubNumeros?.classList.add('active');
-    genSubMonedas?.classList.remove('active');
-    renderNumerosYMonedas(genNumSearch?.value || '');
-  });
+    if (!raw) {
+      genNumberLiveText.textContent = 'Escribe una cifra arriba...';
+      genNumberLiveSub.textContent = 'Pronunciación natural para miembros de EE.UU.';
+      return;
+    }
 
-  genTabMonBtn?.addEventListener('click', () => {
-    activeSubtab = 'monedas';
-    genTabMonBtn.classList.add('active');
-    genTabNumBtn?.classList.remove('active');
-    genSubMonedas?.classList.add('active');
-    genSubNumeros?.classList.remove('active');
-    renderNumerosYMonedas(genNumSearch?.value || '');
-  });
+    const enText = numeroAIngles(raw);
+    const coloquial = numeroAInglesColoquial(raw);
 
-  function renderNumerosYMonedas(query = '') {
-    const q = query.toLowerCase().trim();
-
-    if (activeSubtab === 'numeros' && genNumTableBody) {
-      genNumTableBody.innerHTML = '';
-      const filtered = NUMEROS_DATA.filter(n => n.num.toLowerCase().includes(q) || n.en.toLowerCase().includes(q) || n.tip.toLowerCase().includes(q));
-      filtered.forEach(n => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="td-num-val">${n.num}</td>
-          <td class="td-num-en">${n.en} <br/><span style="font-size: 0.72rem; color: var(--tx3); font-weight: normal;">${n.tip}</span></td>
-          <td class="td-num-action">
-            <button class="gen-btn-copy-item" data-copy="${n.en}" title="Copiar pronunciación"><i class="fa-regular fa-copy"></i></button>
-          </td>
-        `;
-        genNumTableBody.appendChild(tr);
-      });
-    } else if (activeSubtab === 'monedas' && genMonTableBody) {
-      genMonTableBody.innerHTML = '';
-      const filtered = MONEDAS_DATA.filter(m => m.monto.toLowerCase().includes(q) || m.enRapido.toLowerCase().includes(q) || m.enFormal.toLowerCase().includes(q) || m.contexto.toLowerCase().includes(q));
-      filtered.forEach(m => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="td-num-val">${m.monto}</td>
-          <td class="td-num-en"><strong>${m.enRapido}</strong> <span style="font-size: 0.72rem; color: var(--tx3);">(${m.enFormal})</span><br/><span style="font-size: 0.72rem; color: var(--tx3); font-weight: normal;">${m.contexto}</span></td>
-          <td class="td-num-action">
-            <button class="gen-btn-copy-item" data-copy="${m.enRapido}" title="Copiar cómo se dice"><i class="fa-regular fa-copy"></i></button>
-          </td>
-        `;
-        genMonTableBody.appendChild(tr);
-      });
+    genNumberLiveText.textContent = enText;
+    if (coloquial && coloquial.toLowerCase() !== enText.toLowerCase()) {
+      genNumberLiveSub.textContent = `También: "${coloquial}"`;
+    } else {
+      genNumberLiveSub.textContent = 'Pronunciación estándar CMS';
     }
   }
 
-  renderNumerosYMonedas();
+  function renderGridNumeros() {
+    if (!genNumGrid) return;
+    genNumGrid.innerHTML = '';
+    NUMEROS_DATA.forEach(n => {
+      const item = document.createElement('div');
+      item.className = 'gen-pill-item';
+      item.innerHTML = `
+        <span class="gen-pill-code">${n.num}</span>
+        <span class="gen-pill-text">${n.en}</span>
+      `;
+      genNumGrid.appendChild(item);
+    });
+  }
 
-  genNumSearch?.addEventListener('input', (e) => {
-    renderNumerosYMonedas((e.target as HTMLInputElement).value);
+  renderGridNumeros();
+  genNumberInput?.addEventListener('input', updateNumberReader);
+  genNumberClearBtn?.addEventListener('click', () => {
+    if (genNumberInput) {
+      genNumberInput.value = '';
+      updateNumberReader();
+      genNumberInput.focus();
+    }
   });
 
-  // 10. MAPA TOOLTIP
+  // 11. SECCIÓN GENERAL - CUADRO 5: MONEDAS & COPAGOS EN 2 COLUMNAS
+  const genMoneyInput = document.getElementById('genMoneyInput') as HTMLInputElement | null;
+  const genMoneyClearBtn = document.getElementById('genMoneyClearBtn');
+  const genMoneyLiveRapido = document.getElementById('genMoneyLiveRapido');
+  const genMoneyLiveFormal = document.getElementById('genMoneyLiveFormal');
+  const genMonedaGrid = document.getElementById('genMonedaGrid');
+
+  function updateMoneyReader() {
+    const val = genMoneyInput?.value || '';
+    if (!genMoneyLiveRapido || !genMoneyLiveFormal) return;
+
+    if (!val.trim()) {
+      genMoneyLiveRapido.textContent = 'Escribe un monto arriba...';
+      genMoneyLiveFormal.textContent = 'Ejemplo: 5.30, 35, 2000';
+      return;
+    }
+
+    const res = monedaAIngles(val);
+    if (res) {
+      genMoneyLiveRapido.textContent = res.rapido;
+      genMoneyLiveFormal.textContent = `${res.montoFormateado} · ${res.formal}`;
+    } else {
+      genMoneyLiveRapido.textContent = 'Monto no reconocido';
+      genMoneyLiveFormal.textContent = 'Ingresa números como 5.30 o 35';
+    }
+  }
+
+  function renderGridMonedas() {
+    if (!genMonedaGrid) return;
+    genMonedaGrid.innerHTML = '';
+    MONEDAS_DATA.forEach(m => {
+      const item = document.createElement('div');
+      item.className = 'gen-pill-item';
+      item.innerHTML = `
+        <span class="gen-pill-code">${m.monto}</span>
+        <span class="gen-pill-text">${m.enRapido}</span>
+      `;
+      genMonedaGrid.appendChild(item);
+    });
+  }
+
+  renderGridMonedas();
+  genMoneyInput?.addEventListener('input', updateMoneyReader);
+  genMoneyClearBtn?.addEventListener('click', () => {
+    if (genMoneyInput) {
+      genMoneyInput.value = '';
+      updateMoneyReader();
+      genMoneyInput.focus();
+    }
+  });
+
+  // 11.B. SECCIÓN GENERAL - CUADRO 6: UNIDADES FARMACÉUTICAS EN 2 COLUMNAS
+  const genUnidadesGrid = document.getElementById('genUnidadesGrid');
+  const genUnidadInput = document.getElementById('genUnidadSearchInput') as HTMLInputElement | null;
+
+  function renderGridUnidades(query = '') {
+    if (!genUnidadesGrid) return;
+    genUnidadesGrid.innerHTML = '';
+    const q = query.toLowerCase().trim();
+
+    const filtered = UNIDADES_MED_DATA.filter(u => {
+      return u.abrv.toLowerCase().includes(q) ||
+             u.name.toLowerCase().includes(q) ||
+             u.en.toLowerCase().includes(q) ||
+             u.tip.toLowerCase().includes(q);
+    });
+
+    filtered.forEach(u => {
+      const item = document.createElement('div');
+      item.className = 'gen-pill-item';
+      item.setAttribute('data-abrv', u.abrv);
+      item.setAttribute('data-name', u.name);
+      item.innerHTML = `
+        <span class="gen-pill-code">${u.abrv}</span>
+        <span class="gen-pill-text">${u.name}</span>
+      `;
+      genUnidadesGrid.appendChild(item);
+    });
+  }
+
+  renderGridUnidades();
+  genUnidadInput?.addEventListener('input', (e) => {
+    renderGridUnidades((e.target as HTMLInputElement).value);
+  });
+
+  // 12. MAPA TOOLTIP (SECCIÓN USA)
   const mapStates = document.querySelectorAll('.map-state');
   const tooltip = document.getElementById('mapTooltip');
   const mapWrapper = document.querySelector('.us-map-wrapper');
@@ -654,7 +688,7 @@ import './secciones/07-learn/learn.css';
     });
   });
 
-  // 11. TABLA DE ESTADOS CON CLIMA Y CURIOSIDADES (SECCIÓN USA)
+  // 13. TABLA DE ESTADOS CON CLIMA Y CURIOSIDADES (SECCIÓN USA)
   const statesTbody = document.getElementById('statesTableBody');
   const stateInput = document.getElementById('stateSearchInput') as HTMLInputElement | null;
   const filterBtns = document.querySelectorAll('#section-usa .btn-filter');
@@ -669,6 +703,7 @@ import './secciones/07-learn/learn.css';
       const matchZone = zone === 'all' || st.zone.toLowerCase().includes(zone.toLowerCase());
       const matchQuery = st.name.toLowerCase().includes(q) ||
                          st.abbr.toLowerCase().includes(q) ||
+                         st.zip.toLowerCase().includes(q) ||
                          st.cap.toLowerCase().includes(q) ||
                          st.codes.includes(q) ||
                          st.weather.toLowerCase().includes(q) ||
@@ -689,6 +724,7 @@ import './secciones/07-learn/learn.css';
       tr.innerHTML = `
         <td class="st-col-abbr">${st.abbr}</td>
         <td><strong>${st.name}</strong></td>
+        <td><span class="st-col-zip">${st.zip}</span></td>
         <td><span class="badge-zone ${st.zone.toLowerCase()}">${st.zone}</span></td>
         <td class="st-col-time">${t.time} ${t.ampm}</td>
         <td class="st-col-cap">${st.cap}</td>
@@ -715,7 +751,7 @@ import './secciones/07-learn/learn.css';
     });
   });
 
-  // 12. FRASES EN INGLÉS CON COPIADO DE 1-CLICK
+  // 14. FRASES EN INGLÉS CON COPIADO DE 1-CLICK
   const phrasesGrid = document.getElementById('phrasesGrid');
   const phraseInput = document.getElementById('phraseSearchInput') as HTMLInputElement | null;
   const phraseCatBtns = document.querySelectorAll('#section-english .btn-filter');
@@ -768,7 +804,7 @@ import './secciones/07-learn/learn.css';
     });
   });
 
-  // 13. TIMERS (HOLD TIMER 2 MINUTOS & AHT STOPWATCH)
+  // 15. TIMERS (HOLD TIMER 2 MINUTOS & AHT STOPWATCH)
   const HOLD_DURATION = 120;
   let holdRemaining = HOLD_DURATION;
   let holdInterval: any = null;
@@ -905,7 +941,7 @@ import './secciones/07-learn/learn.css';
     }
   });
 
-  // 14. DELETREADOR DE ESTADOS (PANEL LEARN)
+  // 16. DELETREADOR DE ESTADOS (PANEL LEARN / SPELLED)
   const spellerInput = document.getElementById('spellerInput') as HTMLInputElement | null;
   const spellerOutput = document.getElementById('spellerOutput');
   const spellerClearBtn = document.getElementById('spellerClearBtn');
@@ -956,5 +992,4 @@ import './secciones/07-learn/learn.css';
       spellerInput.focus();
     }
   });
-
 </script>
