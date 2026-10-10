@@ -72,15 +72,18 @@ export function monedaAIngles(val) {
 
   // 1. Habla Rápida directa en llamada (ej. 5.30 -> "Five thirty", 615.50 -> "Six hundred fifteen fifty")
   let rapido = '';
+  const coloqEnteros = numeroAInglesColoquial(enteros);
+  const baseEnteros = coloqEnteros ? coloqEnteros : numeroAIngles(enteros);
+
   if (enteros === 0 && centavos === 0) {
     rapido = 'Zero dollars / Free';
   } else if (enteros === 0) {
     rapido = numeroAIngles(centavos) + ' cents';
   } else if (centavos === 0) {
-    rapido = numeroAIngles(enteros) + ' dollars';
+    rapido = baseEnteros + ' dollars';
   } else {
     const centText = centavos < 10 ? `oh-${UNIDADES[centavos].toLowerCase()}` : numeroAIngles(centavos).toLowerCase();
-    rapido = `${numeroAIngles(enteros)} ${centText}`;
+    rapido = `${baseEnteros} ${centText}`;
   }
 
   // 2. Lectura formal CMS (ej. "Six hundred fifteen dollars and fifty cents")
@@ -141,7 +144,9 @@ export const MONEDAS_DATA = [
   { monto: "$47.00", enRapido: "Forty-seven dollars", enFormal: "Forty-seven dollar copay", contexto: "Marca preferida Nivel 3" },
   { monto: "$100.00", enRapido: "One hundred dollars", enFormal: "One hundred dollar copay", contexto: "Medicamentos no preferidos Nivel 4" },
   { monto: "$590.00", enRapido: "Five ninety", enFormal: "Five hundred ninety dollars deductible", contexto: "Deducible estándar anual CMS Parte D" },
-  { monto: "$2,000.00", enRapido: "Two thousand dollars", enFormal: "Two thousand dollars out-of-pocket cap", contexto: "Tope máximo legal anual Ley IRA" }
+  { monto: "$2,000.00", enRapido: "Two thousand dollars", enFormal: "Two thousand dollars out-of-pocket cap", contexto: "Tope máximo legal anual Ley IRA" },
+  { monto: "$2,100.00", enRapido: "Twenty-one hundred dollars", enFormal: "Two thousand one hundred dollars", contexto: "Tope o límite de beneficio extendido" },
+  { monto: "$2,400.00", enRapido: "Twenty-four hundred dollars", enFormal: "Two thousand four hundred dollars", contexto: "Asignación anual de flex card o beneficios" }
 ];
 
 export default {
