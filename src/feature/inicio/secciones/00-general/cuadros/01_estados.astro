@@ -1,0 +1,53 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/01_estados.astro
+// 📍 Cuadro 1: Directorio de Estados con Búsqueda Reactiva & Horarios en Vivo
+---
+
+<div class="gen-card gen-card--estados" id="cuadroEstados">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-map-location-dot gen-icon-mco"></i>
+      <span>Estados & Directorio USA</span>
+    </div>
+    <span class="gen-badge-counter" id="genStateCounter">50 estados</span>
+  </div>
+
+  <p class="gen-card-desc">
+    Búsqueda instantánea por nombre, sigla (FL, TX, CA), prefijo o clima para rapport rápido.
+  </p>
+
+  <!-- Buscador Reactivo -->
+  <div class="gen-search-box">
+    <i class="fa-solid fa-magnifying-glass gen-search-icon"></i>
+    <input 
+      type="text" 
+      class="gen-input-search" 
+      id="genStateSearchInput" 
+      placeholder="Buscar (ej. FL, Texas, 305, Miami, cálido)..." 
+      autocomplete="off"
+    />
+    <button class="gen-btn-clear" id="genStateClearBtn" title="Limpiar búsqueda">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- Contenedor de Tabla con Scroll Optimizado -->
+  <div class="gen-table-scroll">
+    <table class="gen-states-table" id="genStatesTable">
+      <thead>
+        <tr>
+          <th class="th-abbr">Sigla</th>
+          <th class="th-name">Estado</th>
+          <th class="th-zone">Huso</th>
+          <th class="th-time">Hora Local</th>
+          <th class="th-cap">Capital</th>
+          <th class="th-codes">Prefijos</th>
+          <th class="th-weather">Clima</th>
+        </tr>
+      </thead>
+      <tbody id="genStatesTableBody">
+        <!-- Generado dinámicamente por JS en cliente -->
+      </tbody>
+    </table>
+  </div>
+</div>

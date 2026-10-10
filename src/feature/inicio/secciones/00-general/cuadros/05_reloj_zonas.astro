@@ -1,0 +1,69 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/05_reloj_zonas.astro
+// 🕐 Cuadro 5: Reloj Digital Grande del Sistema & 3 Husos Horarios Principales (CA, IA, NY)
+---
+
+<div class="gen-card gen-card--relojes" id="cuadroRelojZonas">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-clock gen-icon-mco"></i>
+      <span>Reloj Digital & 3 Zonas USA</span>
+    </div>
+    <span class="gen-live-badge"><span class="gen-live-dot"></span> EN VIVO</span>
+  </div>
+
+  <p class="gen-card-desc">
+    Hora de tu computadora para control de turno y los 3 husos de mayor volumen de llamadas.
+  </p>
+
+  <!-- Reloj Digital Grande del Asesor -->
+  <div class="gen-big-clock-box" id="genBigClockBox">
+    <div class="gen-big-clock-meta">
+      <span class="gen-clock-label">Mi Computadora</span>
+      <span class="gen-clock-date" id="genDeviceDateText">-- --- ----</span>
+    </div>
+    <div class="gen-big-clock-display">
+      <span class="gen-digits-main" id="genDeviceDigits">00:00:00</span>
+      <span class="gen-digits-ampm" id="genDeviceAmPm">AM</span>
+    </div>
+  </div>
+
+  <!-- Las 3 Horas Principales -->
+  <div class="gen-priority-zones-grid">
+    <!-- Oeste (California / CA - Pacific PDT) -->
+    <div class="gen-zone-card gen-zone-card--pacific">
+      <div class="gen-zone-top">
+        <span class="gen-zone-tag">🌴 Oeste (CA)</span>
+        <span class="gen-zone-sub">PDT / UTC-7</span>
+      </div>
+      <div class="gen-zone-time" id="genTimePacific">
+        --:--:-- <span class="gen-zone-ampm">AM</span>
+      </div>
+      <div class="gen-zone-states">California, WA, OR, NV</div>
+    </div>
+
+    <!-- Central (Iowa / IA - Central CDT) -->
+    <div class="gen-zone-card gen-zone-card--central">
+      <div class="gen-zone-top">
+        <span class="gen-zone-tag">🌾 Central (IA)</span>
+        <span class="gen-zone-sub">CDT / UTC-5</span>
+      </div>
+      <div class="gen-zone-time" id="genTimeCentral">
+        --:--:-- <span class="gen-zone-ampm">AM</span>
+      </div>
+      <div class="gen-zone-states">Iowa, Texas, IL, MO</div>
+    </div>
+
+    <!-- Este (New York / NY - Eastern EDT) -->
+    <div class="gen-zone-card gen-zone-card--eastern">
+      <div class="gen-zone-top">
+        <span class="gen-zone-tag">🗽 Este (NY)</span>
+        <span class="gen-zone-sub">EDT / UTC-4</span>
+      </div>
+      <div class="gen-zone-time" id="genTimeEastern">
+        --:--:-- <span class="gen-zone-ampm">AM</span>
+      </div>
+      <div class="gen-zone-states">New York, Florida, GA, NC</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/03_direcciones.astro
+// 📬 Cuadro 3: Direcciones USPS Comunes & Validación Driver's License (DL)
+---
+
+<div class="gen-card gen-card--direcciones" id="cuadroDirecciones">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-envelopes-bulk gen-icon-mco"></i>
+      <span>Direcciones USPS & Licencia DL</span>
+    </div>
+    <span class="gen-badge-tag">Autenticación HIPAA</span>
+  </div>
+
+  <p class="gen-card-desc">
+    Abreviaciones oficiales USPS para verificación de domicilio y formatos de Driver's License.
+  </p>
+
+  <!-- Buscador de Abreviaciones -->
+  <div class="gen-search-box gen-search-box--sm">
+    <i class="fa-solid fa-magnifying-glass gen-search-icon"></i>
+    <input 
+      type="text" 
+      class="gen-input-search" 
+      id="genUspsSearchInput" 
+      placeholder="Filtrar abreviación (ej: AVE, CIR, Road)..." 
+      autocomplete="off"
+    />
+  </div>
+
+  <!-- Cuadrícula de Abreviaciones USPS -->
+  <div class="gen-abbr-grid" id="genAbbrGrid">
+    <div class="gen-abbr-item" data-code="AVE" data-name="Avenue">
+      <span class="gen-abbr-code">AVE</span>
+      <span class="gen-abbr-name">Avenue</span>
+      <button class="gen-btn-copy-item" data-copy="Avenue" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="BLVD" data-name="Boulevard">
+      <span class="gen-abbr-code">BLVD</span>
+      <span class="gen-abbr-name">Boulevard</span>
+      <button class="gen-btn-copy-item" data-copy="Boulevard" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="CIR" data-name="Circle">
+      <span class="gen-abbr-code">CIR</span>
+      <span class="gen-abbr-name">Circle</span>
+      <button class="gen-btn-copy-item" data-copy="Circle" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="CT" data-name="Court">
+      <span class="gen-abbr-code">CT</span>
+      <span class="gen-abbr-name">Court</span>
+      <button class="gen-btn-copy-item" data-copy="Court" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="DR" data-name="Drive">
+      <span class="gen-abbr-code">DR</span>
+      <span class="gen-abbr-name">Drive</span>
+      <button class="gen-btn-copy-item" data-copy="Drive" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="LN" data-name="Lane">
+      <span class="gen-abbr-code">LN</span>
+      <span class="gen-abbr-name">Lane</span>
+      <button class="gen-btn-copy-item" data-copy="Lane" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="PKWY" data-name="Parkway">
+      <span class="gen-abbr-code">PKWY</span>
+      <span class="gen-abbr-name">Parkway</span>
+      <button class="gen-btn-copy-item" data-copy="Parkway" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="PL" data-name="Place">
+      <span class="gen-abbr-code">PL</span>
+      <span class="gen-abbr-name">Place</span>
+      <button class="gen-btn-copy-item" data-copy="Place" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="RD" data-name="Road">
+      <span class="gen-abbr-code">RD</span>
+      <span class="gen-abbr-name">Road</span>
+      <button class="gen-btn-copy-item" data-copy="Road" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+    <div class="gen-abbr-item" data-code="ST" data-name="Street">
+      <span class="gen-abbr-code">ST</span>
+      <span class="gen-abbr-name">Street</span>
+      <button class="gen-btn-copy-item" data-copy="Street" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+    </div>
+  </div>
+
+  <!-- Panel Resumen Driver's License -->
+  <div class="gen-dl-box">
+    <div class="gen-dl-title">
+      <i class="fa-solid fa-id-card gen-icon-mco"></i>
+      <span>Formatos Driver's License (DL):</span>
+    </div>
+    <div class="gen-dl-pills-row">
+      <span class="gen-dl-pill"><strong>TX:</strong> 8 números</span>
+      <span class="gen-dl-pill"><strong>FL:</strong> 1 letra + 12 núm</span>
+      <span class="gen-dl-pill"><strong>CA:</strong> 1 letra + 7 núm</span>
+      <span class="gen-dl-pill"><strong>NY:</strong> 9 números</span>
+    </div>
+    <div class="gen-dl-tip">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Pide siempre deletreo: <em>"C as in California, T as in Texas"</em>.</span>
+    </div>
+  </div>
+</div>

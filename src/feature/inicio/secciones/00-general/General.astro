@@ -1,0 +1,24 @@
+---
+// src/feature/inicio/secciones/00-general/General.astro
+// 🌟 Orquestador de la Sección General: Layout 5 Cuadros (2 Arriba, 3 Abajo)
+import Estados from './cuadros/01_estados.astro';
+import Deletreador from './cuadros/02_deletreador.astro';
+import Direcciones from './cuadros/03_direcciones.astro';
+import NumerosMonedas from './cuadros/04_numeros_monedas.astro';
+import RelojZonas from './cuadros/05_reloj_zonas.astro';
+---
+
+<section class="general-layout-grid" id="section-general">
+  <!-- Fila Superior: 2 Columnas -->
+  <div class="gen-top-row">
+    <Estados />
+    <Deletreador />
+  </div>
+
+  <!-- Fila Inferior: 3 Columnas -->
+  <div class="gen-bottom-row">
+    <Direcciones />
+    <NumerosMonedas />
+    <RelojZonas />
+  </div>
+</section>

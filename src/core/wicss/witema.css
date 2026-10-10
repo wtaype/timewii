@@ -76,14 +76,14 @@
   --bg_card:             #ffffff;
   --bg-card-hover:       #f0f9fa;
   --bg_card_hv:          #f0f9fa;
-  --bg-subtle:           rgba(0, 156, 166, 0.05);
+  --bg-subtle:           rgba(0, 160, 164, 0.05);
   --line:                #d4e3e6;
   --brd:                 #d4e3e6;
   --border:              #d4e3e6;
   --border-card:         #d4e3e6;
   --border_card:         #d4e3e6;
-  --border-accent:       rgba(0, 156, 166, 0.35);
-  --border_accent:       rgba(0, 156, 166, 0.35);
+  --border-accent:       rgba(0, 160, 164, 0.35);
+  --border_accent:       rgba(0, 160, 164, 0.35);
 
   /* 2. Tipografía y Textos */
   --tx:                  #0f172a;
@@ -91,7 +91,7 @@
   --tx2:                 #334155;
   --tx3:                 #64748b;
   --txa:                 #ffffff;
-  --txe:                 #009ca6;
+  --txe:                 #00a0a4;
   --ink:                 #0f172a;
   --muted:               #64748b;
   --text-main:           #0f172a;
@@ -100,34 +100,34 @@
   --text_muted:          #64748b;
   --text-bright:         #020617;
 
-  /* 3. Colores de Identidad y Marca (Wellcare Oficial) */
-  --mco:                 #00a1a5;
+  /* 3. Colores de Identidad y Marca (Wellcare Oficial #00a0a4) */
+  --mco:                 #00a0a4;
   --mbg:                 #e6f7f8;
-  --p_v1:                #00a1a5;
-  --p_v2:                #00898c;
-  --primary:             #00a1a5;
-  --primary-hover:       #00898c;
-  --primary_hv:          #00898c;
-  --brand-primary:       #00a1a5;
-  --brand-primary-hover: #00898c;
+  --p_v1:                #00a0a4;
+  --p_v2:                #00878a;
+  --primary:             #00a0a4;
+  --primary-hover:       #00878a;
+  --primary_hv:          #00878a;
+  --brand-primary:       #00a0a4;
+  --brand-primary-hover: #00878a;
   --brand-soft:          #e6f7f8;
-  --brand-accent:        #00a1a5;
+  --brand-accent:        #00a0a4;
   --brand-accent-soft:   #eff9fa;
-  --brand-teal:          #00a1a5;
+  --brand-teal:          #00a0a4;
   --brand-blue:          #241f48;
   --brand-blue-hover:    #1d193d;
   --brand-sky:           #0284c7;
   --brand-sky-hover:     #0369a1;
   --brand-orange:        #ff6600;
   --brand-orange-hover:  #ea580c;
-  --accent:              #00a1a5;
-  --accent-hover:        #00898c;
-  --accent_hv:           #00898c;
-  --accent-cyan:         #00a1a5;
+  --accent:              #00a0a4;
+  --accent-hover:        #00878a;
+  --accent_hv:           #00878a;
+  --accent-cyan:         #00a0a4;
   --accent-gold:         #f59e0b;
   --accent-emerald:      #10b981;
-  --bt:                  #00a1a5;
-  --hv:                  #00898c;
+  --bt:                  #00a0a4;
+  --hv:                  #00878a;
   --hva:                 #00b8bc;
 
   /* 4. Inputs, Formularios y Diálogos */
@@ -141,8 +141,8 @@
   /* 5. Cabeceras y Sombras Ligeras (Sin sobrecarga GPU) */
   --header-bg:           #ffffff;
   --header_bg:           #ffffff;
-  --topbar-bg:           #009ca6;
-  --topbar_bg:           #009ca6;
+  --topbar-bg:           #00a0a4;
+  --topbar_bg:           #00a0a4;
   --topbar-text:         #ffffff;
   --glass-bg:            #ffffff;
   --glass_bg:            #ffffff;
@@ -152,8 +152,8 @@
   --glass_shd:           0 0.5vh 1.5vh rgba(15, 23, 42, 0.05);
   --shadow-card:         0 0.4vh 1.2vh rgba(15, 23, 42, 0.04);
   --shd_card:            0 0.4vh 1.2vh rgba(15, 23, 42, 0.04);
-  --shadow-hover:        0 0.8vh 2vh rgba(0, 156, 166, 0.12);
-  --shd_hover:           0 0.8vh 2vh rgba(0, 156, 166, 0.12);
+  --shadow-hover:        0 0.8vh 2vh rgba(0, 160, 164, 0.15);
+  --shd_hover:           0 0.8vh 2vh rgba(0, 160, 164, 0.15);
   --shadow-xl:           0 1.2vh 3vh rgba(15, 23, 42, 0.08);
 }
 
@@ -179,14 +179,14 @@
   --bg_card:             #101726;
   --bg-card-hover:       #162033;
   --bg_card_hv:          #162033;
-  --bg-subtle:           rgba(0, 180, 216, 0.06);
+  --bg-subtle:           rgba(0, 194, 199, 0.06);
   --line:                #1c283c;
   --brd:                 #1c283c;
   --border:              #1c283c;
   --border-card:         #1c283c;
   --border_card:         #1c283c;
-  --border-accent:       rgba(0, 180, 216, 0.35);
-  --border_accent:       rgba(0, 180, 216, 0.35);
+  --border-accent:       rgba(0, 194, 199, 0.35);
+  --border_accent:       rgba(0, 194, 199, 0.35);
 
   /* 2. Tipografía y Textos */
   --tx:                  #f8fafc;
@@ -194,7 +194,7 @@
   --tx2:                 #94a3b8;
   --tx3:                 #64748b;
   --txa:                 #080d15;
-  --txe:                 #00b4d8;
+  --txe:                 #00c2c7;
   --ink:                 #f8fafc;
   --muted:               #94a3b8;
   --text-main:           #f8fafc;
@@ -203,34 +203,34 @@
   --text_muted:          #94a3b8;
   --text-bright:         #ffffff;
 
-  /* 3. Colores de Identidad y Marca (Wellcare Dark) */
-  --mco:                 #00b4d8;
-  --mbg:                 rgba(0, 180, 216, 0.12);
-  --p_v1:                #00b4d8;
-  --p_v2:                #38bdf8;
-  --primary:             #00b4d8;
-  --primary-hover:       #38bdf8;
-  --primary_hv:          #38bdf8;
-  --brand-primary:       #00b4d8;
-  --brand-primary-hover: #38bdf8;
-  --brand-soft:          rgba(0, 180, 216, 0.12);
-  --brand-accent:        #00b4d8;
-  --brand-accent-soft:   rgba(0, 180, 216, 0.18);
-  --brand-teal:          #00b4d8;
+  /* 3. Colores de Identidad y Marca (Wellcare Dark Luminous) */
+  --mco:                 #00c2c7;
+  --mbg:                 rgba(0, 194, 199, 0.12);
+  --p_v1:                #00c2c7;
+  --p_v2:                #00e0e5;
+  --primary:             #00c2c7;
+  --primary-hover:       #00e0e5;
+  --primary_hv:          #00e0e5;
+  --brand-primary:       #00c2c7;
+  --brand-primary-hover: #00e0e5;
+  --brand-soft:          rgba(0, 194, 199, 0.12);
+  --brand-accent:        #00c2c7;
+  --brand-accent-soft:   rgba(0, 194, 199, 0.18);
+  --brand-teal:          #00c2c7;
   --brand-blue:          #162033;
   --brand-blue-hover:    #1c2940;
   --brand-sky:           #38bdf8;
   --brand-sky-hover:     #7dd3fc;
   --brand-orange:        #ff6600;
   --brand-orange-hover:  #ff8533;
-  --accent:              #00b4d8;
-  --accent-hover:        #38bdf8;
-  --accent_hv:           #38bdf8;
-  --accent-cyan:         #00b4d8;
+  --accent:              #00c2c7;
+  --accent-hover:        #00e0e5;
+  --accent_hv:           #00e0e5;
+  --accent-cyan:         #00c2c7;
   --accent-gold:         #f59e0b;
   --accent-emerald:      #10b981;
-  --bt:                  #00b4d8;
-  --hv:                  #38bdf8;
+  --bt:                  #00c2c7;
+  --hv:                  #00e0e5;
   --hva:                 #7dd3fc;
 
   /* 4. Inputs, Formularios y Diálogos */

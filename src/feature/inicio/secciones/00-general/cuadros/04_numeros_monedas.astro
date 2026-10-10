@@ -1,0 +1,70 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/04_numeros_monedas.astro
+// 🔢 Cuadro 4: Pronunciación de Números & Lectura de Monedas/Copagos en Inglés
+---
+
+<div class="gen-card gen-card--numeros" id="cuadroNumerosMonedas">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-arrow-down-1-9 gen-icon-mco"></i>
+      <span>Números & Monedas en Inglés</span>
+    </div>
+    <!-- Pestañas internas -->
+    <div class="gen-tabs-toggle">
+      <button class="gen-tab-toggle-btn active" id="genTabNumerosBtn" data-subtab="numeros">Números</button>
+      <button class="gen-tab-toggle-btn" id="genTabMonedasBtn" data-subtab="monedas">Monedas</button>
+    </div>
+  </div>
+
+  <p class="gen-card-desc">
+    Guía fonética para pronunciar cifras, montos y copagos exactos al miembro senior sin dudar.
+  </p>
+
+  <!-- Buscador Reactivo -->
+  <div class="gen-search-box gen-search-box--sm">
+    <i class="fa-solid fa-magnifying-glass gen-search-icon"></i>
+    <input 
+      type="text" 
+      class="gen-input-search" 
+      id="genNumSearchInput" 
+      placeholder="Buscar número o monto (ej: 24, 615, 5.30, 35)..." 
+      autocomplete="off"
+    />
+  </div>
+
+  <!-- Vista 1: Tabla de Números -->
+  <div class="gen-subtab-view active" id="genSubtabNumeros">
+    <div class="gen-subtable-scroll">
+      <table class="gen-num-table" id="genNumTable">
+        <thead>
+          <tr>
+            <th class="th-num-val">Cifra</th>
+            <th class="th-num-en">Pronunciación en Inglés</th>
+            <th class="th-num-action">Copiar</th>
+          </tr>
+        </thead>
+        <tbody id="genNumTableBody">
+          <!-- Renderizado por JS cliente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Vista 2: Tabla de Monedas / Copagos -->
+  <div class="gen-subtab-view" id="genSubtabMonedas">
+    <div class="gen-subtable-scroll">
+      <table class="gen-num-table" id="genMonedaTable">
+        <thead>
+          <tr>
+            <th class="th-num-val">Monto</th>
+            <th class="th-num-en">Cómo se Dice en Llamada</th>
+            <th class="th-num-action">Copiar</th>
+          </tr>
+        </thead>
+        <tbody id="genMonedaTableBody">
+          <!-- Renderizado por JS cliente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

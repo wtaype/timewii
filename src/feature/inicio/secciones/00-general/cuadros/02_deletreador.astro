@@ -1,0 +1,49 @@
+---
+// src/feature/inicio/secciones/00-general/cuadros/02_deletreador.astro
+// 🔤 Cuadro 2: Deletreador Fonético Amigable de Estados ("W as in Washington")
+---
+
+<div class="gen-card gen-card--speller" id="cuadroDeletreador">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-spell-check gen-icon-mco"></i>
+      <span>Deletreador Amigable ("W as in Washington")</span>
+    </div>
+    <span class="gen-badge-tip">1-Click Copiar</span>
+  </div>
+
+  <p class="gen-card-desc">
+    Para miembros senior usa nombres familiares de ciudades y estados (Texas, California, Florida) en lugar de código militar.
+  </p>
+
+  <!-- Input de Deletreo -->
+  <div class="gen-speller-input-wrap">
+    <input 
+      type="text" 
+      class="gen-speller-input" 
+      id="genSpellerInput" 
+      placeholder="ESCRIBE MBI, CÓDIGO O APELLIDO (EJ: 1EG4-TE5 O SMITH)..."
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button class="gen-speller-clear-btn" id="genSpellerClearBtn" title="Limpiar texto">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- Barra de Acciones y Copiado -->
+  <div class="gen-speller-actions-bar">
+    <span class="gen-speller-hint" id="genSpellerCountHint">Ingresa letras o números arriba</span>
+    <button class="gen-btn-copy-mini" id="genBtnCopySpeller" title="Copiar desglose completo al portapapeles">
+      <i class="fa-regular fa-copy"></i>
+      <span>Copiar Todo</span>
+    </button>
+  </div>
+
+  <!-- Resultado Reactivo en Fichas -->
+  <div class="gen-speller-output-box" id="genSpellerOutput">
+    <span class="gen-empty-state-text">
+      Escribe en la caja de arriba para ver el desglose fonético en tiempo real...
+    </span>
+  </div>
+</div>

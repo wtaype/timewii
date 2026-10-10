@@ -150,3 +150,11 @@
 .badge-zone.pacific  { background: rgba(249, 115, 22, 0.15); color: #f97316; }
 .badge-zone.alaska   { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
 .badge-zone.hawaii   { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+/* Clases semánticas de celdas (Cero CSS inline) */
+.st-col-abbr { color: var(--mco); font-weight: 700; }
+.st-col-time { font-family: monospace; font-weight: bold; }
+.st-col-cap { color: var(--tx2); }
+.st-col-codes { color: var(--tx3); font-size: var(--fz_s3); }
+.st-col-weather { font-size: var(--fz_s2); color: var(--tx1); background: var(--inp); padding: 2px 6px; border-radius: 4px; }
+.st-col-fact { font-size: var(--fz_s2); color: var(--tx2); line-height: 1.35; }
