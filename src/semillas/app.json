@@ -1,0 +1,33 @@
+{
+  "marca": {
+    "titulo": "TIME",
+    "tituloAccent": "WII",
+    "subtitulo": "Smart tools for you",
+    "icono": "fa-heart-pulse",
+    "enlace": "/"
+  },
+  "menuLabel": "HERRAMIENTAS ASESOR",
+  "navegacion": [
+    { "id": "general", "href": "/", "label": "GENERAL", "labelCorto": "General", "icono": "fa-gauge-high" },
+    { "id": "geography", "href": "/geography", "label": "GEOGRAPHY", "labelCorto": "Geography", "icono": "fa-earth-americas" },
+    { "id": "metricas", "href": "/metricas", "label": "MÉTRICAS", "labelCorto": "Métricas", "icono": "fa-chart-pie" },
+    { "id": "eeuu", "href": "/eeuu", "label": "EEUU & CULTURA", "labelCorto": "EEUU", "icono": "fa-flag-usa" },
+    { "id": "ruleta", "href": "/ruleta", "label": "RULETA & BREAK", "labelCorto": "Ruleta", "icono": "fa-arrows-rotate" }
+  ],
+  "accionesFooter": [
+    { "id": "btnTemaSidebar", "tipo": "tema", "label": "Modo Luz", "icono": "fa-gear" },
+    { "id": "btnAboutSidebar", "tipo": "about", "label": "ABOUT", "icono": "fa-circle-info" },
+    { "id": "btnCollapseSidebar", "tipo": "collapse", "label": "COLLAPSE", "icono": "fa-angles-left" }
+  ],
+  "perfil": {
+    "activo": false
+  },
+  "widgetSidebar": {
+    "activo": false
+  },
+  "tema": {
+    "defecto": "noche",
+    "colorLuz": "#fcf9fe",
+    "colorNoche": "#0e0617"
+  }
+}

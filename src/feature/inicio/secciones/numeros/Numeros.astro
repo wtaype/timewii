@@ -1,0 +1,44 @@
+---
+// src/feature/inicio/secciones/numeros/Numeros.astro
+// 🔢 Cuadro 4: Números & Cifras con Deletreador Interactivo - 1 Columna (10 Más Usados)
+---
+
+<div class="gen-card gen-card--numeros" id="cuadroNumeros">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-arrow-down-1-9 gen-icon-mco"></i>
+      <span>Números & Cifras</span>
+    </div>
+    <span class="gen-badge-tag">Fonética en Vivo</span>
+  </div>
+
+  <!-- Input Interactivo de Números -->
+  <div class="gen-interactive-reader-box">
+    <div class="gen-reader-input-row">
+      <i class="fa-solid fa-calculator gen-reader-icon"></i>
+      <input 
+        type="number" 
+        class="gen-input-reader" 
+        id="genNumberInput" 
+        placeholder="Escribe número (ej: 24, 615, 2100)..." 
+        autocomplete="off"
+        min="0"
+        max="99999999"
+      />
+      <button type="button" class="gen-btn-clear" id="genNumberClearBtn" title="Limpiar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Salida en Vivo del Número -->
+    <div class="gen-reader-result-card" id="genNumberResultCard">
+      <div class="gen-reader-live-label">Lectura en llamada:</div>
+      <div class="gen-reader-live-text" id="genNumberLiveText">Escribe una cifra arriba...</div>
+    </div>
+  </div>
+
+  <!-- Fichas de Números en 1 Columna (10 Más Usados) -->
+  <div class="gen-pill-grid gen-pill-grid--compact gen-pill-grid--single-col" id="genNumGrid">
+    <!-- Renderizado por numeros.js -->
+  </div>
+</div>

@@ -1,0 +1,664 @@
+/* ============================================================ */
+/* 🚀 INICIO.CSS - TIMEWII GENERAL DASHBOARD                     */
+/*    Diseño Premium según witema.css: 100% Clases e IDs        */
+/*    Cero CSS Inline · Calibrado para 100vh · Scroll Neutral    */
+/* ============================================================ */
+
+.general-layout-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  width: 100%;
+}
+
+/* ── Fila Superior: 2 Columnas Iguales (Uso Intensivo) ──────── */
+.gen-top-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vh;
+  width: 100%;
+}
+
+/* ── Fila Inferior: 4 Columnas Iguales ──────────────────────── */
+.gen-bottom-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1vh;
+  width: 100%;
+}
+
+/* ── Tarjeta Base del Cuadro ────────────────────────────────── */
+.gen-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_l);
+  padding: 1vh 1vw;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--tr_m), box-shadow var(--tr_m), border-color var(--tr_m);
+  position: relative;
+  overflow: hidden;
+}
+
+.gen-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-accent);
+}
+
+/* Alturas calibradas con precisión en vh para encajar en 100vh */
+.gen-card--estados,
+.gen-card--speller {
+  height: 48.5vh;
+}
+
+.gen-card--monedas,
+.gen-card--numeros,
+.gen-card--direcciones,
+.gen-card--unidades {
+  height: 47.5vh;
+}
+
+/* ── Encabezado de Cada Cuadro ──────────────────────────────── */
+.gen-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6vh;
+  gap: 0.8vh;
+  flex-shrink: 0;
+}
+
+.gen-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6vh;
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--tx1);
+  letter-spacing: -0.2px;
+}
+
+.gen-icon-mco {
+  color: var(--mco);
+  font-size: var(--fz_m2);
+}
+
+/* Insignias y Badges */
+.gen-badge-counter,
+.gen-badge-tip,
+.gen-badge-tag {
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.3vh 0.8vh;
+  border-radius: var(--r_s);
+  background: var(--inp);
+  color: var(--mco);
+  border: 1px solid var(--border-accent);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.gen-badge-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vh;
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.gen-badge-link:hover {
+  background: var(--mco);
+  color: var(--white, #ffffff);
+  border-color: var(--mco);
+}
+
+/* ── Botones Rápidos de Modo Fonético en Cabecera ────────────── */
+.gen-speller-modes {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.gen-mode-btn {
+  background: var(--inp);
+  border: 1px solid var(--border-accent);
+  color: var(--tx3);
+  font-family: var(--ff_J);
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.25vh 0.8vh;
+  border-radius: var(--r_s);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--tr_f);
+}
+
+.gen-mode-btn:hover {
+  color: var(--tx1);
+  border-color: var(--mco);
+}
+
+.gen-mode-btn.active {
+  background: var(--mco);
+  color: var(--white, #ffffff);
+  border-color: var(--mco);
+  box-shadow: 0 0 8px var(--mco-glow);
+}
+
+/* ── Buscador Reactivo y Cajas de Entrada ────────────────────── */
+.gen-search-box {
+  display: flex;
+  align-items: center;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 0.4vh 0.9vh;
+  gap: 0.8vh;
+  margin-bottom: 0.6vh;
+  transition: border-color var(--tr_f), box-shadow var(--tr_f);
+  flex-shrink: 0;
+}
+
+.gen-search-box:focus-within {
+  border-color: var(--mco);
+  box-shadow: 0 0 0 3px var(--mco-light);
+}
+
+.gen-search-icon {
+  color: var(--tx3);
+  font-size: var(--fz_s2);
+}
+
+.gen-input-search {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--tx1);
+  font-size: var(--fz_s2);
+  font-family: var(--ff_J);
+}
+
+.gen-input-search::placeholder {
+  color: var(--tx3);
+}
+
+.gen-btn-clear {
+  background: transparent;
+  border: none;
+  color: var(--tx3);
+  cursor: pointer;
+  padding: 0.2vh;
+  border-radius: 50%;
+  font-size: var(--fz_s2);
+  transition: color var(--tr_f), transform var(--tr_f);
+}
+
+.gen-btn-clear:hover {
+  color: var(--tx1);
+  transform: scale(1.1);
+}
+
+/* ── Speller Monospace Input ────────────────────────────────── */
+.gen-speller-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--inp);
+  border: 2px solid var(--border-accent);
+  border-radius: var(--r_m);
+  padding: 0.4vh 1vh;
+  gap: 1vh;
+  margin-bottom: 0.4vh;
+  transition: border-color var(--tr_f), box-shadow var(--tr_f);
+  flex-shrink: 0;
+}
+
+.gen-speller-input-wrap:focus-within {
+  border-color: var(--mco);
+  box-shadow: 0 0 0 4px var(--mco-light);
+}
+
+.gen-speller-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.3vh 0;
+  font-family: monospace;
+  font-size: var(--fz_m1);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--tx1);
+}
+
+.gen-speller-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--tx3);
+  cursor: pointer;
+  padding: 0.2vh;
+  font-size: var(--fz_s2);
+  transition: color var(--tr_f);
+}
+
+.gen-speller-clear-btn:hover {
+  color: var(--tx1);
+}
+
+.gen-speller-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4vh;
+  flex-shrink: 0;
+}
+
+.gen-speller-hint {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+  font-weight: 500;
+}
+
+/* ── Speller Output Area ────────────────────────────────────── */
+.gen-speller-output-box {
+  flex: 1;
+  background: var(--glass-card);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 0.8vh;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.6vh;
+}
+
+.gen-empty-state-text {
+  color: var(--tx3);
+  font-size: var(--fz_s2);
+  font-style: italic;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.gen-spell-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 0.5vh 0.7vw;
+  min-width: 78px;
+  text-align: center;
+  gap: 0.15vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: border-color var(--tr_f), transform var(--tr_f);
+}
+
+.gen-spell-card:hover {
+  border-color: var(--mco);
+  transform: translateY(-2px);
+}
+
+.gen-spell-char {
+  font-family: monospace;
+  font-size: var(--fz_m2);
+  font-weight: 900;
+  color: var(--mco);
+}
+
+.gen-spell-word {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--tx1);
+  white-space: nowrap;
+}
+
+.gen-spell-phrase {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+  white-space: nowrap;
+}
+
+/* ── Tabla de Estados con Scroll Suave ──────────────────────── */
+.gen-table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  border-radius: var(--r_m);
+  border: 1px solid var(--brd);
+  background: var(--glass-card);
+}
+
+.gen-states-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--fz_s2);
+}
+
+.gen-states-table thead {
+  position: sticky;
+  top: 0;
+  background: var(--wb);
+  z-index: 2;
+  box-shadow: 0 1px 0 var(--brd);
+}
+
+.gen-states-table th {
+  padding: 0.6vh 0.8vh;
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.gen-states-table td {
+  padding: 0.6vh 0.8vh;
+  color: var(--tx2);
+  border-bottom: 1px solid var(--brd);
+  white-space: nowrap;
+}
+
+.gen-states-table tr:hover td {
+  background: var(--glass-raised);
+}
+
+.gen-state-abbr {
+  font-family: monospace;
+  font-weight: 800;
+  color: var(--mco);
+  cursor: pointer;
+}
+
+.gen-state-abbr:hover {
+  text-decoration: underline;
+}
+
+.gen-state-name {
+  font-weight: 700;
+  color: var(--tx1);
+}
+
+.gen-state-zip {
+  font-family: monospace;
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+}
+
+.gen-badge-zone {
+  display: inline-block;
+  padding: 0.15vh 0.5vh;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--mco-light);
+  color: var(--mco);
+  border: 1px solid var(--border-accent);
+}
+
+.gen-time-ticker {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--tx1);
+  font-size: 0.78rem;
+}
+
+/* ── Cajas Interactivas de Lectura (Monedas & Números) ──────── */
+.gen-interactive-reader-box {
+  background: var(--glass-card);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_m);
+  padding: 0.7vh;
+  margin-bottom: 0.6vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  flex-shrink: 0;
+}
+
+.gen-reader-input-row {
+  display: flex;
+  align-items: center;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  padding: 0.35vh 0.7vh;
+  gap: 0.6vh;
+  transition: border-color var(--tr_f);
+}
+
+.gen-reader-input-row:focus-within {
+  border-color: var(--mco);
+}
+
+.gen-currency-symbol,
+.gen-reader-icon {
+  font-weight: 800;
+  color: var(--mco);
+  font-size: var(--fz_s3);
+}
+
+.gen-input-reader {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--ff_J);
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--tx1);
+}
+
+.gen-input-reader::placeholder {
+  color: var(--tx3);
+  font-weight: 400;
+  font-size: var(--fz_s2);
+}
+
+.gen-reader-result-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  padding: 0.6vh 0.8vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+}
+
+.gen-money-out-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15vh;
+}
+
+.gen-money-tag {
+  font-size: var(--fz_s1);
+  font-weight: 800;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gen-money-text-formal {
+  font-size: var(--fz_m1);
+  font-weight: 800;
+  color: var(--mco);
+  line-height: 1.3;
+}
+
+.gen-reader-live-label {
+  font-size: var(--fz_s1);
+  font-weight: 800;
+  color: var(--tx3);
+  text-transform: uppercase;
+}
+
+.gen-reader-live-text {
+  font-size: var(--fz_m1);
+  font-weight: 800;
+  color: var(--mco);
+  line-height: 1.3;
+}
+
+.gen-reader-live-sub {
+  font-size: var(--fz_s1);
+  color: var(--tx3);
+}
+
+/* ── Parrillas de Fichas / Pastillas (Pill Grids) ───────────── */
+.gen-pill-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5vh;
+  align-content: flex-start;
+  padding-right: 0.2vw;
+}
+
+.gen-pill-grid--compact {
+  gap: 0.45vh;
+}
+
+/* Modo 1 Sola Columna para Monedas y Números */
+.gen-pill-grid--single-col {
+  grid-template-columns: 1fr !important;
+}
+
+.gen-pill-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--glass-card);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s);
+  padding: 0.5vh 0.7vw;
+  cursor: pointer;
+  transition: border-color var(--tr_f), background var(--tr_f), transform var(--tr_f);
+  text-decoration: none;
+  gap: 0.6vw;
+}
+
+.gen-pill-item:hover {
+  border-color: var(--mco);
+  background: var(--glass-raised);
+  transform: translateY(-1px);
+}
+
+.gen-pill-code {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: var(--fz_s2);
+  color: var(--mco);
+  flex-shrink: 0;
+}
+
+.gen-pill-text {
+  font-size: var(--fz_s2);
+  color: var(--tx2);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gen-pill-money {
+  font-family: monospace;
+  font-weight: 800;
+  color: var(--mco);
+  font-size: var(--fz_s2);
+  flex-shrink: 0;
+}
+
+.gen-pill-desc {
+  font-size: var(--fz_s2);
+  color: var(--tx2);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Scrollbars Sutiles y Neutrales dentro del Dashboard ─────── */
+.gen-table-scroll,
+.gen-speller-output-box,
+.gen-pill-grid {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-card) transparent;
+}
+
+.gen-table-scroll::-webkit-scrollbar,
+.gen-speller-output-box::-webkit-scrollbar,
+.gen-pill-grid::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.gen-table-scroll::-webkit-scrollbar-track,
+.gen-speller-output-box::-webkit-scrollbar-track,
+.gen-pill-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gen-table-scroll::-webkit-scrollbar-thumb,
+.gen-speller-output-box::-webkit-scrollbar-thumb,
+.gen-pill-grid::-webkit-scrollbar-thumb {
+  background: var(--border-card);
+  border-radius: 999px;
+  transition: background var(--tr_f);
+}
+
+.gen-table-scroll::-webkit-scrollbar-thumb:hover,
+.gen-speller-output-box::-webkit-scrollbar-thumb:hover,
+.gen-pill-grid::-webkit-scrollbar-thumb:hover,
+.gen-table-scroll::-webkit-scrollbar-thumb:active,
+.gen-speller-output-box::-webkit-scrollbar-thumb:active,
+.gen-pill-grid::-webkit-scrollbar-thumb:active {
+  background: var(--mco);
+}
+
+/* ── Responsividad Adaptativa ───────────────────────────────── */
+@media (max-width: 1200px) {
+  .gen-bottom-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gen-top-row {
+    grid-template-columns: 1fr;
+  }
+  .gen-bottom-row {
+    grid-template-columns: 1fr;
+  }
+  .gen-card--estados,
+  .gen-card--speller,
+  .gen-card--monedas,
+  .gen-card--numeros,
+  .gen-card--direcciones,
+  .gen-card--unidades {
+    height: auto !important;
+    min-height: unset !important;
+  }
+  .gen-table-scroll {
+    max-height: 320px;
+  }
+  .gen-speller-output-box {
+    min-height: 180px;
+    max-height: 280px;
+  }
+  .gen-pill-grid {
+    max-height: 260px;
+  }
+}

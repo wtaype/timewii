@@ -320,7 +320,7 @@ html {
 * {
   font-family: var(--ff_P);
   scrollbar-width: thin;
-  scrollbar-color: var(--mco) var(--bg);
+  scrollbar-color: var(--border-card) transparent;
 }
 
 a {
@@ -1345,7 +1345,7 @@ a {
   overflow-y: auto;
   max-height: 25vh;
   scrollbar-width: thin;
-  scrollbar-color: var(--mco) transparent;
+  scrollbar-color: var(--border-card) transparent;
 }
 
 .wi-select-option {
@@ -1987,4 +1987,23 @@ img[data-src] {
 .wii_glass:hover {
   box-shadow: 0 12px 40px 0 var(--glass-shd), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
+}
+
+
+/* Scrollbar sutil/neutral por defecto - Se ilumina al interactuar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-card);
+  border-radius: 999px;
+  transition: background var(--tr_f);
+}
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background: var(--mco);
 }

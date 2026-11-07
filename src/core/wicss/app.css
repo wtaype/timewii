@@ -58,11 +58,11 @@ body {
 
 .wii-content {
   flex: 1;
-  padding: 20px;
+  padding: 1vh 1.5vh;
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 110px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
@@ -71,7 +71,7 @@ body {
     width: 100% !important;
   }
   .wii-content {
-    padding: 16px 14px 110px !important;
+    padding: 1vh 1.5vh 90px !important;
   }
 }
 
@@ -1682,8 +1682,8 @@ img {
     transition: background-color var(--tr_f);
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
+  ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active {
+    background: var(--mco);
   }
 }
 

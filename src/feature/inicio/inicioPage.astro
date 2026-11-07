@@ -1,0 +1,33 @@
+---
+// src/feature/inicio/inicioPage.astro
+// 🌟 Orquestador de Feature Inicio: Dashboard General (2 Columnas Arriba + 4 Columnas Abajo)
+import Directorio from './secciones/directorio/Directorio.astro';
+import Deletreador from './secciones/deletreador/Deletreador.astro';
+import Monedas from './secciones/monedas/Monedas.astro';
+import Numeros from './secciones/numeros/Numeros.astro';
+import Direcciones from './secciones/direcciones/Direcciones.astro';
+import Unidades from './secciones/unidades/Unidades.astro';
+
+// Estilos del módulo
+import './inicio.css';
+---
+
+<section class="general-layout-grid" id="section-general">
+  <!-- Fila Superior: 2 Columnas Principales (Uso Intensivo Diario) -->
+  <div class="gen-top-row">
+    <Directorio />
+    <Deletreador />
+  </div>
+
+  <!-- Fila Inferior: 4 Columnas (Monedas, Números, Direcciones, Unidades) -->
+  <div class="gen-bottom-row">
+    <Monedas />
+    <Numeros />
+    <Direcciones />
+    <Unidades />
+  </div>
+</section>
+
+<script>
+  import './inicio.js';
+</script>

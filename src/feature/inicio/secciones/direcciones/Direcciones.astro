@@ -1,0 +1,35 @@
+---
+// src/feature/inicio/secciones/direcciones/Direcciones.astro
+// 📬 Cuadro 5: Direcciones USPS & Sufijos (Sin buscador · Informativo directo con 1-click copy)
+import { ADDRESSES_DATA } from '@semillas/addressesData.js';
+---
+
+<div class="gen-card gen-card--direcciones" id="cuadroDirecciones">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-envelopes-bulk gen-icon-mco"></i>
+      <span>Direcciones USPS & Sufijos</span>
+    </div>
+    <!-- Enlace oficial de USPS -->
+    <a 
+      href="https://tools.usps.com/zip-code-lookup.htm" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="gen-badge-tag gen-badge-link"
+      title="Abrir buscador oficial de direcciones y ZIP codes de USPS"
+    >
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      <span>USPS LOCATOR</span>
+    </a>
+  </div>
+
+  <!-- Cuadrícula de Abreviaciones USPS en 2 columnas (Informativo Directo) -->
+  <div class="gen-pill-grid" id="genAbbrGrid">
+    {ADDRESSES_DATA.map((item) => (
+      <div class="gen-pill-item gen-copyable-pill" data-copy={item.code} title={`Clic para copiar ${item.code} (${item.name})`}>
+        <span class="gen-pill-code">{item.code}</span>
+        <span class="gen-pill-text">{item.name} ({item.es})</span>
+      </div>
+    ))}
+  </div>
+</div>

@@ -62,9 +62,9 @@ CLAUDE.md
 .gemini/
 .firebase
 
+scratch/
 skills-lock.json
 repowii/
-src/semillas
 src/pages/views/
 .claude/
 .agents/

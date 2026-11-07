@@ -1,0 +1,25 @@
+---
+// src/feature/inicio/secciones/unidades/Unidades.astro
+// 💊 Cuadro 6: Unidades & Formas Farmacéuticas (Sin buscador · Informativo directo con 1-click copy)
+import { UNITS_DATA } from '@semillas/unitsData.js';
+---
+
+<div class="gen-card gen-card--unidades" id="cuadroUnidades">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-pills gen-icon-mco"></i>
+      <span>Unidades & Medidas</span>
+    </div>
+    <span class="gen-badge-tag">Medidas & Dosis</span>
+  </div>
+
+  <!-- Cuadrícula de Unidades en 2 columnas (Informativo Directo) -->
+  <div class="gen-pill-grid" id="genUnidadesGrid">
+    {UNITS_DATA.map((item) => (
+      <div class="gen-pill-item gen-copyable-pill" data-copy={item.abrv} title={`${item.name} · ${item.tip}`}>
+        <span class="gen-pill-code">{item.abrv}</span>
+        <span class="gen-pill-text">{item.name}</span>
+      </div>
+    ))}
+  </div>
+</div>

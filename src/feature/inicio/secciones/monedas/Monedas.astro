@@ -1,0 +1,44 @@
+---
+// src/feature/inicio/secciones/monedas/Monedas.astro
+// 💵 Cuadro 3: Monedas & Copagos con Lectura 100% Formal en Dólares (USD) - 1 Columna (10 Más Usados)
+---
+
+<div class="gen-card gen-card--monedas" id="cuadroMonedas">
+  <div class="gen-card-header">
+    <div class="gen-header-title">
+      <i class="fa-solid fa-hand-holding-dollar gen-icon-mco"></i>
+      <span>Monedas & Copagos</span>
+    </div>
+    <span class="gen-badge-tag">Lectura Formal</span>
+  </div>
+
+  <!-- Input Interactivo de Monedas -->
+  <div class="gen-interactive-reader-box">
+    <div class="gen-reader-input-row">
+      <span class="gen-currency-symbol">$</span>
+      <input 
+        type="text" 
+        class="gen-input-reader" 
+        id="genMoneyInput" 
+        placeholder="Escribe monto (ej: 5.30, 35, 2000)..." 
+        autocomplete="off"
+      />
+      <button type="button" class="gen-btn-clear" id="genMoneyClearBtn" title="Limpiar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Salida Formal de la Moneda -->
+    <div class="gen-reader-result-card" id="genMoneyResultCard">
+      <div class="gen-money-out-row">
+        <span class="gen-money-tag">Lectura Formal en Dólares:</span>
+        <span class="gen-money-text-formal" id="genMoneyLiveFormal">Escribe un monto arriba...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fichas de Copagos en 1 Columna (10 Más Usados) -->
+  <div class="gen-pill-grid gen-pill-grid--compact gen-pill-grid--single-col" id="genMonedaGrid">
+    <!-- Renderizado por monedas.js -->
+  </div>
+</div>
