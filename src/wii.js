@@ -1,11 +1,12 @@
 // src/wii.js
 export const id = 'timewii';
-export const app = 'TimeWii for you';
+export const app = 'TimeWii';
+export const title = 'TimeWii for you';
 export const by = '@wilder.taype';
 export const version = '1.0.0';
 export const versionName = 'v2';
 export const linkweb = 'https://timewii.vercel.app';
-export default { id, app, by, version, versionName, linkweb };
+export default { id, app, title, by,version, versionName, linkweb };
 
 /** ACTUALIZAR AL TAG POR SEGURIDAD [TAG NUEVO] (1)
 git tag v2 -m "Version v2" ; git push origin v2
