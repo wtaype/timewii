@@ -114,15 +114,23 @@ export function inicializarCalculadora() {
   const expr = document.getElementById('calcExpression');
   if (!display) return;
 
-  // Restaurar estado inicial
-  currentInput = '0';
-  previousInput = null;
-  activeOperator = null;
-  waitingForSecondOperand = false;
+  // Restaurar estado inicial si no estaba vinculado
+  if (!display.dataset.bound) {
+    currentInput = '0';
+    previousInput = null;
+    activeOperator = null;
+    waitingForSecondOperand = false;
+  }
   actualizarDisplay();
 
   // Cargar historial persistido
   cargarHistorial();
+
+  // Evitar vincular múltiples veces los event listeners en el DOM (previene dígitos duplicados como '99')
+  if (display.dataset.bound === 'true') {
+    return;
+  }
+  display.dataset.bound = 'true';
 
   // Configurar tabs de modo
   configurarModoTabs();
@@ -314,7 +322,8 @@ function cambiarSigno() {
 
 function configurarKeypad() {
   const keypad = document.getElementById('calcKeypad');
-  if (!keypad) return;
+  if (!keypad || keypad.dataset.bound === 'true') return;
+  keypad.dataset.bound = 'true';
 
   keypad.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
