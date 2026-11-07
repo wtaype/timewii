@@ -1,83 +1,87 @@
-﻿---
+---
 // src/core/componentes/Sidebar.astro
-// 🧭 Barra Lateral de Navegación Desktop Universal (>= 901px)
-// 100% Cero CSS Inline · Desacoplado de Semillas Específicas
+// 🧭 Barra Lateral de Navegación Profesional: TimeWii Workstation Toolkit
+// 100% Cero CSS Inline · Variables exclusivas de witema.css
+import wii from '../../wii.js';
 import configurar from '@semillas/configurar.js';
 
 const currentPath = Astro.url.pathname;
 const itemsNav = configurar.navegacion || [];
-const marca = configurar.marca || {};
-const perfil = configurar.perfil || {};
-const widget = configurar.widgetSidebar || {};
-const badges = perfil.badges || [];
 
-const tituloBrand = marca.titulo || configurar.app || '';
-const subtituloBrand = marca.subtitulo || '';
-const avatarSrc = perfil.avatar || perfil.avatarSm || '';
-const nombrePerfil = perfil.nombreCorto || perfil.nombre || '';
+// Marca dinámica desde wii.js: toma las últimas 3 letras para el span de acento
+const nombreApp = (wii.app || 'TimeWii').toUpperCase();
+const baseTitle = nombreApp.length > 3 ? nombreApp.slice(0, -3) : nombreApp;
+const accentTitle = nombreApp.length > 3 ? nombreApp.slice(-3) : '';
+const subtituloBrand = wii.slogan || 'Smart tools for you';
 ---
 
-<aside class="wii-sidebar" aria-label="Menú principal desktop">
-  <!-- 1. Marca / Logo Superior Dinámico -->
+<aside class="wii-sidebar" id="wiiSidebar" aria-label="Menú principal de herramientas TimeWii">
+  <!-- 1. Marca / Logo Superior -->
   <div class="wii-brand">
-    {marca.icono && (
-      <div class="wii-brand-icon">
-        <i class:list={['fa-solid', marca.icono]}></i>
-      </div>
-    )}
-    <div>
-      <h1 class="wii-brand-title">{tituloBrand}</h1>
+    <div class="wii-brand-icon" title={subtituloBrand}>
+      <i class="fa-solid fa-heart-pulse"></i>
+    </div>
+    <div class="wii-brand-info">
+      <a href="/" class="wii-brand-link" data-astro-prefetch="hover">
+        <h1 class="wii-brand-title">{baseTitle}<span>{accentTitle}</span></h1>
+      </a>
       {subtituloBrand && <p class="wii-brand-sub">{subtituloBrand}</p>}
     </div>
   </div>
 
-  <!-- 2. Perfil Resumido Dinámico -->
-  {(avatarSrc || nombrePerfil) && (
-    <div class="wii-profile-pill">
-      {avatarSrc && <img src={avatarSrc} alt={nombrePerfil} class="wii-avatar-sm" />}
-      <div>
-        <div class="wii-profile-name">{nombrePerfil}</div>
-        {badges.length > 0 && (
-          <div class="wii-profile-badges">
-            {badges.map((b) => (
-              <span class:list={['wii-mini-tag', b.clase]}>
-                {b.icono && <i class:list={['fa-solid', b.icono]}></i>} {b.texto}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  )}
-
-  <!-- 3. Menú de Navegación Desacoplado -->
-  <nav class="wii-nav-menu">
-    <span class="wii-nav-category">Secciones</span>
-
+  <!-- 2. Menú de Navegación de Herramientas (Sin categoría) -->
+  <nav class="wii-nav-menu" aria-label="Herramientas del Asesor">
     {itemsNav.map((item) => {
       const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
       return (
-        <a href={item.href} class:list={['wii-nav-item', { active: isActive }]} data-tab={item.id} data-astro-prefetch="hover">
+        <a
+          href={item.href}
+          class:list={['wii-nav-item', { active: isActive }]}
+          data-tab={item.id}
+          data-astro-prefetch="hover"
+          title={item.label}
+        >
           <i class:list={['fa-solid', item.icono]}></i>
-          <span>{item.label}</span>
+          <span class="wii-nav-text">{item.label}</span>
           {item.badge && <span class="wii-nav-badge">{item.badge}</span>}
         </a>
       );
     })}
   </nav>
 
-  <!-- 4. Pie de Barra: Widget Destacado y Cambio de Tema -->
+  <!-- 3. Pie de Barra Lateral: 3 Acciones Ergonómicas -->
   <div class="wii-sidebar-footer">
-    {widget.activo && (
-      <div class="wii-event-box">
-        {widget.subtitulo && <div class="wii-event-sub">{widget.subtitulo}</div>}
-        {widget.valor && <div class="wii-event-val">{widget.valor}</div>}
-      </div>
-    )}
+    <!-- Alternar Tema Luz / Noche -->
+    <button
+      type="button"
+      class="wii-sidebar-action-btn"
+      id="btnTemaSidebar"
+      title="Alternar entre Modo Luz y Modo Noche"
+    >
+      <i class="fa-solid fa-moon" id="iconoTemaSidebar"></i>
+      <span id="textoTemaSidebar">Tema Noche</span>
+    </button>
 
-    <button type="button" class="wii-theme-toggle-btn" id="btnTemaSidebar" title="Alternar Modo Luz y Noche">
-      <i class="fa-solid fa-sun" id="iconoTemaSidebar"></i>
-      <span id="textoTemaSidebar">Tema Luz</span>
+    <!-- Modal About / Transparencia & Privacidad -->
+    <button
+      type="button"
+      class="wii-sidebar-action-btn"
+      id="btnAboutSidebar"
+      title="Acerca de TimeWii, Privacidad y Atajos"
+    >
+      <i class="fa-solid fa-circle-info"></i>
+      <span>ABOUT</span>
+    </button>
+
+    <!-- Colapsar / Expandir Sidebar con LocalStorage -->
+    <button
+      type="button"
+      class="wii-sidebar-action-btn"
+      id="btnCollapseSidebar"
+      title="Colapsar menú lateral para mayor espacio de trabajo"
+    >
+      <i class="fa-solid fa-angles-left" id="iconoCollapseSidebar"></i>
+      <span id="textoCollapseSidebar">COLLAPSE</span>
     </button>
   </div>
 </aside>

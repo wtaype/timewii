@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    APP.CSS - MOTOR UNIVERSAL WIDEV
    Estilos Core Globales: Variables de Tema, Reset, Componentes y Layout
    (100% Cero CSS Inline - Arquitectura set:html & ?inline)
@@ -2262,6 +2262,7 @@ img {
 
 /* 2. BARRA LATERAL DESKTOP (.wii-sidebar >= 901px) */
 .wii-sidebar {
+  overflow-x: hidden !important;
   display: flex;
   flex-direction: column;
   width: 255px;
@@ -2275,211 +2276,541 @@ img {
   border-right: 1px solid var(--border-card);
   z-index: 800;
   padding: 16px 14px;
-  transition: background var(--tr_m), border-color var(--tr_m);
+  font-family: var(--ff_J) !important;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), background var(--tr_m), border-color var(--tr_m);
 }
 
 .wii-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-card);
+  transition: all var(--tr_f);
 }
 
 .wii-brand-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--r_m);
-  background: linear-gradient(135deg, var(--mco), #f59e0b);
-  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r_m, 1vh);
+  background: linear-gradient(135deg, var(--mco) 0%, var(--mco-hover) 100%);
+  color: var(--white, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   box-shadow: 0 4px 14px var(--mco-glow);
+  flex-shrink: 0;
+}
+
+.wii-brand-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.wii-brand-link {
+  text-decoration: none;
 }
 
 .wii-brand-title {
-  font-size: 1.18rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--tx1);
   line-height: 1.1;
   letter-spacing: -0.3px;
+  font-family: var(--ff_J);
+}
+
+.wii-brand-title span {
+  color: var(--mco);
+  margin-left: 2px;
 }
 
 .wii-brand-sub {
   font-size: 0.74rem;
   color: var(--tx3);
   font-weight: 500;
-}
-
-.wii-profile-pill {
-  margin-top: 14px;
-  padding: 10px 12px;
-  background: var(--glass-raised);
-  border: 1px solid var(--border-card);
-  border-radius: var(--r_m);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.wii-avatar-sm {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--r_pill);
-  object-fit: cover;
-  border: 2px solid var(--mco);
-  box-shadow: 0 0 10px var(--mco-glow);
-}
-
-.wii-profile-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--tx1);
-  line-height: 1.2;
-}
-
-.wii-profile-badges {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 4px;
-}
-
-.wii-mini-tag {
-  font-size: 0.64rem;
-  padding: 2px 7px;
-  border-radius: var(--r_pill);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.wii-tag-fda {
-  background: rgba(37, 99, 235, 0.1);
-  color: #2563eb;
-  border: 1px solid rgba(37, 99, 235, 0.3);
-}
-
-.wii-tag-faith {
-  background: var(--mco-light);
-  color: var(--mco);
-  border: 1px solid var(--border-accent);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .wii-nav-menu {
-  margin-top: 16px;
+  overflow-x: hidden !important;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   flex: 1;
   overflow-y: auto;
 }
 
 .wii-nav-category {
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.70rem;
+  font-weight: 800;
   color: var(--tx3);
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  padding: 6px 10px 4px;
+  padding: 8px 10px 4px;
+  font-family: var(--ff_J);
 }
 
 .wii-nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: var(--r_m);
-  font-size: 0.88rem;
-  font-weight: 500;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--r_m, 1vh);
+  font-size: 0.86rem;
+  font-weight: 600;
   color: var(--tx2);
   text-decoration: none;
   transition: all var(--tr_f);
+  border: 1px solid transparent;
+  font-family: var(--ff_J);
 }
 
 .wii-nav-item:hover {
   background: var(--glass-raised);
   color: var(--mco);
-  transform: translateX(3px);
+  transform: translateY(-2px);
 }
 
 .wii-nav-item.active {
   background: var(--mco-light);
   color: var(--mco);
-  font-weight: 700;
+  font-weight: 800;
   border: 1px solid var(--border-accent);
+  box-shadow: 0 2px 10px var(--mco-glow);
 }
 
 .wii-nav-item i {
-  font-size: 1rem;
-  width: 20px;
+  font-size: 1.05rem;
+  width: 22px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .wii-nav-badge {
   margin-left: auto;
   font-size: 0.65rem;
-  padding: 1px 6px;
+  padding: 2px 7px;
   border-radius: var(--r_pill);
   background: var(--mco);
-  color: #fff;
+  color: var(--white);
   font-weight: 700;
 }
 
 .wii-sidebar-footer {
   padding-top: 12px;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-card);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.wii-event-box {
-  background: var(--glass-raised);
-  border: 1px dashed var(--border-accent);
-  border-radius: var(--r_m);
-  padding: 8px 10px;
-  text-align: center;
-}
-
-.wii-event-sub {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--tx3);
-  text-transform: uppercase;
-}
-
-.wii-event-val {
-  font-size: 0.84rem;
-  font-weight: 800;
-  color: var(--mco);
-  margin-top: 2px;
-}
-
-.wii-theme-toggle-btn {
+.wii-sidebar-action-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px;
-  border-radius: var(--r_m);
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--r_m, 1vh);
   background: var(--glass-card);
   border: 1px solid var(--border-card);
   color: var(--tx2);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  transition: all var(--tr_f);
+  font-family: var(--ff_J);
+  text-align: left;
+}
+
+.wii-sidebar-action-btn:hover {
+  background: var(--glass-raised);
+  color: var(--mco);
+  border-color: var(--border-accent);
+  transform: translateY(-1px);
+}
+
+.wii-sidebar-action-btn i {
+  width: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  color: var(--mco);
+}
+
+/* ========================================================
+   ESTADO COLAPSADO DEL SIDEBAR (.wii-sidebar.collapsed)
+   ======================================================== */
+html.wii-sidebar-is-collapsed .wii-sidebar,
+.wii-sidebar.collapsed {
+  width: 68px !important;
+  padding: 14px 8px !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-brand,
+.wii-sidebar.collapsed .wii-brand {
+  justify-content: center !important;
+  padding-bottom: 10px !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-brand-info,
+.wii-sidebar.collapsed .wii-brand-info,
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-nav-category,
+.wii-sidebar.collapsed .wii-nav-category,
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-nav-text,
+.wii-sidebar.collapsed .wii-nav-text,
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-nav-badge,
+.wii-sidebar.collapsed .wii-nav-badge,
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-sidebar-action-btn span,
+.wii-sidebar.collapsed .wii-sidebar-action-btn span {
+  display: none !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-nav-item,
+.wii-sidebar.collapsed .wii-nav-item {
+  justify-content: center !important;
+  padding: 10px 0 !important;
+  transform: none !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-nav-item i,
+.wii-sidebar.collapsed .wii-nav-item i {
+  margin: 0 !important;
+  width: auto !important;
+  font-size: 1.25rem !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-sidebar-action-btn,
+.wii-sidebar.collapsed .wii-sidebar-action-btn {
+  justify-content: center !important;
+  padding: 10px 0 !important;
+  transform: none !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar .wii-sidebar-action-btn i,
+.wii-sidebar.collapsed .wii-sidebar-action-btn i {
+  margin: 0 !important;
+  width: auto !important;
+  font-size: 1.15rem !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-sidebar #iconoCollapseSidebar,
+.wii-sidebar.collapsed #iconoCollapseSidebar {
+  transform: rotate(180deg) !important;
+}
+
+html.wii-sidebar-is-collapsed .wii-main-area,
+.wii-main-area.collapsed {
+  margin-left: 68px !important;
+}
+
+/* ========================================================
+   MODAL ABOUT & TRANSPARENCIA (.wii-modal-*)
+   ======================================================== */
+html.wii-modal-open,
+body.wii-modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+.wii-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 4, 15, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: wiiFadeIn 0.2s ease-out forwards;
+}
+
+.wii-modal-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_m, 1vh);
+  width: 100%;
+  max-width: 780px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-accent) transparent;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ff_J) !important;
+}
+
+.wii-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wii-modal-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--tx1);
+}
+
+.wii-modal-brand-badge i {
+  color: var(--mco);
+}
+
+.wii-modal-brand-badge b {
+  color: var(--mco);
+}
+
+.wii-modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--tx3);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
   transition: all var(--tr_f);
 }
 
-.wii-theme-toggle-btn:hover {
+.wii-modal-close-btn:hover {
+  background: var(--glass-raised);
+  color: var(--tx1);
+}
+
+.wii-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wii-about-badge-version {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--tx3);
+  font-weight: 600;
+}
+
+.wii-pill-secure {
   background: var(--mco-light);
   color: var(--mco);
-  border-color: var(--border-accent);
+  border: 1px solid var(--border-accent);
+  padding: 2px 8px;
+  border-radius: var(--r_pill);
+  font-weight: 700;
+  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
+
+.wii-about-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.wii-about-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.wii-about-brand {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--tx1);
+  text-transform: uppercase;
+}
+
+.wii-about-brand b {
+  color: var(--mco);
+  text-shadow: 0 0 12px var(--mco-glow);
+}
+
+.wii-about-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mco);
+  box-shadow: 0 0 8px var(--mco-glow);
+  display: inline-block;
+  opacity: 0.85;
+}
+
+.wii-about-slogan {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tx2);
+  letter-spacing: 0.03em;
+}
+
+.wii-about-author-lead {
+  font-size: 0.88rem;
+  color: var(--tx2);
+  line-height: 1.65;
+  letter-spacing: 0.012em;
+  margin: 0;
+}
+
+.wii-about-author-lead b {
+  color: var(--tx1);
+  font-weight: 700;
+}
+
+.wii-about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 650px) {
+  .wii-about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wii-about-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: var(--glass-raised);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_m, 1vh);
+}
+
+.wii-about-card-icon {
+  font-size: 1.2rem;
+  color: var(--mco);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.wii-about-card-info h3 {
+  font-size: 0.90rem;
+  font-weight: 700;
+  color: var(--tx1);
+  margin-bottom: 2px;
+}
+
+.wii-about-card-info p {
+  font-size: 0.80rem;
+  color: var(--tx3);
+  line-height: 1.4;
+}
+
+.wii-about-card-info code {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  color: var(--mco);
+}
+
+.wii-about-shortcuts {
+  background: var(--glass-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_m, 1vh);
+  padding: 12px;
+  margin-top: 4px;
+}
+
+.wii-about-shortcuts h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tx1);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wii-shortcuts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wii-shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.80rem;
+  color: var(--tx2);
+}
+
+.wii-shortcut-row kbd {
+  background: var(--glass-raised);
+  border: 1px solid var(--border-card);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--tx1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.wii-modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wii-about-copy {
+  font-size: 0.74rem;
+  color: var(--tx3);
+}
+
+.wii-btn-modal-primary {
+  background: var(--mco);
+  color: var(--white, #ffffff);
+  font-weight: 800;
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--r_m, 1vh);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--tr_f);
+}
+
+.wii-btn-modal-primary:hover {
+  background: var(--mco-hover);
+  transform: translateY(-1px);
+}
+
+@keyframes wiiFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
 
 /* 3. DOCK MÓVIL INFERIOR (.wii-nav-bottom) */
 .wii-nav-bottom {

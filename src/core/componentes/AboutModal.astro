@@ -1,0 +1,87 @@
+---
+// src/core/componentes/AboutModal.astro
+// 🛡️ Modal Informativo de Transparencia, Seguridad y Propósito: TimeWii
+// 100% Cero CSS Inline · Variables exclusivas de witema.css
+import configurar from '@semillas/configurar.js';
+import wii from '../../wii.js';
+
+// Extraemos partes de app para dar estilo idéntico al branding del sidebar
+const appName = wii.app || 'TimeWii';
+const baseTitle = appName.length > 3 ? appName.slice(0, -3).toUpperCase() : appName.toUpperCase();
+const accentTitle = appName.length > 3 ? appName.slice(-3).toUpperCase() : '';
+---
+
+<div class="wii-modal-backdrop" id="modalAboutBackdrop" aria-hidden="true" style="display: none;">
+  <div class="wii-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle">
+    <!-- Cabecera del Modal -->
+    <div class="wii-modal-header">
+      <div class="wii-modal-brand-badge">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <span>{baseTitle}<b>{accentTitle}</b></span>
+      </div>
+      <button type="button" class="wii-modal-close-btn" id="btnCerrarAbout" aria-label="Cerrar modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Contenido del Modal -->
+    <div class="wii-modal-body">
+      <div class="wii-about-badge-version">
+        <span>Versión {wii.version}</span>
+        <span class="wii-pill-secure"><i class="fa-solid fa-shield-halved"></i> 100% Local-First & Seguro</span>
+      </div>
+
+      <div class="wii-about-hero">
+        <h2 id="aboutModalTitle" class="wii-about-title">
+          <span class="wii-about-brand">{baseTitle}<b>{accentTitle}</b></span>
+          <span class="wii-about-dot" aria-hidden="true"></span>
+          <span class="wii-about-slogan">{wii.slogan}</span>
+        </h2>
+        <p class="wii-about-author-lead">
+          Desarrollado con <b>fines educativos y profesionales</b> como una estación de trabajo ergonómica, privada y de alta velocidad para agentes y asesores remotos que brindan soporte a clientes de Estados Unidos.
+        </p>
+      </div>
+
+      <!-- Grid de Pilares de Seguridad y Transparencia -->
+      <div class="wii-about-grid">
+        <div class="wii-about-card">
+          <div class="wii-about-card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="wii-about-card-info">
+            <h3>Fines Educativos y Profesionales</h3>
+            <p>Diseñado para potenciar habilidades de comunicación, comprensión de husos horarios, fonética en inglés y cálculo de metas de calidad (CSAT) en entornos BPO.</p>
+          </div>
+        </div>
+
+        <div class="wii-about-card">
+          <div class="wii-about-card-icon"><i class="fa-solid fa-database"></i></div>
+          <div class="wii-about-card-info">
+            <h3>Cero Servidores Externos</h3>
+            <p>TimeWii opera sin bases de datos remotas ni servicios en la nube. Toda la información se almacena de manera estricta y segura en el <code>localStorage</code> de tu navegador.</p>
+          </div>
+        </div>
+
+        <div class="wii-about-card">
+          <div class="wii-about-card-icon"><i class="fa-solid fa-user-shield"></i></div>
+          <div class="wii-about-card-info">
+            <h3>Privacidad y Cumplimiento Total</h3>
+            <p>Tus notas, métricas y preferencias se quedan exclusivamente en tu equipo. Cero rastreadores analíticos, cero telemetría y cero recolección de datos sensibles de clientes.</p>
+          </div>
+        </div>
+
+        <div class="wii-about-card">
+          <div class="wii-about-card-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="wii-about-card-info">
+            <h3>Rendimiento Local Instantáneo 0ms</h3>
+            <p>Compilado estáticamente con Astro y Vite. Ejecución ultra rápida en memoria sin depender de peticiones de red ni latencias externas durante tus llamadas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie del Modal -->
+    <div class="wii-modal-footer">
+      <span class="wii-about-copy">Desarrollado con dedicación por <b>Wilder Taype</b> · {configurar.anio}</span>
+      <button type="button" class="wii-btn-modal-primary" id="btnEntendidoAbout">Entendido</button>
+    </div>
+  </div>
+</div>

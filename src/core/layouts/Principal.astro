@@ -1,12 +1,14 @@
 ---
 // src/core/layouts/Principal.astro
-// 🏛️ Layout Maestro Modular Agnóstico (WiDev App Engine)
+// 🏛️ Layout Maestro Modular Agnóstico: TimeWii Workstation Engine
 // Soporta: View Transitions SPA (0ms), Anti-FOUC, Shell Responsivo y Dock Móvil
 // 🚀 0 CSS Externos: Fuentes locales, FontAwesome y WiTema inyectados en línea vía set:html
 // ⚡ Máximo 2 JS: ClientRouter + App despachador único
 import { ClientRouter } from 'astro:transitions';
 import Sidebar from '@core/componentes/Sidebar.astro';
 import NavBottom from '@core/componentes/NavBottom.astro';
+import AboutModal from '@core/componentes/AboutModal.astro';
+import wii from '../../wii.js';
 import configurar from '@semillas/configurar.js';
 
 import googleCss from '../../../public/google/fonts.min.css?raw';
@@ -22,13 +24,12 @@ interface Props {
 }
 
 const {
-  titulo = configurar.nombre || configurar.app || '',
-  descripcion = configurar.descripcion || ''
+  titulo = configurar.title || `${configurar.app} • ${configurar.slogan}`,
+  descripcion = configurar.slogan || ''
 } = Astro.props;
 
-const avatarPreload = configurar.perfil?.avatar || configurar.perfil?.avatarSm || '';
-const colorLuz = configurar.tema?.colorLuz || '#fcfbf7';
-const colorNoche = configurar.tema?.colorNoche || '#080d1a';
+const colorLuz = configurar.tema?.colorLuz || '#fcf9fe';
+const colorNoche = configurar.tema?.colorNoche || '#0e0617';
 ---
 
 <!DOCTYPE html>
@@ -40,15 +41,16 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
   <title>{titulo}</title>
   {descripcion && <meta name="description" content={descripcion} />}
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="theme-color" content={colorLuz} />
+  <meta name="theme-color" content={colorNoche} />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- Script Anti-FOUC de Cero Latencia (Ejecución Síncrona Inmediata) -->
+  <!-- Script Anti-FOUC de Cero Latencia (Tema + Colapso Síncronos) -->
   <script is:inline define:vars={{ colorLuz, colorNoche }} data-astro-rerun>
     (function () {
       try {
+        // 1. Sincronizar Tema sin saltos visuales
         var guardado = localStorage.getItem('wiTema');
         var tema = guardado === 'noche' || guardado === 'luz'
           ? guardado
@@ -56,17 +58,22 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
         document.documentElement.dataset.theme = tema;
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.content = tema === 'noche' ? colorNoche : colorLuz;
+
+        // 2. Sincronizar Estado Colapsado del Sidebar
+        var colapsado = localStorage.getItem('timewii_sidebar_collapsed') === 'true';
+        if (colapsado && window.innerWidth >= 901) {
+          document.documentElement.classList.add('wii-sidebar-is-collapsed');
+        } else {
+          document.documentElement.classList.remove('wii-sidebar-is-collapsed');
+        }
       } catch (e) {}
     })();
   </script>
 
-  <!-- Optimización de Carga Crítica (Preload Eager solo de Avatar si existe) -->
-  {avatarPreload && <link rel="preload" href={avatarPreload} as="image" type="image/jpeg" />}
-
   <!-- 🎨 Estilos Globales Inlined (Fuentes + FontAwesome + WiTema + App): 0 peticiones CSS bloqueantes -->
   <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
 
-  <!-- Client Router de Astro para Navegación SPA Fluida -->
+  <!-- Client Router de Astro para Navegación SPA Fluida (0ms) -->
   <ClientRouter fallback="swap" />
 </head>
 
@@ -87,7 +94,10 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
   <!-- 3. Barra Inferior Móvil Fija (z-index: 9999) -->
   <NavBottom />
 
-  <!-- Despachador Único de la App (Tema, Gestos y Features bajo demanda) -->
+  <!-- 4. Modal Informativo ABOUT & Privacidad -->
+  <AboutModal />
+
+  <!-- Despachador Único de la App (Tema, Gestos, Colapso y Modales) -->
   <script>
     import { alternarTema, obtenerTema } from '@widev/tema.js';
     import { iniciarGestosSwipe } from '@widev/gestos.js';
@@ -96,43 +106,128 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
       const t = document.documentElement.dataset.theme || obtenerTema();
       const esNoche = t === 'noche';
 
-      // Sidebar & Controles
+      // Sidebar & Controles de Tema
       const txtS = document.getElementById('textoTemaSidebar');
       const icoS = document.getElementById('iconoTemaSidebar');
-      if (txtS) txtS.textContent = esNoche ? 'Tema Noche' : 'Tema Luz';
-      if (icoS) icoS.className = esNoche ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      if (txtS) txtS.textContent = esNoche ? 'Modo Luz' : 'Tema Noche';
+      if (icoS) icoS.className = esNoche ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+
+      // Sincronizar estado colapsado en Sidebar y Main Area
+      const isCollapsed = localStorage.getItem('timewii_sidebar_collapsed') === 'true';
+      const sb = document.getElementById('wiiSidebar');
+      const ma = document.querySelector('.wii-main-area');
+      if (isCollapsed && window.innerWidth >= 901) {
+        document.documentElement.classList.add('wii-sidebar-is-collapsed');
+        if (sb) sb.classList.add('collapsed');
+        if (ma) ma.classList.add('collapsed');
+      } else {
+        document.documentElement.classList.remove('wii-sidebar-is-collapsed');
+        if (sb) sb.classList.remove('collapsed');
+        if (ma) ma.classList.remove('collapsed');
+      }
     }
 
-    if (typeof window !== 'undefined' && !(window as any).__wiTemaDelegated) {
-      (window as any).__wiTemaDelegated = true;
+    if (typeof window !== 'undefined' && !(window as any).__wiAppDelegated) {
+      (window as any).__wiAppDelegated = true;
+
+      // Delegación de Eventos Click
       document.addEventListener('click', (e: any) => {
-        const btn = e.target.closest('#btnTemaSidebar, #btnTemaBottom, #btnThemeToggle');
-        if (btn) {
+        // A. Alternar Tema
+        const btnTema = e.target.closest('#btnTemaSidebar, #btnTemaBottom, #btnThemeToggle');
+        if (btnTema) {
           e.preventDefault();
           alternarTema();
           sincronizarUI();
           return;
         }
 
-        // Micro-vibración háptica al pulsar el dock inferior o ítems de navegación
+        // B. Colapsar / Expandir Sidebar con LocalStorage
+        const btnCollapse = e.target.closest('#btnCollapseSidebar');
+        if (btnCollapse) {
+          e.preventDefault();
+          const currentlyCollapsed = localStorage.getItem('timewii_sidebar_collapsed') === 'true';
+          const newState = !currentlyCollapsed;
+          localStorage.setItem('timewii_sidebar_collapsed', newState ? 'true' : 'false');
+          sincronizarUI();
+          return;
+        }
+
+        // C. Abrir Modal About
+        const btnAbout = e.target.closest('#btnAboutSidebar');
+        if (btnAbout) {
+          e.preventDefault();
+          const modal = document.getElementById('modalAboutBackdrop');
+          if (modal) {
+            modal.style.display = 'flex';
+            document.documentElement.classList.add('wii-modal-open');
+            document.body.classList.add('wii-modal-open');
+          }
+          return;
+        }
+
+        // D. Cerrar Modal About
+        const btnCloseAbout = e.target.closest('#btnCerrarAbout, #btnEntendidoAbout');
+        if (btnCloseAbout) {
+          e.preventDefault();
+          const modal = document.getElementById('modalAboutBackdrop');
+          if (modal) {
+            modal.style.display = 'none';
+            document.documentElement.classList.remove('wii-modal-open');
+            document.body.classList.remove('wii-modal-open');
+          }
+          return;
+        }
+
+        // E. Click en el backdrop del modal para cerrar
+        if (e.target && e.target.id === 'modalAboutBackdrop') {
+          e.target.style.display = 'none';
+          document.documentElement.classList.remove('wii-modal-open');
+          document.body.classList.remove('wii-modal-open');
+          return;
+        }
+
+        // F. Micro-vibración háptica al pulsar el dock inferior o ítems de navegación
         const dockBtn = e.target.closest('.wii-nav-dock-btn, .wii-nav-item');
         if (dockBtn && typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
           navigator.vibrate(8);
         }
       });
+
+      // Atajos de teclado ergonómicos
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        // Alt + C -> Colapsar / Expandir Sidebar
+        if (e.altKey && (e.key === 'c' || e.key === 'C')) {
+          e.preventDefault();
+          const currentlyCollapsed = localStorage.getItem('timewii_sidebar_collapsed') === 'true';
+          localStorage.setItem('timewii_sidebar_collapsed', !currentlyCollapsed ? 'true' : 'false');
+          sincronizarUI();
+        }
+        // Alt + L -> Alternar Tema
+        else if (e.altKey && (e.key === 'l' || e.key === 'L')) {
+          e.preventDefault();
+          alternarTema();
+          sincronizarUI();
+        }
+        // Escape -> Cerrar modal About
+        else if (e.key === 'Escape') {
+          const modal = document.getElementById('modalAboutBackdrop');
+          if (modal && modal.style.display !== 'none') {
+            modal.style.display = 'none';
+            document.documentElement.classList.remove('wii-modal-open');
+            document.body.classList.remove('wii-modal-open');
+          }
+        }
+      });
+
       window.addEventListener('witema-changed', sincronizarUI);
     }
 
     // Inicializar Motor Universal de Gestos Swipe
     iniciarGestosSwipe();
 
-    // Orquestación inteligente de features de página
-    function inicializarPaginaActual() {
-      sincronizarUI();
-    }
-
-    inicializarPaginaActual();
-    document.addEventListener('astro:page-load', inicializarPaginaActual);
+    // Sincronizar en cada cambio de ruta SPA
+    sincronizarUI();
+    document.addEventListener('astro:page-load', sincronizarUI);
   </script>
 </body>
 </html>
