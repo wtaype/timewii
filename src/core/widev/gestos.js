@@ -15,7 +15,7 @@ let rutasRegistradas = [];
  * @param {string} selector - Selector CSS de los enlaces de navegación
  * @returns {string[]} Lista de rutas normalizadas
  */
-export function obtenerRutasActivas(selector = '.geco-nav-bottom a[href], .geco-nav-menu a[href]') {
+export function obtenerRutasActivas(selector = '.wii-nav-bottom a[href], .wii-nav-menu a[href]') {
   if (typeof document === 'undefined') return [];
   const enlaces = Array.from(document.querySelectorAll(selector));
   const rutas = enlaces
@@ -72,10 +72,10 @@ export function iniciarGestosSwipe(opciones = {}) {
 
   const {
     rutas = null,
-    selectorNav = '.geco-nav-bottom a[href], .geco-nav-menu a[href]',
+    selectorNav = '.wii-nav-bottom a[href], .wii-nav-menu a[href]',
     umbral = 50,
     vibrar = 12,
-    excluir = 'input, textarea, select, button, a, iframe, .no-swipe, [data-no-swipe], #mapaGersson, .geco-survey-btn, .geco-yape-frame'
+    excluir = 'input, textarea, select, button, a, iframe, .no-swipe, [data-no-swipe]'
   } = opciones;
 
   function actualizarRutas() {

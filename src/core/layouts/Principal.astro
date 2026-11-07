@@ -71,14 +71,14 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
 </head>
 
 <body>
-  <div class="geco-shell">
+  <div class="wii-shell">
     <!-- 1. Barra Lateral Desktop (>= 901px) -->
     <Sidebar />
 
     <!-- 2. Área de Contenido Principal (Sin Header: Máximo Espacio Vertical) -->
-    <div class="geco-main-area">
+    <div class="wii-main-area">
       <!-- Lienzo Principal de Contenido -->
-      <main class="geco-content">
+      <main class="wii-content">
         <slot />
       </main>
     </div>
@@ -115,7 +115,7 @@ const colorNoche = configurar.tema?.colorNoche || '#080d1a';
         }
 
         // Micro-vibración háptica al pulsar el dock inferior o ítems de navegación
-        const dockBtn = e.target.closest('.geco-nav-dock-btn, .geco-nav-item');
+        const dockBtn = e.target.closest('.wii-nav-dock-btn, .wii-nav-item');
         if (dockBtn && typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
           navigator.vibrate(8);
         }
