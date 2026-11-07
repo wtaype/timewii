@@ -1,67 +1,35 @@
 // src/core/widev/tema.js
-// 🎨 Gestor Universal de Temas (wiTema) - Detección Smart & Cero FOUC
-const KEY = 'wiTema';
+// 🎨 Gestor Minimalista de Tema (Luz / Noche) • CumpleWii
+// 100% Reactivo · Persistencia en localStorage ('wiTema') · 22 Líneas Limpias
+const CLAVE = 'wiTema';
 
-export const witemas = {
-  futuro: '#07131b',
-  luz: '#f4f8fb'
-};
-
-export const wiTema = {
-  get: () => {
-    try {
-      return localStorage.getItem(KEY) || (window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'luz' : 'futuro');
-    } catch {
-      return 'luz';
-    }
-  },
-
-  set: (t, persist = true) => {
-    const tema = t === 'futuro' ? 'futuro' : 'luz';
-    if (typeof document !== 'undefined' && document.documentElement) {
-      document.documentElement.dataset.theme = tema;
-      document.querySelectorAll('#themeIcon, #icon_theme, #btnThemeToggle i').forEach((i) => {
-        i.className = tema === 'futuro' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-      });
-      let meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = tema === 'futuro' ? '#07131b' : '#f4f8fb';
-    }
-    if (persist) {
-      try { localStorage.setItem(KEY, tema); } catch {}
-    }
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('witema:cambiado', { detail: { tema } }));
-    }
-  },
-
-  toggle: () => {
-    const actual = (typeof document !== 'undefined' && document.documentElement.dataset.theme) || wiTema.get();
-    wiTema.set(actual === 'futuro' ? 'luz' : 'futuro', true);
-  },
-
-  listen: () => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-      try {
-        if (!localStorage.getItem(KEY)) {
-          wiTema.set(e.matches ? 'luz' : 'futuro', false);
-        }
-      } catch {}
-    });
-  },
-
-  init: () => {
-    wiTema.set(wiTema.get(), false);
-    wiTema.listen();
-  }
-};
-
-if (typeof window !== 'undefined') {
-  (window).toggleTema = wiTema.toggle;
+export function obtenerTema() {
+  if (typeof localStorage === 'undefined') return 'luz';
+  return localStorage.getItem(CLAVE) || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'noche' : 'luz');
 }
 
-export const setTema = (name) => wiTema.set(name, true);
-export const getTemaActual = wiTema.get;
-export const witema = wiTema.init;
+export function aplicarTema(tema) {
+  const t = tema === 'noche' ? 'noche' : 'luz';
+  if (typeof document !== 'undefined') {
+    document.documentElement.dataset.theme = t;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = t === 'noche' ? '#080d1a' : '#fcfbf7';
+  }
+  try { localStorage.setItem(CLAVE, t); } catch {}
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('witema-changed', { detail: t }));
+  }
+  return t;
+}
 
+export function alternarTema() {
+  return aplicarTema(obtenerTema() === 'noche' ? 'luz' : 'noche');
+}
+
+// Compatibilidad widev
+export const obtenerTemaPreferido = obtenerTema;
+export const setTema = aplicarTema;
+export const wiTema = { get: obtenerTema, set: aplicarTema, toggle: alternarTema };
+export const witema = wiTema;
+export const witemas = wiTema;
 export default wiTema;

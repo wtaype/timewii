@@ -6,17 +6,18 @@ import { langwii } from './langwii.js';
 // ── Año actual ───────────────────────────────────────────────────────────────
 export const year = () => new Date().getFullYear();
 
-// ── Fechas de Firebase con formato múltiple ──────────────────────────────────
-export const wiDate = (tm) => ({
+// ── Fechas locales con formato múltiple (100% Local / Zero Database) ─────────
+export const wiDate = () => ({
   save: (val) => {
     if (!val) return null;
     if (val.length === 10) val = `${val}T${new Date().toTimeString().split(' ')[0]}`;
-    return tm.fromDate(new Date(val));
+    return new Date(val).toISOString();
   },
   get: (val, fmt) => {
+    if (!val) return '';
     const sec = val?.seconds ?? (val?.type?.includes?.('timestamp') ? val.seconds : null);
-    const fec = val?.toDate?.() || (sec && new Date(sec * 1000)) || (typeof val === 'number' && new Date(val * 1000));
-    if (!fec) return '';
+    const fec = val instanceof Date ? val : (sec ? new Date(sec * 1000) : new Date(val));
+    if (!fec || isNaN(fec.getTime())) return '';
     const ajustada = new Date(fec.getTime() - fec.getTimezoneOffset() * 60000);
     if (fmt === 'full')  return ajustada.toISOString().slice(0, 16);
     if (fmt === 'local') return fec.toLocaleDateString();

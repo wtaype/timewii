@@ -1,0 +1,83 @@
+---
+// src/core/componentes/Sidebar.astro
+// 🧭 Barra Lateral de Navegación Desktop Universal (>= 901px)
+// 100% Cero CSS Inline · Desacoplado de Semillas Específicas
+import configurar from '@semillas/configurar.js';
+
+const currentPath = Astro.url.pathname;
+const itemsNav = configurar.navegacion || [];
+const marca = configurar.marca || {};
+const perfil = configurar.perfil || {};
+const widget = configurar.widgetSidebar || {};
+const badges = perfil.badges || [];
+
+const tituloBrand = marca.titulo || configurar.app || '';
+const subtituloBrand = marca.subtitulo || '';
+const avatarSrc = perfil.avatar || perfil.avatarSm || '';
+const nombrePerfil = perfil.nombreCorto || perfil.nombre || '';
+---
+
+<aside class="geco-sidebar" aria-label="Menú principal desktop">
+  <!-- 1. Marca / Logo Superior Dinámico -->
+  <div class="geco-brand">
+    {marca.icono && (
+      <div class="geco-brand-icon">
+        <i class:list={['fa-solid', marca.icono]}></i>
+      </div>
+    )}
+    <div>
+      <h1 class="geco-brand-title">{tituloBrand}</h1>
+      {subtituloBrand && <p class="geco-brand-sub">{subtituloBrand}</p>}
+    </div>
+  </div>
+
+  <!-- 2. Perfil Resumido Dinámico -->
+  {(avatarSrc || nombrePerfil) && (
+    <div class="geco-profile-pill">
+      {avatarSrc && <img src={avatarSrc} alt={nombrePerfil} class="geco-avatar-sm" />}
+      <div>
+        <div class="geco-profile-name">{nombrePerfil}</div>
+        {badges.length > 0 && (
+          <div class="geco-profile-badges">
+            {badges.map((b) => (
+              <span class:list={['geco-mini-tag', b.clase]}>
+                {b.icono && <i class:list={['fa-solid', b.icono]}></i>} {b.texto}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- 3. Menú de Navegación Desacoplado -->
+  <nav class="geco-nav-menu">
+    <span class="geco-nav-category">Secciones</span>
+
+    {itemsNav.map((item) => {
+      const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+      return (
+        <a href={item.href} class:list={['geco-nav-item', { active: isActive }]} data-tab={item.id} data-astro-prefetch="hover">
+          <i class:list={['fa-solid', item.icono]}></i>
+          <span>{item.label}</span>
+          {item.badge && <span class="geco-nav-badge">{item.badge}</span>}
+        </a>
+      );
+    })}
+  </nav>
+
+  <!-- 4. Pie de Barra: Widget Destacado y Cambio de Tema -->
+  <div class="geco-sidebar-footer">
+    {widget.activo && (
+      <div class="geco-event-box">
+        {widget.subtitulo && <div class="geco-event-sub">{widget.subtitulo}</div>}
+        {widget.valor && <div class="geco-event-val">{widget.valor}</div>}
+      </div>
+    )}
+
+    <button type="button" class="geco-theme-toggle-btn" id="btnTemaSidebar" title="Alternar Modo Luz y Noche">
+      <i class="fa-solid fa-sun" id="iconoTemaSidebar"></i>
+      <span id="textoTemaSidebar">Tema Luz</span>
+    </button>
+  </div>
+</aside>

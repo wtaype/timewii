@@ -1,5 +1,5 @@
-/* ==========================================================================
-   APP.CSS - SOLGAS SURQUILLO (GASWII)
+﻿/* ==========================================================================
+   APP.CSS - MOTOR UNIVERSAL WIDEV
    Estilos Core Globales: Variables de Tema, Reset, Componentes y Layout
    (100% Cero CSS Inline - Arquitectura set:html & ?inline)
    ========================================================================== */
@@ -16,7 +16,7 @@
 
 html {
   box-sizing: border-box !important;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
@@ -25,18 +25,54 @@ html {
 
 body {
   box-sizing: border-box !important;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  line-height: 1.6;
+  font-family: var(--ff_J);
+  background: var(--mesh-bg, var(--bg-body));
+  background-attachment: fixed;
+  color: var(--tx2, var(--text-main));
+  line-height: 1.5;
+  font-size: 14.5px;
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
   position: relative;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--tr_m, 0.3s ease), color var(--tr_m, 0.3s ease);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.geco-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.geco-main-area {
+  flex: 1;
+  margin-left: 255px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.geco-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 110px;
+}
+
+@media (max-width: 900px) {
+  .geco-main-area {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .geco-content {
+    padding: 16px 14px 110px !important;
+  }
 }
 
 #wimain, main {
@@ -45,7 +81,7 @@ body {
   max-width: 100%;
   overflow-x: clip;
   box-sizing: border-box;
-  min-height: calc(100vh - 140px);
+  min-height: 85vh;
   position: relative;
 }
 
@@ -57,7 +93,7 @@ section {
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Outfit', 'Poppins', sans-serif;
+  font-family: var(--ff_J);
   font-weight: 700;
   line-height: 1.25;
   color: var(--text-bright);
@@ -109,7 +145,7 @@ img {
 .btn-fire,
 .btn-serenidad {
   background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-weight: 700;
   border-radius: 1vh;
   padding: 0.85rem 1.4rem;
@@ -120,7 +156,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 0.6vw;
-  box-shadow: 0 0.8vh 2.2vh var(--brand-glow-primary);
+  box-shadow: 0 0.8vh 2.2vh color-mix(in srgb, var(--primary) 30%, transparent);
   transition: all 0.25s ease;
   text-align: center;
 }
@@ -129,12 +165,12 @@ img {
 .btn-serenidad:hover {
   background: linear-gradient(135deg, var(--brand-primary-hover) 0%, #1e332a 100%);
   transform: translateY(-0.3vh);
-  box-shadow: 0 1.2vh 3vh var(--brand-glow-primary);
+  box-shadow: 0 1.2vh 3vh color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .btn-call {
   background: linear-gradient(135deg, var(--brand-blue) 0%, #0369a1 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-family: var(--ff_P, 'Poppins', sans-serif);
   font-weight: 700;
   border-radius: 1vh;
@@ -146,7 +182,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 0.6vw;
-  box-shadow: 0 0.8vh 2.2vh var(--brand-glow-blue);
+  box-shadow: 0 0.8vh 2.2vh color-mix(in srgb, var(--brand-blue) 30%, transparent);
   transition: all var(--tr_m, 0.25s ease);
   text-align: center;
 }
@@ -154,12 +190,12 @@ img {
 .btn-call:hover {
   background: linear-gradient(135deg, var(--brand-blue-hover) 0%, #075985 100%);
   transform: translateY(-0.25vh);
-  box-shadow: 0 1.2vh 3vh var(--brand-glow-blue);
+  box-shadow: 0 1.2vh 3vh color-mix(in srgb, var(--brand-blue) 30%, transparent);
 }
 
 .btn-whatsapp {
   background: linear-gradient(135deg, var(--wa-green) 0%, #15803d 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-family: var(--ff_P, 'Poppins', sans-serif);
   font-weight: 700;
   border-radius: 1vh;
@@ -176,7 +212,7 @@ img {
 }
 
 .btn-whatsapp:hover {
-  background: linear-gradient(135deg, var(--wa-hover) 0%, #166534 100%);
+  background: linear-gradient(135deg, var(--wa_hover, var(--wa)) 0%, #166534 100%);
   transform: translateY(-0.25vh);
   box-shadow: 0 1.2vh 3vh rgba(37, 211, 102, 0.45);
 }
@@ -210,14 +246,14 @@ img {
   box-shadow: 0 1.2vh 3vh rgba(56, 189, 248, 0.35);
 }
 
-:root[data-theme="futuro"] .btn-test,
+:root[data-theme="noche"] .btn-test,
 :root[data-theme="dark"] .btn-test {
   background: linear-gradient(135deg, #112836 0%, #193648 100%);
   color: #38bdf8 !important;
   border: 1.5px solid #38bdf8;
 }
 
-:root[data-theme="futuro"] .btn-test:hover,
+:root[data-theme="noche"] .btn-test:hover,
 :root[data-theme="dark"] .btn-test:hover {
   background: #193648;
   color: #7dd3fc !important;
@@ -291,7 +327,7 @@ img {
 
 .pill-btn.active {
   background: var(--brand-orange);
-  color: #ffffff;
+  color: var(--white);
 }
 
 /* 7. BADGES Y ETIQUETAS */
@@ -416,7 +452,7 @@ img {
   max-width: 100%;
   box-sizing: border-box !important;
   background: var(--topbar-bg);
-  color: #ffffff;
+  color: var(--white);
   font-size: clamp(0.72rem, 0.78vw, 0.85rem);
   font-weight: 700;
   padding: 0.7vh 0;
@@ -457,7 +493,7 @@ img {
 }
 
 .topbar-phone-link {
-  color: #ffffff;
+  color: var(--white);
   text-decoration: underline;
   font-weight: 800;
   display: inline-flex;
@@ -525,7 +561,7 @@ img {
 .header-brand-title {
   font-size: clamp(1.05rem, 1.2vw, 1.35rem);
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--ff_O);
   display: block;
   color: var(--text-bright);
   line-height: 1.1;
@@ -610,7 +646,7 @@ img {
   border-radius: 1vh;
   padding: 2px;
   gap: 2px;
-  height: 34px;
+  height: 4.5vh;
   box-sizing: border-box !important;
   flex-shrink: 0;
 }
@@ -640,8 +676,8 @@ img {
 
 .header-pill-btn.active {
   background: var(--brand-orange);
-  color: #ffffff !important;
-  box-shadow: 0 2px 8px var(--brand-glow-orange);
+  color: var(--white) !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 /* Theme Toggle Button */
@@ -649,8 +685,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   color: var(--text-bright);
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   border-radius: 1vh;
   cursor: pointer;
   display: inline-flex;
@@ -778,7 +814,7 @@ img {
 /* Header Pedir Gas WhatsApp Button */
 .header-btn-whatsapp, .header-btn-order {
   background: linear-gradient(135deg, var(--wa-green) 0%, #15803d 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-weight: 700;
   border-radius: 1.2vh;
   padding: 0.5rem 1.15rem;
@@ -794,7 +830,7 @@ img {
 }
 
 .header-btn-whatsapp:hover, .header-btn-order:hover {
-  background: linear-gradient(135deg, var(--wa-hover) 0%, #166534 100%);
+  background: linear-gradient(135deg, var(--wa_hover, var(--wa)) 0%, #166534 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
 }
@@ -803,8 +839,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   color: var(--text-bright);
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   border-radius: 1vh;
   cursor: pointer;
   display: inline-flex;
@@ -881,8 +917,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   border-radius: 1vh;
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1082,7 +1118,7 @@ img {
   font-weight: 800;
   font-size: 1.15rem;
   color: var(--text-bright);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--ff_O);
   display: block;
 }
 
@@ -1177,7 +1213,7 @@ img {
 }
 
 .footer-nav-list a:hover {
-  color: var(--cl-orange, #ea580c);
+  color: var(--primary);
   transform: translateX(2px);
 }
 
@@ -1352,7 +1388,7 @@ img {
   background: var(--bg-card);
   border-color: var(--brand-orange);
   color: var(--text-bright);
-  box-shadow: 0 0.5vh 1.5vh var(--brand-glow-orange);
+  box-shadow: 0 0.5vh 1.5vh color-mix(in srgb, var(--primary) 30%, transparent);
   transform: translateY(-0.2vh);
 }
 
@@ -1519,7 +1555,7 @@ img {
 .font-bold { font-weight: 700; }
 .font-extrabold { font-weight: 800; }
 .font-black { font-weight: 900; }
-.font-outfit { font-family: 'Outfit', sans-serif; }
+.font-outfit { font-family: var(--ff_O); }
 
 .uppercase { text-transform: uppercase; }
 .text-center { text-align: center; }
@@ -1543,7 +1579,7 @@ img {
 .color-emerald { color: var(--accent-emerald); }
 .color-brand-blue { color: var(--brand-blue); }
 .color-gold { color: var(--accent-gold); }
-.text-white { color: #ffffff; }
+.text-white { color: var(--white); }
 .text-bright { color: var(--text-bright); }
 .text-muted { color: var(--text-muted); }
 .border-card { border-color: var(--border-card); }
@@ -1551,3 +1587,993 @@ img {
 .border-accent { border-color: var(--border-accent); }
 .bg-surface { background: var(--bg-surface); }
 .bg-surface-elevated { background: var(--bg-surface-elevated); }
+
+/* ==========================================================================
+   📱 CONTENEDOR CENTRALIZADO UNIFICADO (.appwii)
+   Experiencia móvil compacta y centrada en pantallas de escritorio
+   ========================================================================== */
+.appwii {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  padding: 1vh 1rem;
+  padding-bottom: 12vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 520px) {
+  .appwii {
+    padding-inline: 0.8rem;
+    padding-bottom: 12vh;
+  }
+}
+
+/* En tablets y computadoras de escritorio (≥640px) */
+@media (min-width: 640px) {
+  .appwii {
+    max-width: clamp(460px, 50vw, 560px);
+    padding-inline: 1.2rem;
+    padding-bottom: 13vh;
+  }
+
+  .beca-header-container {
+    max-width: clamp(460px, 50vw, 560px);
+    padding-inline: 1.2rem;
+  }
+
+  /* Barra de Navegación Flotante y Ergonómica (Dock Pill Centrado) */
+  .beca-nav-bottom {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-top: none !important;
+    box-shadow: none !important;
+    bottom: 1.4vh !important;
+    pointer-events: none;
+  }
+
+  .beca-nav-container {
+    max-width: clamp(440px, 48vw, 540px) !important;
+    margin-inline: auto !important;
+    background: var(--surface) !important;
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-card) !important;
+    border-radius: var(--r_full) !important;
+    box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.12), 0 0.2vh 0.6vh rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    pointer-events: auto;
+    overflow: hidden;
+    padding: 0.3vh 0.6vw !important;
+  }
+
+  .beca-nav-btn {
+    border-top: none !important;
+    border-radius: var(--r_full) !important;
+    padding-block: 0.8vh 0.7vh !important;
+    transition: background-color var(--tr_f), color var(--tr_f), transform var(--tr_f);
+  }
+
+  .beca-nav-btn:hover:not(.active) {
+    transform: translateY(-1px);
+  }
+
+  .beca-nav-btn.active {
+    border-radius: var(--r_full) !important;
+    box-shadow: inset 0 0 0 1px var(--border-accent);
+  }
+}
+
+/* Barra de desplazamiento nativa estilizada en escritorio */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0.8vh;
+    height: 0.8vh;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-body);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-card);
+    border-radius: 999vw;
+    transition: background-color var(--tr_f);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+
+/* ==========================================================================
+   🌸 BECAWII 2026 - NAVEGACIÓN MÓVIL INFERIOR Y COMPONENTES BASE
+   100% Gobernado por variables Witema V2.0 (Cero colores fijos)
+   ========================================================================== */
+
+/* 1. Barra de Navegación Inferior Fija (Mobile-First Touch Ergonomics Horizontal) */
+.beca-nav-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 900;
+  background: var(--surface) !important;
+  background-color: var(--surface) !important;
+  border-top: 1px solid var(--border-card);
+  box-shadow: 0 -0.4vh 1.8vh rgba(0, 0, 0, 0.06);
+  padding: 0;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.3vh);
+  transition: background-color var(--tr_m), border-color var(--tr_m);
+}
+
+.beca-nav-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.beca-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+  padding-block: 0.6vh 0.5vh;
+  padding-inline: 0;
+  border-radius: 0 !important;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-top: 3.5px solid transparent;
+  margin-top: -1px;
+  cursor: pointer;
+  transition: all var(--tr_f);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+.beca-nav-btn:hover:not(.active) {
+  color: var(--primary);
+  background-color: var(--bg-subtle);
+}
+
+.beca-nav-btn.active {
+  color: var(--primary);
+  background-color: var(--mbg);
+  border-top-color: var(--primary);
+  border-radius: 0 !important;
+}
+
+.beca-nav-icon-wrap {
+  height: 2.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25vh;
+  transition: transform var(--tr_f);
+}
+
+.beca-nav-btn:hover .beca-nav-icon-wrap {
+  transform: translateY(-0.15vh);
+}
+
+.beca-nav-btn.active .beca-nav-icon-wrap {
+  transform: scale(1.08);
+}
+
+.beca-nav-icon {
+  font-size: var(--fz_m2);
+  line-height: 1;
+  transition: transform var(--tr_f);
+}
+
+.beca-nav-text {
+  font-size: var(--fz_s1);
+  font-family: var(--ff_P);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  transition: color var(--tr_f);
+}
+
+.beca-nav-btn.active .beca-nav-text {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.beca-nav-btn:not(.active) .beca-nav-text {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* 2. Tarjetas y Contenedores BecaWii */
+.beca-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_l);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--tr_m), box-shadow var(--tr_m), border-color var(--tr_m);
+  overflow: hidden;
+}
+
+.beca-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 3. Botones Semánticos BecaWii */
+.beca-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--r_m);
+  padding: 1.2vh 2.5vw;
+  font-family: var(--ff_P);
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 25%, transparent);
+  transition: all var(--tr_f);
+  outline: none;
+}
+
+.beca-btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.beca-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--mbg);
+  color: var(--primary);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_m);
+  padding: 1.2vh 2.5vw;
+  font-family: var(--ff_P);
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--tr_f);
+  outline: none;
+}
+
+.beca-btn-secondary:hover {
+  background: var(--brand-accent-soft);
+  border-color: var(--border-accent);
+  transform: translateY(-1px);
+}
+
+/* 4. Badges y Píldoras de Estado */
+.beca-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--r_full);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 600;
+  background: var(--mbg);
+  color: var(--primary);
+  border: 1px solid var(--border-card);
+}
+
+/* ==========================================================================
+   5. HEADER BECAWII 2026 (100% TOKENS WITEMA)
+   ========================================================================== */
+.beca-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--surface) !important;
+  background-color: var(--surface) !important;
+  border-bottom: 1px solid var(--border-card);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.beca-header-container {
+  max-width: 90vw;
+  margin: 0 auto;
+  height: 6vh;
+  padding: 0 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 520px) {
+  .beca-header-container {
+    max-width: 100% !important;
+    padding: 0 2.5vw !important;
+  }
+}
+
+.beca-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.beca-brand-logo-text {
+  font-family: var(--ff_O);
+  font-size: var(--fz_m2);
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.beca-header-year-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2vh 0.8vw;
+  border-radius: var(--r_full);
+  background-color: var(--mbg);
+  color: var(--primary);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  border: 1px solid var(--border-card);
+  line-height: 1;
+}
+
+.beca-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.beca-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 3.8vh;
+  padding: 0 1.2vw;
+  border-radius: var(--r_full);
+  background-color: var(--mbg);
+  color: var(--text-main);
+  border: 1px solid var(--border-card);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.beca-theme-toggle:hover {
+  background-color: var(--brand-accent-soft);
+  border-color: var(--border-accent);
+  color: var(--primary);
+}
+
+.beca-header-avatar {
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.beca-header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========================================================
+   REPRODUCTOR GLOBAL PERSISTENTE PARA CLAYDA (MINI PLAYER)
+   ======================================================== */
+.becawii-mini-player {
+  position: fixed;
+  bottom: 7.5vh;
+  right: 2vw;
+  z-index: 99;
+  background: var(--surface);
+  border: 1.5px solid var(--border-accent);
+  border-radius: 1.5vh;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  padding-block: 0.5vh;
+  padding-inline: 1.5vw;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  max-width: 60vw;
+  animation: miniPlayerFadeIn 0.3s ease;
+}
+
+@keyframes miniPlayerFadeIn {
+  from { opacity: 0; transform: translateY(1vh); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.becawii-mini-player-link {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  text-decoration: none;
+  min-width: 0;
+  flex: 1;
+}
+
+.becawii-mini-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3vw;
+  height: 2vh;
+  width: 1.8vh;
+  flex-shrink: 0;
+}
+
+.becawii-mini-bar {
+  width: 0.4vh;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 999vw;
+  animation: miniBarBounce 0.8s ease-in-out infinite alternate;
+}
+
+.becawii-mini-bar:nth-child(2) {
+  animation-delay: 0.2s;
+  height: 60%;
+}
+
+.becawii-mini-bar:nth-child(3) {
+  animation-delay: 0.4s;
+  height: 80%;
+}
+
+@keyframes miniBarBounce {
+  0% { height: 25%; }
+  100% { height: 100%; }
+}
+
+.becawii-mini-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.becawii-mini-title {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30vw;
+}
+
+.becawii-mini-sub {
+  font-size: var(--fz_s2);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30vw;
+}
+
+.becawii-mini-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.becawii-mini-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5vh;
+  height: 4.5vh;
+  border-radius: 50%;
+  border: 1px solid var(--border-card);
+  background: var(--primary);
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.becawii-mini-btn:hover {
+  transform: scale(1.08);
+}
+
+
+/* ==========================================================================
+   NAVEGACIÓN ANIMADA SUPER BONITA (ESTILO MÓVIL DUOLINGO / NATIVO PREMIUM)
+   ========================================================================== */
+.beca-header {
+  view-transition-name: beca-header-bar;
+}
+
+.beca-nav-bottom {
+  view-transition-name: beca-bottom-nav;
+}
+
+::view-transition-old(beca-header-bar),
+::view-transition-new(beca-header-bar),
+::view-transition-old(beca-bottom-nav),
+::view-transition-new(beca-bottom-nav) {
+  animation: none !important;
+}
+
+::view-transition-old(root) {
+  animation: 0.18s cubic-bezier(0.4, 0, 1, 1) both becaPageOut;
+}
+
+::view-transition-new(root) {
+  animation: 0.24s cubic-bezier(0.16, 1, 0.3, 1) both becaPageIn;
+}
+
+@keyframes becaPageOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-1vh) scale(0.988);
+  }
+}
+
+@keyframes becaPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.2vh) scale(1.012);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.beca-nav-btn.active .beca-nav-icon-wrap {
+  animation: becaTabBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes becaTabBounce {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+.beca-nav-btn:active .beca-nav-icon-wrap {
+  transform: scale(0.92);
+}
+
+
+/* ========================================================
+   🧭 ESTILOS CORE DE COMPONENTES: HEADER, SIDEBAR, NAVBOTTOM
+   (100% Cero CSS Inline en Componentes Astro)
+   ======================================================== */
+
+/* 1. CABECERA PRINCIPAL (.geco-header) */
+.geco-header {
+  position: sticky;
+  top: 0;
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-card);
+  z-index: 700;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--tr_m), border-color var(--tr_m);
+}
+
+.geco-header-brand-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.geco-header-brand-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--mco);
+  letter-spacing: -0.3px;
+  transition: color var(--tr_f);
+}
+
+.geco-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.geco-theme-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--r_pill);
+  background: var(--glass-card);
+  border: 1px solid var(--border-card);
+  color: var(--tx2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.geco-theme-pill-btn:hover {
+  background: var(--mco-light);
+  color: var(--mco);
+  border-color: var(--border-accent);
+}
+
+.geco-header-avatar-link {
+  display: inline-flex;
+  border-radius: var(--r_pill);
+}
+
+.geco-avatar-header {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r_pill);
+  object-fit: cover;
+  border: 2px solid var(--mco);
+  box-shadow: 0 0 10px var(--mco-glow);
+  transition: transform var(--tr_f), box-shadow var(--tr_f);
+}
+
+.geco-header-avatar-link:hover .geco-avatar-header {
+  transform: scale(1.06);
+  box-shadow: 0 0 16px var(--mco-glow);
+}
+
+/* 2. BARRA LATERAL DESKTOP (.geco-sidebar >= 901px) */
+.geco-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--glass-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-card);
+  z-index: 800;
+  padding: 16px 14px;
+  transition: background var(--tr_m), border-color var(--tr_m);
+}
+
+.geco-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.geco-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r_m);
+  background: linear-gradient(135deg, var(--mco), #f59e0b);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 14px var(--mco-glow);
+}
+
+.geco-brand-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--tx1);
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.geco-brand-sub {
+  font-size: 0.74rem;
+  color: var(--tx3);
+  font-weight: 500;
+}
+
+.geco-profile-pill {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: var(--glass-raised);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_m);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.geco-avatar-sm {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r_pill);
+  object-fit: cover;
+  border: 2px solid var(--mco);
+  box-shadow: 0 0 10px var(--mco-glow);
+}
+
+.geco-profile-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tx1);
+  line-height: 1.2;
+}
+
+.geco-profile-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.geco-mini-tag {
+  font-size: 0.64rem;
+  padding: 2px 7px;
+  border-radius: var(--r_pill);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.geco-tag-fda {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.geco-tag-faith {
+  background: var(--mco-light);
+  color: var(--mco);
+  border: 1px solid var(--border-accent);
+}
+
+.geco-nav-menu {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.geco-nav-category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 10px 4px;
+}
+
+.geco-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r_m);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--tx2);
+  text-decoration: none;
+  transition: all var(--tr_f);
+}
+
+.geco-nav-item:hover {
+  background: var(--glass-raised);
+  color: var(--mco);
+  transform: translateX(3px);
+}
+
+.geco-nav-item.active {
+  background: var(--mco-light);
+  color: var(--mco);
+  font-weight: 700;
+  border: 1px solid var(--border-accent);
+}
+
+.geco-nav-item i {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.geco-nav-badge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: var(--r_pill);
+  background: var(--mco);
+  color: #fff;
+  font-weight: 700;
+}
+
+.geco-sidebar-footer {
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.geco-event-box {
+  background: var(--glass-raised);
+  border: 1px dashed var(--border-accent);
+  border-radius: var(--r_m);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.geco-event-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--tx3);
+  text-transform: uppercase;
+}
+
+.geco-event-val {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--mco);
+  margin-top: 2px;
+}
+
+.geco-theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--r_m);
+  background: var(--glass-card);
+  border: 1px solid var(--border-card);
+  color: var(--tx2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.geco-theme-toggle-btn:hover {
+  background: var(--mco-light);
+  color: var(--mco);
+  border-color: var(--border-accent);
+}
+
+/* 3. DOCK MÓVIL INFERIOR (.geco-nav-bottom) */
+.geco-nav-bottom {
+  display: none;
+}
+
+/* 4. RESPONSIVE BREAKPOINT (<= 900px) */
+@media (max-width: 900px) {
+  .geco-sidebar {
+    display: none !important;
+  }
+
+  .geco-header {
+    padding: 8px 14px;
+  }
+
+  .geco-nav-bottom {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    background: var(--glass-dock);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid var(--border-card);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+    padding: 6px 8px max(env(safe-area-inset-bottom, 8px), 8px);
+    justify-content: space-around;
+    align-items: center;
+    transition: background var(--tr_m), border-color var(--tr_m);
+  }
+
+  .geco-nav-dock-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px 10px;
+    border-radius: var(--r_m, 1vh);
+    color: var(--tx3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    min-width: 56px;
+    min-height: 48px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--tr_f);
+  }
+
+  .geco-nav-dock-btn i {
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: transform var(--tr_f);
+  }
+
+  .geco-nav-dock-btn:hover {
+    color: var(--mco);
+    transform: translateY(-1px);
+  }
+
+  .geco-nav-dock-btn.active {
+    color: var(--mco);
+    font-weight: 800;
+    background: var(--mco-light);
+    border: 1px solid var(--border-accent);
+    transform: translateY(-2px);
+  }
+
+  .geco-nav-dock-btn.active i {
+    transform: scale(1.1);
+  }
+}
+
+/* ============================================================ */
+/* ?? MICRO-INTERACCIONES M�VILES NATIVAS & TOUCH ACTION       */
+/* ============================================================ */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+html, body {
+  touch-action: pan-y;
+}
+
+.geco-nav-bottom {
+  touch-action: manipulation;
+}
+
+.geco-nav-dock-btn {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}

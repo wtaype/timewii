@@ -1,5 +1,17 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@core/*": ["./src/core/*"],
+      "@semillas/*": ["./src/semillas/*"],
+      "@widev": ["./src/core/widev/widev.js"],
+      "@widev/*": ["./src/core/widev/*"],
+      "@wii": ["./src/wii.js"],
+      "@feature/*": ["./src/feature/*"]
+    }
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }

@@ -1,45 +1,138 @@
 ---
 // src/core/layouts/Principal.astro
-// 🌟 Layout Maestro Unificado TimeWii (Cero Bloqueo, 100% Local y Seguro)
-import '../wicss/witema.css';
-import '../wicss/app.css';
+// 🏛️ Layout Maestro Modular Agnóstico (WiDev App Engine)
+// Soporta: View Transitions SPA (0ms), Anti-FOUC, Shell Responsivo y Dock Móvil
+// 🚀 0 CSS Externos: Fuentes locales, FontAwesome y WiTema inyectados en línea vía set:html
+// ⚡ Máximo 2 JS: ClientRouter + App despachador único
+import { ClientRouter } from 'astro:transitions';
+import Sidebar from '@core/componentes/Sidebar.astro';
+import NavBottom from '@core/componentes/NavBottom.astro';
+import configurar from '@semillas/configurar.js';
+
+import googleCss from '../../../public/google/fonts.min.css?raw';
+import awesomeCss from '../../../public/fontawesome/css/all.min.css?raw';
+import witemaCss from '../wicss/witema.css?inline';
+import appCss from '../wicss/app.css?inline';
+
+const globalCss = googleCss + '\n' + awesomeCss + '\n' + witemaCss + '\n' + appCss;
 
 interface Props {
   titulo?: string;
   descripcion?: string;
 }
 
-const { 
-  titulo = 'Timewii - Smart tools for you | Wellcare Support',
-  descripcion = 'Herramienta de apoyo y productividad para asesores de atención telefónica Wellcare Medicare Advantage en Teleperformance.'
+const {
+  titulo = configurar.nombre || configurar.app || '',
+  descripcion = configurar.descripcion || ''
 } = Astro.props;
+
+const avatarPreload = configurar.perfil?.avatar || configurar.perfil?.avatarSm || '';
+const colorLuz = configurar.tema?.colorLuz || '#fcfbf7';
+const colorNoche = configurar.tema?.colorNoche || '#080d1a';
 ---
 
 <!DOCTYPE html>
-<html lang="en" data-theme="futuro" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <title>{titulo}</title>
-  <meta name="description" content={descripcion} />
+  {descripcion && <meta name="description" content={descripcion} />}
   <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content={colorLuz} />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- Tipografía & Iconografía Local Caché -->
-  <link rel="stylesheet" href="/google/fonts.min.css" />
-  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+  <!-- Script Anti-FOUC de Cero Latencia (Ejecución Síncrona Inmediata) -->
+  <script is:inline define:vars={{ colorLuz, colorNoche }} data-astro-rerun>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('wiTema');
+        var tema = guardado === 'noche' || guardado === 'luz'
+          ? guardado
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'noche' : 'luz');
+        document.documentElement.dataset.theme = tema;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = tema === 'noche' ? colorNoche : colorLuz;
+      } catch (e) {}
+    })();
+  </script>
 
-  <!-- Anti-FOUC Inmediato (0ms de parpadeo) -->
-  <script is:inline>try{var g=localStorage.getItem('wiTema');document.documentElement.dataset.theme=g||'futuro'}catch(e){}</script>
+  <!-- Optimización de Carga Crítica (Preload Eager solo de Avatar si existe) -->
+  {avatarPreload && <link rel="preload" href={avatarPreload} as="image" type="image/jpeg" />}
 
-  <slot name="head" />
+  <!-- 🎨 Estilos Globales Inlined (Fuentes + FontAwesome + WiTema + App): 0 peticiones CSS bloqueantes -->
+  <style is:global data-astro-transition-persist="global-css" set:html={globalCss}></style>
+
+  <!-- Client Router de Astro para Navegación SPA Fluida -->
+  <ClientRouter fallback="swap" />
 </head>
 
 <body>
-  <!-- Contenido Principal -->
-  <slot />
+  <div class="geco-shell">
+    <!-- 1. Barra Lateral Desktop (>= 901px) -->
+    <Sidebar />
 
-  <!-- Script de Interactividad del Tema Minificado -->
-  <script is:inline>window.cambiarTemaGlobal=function(n){document.documentElement.dataset.theme=n;try{localStorage.setItem('wiTema',n)}catch(e){}window.dispatchEvent(new CustomEvent('witema-changed',{detail:n}))};</script>
+    <!-- 2. Área de Contenido Principal (Sin Header: Máximo Espacio Vertical) -->
+    <div class="geco-main-area">
+      <!-- Lienzo Principal de Contenido -->
+      <main class="geco-content">
+        <slot />
+      </main>
+    </div>
+  </div>
+
+  <!-- 3. Barra Inferior Móvil Fija (z-index: 9999) -->
+  <NavBottom />
+
+  <!-- Despachador Único de la App (Tema, Gestos y Features bajo demanda) -->
+  <script>
+    import { alternarTema, obtenerTema } from '@widev/tema.js';
+    import { iniciarGestosSwipe } from '@widev/gestos.js';
+
+    function sincronizarUI() {
+      const t = document.documentElement.dataset.theme || obtenerTema();
+      const esNoche = t === 'noche';
+
+      // Sidebar & Controles
+      const txtS = document.getElementById('textoTemaSidebar');
+      const icoS = document.getElementById('iconoTemaSidebar');
+      if (txtS) txtS.textContent = esNoche ? 'Tema Noche' : 'Tema Luz';
+      if (icoS) icoS.className = esNoche ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    }
+
+    if (typeof window !== 'undefined' && !(window as any).__wiTemaDelegated) {
+      (window as any).__wiTemaDelegated = true;
+      document.addEventListener('click', (e: any) => {
+        const btn = e.target.closest('#btnTemaSidebar, #btnTemaBottom, #btnThemeToggle');
+        if (btn) {
+          e.preventDefault();
+          alternarTema();
+          sincronizarUI();
+          return;
+        }
+
+        // Micro-vibración háptica al pulsar el dock inferior o ítems de navegación
+        const dockBtn = e.target.closest('.geco-nav-dock-btn, .geco-nav-item');
+        if (dockBtn && typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+          navigator.vibrate(8);
+        }
+      });
+      window.addEventListener('witema-changed', sincronizarUI);
+    }
+
+    // Inicializar Motor Universal de Gestos Swipe
+    iniciarGestosSwipe();
+
+    // Orquestación inteligente de features de página
+    function inicializarPaginaActual() {
+      sincronizarUI();
+    }
+
+    inicializarPaginaActual();
+    document.addEventListener('astro:page-load', inicializarPaginaActual);
+  </script>
 </body>
 </html>
