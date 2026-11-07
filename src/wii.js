@@ -2,7 +2,7 @@
 export const id = 'timewii';
 export const app = 'TimeWii for you';
 export const by = '@wilder.taype';
-export const version = 1.0.0;
+export const version = '1.0.0';
 export const versionName = 'v2';
 export const linkweb = 'https://timewii.vercel.app';
 export default { id, app, by, version, versionName, linkweb };
