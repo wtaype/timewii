@@ -1,0 +1,671 @@
+/* src/feature/ruleta/ruleta.css */
+/* 🎯 Estilos Premium para la Super Smart Ruleta de Equipo & Panel del Supervisor */
+/* 100% Variables de witema.css y tipografía var(--ff_J) */
+
+.wii-ruleta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  width: 100%;
+  color: var(--tx1);
+  font-family: var(--ff_J), sans-serif;
+}
+
+/* ==========================================================================
+   1. GRID SUPERIOR: RULETA (IZQ) & PANEL DE PARTICIPANTES (DER)
+   ========================================================================== */
+.wii-ruleta-grid-top {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.2vh;
+  align-items: stretch;
+}
+
+.wii-ruleta-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+  padding: 1.2vh 1.4vh;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  transition: border-color 0.2s ease;
+}
+
+.wii-ruleta-card:hover {
+  border-color: rgba(229, 69, 84, 0.3);
+}
+
+.wii-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8vh;
+  border-bottom: 1px solid var(--brd);
+  padding-bottom: 0.8vh;
+}
+
+.wii-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 0.6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.wii-ico-wheel        { background: rgba(229, 69, 84, 0.12); color: var(--mco); border: 1px solid rgba(229, 69, 84, 0.3); }
+.wii-ico-participants { background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.3); }
+.wii-ico-winners      { background: rgba(240, 197, 71, 0.12); color: #f0c547; border: 1px solid rgba(240, 197, 71, 0.3); }
+
+.wii-header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.wii-card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tx1);
+  margin: 0;
+}
+
+.wii-card-sub {
+  font-size: 0.72rem;
+  color: var(--tx3);
+  margin: 0.2vh 0 0;
+}
+
+.wii-wheel-status-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vh;
+  padding: 0.35vh 0.8vh;
+  border-radius: 0.5vh;
+  background: rgba(229, 69, 84, 0.15);
+  border: 1px solid var(--mco);
+  color: var(--mco);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.wii-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mco);
+  box-shadow: 0 0 6px var(--mco);
+}
+
+/* ==========================================================================
+   2. ESTACIÓN DE LA RULETA INTERACTIVA (CANVAS)
+   ========================================================================== */
+.wii-wheel-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vh;
+  flex: 1;
+}
+
+.wii-wheel-container {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wii-wheel-pointer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  color: var(--mco);
+  font-size: 2.2rem;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.wii-wheel-disc {
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.wii-wheel-disc canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wii-wheel-center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mco) 0%, #b82b39 100%);
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 16px rgba(229, 69, 84, 0.5);
+  transition: all 0.15s ease;
+  z-index: 5;
+  outline: none;
+}
+
+.wii-wheel-center-btn:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6), 0 0 24px rgba(229, 69, 84, 0.7);
+}
+
+.wii-wheel-center-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.wii-wheel-center-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: translate(-50%, -50%);
+}
+
+.wii-wheel-center-btn i {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+/* Banner de Anuncio del Ganador */
+.wii-winner-announcement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1vh;
+  background: rgba(229, 69, 84, 0.12);
+  border: 1.5px solid var(--mco);
+  border-radius: 0.8vh;
+  padding: 0.8vh 1.2vh;
+  box-shadow: 0 4px 20px rgba(229, 69, 84, 0.2);
+  animation: popWinner 0.25s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+}
+
+@keyframes popWinner {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.wii-winner-trophy {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(240, 197, 71, 0.15);
+  border: 1.5px solid #f0c547;
+  color: #f0c547;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.wii-winner-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.wii-winner-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--mco);
+  letter-spacing: 0.04em;
+}
+
+.wii-winner-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--tx1);
+  margin: 0.1vh 0;
+}
+
+.wii-winner-action-desc {
+  font-size: 0.72rem;
+  color: var(--tx2);
+  margin: 0;
+}
+
+.wii-winner-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+}
+
+.wii-btn-winner-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  background: var(--mco);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5vh;
+  padding: 0.6vh 1vh;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-btn-winner-action:hover {
+  background: #ff5264;
+}
+
+.wii-btn-winner-dismiss {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3vh;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  color: var(--tx2);
+  border-radius: 0.5vh;
+  padding: 0.6vh 0.8vh;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.wii-btn-winner-dismiss:hover {
+  border-color: var(--tx2);
+  color: var(--tx1);
+}
+
+/* ==========================================================================
+   3. PANEL DE PARTICIPANTES (SUPERVISOR)
+   ========================================================================== */
+.wii-participants-count-pill {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #00d2ff;
+  background: rgba(0, 210, 255, 0.12);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 0.5vh;
+  padding: 0.3vh 0.7vh;
+}
+
+.wii-participants-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.wii-textarea-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4vh;
+  flex-wrap: wrap;
+  gap: 0.5vh;
+}
+
+.wii-input-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tx2);
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-textarea-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-action-chip {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.2vh 0.55vh;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--tx2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-action-chip:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+.btn-chip-danger:hover {
+  border-color: #ff5252;
+  color: #ff5252;
+}
+
+.wii-participants-textarea {
+  width: 100%;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 0.8vh 1vh;
+  color: var(--tx1);
+  font-family: inherit;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  outline: none;
+  resize: vertical;
+  min-height: 130px;
+  transition: border-color 0.2s ease;
+}
+
+.wii-participants-textarea:focus {
+  border-color: var(--mco);
+  box-shadow: 0 0 0 2px rgba(229, 69, 84, 0.15);
+}
+
+/* Opciones Inteligentes */
+.wii-smart-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.8vh;
+  padding: 0.8vh 1vh;
+}
+
+/* Switch Autoeliminar */
+.wii-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8vh;
+  cursor: pointer;
+  padding: 0.4vh 0;
+  user-select: none;
+}
+
+.wii-switch-toggle {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.wii-switch-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wii-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 22px;
+  border: 1px solid var(--brd);
+}
+
+.wii-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+}
+
+.wii-switch-toggle input:checked + .wii-switch-slider {
+  background-color: var(--mco);
+  border-color: var(--mco);
+}
+
+.wii-switch-toggle input:checked + .wii-switch-slider:before {
+  transform: translateX(18px);
+}
+
+.wii-switch-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.wii-switch-text strong {
+  font-size: 0.78rem;
+  color: var(--tx1);
+}
+
+.wii-switch-text span {
+  font-size: 0.68rem;
+  color: var(--tx3);
+}
+
+/* Modos y Velocidad */
+.wii-mode-selector-group,
+.wii-speed-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+  border-top: 1px solid var(--brd);
+  padding-top: 0.6vh;
+}
+
+.wii-mode-group-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wii-mode-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+  flex-wrap: wrap;
+}
+
+.wii-mode-chip {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.35vh 0.75vh;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--tx2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-mode-chip:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+.wii-mode-chip.active {
+  background: rgba(229, 69, 84, 0.18);
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+/* ==========================================================================
+   4. TABLA DE RESULTADOS & PODIO DE GANADORES
+   ========================================================================== */
+.wii-card-winners {
+  margin-top: 0;
+}
+
+.wii-winners-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6vh;
+}
+
+.wii-winners-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  color: var(--tx2);
+  border-radius: 0.5vh;
+  padding: 0.4vh 0.8vh;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-winners-btn:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+.wii-winners-btn.btn-danger:hover {
+  border-color: #ff5252;
+  color: #ff5252;
+}
+
+.wii-table-responsive-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  background: var(--inp);
+}
+
+.wii-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+.wii-custom-table th {
+  background: var(--wb);
+  color: var(--tx3);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.8vh 1vh;
+  border-bottom: 1.5px solid var(--brd);
+  white-space: nowrap;
+}
+
+.wii-custom-table td {
+  padding: 0.7vh 1vh;
+  border-bottom: 1px solid var(--brd);
+  color: var(--tx2);
+  vertical-align: middle;
+}
+
+.wii-custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wii-custom-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.wii-winner-cell-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6vh;
+  font-size: 0.85rem;
+}
+
+.wii-winner-cell-name strong {
+  color: var(--tx1);
+}
+
+.wii-tbl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2vh 0.6vh;
+  border-radius: 0.4vh;
+  white-space: nowrap;
+}
+
+.pill-ok { background: rgba(58, 176, 87, 0.15); color: var(--ok, #00e676); border: 1px solid rgba(58, 176, 87, 0.3); }
+.pill-warning { background: rgba(240, 197, 71, 0.15); color: #f0c547; border: 1px solid rgba(240, 197, 71, 0.3); }
+.pill-danger { background: rgba(229, 69, 84, 0.15); color: var(--mco); border: 1px solid rgba(229, 69, 84, 0.3); }
+.pill-neutral { background: rgba(255, 255, 255, 0.06); color: var(--tx3); border: 1px solid var(--brd); }
+
+.wii-log-time {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: var(--tx3);
+}
+
+.wii-tbl-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-tbl-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3vh;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  color: var(--tx2);
+  border-radius: 0.4vh;
+  padding: 0.25vh 0.6vh;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-tbl-action-btn:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+.btn-readd-participant:hover {
+  border-color: #00d2ff;
+  color: #00d2ff;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .wii-ruleta-grid-top {
+    grid-template-columns: 1fr;
+  }
+  .wii-wheel-container {
+    width: 320px;
+    height: 320px;
+  }
+  .wii-wheel-disc {
+    width: 320px;
+    height: 320px;
+  }
+}

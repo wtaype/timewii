@@ -1,0 +1,1017 @@
+/* src/feature/calculadora/calculadora.css */
+/* 🧮 Estilos Premium para la Calculadora Inteligente & Tiempos (Layout Split: Left / Right) */
+/* 100% Variables de witema.css y tipografía var(--ff_J) · Ergonómico y accesible */
+
+.wii-calc-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  width: 100%;
+  color: var(--tx1);
+  font-family: var(--ff_J), sans-serif;
+}
+
+/* ─── GRID PRINCIPAL SPLIT (LEFT / RIGHT) ─── */
+.wii-calc-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr; /* Izquierda Entrada / Derecha Resultados */
+  gap: 1.2vh;
+  align-items: stretch;
+}
+
+/* Tarjeta Base de Calculadora */
+.wii-calc-card {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+  padding: 1.2vh 1.4vh;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+/* Cabeceras de Tarjeta */
+.wii-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--brd);
+  padding-bottom: 0.6vh;
+  flex-wrap: wrap;
+  gap: 0.8vh;
+}
+
+.wii-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.8vh;
+}
+
+.wii-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.6vh;
+  background: rgba(229, 69, 84, 0.12);
+  border: 1px solid var(--mco);
+  color: var(--mco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.wii-card-icon.wii-ico-results {
+  background: rgba(0, 230, 118, 0.12);
+  border-color: var(--ok, #00e676);
+  color: var(--ok, #00e676);
+}
+
+.wii-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--tx1);
+  margin: 0;
+}
+
+.wii-card-sub {
+  font-size: 0.68rem;
+  color: var(--tx3);
+  margin: 0.2vh 0 0;
+}
+
+/* Status Badge */
+.wii-calc-status-badge {
+  background: rgba(0, 230, 118, 0.12);
+  border: 1px solid var(--ok, #00e676);
+  color: var(--ok, #00e676);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.3vh 0.6vh;
+  border-radius: 0.4vh;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ok, #00e676);
+  box-shadow: 0 0 6px var(--ok, #00e676);
+}
+
+/* Tabs de Modos de Cálculo */
+.wii-calc-mode-tabs {
+  display: flex;
+  gap: 0.4vh;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 2px;
+}
+
+.wii-mode-tab {
+  background: transparent;
+  border: none;
+  border-radius: 0.4vh;
+  padding: 0.4vh 0.8vh;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--tx2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  transition: all 0.15s ease;
+}
+
+.wii-mode-tab:hover {
+  color: var(--tx1);
+}
+
+.wii-mode-tab.active {
+  background: var(--wb);
+  color: var(--mco);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   1. LADO IZQUIERDO: PANTALLA LCD, TECLADO & HORAS
+   ========================================================================== */
+.wii-calc-mode-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9vh;
+}
+
+/* Pantalla LCD Digital */
+.wii-calc-screen {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.8vh;
+  padding: 1vh 1.2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 85px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.wii-screen-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  color: var(--tx3);
+  font-weight: 600;
+}
+
+.wii-calc-mode-indicator {
+  letter-spacing: 0.04em;
+}
+
+.wii-calc-expr {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--tx2);
+  min-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+.wii-screen-main {
+  text-align: right;
+  overflow: hidden;
+}
+
+.wii-calc-display {
+  font-family: monospace;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--tx1);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  word-break: break-all;
+}
+
+/* Barra de Chips Rápidos (+10%, +15%, etc.) */
+.wii-quick-chips-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+  flex-wrap: wrap;
+}
+
+.wii-chips-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--tx3);
+  margin-right: 0.2vh;
+}
+
+.wii-chip-btn {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.25vh 0.6vh;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--tx2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-chip-btn:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+  background: rgba(229, 69, 84, 0.08);
+}
+
+/* Teclado Numérico Ergonómico */
+.wii-calc-keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6vh;
+}
+
+.wii-key {
+  height: 48px;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  font-family: var(--ff_J), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--tx1);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.wii-key:hover {
+  border-color: var(--mco);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.wii-key:active {
+  transform: translateY(1px);
+}
+
+.wii-key-num {
+  font-weight: 800;
+}
+
+.wii-key-op {
+  background: rgba(229, 69, 84, 0.08);
+  border-color: rgba(229, 69, 84, 0.25);
+  color: var(--mco);
+  font-size: 1.15rem;
+}
+
+.wii-key-op:hover {
+  background: rgba(229, 69, 84, 0.18);
+  border-color: var(--mco);
+}
+
+.wii-key-clear {
+  background: rgba(237, 113, 58, 0.12);
+  border-color: rgba(237, 113, 58, 0.3);
+  color: #ed713a;
+  font-weight: 800;
+}
+
+.wii-key-clear:hover {
+  background: rgba(237, 113, 58, 0.22);
+  border-color: #ed713a;
+}
+
+.wii-key-special {
+  color: var(--tx2);
+  font-weight: 700;
+}
+
+.wii-key-equals {
+  background: var(--mco);
+  border-color: var(--mco);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.35rem;
+  box-shadow: 0 4px 10px rgba(229, 69, 84, 0.3);
+}
+
+.wii-key-equals:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 14px rgba(229, 69, 84, 0.4);
+}
+
+.wii-calc-keyboard-tip {
+  display: flex;
+  align-items: center;
+  gap: 0.6vh;
+  font-size: 0.65rem;
+  color: var(--tx3);
+  padding-top: 0.4vh;
+  border-top: 1px solid var(--brd);
+}
+
+/* Sub-modos de Horas & Tiempos */
+.wii-time-section-box {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.8vh;
+  padding: 0.9vh 1.1vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7vh;
+}
+
+.wii-time-sec-header {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--mco);
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+}
+
+.wii-time-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 0.6vh;
+}
+
+.wii-time-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+}
+
+.wii-time-field label {
+  font-size: 0.65rem;
+  color: var(--tx3);
+  font-weight: 700;
+}
+
+.wii-time-input,
+.wii-time-select {
+  height: 32px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.5vh;
+  padding: 0 0.6vh;
+  color: var(--tx1);
+  font-family: inherit;
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.wii-time-input:focus,
+.wii-time-select:focus {
+  border-color: var(--mco);
+}
+
+.wii-time-btn-calc {
+  height: 32px;
+  background: var(--mco);
+  color: #fff;
+  border: none;
+  border-radius: 0.5vh;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vh;
+  transition: all 0.15s ease;
+}
+
+.wii-time-btn-calc:hover {
+  filter: brightness(1.1);
+}
+
+/* Bloques de Tiempo A + B */
+.wii-blocks-calc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6vh;
+}
+
+.wii-time-block-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+}
+
+.wii-block-tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--tx3);
+}
+
+.wii-hm-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.3vh;
+}
+
+.wii-num-mini {
+  width: 52px;
+  height: 32px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  text-align: center;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--tx1);
+  outline: none;
+}
+
+.wii-num-mini:focus {
+  border-color: var(--mco);
+}
+
+.wii-hm-sep {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--tx3);
+}
+
+.wii-block-operator-box {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+}
+
+.wii-op-select {
+  height: 32px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0 0.5vh;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--mco);
+  outline: none;
+}
+
+/* Convertidor Decimal ⇄ HM */
+.wii-conv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8vh;
+}
+
+.wii-conv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+}
+
+.wii-conv-col label {
+  font-size: 0.65rem;
+  color: var(--tx3);
+  font-weight: 700;
+}
+
+.wii-input-with-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-conv-mini-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  color: var(--mco);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.15s ease;
+}
+
+.wii-conv-mini-btn:hover {
+  border-color: var(--mco);
+  background: rgba(229, 69, 84, 0.08);
+}
+
+.wii-time-presets {
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+  flex-wrap: wrap;
+  padding-top: 0.4vh;
+}
+
+.wii-presets-lbl {
+  font-size: 0.65rem;
+  color: var(--tx3);
+  font-weight: 700;
+}
+
+.wii-preset-chip {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.2vh 0.5vh;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--tx2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wii-preset-chip:hover {
+  border-color: var(--mco);
+  color: var(--tx1);
+}
+
+/* ==========================================================================
+   2. LADO DERECHO: RESULTADOS, DESGLOSE E HISTORIAL
+   ========================================================================== */
+/* Tarjeta de Resultado Principal */
+.wii-res-primary-box {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.8vh;
+  padding: 1.1vh 1.3vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.wii-res-top-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wii-res-type-pill {
+  background: rgba(229, 69, 84, 0.12);
+  border: 1px solid var(--mco);
+  color: var(--mco);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.25vh 0.6vh;
+  border-radius: 0.4vh;
+  letter-spacing: 0.04em;
+}
+
+.wii-res-timestamp {
+  font-size: 0.65rem;
+  color: var(--tx3);
+}
+
+.wii-res-hero-val {
+  font-family: monospace;
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: var(--tx1);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-align: center;
+  padding: 0.4vh 0;
+  word-break: break-all;
+}
+
+.wii-res-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--brd);
+  padding-top: 0.6vh;
+}
+
+.wii-btn-reuse {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.5vh;
+  padding: 0.4vh 0.8vh;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--tx1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  transition: all 0.15s ease;
+}
+
+.wii-btn-reuse:hover {
+  border-color: var(--mco);
+  color: var(--mco);
+}
+
+.wii-res-helper-text {
+  font-size: 0.62rem;
+  color: var(--tx3);
+}
+
+/* Desglose Contextual */
+.wii-desglose-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.wii-desglose-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7vh;
+}
+
+.wii-desglose-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--tx1);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+}
+
+.wii-desglose-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0.8vh;
+}
+
+.wii-desglose-card {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 0.7vh 0.9vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+}
+
+.wii-dg-lbl {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--tx3);
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-dg-val {
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--tx1);
+}
+
+.wii-spoken-text {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--mco);
+  line-height: 1.35;
+  font-style: italic;
+}
+
+/* Matriz de Propinas / Recargos */
+.wii-tips-matrix {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 0.7vh 0.9vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.wii-tips-hdr {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--tx3);
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6vh;
+}
+
+.wii-tip-cell {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.4vh 0.6vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2vh;
+}
+
+.wii-tip-cell.highlight {
+  border-color: rgba(229, 69, 84, 0.4);
+  background: rgba(229, 69, 84, 0.05);
+}
+
+.wii-tip-pct {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--tx3);
+}
+
+.wii-tip-delta {
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--mco);
+}
+
+.wii-tip-total {
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--tx2);
+}
+
+/* KPIs de Tiempo */
+.wii-time-kpis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6vh;
+}
+
+.wii-time-kpi-card {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 0.7vh 0.8vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+}
+
+.wii-kpi-lbl {
+  font-size: 0.62rem;
+  color: var(--tx3);
+  font-weight: 700;
+}
+
+.wii-kpi-val {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--tx1);
+}
+
+/* Progreso de Jornada Laboral */
+.wii-shift-progress-box {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.6vh;
+  padding: 0.7vh 0.9vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+}
+
+.wii-shift-prog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--tx2);
+}
+
+.wii-shift-prog-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--brd);
+}
+
+.wii-shift-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ed713a, var(--mco), var(--ok, #00e676));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.wii-shift-prog-meta {
+  font-size: 0.62rem;
+  color: var(--tx3);
+}
+
+/* Historial Cronológico */
+.wii-calc-history-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  flex: 1;
+  border-top: 1px solid var(--brd);
+  padding-top: 0.8vh;
+}
+
+.wii-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wii-history-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+}
+
+.wii-history-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tx1);
+  margin: 0;
+}
+
+.wii-history-count-badge {
+  background: rgba(229, 69, 84, 0.12);
+  border: 1px solid var(--mco);
+  color: var(--mco);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.2vh 0.5vh;
+  border-radius: 0.4vh;
+}
+
+.wii-btn-clear-history {
+  background: none;
+  border: none;
+  color: var(--tx3);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+  transition: color 0.15s ease;
+}
+
+.wii-btn-clear-history:hover {
+  color: var(--mco);
+}
+
+.wii-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.wii-hist-item {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.5vh;
+  padding: 0.5vh 0.8vh;
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 0.6vh;
+  transition: all 0.15s ease;
+}
+
+.wii-hist-item:hover {
+  border-color: var(--mco);
+  background: rgba(229, 69, 84, 0.04);
+}
+
+.wii-hist-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.wii-hist-type {
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: var(--mco);
+  letter-spacing: 0.02em;
+}
+
+.wii-hist-time {
+  font-size: 0.58rem;
+  color: var(--tx3);
+}
+
+.wii-hist-body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wii-hist-expr {
+  font-size: 0.65rem;
+  color: var(--tx3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wii-hist-res {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--tx1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wii-hist-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3vh;
+}
+
+.wii-hist-btn-load,
+.wii-hist-btn-del {
+  width: 24px;
+  height: 24px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  color: var(--tx2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  transition: all 0.12s ease;
+}
+
+.wii-hist-btn-load:hover {
+  border-color: var(--mco);
+  color: var(--mco);
+}
+
+.wii-hist-btn-del:hover {
+  border-color: #ed713a;
+  color: #ed713a;
+}
+
+.wii-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 1vh;
+  color: var(--tx3);
+  text-align: center;
+}
+
+.wii-history-empty i {
+  font-size: 1.6rem;
+  margin-bottom: 0.6vh;
+  color: var(--mco);
+  opacity: 0.6;
+}
+
+.wii-history-empty p {
+  font-size: 0.74rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--tx2);
+}
+
+.wii-history-empty span {
+  font-size: 0.64rem;
+  margin-top: 0.2vh;
+}
+
+/* ==========================================================================
+   3. RESPONSIVIDAD
+   ========================================================================== */
+@media (max-width: 992px) {
+  .wii-calc-grid {
+    grid-template-columns: 1fr;
+  }
+}

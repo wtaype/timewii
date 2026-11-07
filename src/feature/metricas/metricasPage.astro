@@ -1,0 +1,27 @@
+---
+// src/feature/metricas/metricasPage.astro
+// 📊 Orquestador Maestro de la Vista /metricas: Calculadora Visual CSAT (Estilo Imagen 1)
+// 5 Cajas Coloreadas, Velocímetro Semicircular, Barra de Distribución y Tabla de Leyenda Fácil
+import CsatInputCards from './componentes/CsatInputCards.astro';
+import CsatSpeedometer from './componentes/CsatSpeedometer.astro';
+import CsatLegendTable from './componentes/CsatLegendTable.astro';
+import './metricas.css';
+---
+
+<div class="wii-metricas-container" id="metricasContainer">
+  <!-- 1. SECCIÓN SUPERIOR: 5 CAJAS DE CALIFICACIÓN (VERY DISSATISFIED A VERY SATISFIED) -->
+  <CsatInputCards />
+
+  <!-- 2. SECCIÓN CENTRAL: VELOCÍMETRO SEMICIRCULAR & CONTROL DE META AMIGABLE -->
+  <CsatSpeedometer />
+
+  <!-- 3. SECCIÓN INFERIOR: TABLA DE LEYENDA & DESGLOSE FÁCIL DE CALCULAR -->
+  <CsatLegendTable />
+</div>
+
+<script>
+  import { inicializarMetricas } from './metricas.js';
+
+  inicializarMetricas();
+  document.addEventListener('astro:page-load', inicializarMetricas);
+</script>

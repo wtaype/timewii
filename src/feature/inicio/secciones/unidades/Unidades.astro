@@ -1,6 +1,6 @@
 ---
 // src/feature/inicio/secciones/unidades/Unidades.astro
-// 💊 Cuadro 6: Unidades & Formas Farmacéuticas (Sin buscador · Informativo directo con 1-click copy)
+// 💊 Cuadro 6: Unidades & Formas Farmacéuticas (Sin buscador · Informativo directo)
 import { UNITS_DATA } from '@semillas/unitsData.js';
 ---
 
@@ -16,7 +16,7 @@ import { UNITS_DATA } from '@semillas/unitsData.js';
   <!-- Cuadrícula de Unidades en 2 columnas (Informativo Directo) -->
   <div class="gen-pill-grid" id="genUnidadesGrid">
     {UNITS_DATA.map((item) => (
-      <div class="gen-pill-item gen-copyable-pill" data-copy={item.abrv} title={`${item.name} · ${item.tip}`}>
+      <div class="gen-pill-item" title={`${item.name} · ${item.tip}`}>
         <span class="gen-pill-code">{item.abrv}</span>
         <span class="gen-pill-text">{item.name}</span>
       </div>

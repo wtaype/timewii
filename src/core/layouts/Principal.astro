@@ -101,6 +101,7 @@ const colorNoche = configurar.tema?.colorNoche || '#0e0617';
   <script>
     import { alternarTema, obtenerTema } from '@widev/tema.js';
     import { iniciarGestosSwipe } from '@widev/gestos.js';
+    import { tituloPro } from '@widev/tituloPro.js';
 
     function sincronizarUI() {
       const t = document.documentElement.dataset.theme || obtenerTema();
@@ -225,9 +226,15 @@ const colorNoche = configurar.tema?.colorNoche || '#0e0617';
     // Inicializar Motor Universal de Gestos Swipe
     iniciarGestosSwipe();
 
+    // Iniciar Reloj Dinámico en el <title> de la Pestaña sincronizado con wii.js
+    tituloPro();
+
     // Sincronizar en cada cambio de ruta SPA
     sincronizarUI();
-    document.addEventListener('astro:page-load', sincronizarUI);
+    document.addEventListener('astro:page-load', () => {
+      sincronizarUI();
+      tituloPro();
+    });
   </script>
 </body>
 </html>

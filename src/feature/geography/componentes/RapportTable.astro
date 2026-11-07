@@ -1,0 +1,197 @@
+---
+// src/feature/geography/componentes/RapportTable.astro
+// 🏛️ Directorio de los 50 Estados USA: 11 Columnas Estructuradas con Curiosidades y Población
+// SIGLA | ESTADO | CAPITAL | CIUDADES CLAVE | ZIP Code | HUSO | HORA LOCAL | PREFIJOS | CLIMA | POBLACION | CURIOSIDADES
+import { STATES_DATA, ZONAS_HORARIAS } from '@semillas/statesData.js';
+
+function obtenerIanaEstado(estado: any) {
+  if (estado.abbr === 'AZ') return 'America/Phoenix';
+  return ZONAS_HORARIAS[estado.zone as keyof typeof ZONAS_HORARIAS] || 'America/New_York';
+}
+---
+
+<section class="wii-geo-rapport-section" id="geoRapportSection">
+  <!-- Cabecera de Control del Directorio -->
+  <div class="wii-geo-table-header">
+    <div class="wii-table-title-group">
+      <div class="wii-table-icon">
+        <i class="fa-solid fa-address-book"></i>
+      </div>
+      <div>
+        <h2 class="wii-table-title">Directorio de los 50 Estados USA & Ciudades Clave</h2>
+        <p class="wii-table-sub">Consulta instantánea de capitales, ciudades, ZIP, prefijos, población y curiosidades útiles</p>
+      </div>
+    </div>
+
+    <!-- Buscador y Contador -->
+    <div class="wii-table-actions">
+      <div class="wii-geo-search-box">
+        <i class="fa-solid fa-magnifying-glass wii-search-ico"></i>
+        <input
+          type="text"
+          id="geoSearchInput"
+          class="wii-geo-search-input"
+          placeholder="Buscar estado, sigla (TX, FL), ciudad (Dallas, Miami), ZIP, prefijo..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="button" id="btnClearGeoSearch" class="wii-geo-clear-btn" style="display: none;" title="Limpiar búsqueda">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="wii-geo-count-badge" id="geoStateCounter">
+        50 ESTADOS
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs de Filtrado Rápido por Zona Horaria -->
+  <div class="wii-geo-filter-tabs" id="geoFilterTabs">
+    <button type="button" class="wii-filter-tab active" data-filter="Todos">
+      <span>Todos</span>
+      <span class="wii-tab-num">50</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Eastern">
+      <span class="wii-tab-dot wii-dot-est"></span>
+      <span>Eastern</span>
+      <span class="wii-tab-num">21</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Central">
+      <span class="wii-tab-dot wii-dot-cst"></span>
+      <span>Central</span>
+      <span class="wii-tab-num">16</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Mountain">
+      <span class="wii-tab-dot wii-dot-mst"></span>
+      <span>Mountain</span>
+      <span class="wii-tab-num">7</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Pacific">
+      <span class="wii-tab-dot wii-dot-pst"></span>
+      <span>Pacific</span>
+      <span class="wii-tab-num">4</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Alaska">
+      <span class="wii-tab-dot wii-dot-ak"></span>
+      <span>Alaska</span>
+      <span class="wii-tab-num">1</span>
+    </button>
+    <button type="button" class="wii-filter-tab" data-filter="Hawaii">
+      <span class="wii-tab-dot wii-dot-hi"></span>
+      <span>Hawaii</span>
+      <span class="wii-tab-num">1</span>
+    </button>
+  </div>
+
+  <!-- Contenedor con Scroll de la Tabla con las 11 Columnas Exactas -->
+  <div class="wii-geo-table-viewport">
+    <table class="wii-geo-table" id="geoStatesTable">
+      <thead>
+        <tr>
+          <th style="width: 55px; text-align: center;">SIGLA</th>
+          <th style="width: 130px;">ESTADO</th>
+          <th style="width: 125px;">CAPITAL</th>
+          <th style="width: 200px;">CIUDADES CLAVE</th>
+          <th style="width: 110px;">ZIP CODE</th>
+          <th style="width: 95px;">HUSO</th>
+          <th style="width: 115px;">HORA LOCAL</th>
+          <th style="width: 140px;">PREFIJOS (ÁREA)</th>
+          <th style="width: 130px;">CLIMA TÍPICO</th>
+          <th style="width: 95px;">POBLACIÓN</th>
+          <th>CURIOSIDADES</th>
+        </tr>
+      </thead>
+      <tbody>
+        {STATES_DATA.map((st) => {
+          const iana = obtenerIanaEstado(st);
+          const zoneClass = `wii-badge-${st.zone.toLowerCase()}`;
+          return (
+            <tr
+              class="wii-geo-row"
+              data-abbr={st.abbr}
+              data-name={st.name.toLowerCase()}
+              data-cap={st.cap.toLowerCase()}
+              data-zone={st.zone}
+              data-cities={st.cities.toLowerCase()}
+              data-zip={st.zip}
+              data-pop={st.pop}
+              data-codes={st.codes}
+              data-weather={st.weather.toLowerCase()}
+              data-curio={st.curio.toLowerCase()}
+              data-search={`${st.abbr} ${st.name} ${st.cap} ${st.cities} ${st.zip} ${st.codes} ${st.weather} ${st.pop} ${st.curio}`.toLowerCase()}
+            >
+              <!-- 1. SIGLA -->
+              <td class="wii-td-abbr">
+                <span class="wii-geo-sigla">{st.abbr}</span>
+              </td>
+
+              <!-- 2. ESTADO -->
+              <td class="wii-td-state">
+                <strong class="wii-state-name">{st.name}</strong>
+              </td>
+
+              <!-- 3. CAPITAL -->
+              <td class="wii-td-cap">
+                <span class="wii-state-cap"><i class="fa-solid fa-landmark"></i> {st.cap}</span>
+              </td>
+
+              <!-- 4. CIUDADES CLAVE -->
+              <td class="wii-td-cities">
+                <span class="wii-cities-text">{st.cities}</span>
+              </td>
+
+              <!-- 5. ZIP CODE -->
+              <td class="wii-td-zip">
+                <span class="wii-zip-badge">{st.zip}</span>
+              </td>
+
+              <!-- 6. HUSO HORARIO -->
+              <td class="wii-td-zone">
+                <span class:list={['wii-zone-badge', zoneClass]}>
+                  {st.zone}
+                </span>
+                {st.abbr === 'AZ' && <span class="wii-no-dst-tag" title="No observa horario de verano">Sin DST</span>}
+              </td>
+
+              <!-- 7. HORA LOCAL TICKER -->
+              <td class="wii-td-time">
+                <span class="wii-row-clock" data-tz={iana}>
+                  --:--:-- --
+                </span>
+              </td>
+
+              <!-- 8. PREFIJOS (ÁREA) -->
+              <td class="wii-td-codes">
+                <span class="wii-codes-text">{st.codes}</span>
+              </td>
+
+              <!-- 9. CLIMA TÍPICO -->
+              <td class="wii-td-weather">
+                <span class="wii-weather-pill">{st.weather}</span>
+              </td>
+
+              <!-- 10. POBLACIÓN -->
+              <td class="wii-td-pop">
+                <span class="wii-pop-pill"><i class="fa-solid fa-users"></i> {st.pop}</span>
+              </td>
+
+              <!-- 11. CURIOSIDADES (CORTO Y SUPER ÚTIL) -->
+              <td class="wii-td-curio">
+                <span class="wii-curio-text">{st.curio}</span>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+
+    <!-- Estado Vacío cuando no hay resultados de búsqueda -->
+    <div class="wii-geo-empty" id="geoEmptyState" style="display: none;">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <p>No se encontraron estados para tu búsqueda.</p>
+      <button type="button" class="wii-btn-reset-filter" id="btnResetGeoFilter">
+        Restablecer Filtros
+      </button>
+    </div>
+  </div>
+</section>

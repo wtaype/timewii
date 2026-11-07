@@ -1,6 +1,6 @@
 ---
 // src/feature/inicio/secciones/direcciones/Direcciones.astro
-// 📬 Cuadro 5: Direcciones USPS & Sufijos (Sin buscador · Informativo directo con 1-click copy)
+// 📬 Cuadro 5: Direcciones USPS & Sufijos (Sin buscador · Informativo directo)
 import { ADDRESSES_DATA } from '@semillas/addressesData.js';
 ---
 
@@ -26,7 +26,7 @@ import { ADDRESSES_DATA } from '@semillas/addressesData.js';
   <!-- Cuadrícula de Abreviaciones USPS en 2 columnas (Informativo Directo) -->
   <div class="gen-pill-grid" id="genAbbrGrid">
     {ADDRESSES_DATA.map((item) => (
-      <div class="gen-pill-item gen-copyable-pill" data-copy={item.code} title={`Clic para copiar ${item.code} (${item.name})`}>
+      <div class="gen-pill-item" title={`${item.name} (${item.es})`}>
         <span class="gen-pill-code">{item.code}</span>
         <span class="gen-pill-text">{item.name} ({item.es})</span>
       </div>

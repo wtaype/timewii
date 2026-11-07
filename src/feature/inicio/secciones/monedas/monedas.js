@@ -39,7 +39,6 @@ export function initMonedas() {
       pill.addEventListener('click', () => {
         input.value = item.monto.replace('$', '');
         updateMoneyReader();
-        navigator.clipboard.writeText(`${item.monto} - ${item.enFormal}`);
       });
       grid.appendChild(pill);
     });

@@ -1,0 +1,150 @@
+---
+// src/feature/calculadora/componentes/CalculadoraRight.astro
+// 📊 Lado Derecho (RIGHT): Resultados Principales, Desglose Inteligente, Inglés Hablado e Historial
+// 100% Variables de witema.css · Tipografía var(--ff_J) · Ergonómico y accesible
+---
+
+<div class="wii-calc-card wii-calc-right-card">
+  <!-- Cabecera de la Tarjeta Derecha -->
+  <div class="wii-card-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-results">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Resultados & Desglose Inteligente</h2>
+        <p class="wii-card-sub">Visualización en vivo, pronunciación en inglés e historial de sesión</p>
+      </div>
+    </div>
+    <div class="wii-calc-status-badge">
+      <span class="wii-status-dot"></span> EN VIVO
+    </div>
+  </div>
+
+  <!-- 1. Tarjeta del Resultado Principal (Destacado) -->
+  <div class="wii-res-primary-box">
+    <div class="wii-res-top-meta">
+      <span class="wii-res-type-pill" id="resTypePill">ARITMÉTICA</span>
+      <span class="wii-res-timestamp" id="resTimestamp">Listo para operar</span>
+    </div>
+
+    <!-- Valor Principal en Formato Gigante -->
+    <div class="wii-res-hero-val" id="resHeroVal">
+      0
+    </div>
+
+    <!-- Acción Ergonómica para Reutilizar el Resultado -->
+    <div class="wii-res-actions-bar">
+      <button type="button" class="wii-btn-reuse" id="btnReuseResult" title="Cargar este resultado en la pantalla de la calculadora">
+        <i class="fa-solid fa-arrow-left"></i> Reutilizar en Calculadora
+      </button>
+      <span class="wii-res-helper-text">0 copias necesarias • Reincorpora al instante</span>
+    </div>
+  </div>
+
+  <!-- 2. Desglose Contextual Inteligente -->
+  <div class="wii-desglose-container">
+    <!-- A. Desglose para Operaciones Aritméticas -->
+    <div class="wii-desglose-panel" id="desgloseAritmetico">
+      <h3 class="wii-desglose-title"><i class="fa-solid fa-sparkles"></i> Desglose para Asesores (USA Call Support)</h3>
+
+      <div class="wii-desglose-grid">
+        <!-- Formato Moneda -->
+        <div class="wii-desglose-card">
+          <span class="wii-dg-lbl"><i class="fa-solid fa-dollar-sign"></i> Formato Moneda USA:</span>
+          <strong class="wii-dg-val" id="txtResMoneda">$0.00 USD</strong>
+        </div>
+
+        <!-- Pronunciación en Inglés -->
+        <div class="wii-desglose-card wii-card-spoken">
+          <span class="wii-dg-lbl"><i class="fa-solid fa-comment-dots"></i> Cómo decirlo en inglés al cliente:</span>
+          <div class="wii-spoken-text" id="txtResIngles">Zero</div>
+        </div>
+      </div>
+
+      <!-- Recargos / Propinas USA (+10%, +15%, +20%) -->
+      <div class="wii-tips-matrix">
+        <span class="wii-tips-hdr"><i class="fa-solid fa-receipt"></i> Propinas / Impuestos habituales en EE.UU.:</span>
+        <div class="wii-tips-grid">
+          <div class="wii-tip-cell">
+            <span class="wii-tip-pct">+10%</span>
+            <span class="wii-tip-delta" id="txtTip10Delta">+$0.00</span>
+            <span class="wii-tip-total" id="txtTip10Total">$0.00</span>
+          </div>
+          <div class="wii-tip-cell highlight">
+            <span class="wii-tip-pct">+15% (Estándar)</span>
+            <span class="wii-tip-delta" id="txtTip15Delta">+$0.00</span>
+            <span class="wii-tip-total" id="txtTip15Total">$0.00</span>
+          </div>
+          <div class="wii-tip-cell">
+            <span class="wii-tip-pct">+20% (Excelente)</span>
+            <span class="wii-tip-delta" id="txtTip20Delta">+$0.00</span>
+            <span class="wii-tip-total" id="txtTip20Total">$0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B. Desglose para Horas & Tiempos de Turno -->
+    <div class="wii-desglose-panel" id="desgloseTiempo" style="display: none;">
+      <h3 class="wii-desglose-title"><i class="fa-solid fa-clock"></i> Análisis de Tiempo de Turno & Nómina</h3>
+
+      <div class="wii-time-kpis-grid">
+        <div class="wii-time-kpi-card">
+          <span class="wii-kpi-lbl">Horas & Minutos:</span>
+          <strong class="wii-kpi-val" id="txtTimeHm">0h 00m</strong>
+        </div>
+
+        <div class="wii-time-kpi-card">
+          <span class="wii-kpi-lbl">Equivalente Decimal (WFM):</span>
+          <strong class="wii-kpi-val" id="txtTimeDecimal">0.00 hrs</strong>
+        </div>
+
+        <div class="wii-time-kpi-card">
+          <span class="wii-kpi-lbl">Total en Minutos:</span>
+          <strong class="wii-kpi-val" id="txtTimeMinutos">0 mins</strong>
+        </div>
+      </div>
+
+      <!-- Barra de Progreso de Jornada Laboral (Base 8 Horas) -->
+      <div class="wii-shift-progress-box">
+        <div class="wii-shift-prog-header">
+          <span>Cobertura de Jornada Estándar (8 horas):</span>
+          <strong id="txtShiftPct">0%</strong>
+        </div>
+        <div class="wii-shift-prog-track">
+          <div class="wii-shift-prog-fill" id="shiftProgFill" style="width: 0%;"></div>
+        </div>
+        <div class="wii-shift-prog-meta" id="txtShiftMeta">
+          0h restantes para completar la jornada de 8h
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Historial Cronológico de Cálculos de la Sesión -->
+  <div class="wii-calc-history-section">
+    <div class="wii-history-header">
+      <div class="wii-history-title-group">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h3 class="wii-history-title">Historial de Cálculos</h3>
+        <span class="wii-history-count-badge" id="historyCounterBadge">0 REGISTROS</span>
+      </div>
+      <button type="button" class="wii-btn-clear-history" id="btnClearHistory" title="Vaciar historial de la sesión">
+        <i class="fa-solid fa-trash-can"></i> Limpiar
+      </button>
+    </div>
+
+    <!-- Lista de Historial -->
+    <div class="wii-history-list" id="calcHistoryList">
+      <!-- Registros inyectados por JavaScript -->
+    </div>
+
+    <!-- Estado Vacío -->
+    <div class="wii-history-empty" id="calcHistoryEmpty">
+      <i class="fa-solid fa-calculator"></i>
+      <p>Aún no has realizado cálculos en esta sesión.</p>
+      <span>Tus operaciones aritméticas y de horas aparecerán aquí organizadas.</span>
+    </div>
+  </div>
+</div>

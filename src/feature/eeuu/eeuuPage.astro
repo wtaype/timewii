@@ -1,0 +1,54 @@
+---
+// src/feature/eeuu/eeuuPage.astro
+// 🇺🇸 vs 🇵🇪 Orquestador Maestro de la Vista /eeuu: Feriados Laborales, Calendario y Choque Cultural
+// Diseñado para alta velocidad, formato tabular conciso, estilo turista y 0ms de latencia
+import HolidaysCard from './componentes/HolidaysCard.astro';
+import EtiquetteCard from './componentes/EtiquetteCard.astro';
+import IdiomsCard from './componentes/IdiomsCard.astro';
+import RegionsCard from './componentes/RegionsCard.astro';
+import './eeuu.css';
+---
+
+<div class="wii-eeuu-container" id="eeuuContainer">
+  <!-- 1. BARRA SUPERIOR DE CATEGORÍAS -->
+  <div class="wii-eeuu-nav-bar">
+    <div class="wii-eeuu-tabs" id="eeuuTabSelector">
+      <button type="button" class="wii-eeuu-tab-btn active" data-category="all">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Todas las Tablas</span>
+      </button>
+      <button type="button" class="wii-eeuu-tab-btn" data-category="holidays">
+        <i class="fa-solid fa-calendar-days" style="color: var(--mco);"></i>
+        <span>Calendario & Feriados (25)</span>
+      </button>
+      <button type="button" class="wii-eeuu-tab-btn" data-category="etiquette">
+        <i class="fa-solid fa-handshake" style="color: var(--ok, #00e676);"></i>
+        <span>Choque Cultural USA vs Perú</span>
+      </button>
+      <button type="button" class="wii-eeuu-tab-btn" data-category="idioms">
+        <i class="fa-solid fa-comments" style="color: #00d2ff;"></i>
+        <span>Slang USA vs Jergas Perú (12)</span>
+      </button>
+      <button type="button" class="wii-eeuu-tab-btn" data-category="regions">
+        <i class="fa-solid fa-earth-americas" style="color: #f0c547;"></i>
+        <span>Regiones USA vs Perú</span>
+      </button>
+    </div>
+    <div class="wii-eeuu-badge">
+      <span class="wii-flag-pair">🇺🇸 ⟷ 🇵🇪</span> Guía Turista & Laboral
+    </div>
+  </div>
+
+  <!-- 2. TABLAS Y CALENDARIO ORGANIZADOS -->
+  <HolidaysCard />
+  <EtiquetteCard />
+  <IdiomsCard />
+  <RegionsCard />
+</div>
+
+<script>
+  import { inicializarEeuu } from './eeuu.js';
+
+  // Inicialización limpia e idempotente en cada carga
+  document.addEventListener('astro:page-load', inicializarEeuu);
+</script>

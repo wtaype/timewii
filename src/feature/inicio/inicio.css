@@ -229,7 +229,6 @@
   border: none;
   outline: none;
   padding: 0.3vh 0;
-  font-family: monospace;
   font-size: var(--fz_m1);
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -310,7 +309,6 @@
 }
 
 .gen-spell-char {
-  font-family: monospace;
   font-size: var(--fz_m2);
   font-weight: 900;
   color: var(--mco);
@@ -375,14 +373,14 @@
 }
 
 .gen-state-abbr {
-  font-family: monospace;
+  font-family: var(--ff_J), sans-serif;
   font-weight: 800;
+  font-size: var(--fz_s2);
   color: var(--mco);
-  cursor: pointer;
-}
-
-.gen-state-abbr:hover {
-  text-decoration: underline;
+  letter-spacing: 0.5px;
+  user-select: none;
+  display: inline-block;
+  min-width: 32px;
 }
 
 .gen-state-name {
@@ -391,7 +389,6 @@
 }
 
 .gen-state-zip {
-  font-family: monospace;
   font-size: var(--fz_s1);
   color: var(--tx3);
 }
@@ -408,7 +405,6 @@
 }
 
 .gen-time-ticker {
-  font-family: monospace;
   font-weight: 700;
   color: var(--tx1);
   font-size: 0.78rem;
@@ -544,20 +540,18 @@
   border: 1px solid var(--brd);
   border-radius: var(--r_s);
   padding: 0.5vh 0.7vw;
-  cursor: pointer;
-  transition: border-color var(--tr_f), background var(--tr_f), transform var(--tr_f);
+  cursor: default;
+  transition: border-color var(--tr_f), background var(--tr_f);
   text-decoration: none;
   gap: 0.6vw;
 }
 
 .gen-pill-item:hover {
-  border-color: var(--mco);
+  border-color: var(--brd-hi);
   background: var(--glass-raised);
-  transform: translateY(-1px);
 }
 
 .gen-pill-code {
-  font-family: monospace;
   font-weight: 800;
   font-size: var(--fz_s2);
   color: var(--mco);
@@ -574,7 +568,6 @@
 }
 
 .gen-pill-money {
-  font-family: monospace;
   font-weight: 800;
   color: var(--mco);
   font-size: var(--fz_s2);

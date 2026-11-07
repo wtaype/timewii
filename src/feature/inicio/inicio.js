@@ -19,24 +19,7 @@ export function initInicio() {
   // 4. Inicializar Lector de Números
   initNumeros();
 
-  // 5. Soporte de copiado de 1-clic para Direcciones y Unidades
-  const copyablePills = document.querySelectorAll('.gen-copyable-pill');
-  copyablePills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      const text = pill.getAttribute('data-copy');
-      if (text) {
-        navigator.clipboard.writeText(text);
-        const codeEl = pill.querySelector('.gen-pill-code');
-        if (codeEl) {
-          const original = codeEl.textContent;
-          codeEl.textContent = '✓';
-          setTimeout(() => {
-            codeEl.textContent = original;
-          }, 900);
-        }
-      }
-    });
-  });
+
 }
 
 // Inicialización automática tanto en carga estática como con ClientRouter

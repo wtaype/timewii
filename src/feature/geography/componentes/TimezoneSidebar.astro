@@ -1,0 +1,107 @@
+---
+// src/feature/geography/componentes/TimezoneSidebar.astro
+// ⏰ Panel Lateral de Husos Horarios (40%): Pacific, Mountain, Central, Eastern y Reloj Local
+// Diseño minimalista, ejecutivo y de alto contraste sin texto excesivo
+---
+
+<aside class="wii-geo-sidebar-panel">
+  <!-- 1. Cabecera con Reloj Local del Dispositivo & Toggle 12h/24h -->
+  <div class="wii-geo-device-box">
+    <div class="wii-device-top-row">
+      <div class="wii-device-meta">
+        <span class="wii-device-badge"><i class="fa-solid fa-laptop"></i> TU RELOJ LOCAL</span>
+        <span class="wii-device-date-str" id="geoDeviceDate">Hoy: --/--/----</span>
+      </div>
+      <button type="button" class="wii-format-btn" id="btnToggle24h" title="Alternar formato 12h / 24h">
+        <i class="fa-solid fa-clock"></i>
+        <span id="txtFormatLabel">12H</span>
+      </button>
+    </div>
+    <div class="wii-device-clock-large" id="clockDevice">
+      --:--:-- --
+    </div>
+    <div class="wii-device-status-row">
+      <span class="wii-sync-indicator"><span class="wii-sync-pulse"></span> Sincronizado</span>
+      <span class="wii-device-zone" id="geoDeviceZone">Local</span>
+    </div>
+  </div>
+
+  <!-- 2. Grid de las 4 Zonas Principales de EE.UU. (Interactivas) -->
+  <div class="wii-geo-zones-grid">
+    <!-- PACIFIC TIME -->
+    <div class="wii-tz-card tz-pacific" data-zone-filter="Pacific" title="Clic para filtrar estados Pacific">
+      <div class="wii-tz-bar"></div>
+      <div class="wii-tz-header">
+        <span class="wii-tz-title">PACIFIC TIME</span>
+        <span class="wii-tz-sub">PST [UTC-8]</span>
+      </div>
+      <div class="wii-tz-clock" id="clockPST" data-tz="America/Los_Angeles">
+        --:--:-- --
+      </div>
+      <div class="wii-tz-footer">
+        <span>CA, WA, OR, NV</span>
+      </div>
+    </div>
+
+    <!-- MOUNTAIN TIME -->
+    <div class="wii-tz-card tz-mountain" data-zone-filter="Mountain" title="Clic para filtrar estados Mountain">
+      <div class="wii-tz-bar"></div>
+      <div class="wii-tz-header">
+        <span class="wii-tz-title">MOUNTAIN TIME</span>
+        <span class="wii-tz-sub">MST [UTC-7]</span>
+      </div>
+      <div class="wii-tz-clock" id="clockMST" data-tz="America/Denver">
+        --:--:-- --
+      </div>
+      <div class="wii-tz-footer">
+        <span>AZ (sin DST), CO, UT, etc.</span>
+      </div>
+    </div>
+
+    <!-- CENTRAL TIME -->
+    <div class="wii-tz-card tz-central" data-zone-filter="Central" title="Clic para filtrar estados Central">
+      <div class="wii-tz-bar"></div>
+      <div class="wii-tz-header">
+        <span class="wii-tz-title">CENTRAL TIME</span>
+        <span class="wii-tz-sub">CST [UTC-6]</span>
+      </div>
+      <div class="wii-tz-clock" id="clockCST" data-tz="America/Chicago">
+        --:--:-- --
+      </div>
+      <div class="wii-tz-footer">
+        <span>TX, IL, MO, MN, etc.</span>
+      </div>
+    </div>
+
+    <!-- EASTERN TIME -->
+    <div class="wii-tz-card tz-eastern" data-zone-filter="Eastern" title="Clic para filtrar estados Eastern">
+      <div class="wii-tz-bar"></div>
+      <div class="wii-tz-header">
+        <span class="wii-tz-title">EASTERN TIME</span>
+        <span class="wii-tz-sub">EST [UTC-5]</span>
+      </div>
+      <div class="wii-tz-clock" id="clockEST" data-tz="America/New_York">
+        --:--:-- --
+      </div>
+      <div class="wii-tz-footer">
+        <span>NY, FL, GA, NC, PA, etc.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Zonas Especiales & Territorios en Cinta Rápida -->
+  <div class="wii-geo-special-strip">
+    <div class="wii-special-chip" data-zone-filter="Alaska" title="Filtrar Alaska">
+      <span class="wii-chip-name">Alaska:</span>
+      <span class="wii-chip-clock" id="clockAKST" data-tz="America/Anchorage">--:-- --</span>
+    </div>
+    <div class="wii-special-chip" data-zone-filter="Hawaii" title="Filtrar Hawaii">
+      <span class="wii-chip-name">Hawaii:</span>
+      <span class="wii-chip-clock" id="clockHST" data-tz="Pacific/Honolulu">--:-- --</span>
+    </div>
+    <div class="wii-special-chip" data-zone-filter="Todos" title="Puerto Rico / USVI">
+      <span class="wii-chip-name">Puerto Rico (AST):</span>
+      <span class="wii-chip-clock" id="clockAST" data-tz="America/Puerto_Rico">--:-- --</span>
+    </div>
+  </div>
+</aside>

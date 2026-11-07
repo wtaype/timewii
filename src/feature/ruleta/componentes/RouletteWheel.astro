@@ -1,0 +1,59 @@
+---
+// src/feature/ruleta/componentes/RouletteWheel.astro
+// 🎯 Ruleta Interactiva de Pausa Activa y Bienestar Ergonómico
+---
+
+<div class="wii-ruleta-card wii-card-wheel">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-wheel">
+      <i class="fa-solid fa-arrows-spin"></i>
+    </div>
+    <div>
+      <h2 class="wii-card-title">Ruleta de Pausa Activa</h2>
+      <p class="wii-card-sub">Gira la ruleta entre llamadas para obtener un ejercicio de descanso ergonómico</p>
+    </div>
+  </div>
+
+  <div class="wii-wheel-station">
+    <!-- Contenedor de la Ruleta y Puntero -->
+    <div class="wii-wheel-container">
+      <!-- Puntero / Flecha Indicadora Superior -->
+      <div class="wii-wheel-pointer" id="wheelPointer">
+        <i class="fa-solid fa-caret-down"></i>
+      </div>
+
+      <!-- Lienzo Giratorio de la Ruleta (Canvas SVG) -->
+      <div class="wii-wheel-disc" id="wheelDisc">
+        <canvas id="wheelCanvas" width="340" height="340"></canvas>
+      </div>
+
+      <!-- Botón Central de Giro -->
+      <button type="button" class="wii-wheel-center-btn" id="btnSpinWheel" title="Girar ruleta de pausa activa">
+        <i class="fa-solid fa-rotate"></i>
+        <span>GIRAR</span>
+      </button>
+    </div>
+
+    <!-- Tarjeta de Ejercicio Resultante -->
+    <div class="wii-wheel-result-card" id="wheelResultCard">
+      <div class="wii-res-header">
+        <div class="wii-res-icon-box" id="resIconBox">
+          <i class="fa-solid fa-sparkles"></i>
+        </div>
+        <div class="wii-res-title-group">
+          <span class="wii-res-tag" id="resTag">RECOMENDACIÓN ERGONÓMICA</span>
+          <h3 class="wii-res-name" id="resName">Estiramiento de Cuello & Hombros</h3>
+        </div>
+      </div>
+      <p class="wii-res-desc" id="resDesc">
+        Inclina suavemente la cabeza hacia el hombro derecho por 15 segundos y repite en el lado izquierdo. Luego gira los hombros hacia atrás 5 veces para aliviar la tensión acumulada por la diadema.
+      </p>
+      <div class="wii-res-meta">
+        <span class="wii-res-duration" id="resDuration"><i class="fa-solid fa-stopwatch"></i> Duración: 2 minutos</span>
+        <button type="button" class="wii-btn-spin-again" id="btnSpinAgain">
+          <i class="fa-solid fa-arrows-rotate"></i> Probar otro ejercicio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

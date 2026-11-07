@@ -1,0 +1,14 @@
+---
+// src/pages/calculadora.astro
+// 🧮 Módulo Calculadora Inteligente & Tiempos: Operaciones Matemáticas, Horas de Turno y Resultados Desglosados
+import Principal from '@core/layouts/Principal.astro';
+import CalculadoraPage from '../feature/calculadora/calculadoraPage.astro';
+import wii from '../wii.js';
+---
+
+<Principal
+  titulo={`Calculadora Inteligente & Horas • ${wii.app}`}
+  descripcion="Calculadora ergonómica para asesores: operaciones aritméticas rápidas, cálculo de horas de turno y llamadas, desglose monetario y tiempo en inglés"
+>
+  <CalculadoraPage />
+</Principal>

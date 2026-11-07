@@ -1,0 +1,62 @@
+---
+// src/feature/eeuu/componentes/EtiquetteCard.astro
+// 🤝 Choque Cultural & Estilo de Vida: EE.UU. vs Perú
+// Estilo guía de viajero/turista en tabla organizada y concisa, sin textos excesivos
+import { CULTURE_COMPARISON_DATA } from '@semillas/cultureData.js';
+---
+
+<div class="wii-eeuu-card wii-card-etiquette">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-etiquette">
+      <i class="fa-solid fa-handshake"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Choque Cultural & Estilo de Vida: EE.UU. vs Perú</h2>
+      <p class="wii-card-sub">Guía comparativa rápida: propinas, horarios, enchufes, unidades y costumbres cotidianas</p>
+    </div>
+  </div>
+
+  <div class="wii-etiquette-body">
+    <div class="wii-table-responsive-wrapper">
+      <table class="wii-custom-table" id="tablaChoqueCultural">
+        <thead>
+          <tr>
+            <th>Aspecto Cotidiano</th>
+            <th>🇺🇸 En Estados Unidos</th>
+            <th>🇵🇪 En Perú</th>
+            <th>Diferencia Clave / Curiosidad (Nivel Turista)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {CULTURE_COMPARISON_DATA.map((item) => (
+            <tr>
+              <td>
+                <div class="wii-tbl-category">
+                  <i class={`fa-solid ${item.icon}`} style="color: var(--mco); font-size: 0.85rem;"></i>
+                  <strong>{item.aspecto}</strong>
+                </div>
+              </td>
+              <td>
+                <span class="wii-cell-country">
+                  <span class="wii-flag-tag">🇺🇸</span>
+                  <span>{item.usa}</span>
+                </span>
+              </td>
+              <td>
+                <span class="wii-cell-country">
+                  <span class="wii-flag-tag">🇵🇪</span>
+                  <span>{item.peru}</span>
+                </span>
+              </td>
+              <td class="wii-tbl-desc">
+                <span class="wii-culture-tip-pill">
+                  <i class="fa-solid fa-lightbulb" style="color: #f0c547;"></i> {item.diferencia}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

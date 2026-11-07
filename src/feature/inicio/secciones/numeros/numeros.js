@@ -41,7 +41,6 @@ export function initNumeros() {
       pill.addEventListener('click', () => {
         input.value = item.num;
         updateNumberReader();
-        navigator.clipboard.writeText(`${item.num} - ${item.en}`);
       });
       grid.appendChild(pill);
     });

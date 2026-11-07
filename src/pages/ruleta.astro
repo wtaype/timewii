@@ -1,17 +1,14 @@
 ---
 // src/pages/ruleta.astro
-// 🎲 Módulo Ruleta & Break: Pausas Activas y Dinámicas de Equipo
+// 🎯 Módulo Ruleta de Equipo: Sorteos Grupales, Quién Expone y Podio de Ganadores
 import Principal from '@core/layouts/Principal.astro';
+import RuletaPage from '../feature/ruleta/ruletaPage.astro';
+import wii from '../wii.js';
 ---
 
-<Principal titulo="Ruleta & Break • TimeWii">
-  <div class="page-container">
-    <div class="clean-card" style="margin-top: 1rem; text-align: center; padding: 3rem 1.5rem;">
-      <i class="fa-solid fa-arrows-rotate" style="font-size: 2.5rem; color: var(--mco); margin-bottom: 1rem; display: block;"></i>
-      <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--tx1);">Ruleta & Pausa Activa</h2>
-      <p style="color: var(--tx3); max-width: 600px; margin: 0.5rem auto 0;">
-        Dinámicas de descanso mental, ejercicios ergonómicos y temporizadores de break para el asesor.
-      </p>
-    </div>
-  </div>
+<Principal
+  titulo={`Super Smart Ruleta de Equipo • ${wii.app}`}
+  descripcion="Ruleta inteligente para supervisores y equipos: sorteos grupales, selección de expositores, pegado directo desde Excel y podio de ganadores"
+>
+  <RuletaPage />
 </Principal>

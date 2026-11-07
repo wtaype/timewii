@@ -1,0 +1,26 @@
+---
+// src/feature/calculadora/calculadoraPage.astro
+// 🧮 Orquestador Maestro de la Vista /calculadora: Layout Split (Left Entrada / Right Resultados)
+// 100% Variables de witema.css · Tipografía var(--ff_J) · Cero dependencias externas
+import CalculadoraLeft from './componentes/CalculadoraLeft.astro';
+import CalculadoraRight from './componentes/CalculadoraRight.astro';
+import './calculadora.css';
+---
+
+<div class="wii-calc-container" aria-label="Estación de Calculadora y Tiempos">
+  <!-- Layout Dividido: Left (Cálculo) y Right (Resultados & Desglose) -->
+  <div class="wii-calc-grid">
+    <!-- LADO IZQUIERDO: Teclado y Entrada de Cálculos -->
+    <CalculadoraLeft />
+
+    <!-- LADO DERECHO: Resultados en Vivo, Análisis e Historial -->
+    <CalculadoraRight />
+  </div>
+</div>
+
+<script>
+  import { inicializarCalculadora } from './calculadora.js';
+
+  inicializarCalculadora();
+  document.addEventListener('astro:page-load', inicializarCalculadora);
+</script>

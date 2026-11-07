@@ -1,0 +1,95 @@
+---
+// src/feature/ruleta/componentes/ParticipantsPanel.astro
+// 📝 Panel del Supervisor: Carga desde Excel, Configuración de Sorteo y Autoeliminación
+---
+
+<div class="wii-ruleta-card wii-card-participants">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-participants">
+      <i class="fa-solid fa-users-gear"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Panel de Participantes (Supervisor)</h2>
+      <p class="wii-card-sub">Pega lista desde Excel o escribe un nombre por línea para autocompletar</p>
+    </div>
+    <div class="wii-participants-count-pill" id="participantsCountPill">
+      <i class="fa-solid fa-user-group"></i> <strong id="participantsCount">8</strong> activos
+    </div>
+  </div>
+
+  <div class="wii-participants-body">
+    <!-- 1. Textarea con Autocompletado de la Ruleta al Pegar/Escribir -->
+    <div class="wii-input-group">
+      <div class="wii-textarea-header">
+        <label for="participantsTextarea" class="wii-input-label">
+          <i class="fa-solid fa-file-excel" style="color: var(--ok, #00e676);"></i> Lista de Participantes (1 por línea):
+        </label>
+        <div class="wii-textarea-actions">
+          <button type="button" class="wii-action-chip" id="btnShuffleParticipants" title="Barajar / Mezclar orden aleatoriamente">
+            <i class="fa-solid fa-shuffle"></i> Mezclar
+          </button>
+          <button type="button" class="wii-action-chip" id="btnLoadSampleParticipants" title="Cargar lista de ejemplo">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Ejemplo
+          </button>
+          <button type="button" class="wii-action-chip btn-chip-danger" id="btnClearParticipants" title="Limpiar lista">
+            <i class="fa-solid fa-trash-can"></i> Limpiar
+          </button>
+        </div>
+      </div>
+      <textarea
+        id="participantsTextarea"
+        class="wii-participants-textarea"
+        rows="6"
+        placeholder="Pega aquí los nombres desde Excel o escribe uno por línea...&#10;Carlos Quispe&#10;Andrea Morales&#10;Wilder Mendoza..."
+      >Carlos Quispe
+Andrea Morales
+Wilder Mendoza
+Sofía Castro
+Diego Ramos
+Luciana Vega
+Mateo Torres
+Valeria Silva</textarea>
+    </div>
+
+    <!-- 2. Configuración Inteligente: Autoeliminación & Modos -->
+    <div class="wii-smart-options-grid">
+      <!-- Opción Autoeliminar Ganador -->
+      <label class="wii-switch-label" title="Al ganar, el participante se quita de la ruleta automáticamente para no repetir">
+        <div class="wii-switch-toggle">
+          <input type="checkbox" id="chkAutoRemoveWinner" checked />
+          <span class="wii-switch-slider"></span>
+        </div>
+        <div class="wii-switch-text">
+          <strong>Autoeliminar Ganador</strong>
+          <span>Evita que una persona repita turno o premio</span>
+        </div>
+      </label>
+
+      <!-- Selector de Modo de Sorteo -->
+      <div class="wii-mode-selector-group">
+        <span class="wii-mode-group-title">Motivo del Sorteo:</span>
+        <div class="wii-mode-chips" id="modeSelectorChips">
+          <button type="button" class="wii-mode-chip active" data-mode="exponer">
+            <i class="fa-solid fa-microphone"></i> Quién Expone
+          </button>
+          <button type="button" class="wii-mode-chip" data-mode="premio">
+            <i class="fa-solid fa-trophy"></i> Ganador Premio
+          </button>
+          <button type="button" class="wii-mode-chip" data-mode="turno">
+            <i class="fa-solid fa-dice"></i> Asignación Turno
+          </button>
+        </div>
+      </div>
+
+      <!-- Selector de Velocidad -->
+      <div class="wii-speed-selector-group">
+        <span class="wii-mode-group-title">Velocidad de Giro:</span>
+        <div class="wii-mode-chips" id="speedSelectorChips">
+          <button type="button" class="wii-mode-chip" data-speed="2.5">Rápido (2.5s)</button>
+          <button type="button" class="wii-mode-chip active" data-speed="4">Normal (4s)</button>
+          <button type="button" class="wii-mode-chip" data-speed="6">Suspenso (6s)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

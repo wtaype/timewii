@@ -1,0 +1,283 @@
+---
+// src/feature/eeuu/componentes/HolidaysCard.astro
+// 📅 Calendario Anual Completo 6x6 (6 Columnas Arriba y 6 Abajo = 12 Meses en Vista Completa)
+// Con puntitos: 🔴 Rojo (Perú), 🔵 Azul (EE.UU.), 🟢 Verde (Ambos) + Modal Interactivo al Clic
+import { HOLIDAYS_COMPARISON_DATA } from '@semillas/cultureData.js';
+
+// Configuración de los 12 Meses para el año 2026
+const MESES_INFO = [
+  { num: 1, nombre: 'Enero', dias: 31, offset: 3 },     // 1 Ene 2026 es Jueves (offset 3)
+  { num: 2, nombre: 'Febrero', dias: 28, offset: 6 },   // 1 Feb 2026 es Domingo (offset 6)
+  { num: 3, nombre: 'Marzo', dias: 31, offset: 6 },     // 1 Mar 2026 es Domingo (offset 6)
+  { num: 4, nombre: 'Abril', dias: 30, offset: 2 },     // 1 Abr 2026 es Miércoles (offset 2)
+  { num: 5, nombre: 'Mayo', dias: 31, offset: 4 },      // 1 May 2026 es Viernes (offset 4)
+  { num: 6, nombre: 'Junio', dias: 30, offset: 0 },     // 1 Jun 2026 es Lunes (offset 0)
+  { num: 7, nombre: 'Julio', dias: 31, offset: 2 },     // 1 Jul 2026 es Miércoles (offset 2)
+  { num: 8, nombre: 'Agosto', dias: 31, offset: 5 },    // 1 Ago 2026 es Sábado (offset 5)
+  { num: 9, nombre: 'Septiembre', dias: 30, offset: 1 },// 1 Sep 2026 es Martes (offset 1)
+  { num: 10, nombre: 'Octubre', dias: 31, offset: 3 },  // 1 Oct 2026 es Jueves (offset 3)
+  { num: 11, nombre: 'Noviembre', dias: 30, offset: 6 },// 1 Nov 2026 es Domingo (offset 6)
+  { num: 12, nombre: 'Diciembre', dias: 31, offset: 1 } // 1 Dic 2026 es Martes (offset 1)
+];
+
+// Feriados mapeados por clave 'MM-DD' para renderizado estático inmediato
+const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name: string }> = {
+  '01-01': { country: 'both', name: 'New Year’s Day / Año Nuevo' },
+  '01-19': { country: 'usa',  name: 'Martin Luther King Jr. Day' },
+  '02-16': { country: 'usa',  name: 'Presidents’ Day' },
+  '04-02': { country: 'peru', name: 'Jueves Santo' },
+  '04-03': { country: 'peru', name: 'Viernes Santo' },
+  '05-01': { country: 'peru', name: 'Día del Trabajo (Perú)' },
+  '05-25': { country: 'usa',  name: 'Memorial Day' },
+  '06-07': { country: 'peru', name: 'Día de la Bandera' },
+  '06-19': { country: 'usa',  name: 'Juneteenth' },
+  '06-29': { country: 'peru', name: 'San Pedro y San Pablo' },
+  '07-04': { country: 'usa',  name: 'Independence Day (4th of July)' },
+  '07-23': { country: 'peru', name: 'Día de la FAP (Quiñones)' },
+  '07-28': { country: 'peru', name: 'Fiestas Patrias de Perú' },
+  '07-29': { country: 'peru', name: 'Gran Parada Militar' },
+  '08-06': { country: 'peru', name: 'Batalla de Junín' },
+  '08-30': { country: 'peru', name: 'Santa Rosa de Lima' },
+  '09-07': { country: 'usa',  name: 'Labor Day (EE.UU.)' },
+  '10-08': { country: 'peru', name: 'Combate de Angamos' },
+  '10-12': { country: 'usa',  name: 'Columbus Day / Indigenous Day' },
+  '10-31': { country: 'both', name: 'Halloween / Canción Criolla' },
+  '11-01': { country: 'peru', name: 'Día de Todos los Santos' },
+  '11-11': { country: 'usa',  name: 'Veterans Day' },
+  '11-26': { country: 'usa',  name: 'Thanksgiving Day' },
+  '11-27': { country: 'usa',  name: 'Black Friday' },
+  '12-08': { country: 'peru', name: 'Inmaculada Concepción' },
+  '12-09': { country: 'peru', name: 'Batalla de Ayacucho' },
+  '12-25': { country: 'both', name: 'Christmas Day / Navidad' }
+};
+---
+
+<div class="wii-eeuu-card wii-card-holidays">
+  <!-- Cabecera del Calendario -->
+  <div class="wii-card-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-calendar">
+        <i class="fa-solid fa-calendar-days"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Calendario Anual 2026: Feriados EE.UU. vs Perú (Vista Completa 6x6)</h2>
+        <p class="wii-card-sub">Haz clic en cualquier día con puntito para ver qué país celebra, por qué y el impacto en tu turno</p>
+      </div>
+    </div>
+
+    <!-- Leyenda Solicitada: Azul EE.UU., Rojo Perú, Verde Ambos -->
+    <div class="wii-cal-legend-bar">
+      <div class="wii-legend-chip chip-usa" title="Feriado exclusivo en EE.UU. (Líneas cerradas / Día libre campaña)">
+        <span class="wii-legend-dot dot-usa"></span>
+        <span>Azul: EE.UU. (Líneas cerradas)</span>
+      </div>
+      <div class="wii-legend-chip chip-peru" title="Feriado en Perú (SÍ se trabaja para EE.UU. con pago doble según ley)">
+        <span class="wii-legend-dot dot-peru"></span>
+        <span>Rojo: Perú (SÍ se trabaja)</span>
+      </div>
+      <div class="wii-legend-chip chip-both" title="Feriado en ambos países (Descanso total compartido)">
+        <span class="wii-legend-dot dot-both"></span>
+        <span>Verde: Ambos (Descanso total)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wii-holidays-body">
+    <!-- =========================================================================
+         1. CALENDARIO ANUAL EN VISTA COMPLETA (6 COLUMNAS ARRIBA Y 6 ABAJO)
+         ========================================================================= -->
+    <div class="wii-annual-calendar-box">
+      <div class="wii-annual-grid-6x2" id="annualCalendarGrid">
+        {MESES_INFO.map((mes) => {
+          const mesPad = String(mes.num).padStart(2, '0');
+          // Contar feriados en este mes
+          const totalFeriadosMes = Object.keys(FERIADOS_MAP_2026).filter(k => k.startsWith(mesPad)).length;
+
+          return (
+            <div class="wii-month-mini-card" data-month-num={mes.num}>
+              <!-- Encabezado del Mes -->
+              <div class="wii-mm-header">
+                <span class="wii-mm-name">{mes.nombre}</span>
+                {totalFeriadosMes > 0 && (
+                  <span class="wii-mm-badge">{totalFeriadosMes} feriado{totalFeriadosMes === 1 ? '' : 's'}</span>
+                )}
+              </div>
+
+              <!-- Días de la Semana (L M M J V S D) como en la Imagen 1 -->
+              <div class="wii-mm-weekdays">
+                <span>L</span>
+                <span>M</span>
+                <span>M</span>
+                <span>J</span>
+                <span>V</span>
+                <span>S</span>
+                <span>D</span>
+              </div>
+
+              <!-- Cuadrícula de Días -->
+              <div class="wii-mm-days">
+                {/* Celdas vacías de compensación */}
+                {Array.from({ length: mes.offset }).map(() => (
+                  <div class="wii-mm-day is-empty"></div>
+                ))}
+
+                {/* Días del Mes */}
+                {Array.from({ length: mes.dias }).map((_, idx) => {
+                  const dia = idx + 1;
+                  const diaPad = String(dia).padStart(2, '0');
+                  const key = `${mesPad}-${diaPad}`;
+                  const feriado = FERIADOS_MAP_2026[key];
+
+                  let holidayClass = '';
+                  let dotHtml = null;
+
+                  if (feriado) {
+                    holidayClass = `has-holiday holiday-${feriado.country}`;
+                    dotHtml = `<span class="wii-cal-dot dot-${feriado.country}"></span>`;
+                  }
+
+                  return (
+                    <button
+                      type="button"
+                      class:list={['wii-mm-day', holidayClass]}
+                      data-date={`2026-${key}`}
+                      data-month={mes.num}
+                      data-day={dia}
+                      data-holiday-key={feriado ? key : undefined}
+                      title={feriado ? `${dia} de ${mes.nombre}: ${feriado.name}` : `${dia} de ${mes.nombre}`}
+                    >
+                      <span class="wii-day-num">{dia}</span>
+                      {feriado && <span class:list={['wii-cal-dot', `dot-${feriado.country}`]}></span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         2. TABLA COMPARATIVA ANUAL COMPLETA: EE.UU. VS PERÚ
+         ========================================================================= -->
+    <div class="wii-holidays-table-section">
+      <div class="wii-table-filter-bar">
+        <span class="wii-filter-bar-title">
+          <i class="fa-solid fa-list-check"></i> Matriz Completa de Feriados del Año:
+        </span>
+        <div class="wii-holidays-filter-chips" id="holidaysFilterChips">
+          <button type="button" class="wii-chip-btn active" data-filter="all">Todos ({HOLIDAYS_COMPARISON_DATA.length})</button>
+          <button type="button" class="wii-chip-btn" data-filter="usa_libre">🔵 Días Libres USA</button>
+          <button type="button" class="wii-chip-btn" data-filter="peru_trabaja">🔴 Feriados Perú (SÍ se Trabaja)</button>
+          <button type="button" class="wii-chip-btn" data-filter="ambos_descanso">🟢 Descanso Ambos</button>
+        </div>
+      </div>
+
+      <div class="wii-table-responsive-wrapper">
+        <table class="wii-custom-table" id="tablaFeriados">
+          <thead>
+            <tr>
+              <th style="width: 120px;">FECHA</th>
+              <th>🇺🇸 FERIADO EN EE.UU.</th>
+              <th>🇵🇪 FERIADO EN PERÚ</th>
+              <th>¿SE TRABAJA? / IMPACTO EN ASESOR</th>
+              <th>NOTA CURIOSA / TRADICIÓN (NIVEL TURISTA)</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyFeriados">
+            {HOLIDAYS_COMPARISON_DATA.map((item) => {
+              let badgePill = '';
+              let rowHighlight = '';
+              if (item.seTrabaja === 'ambos_descanso') {
+                badgePill = `<span class="wii-tbl-pill pill-both"><i class="fa-solid fa-ban"></i> 🟢 Descanso Ambos</span>`;
+                rowHighlight = 'row-both';
+              } else if (item.seTrabaja === 'usa_libre') {
+                badgePill = `<span class="wii-tbl-pill pill-usa"><i class="fa-solid fa-mug-hot"></i> 🔵 Día Libre USA</span>`;
+                rowHighlight = 'row-usa';
+              } else {
+                badgePill = `<span class="wii-tbl-pill pill-peru"><i class="fa-solid fa-headset"></i> 🔴 SÍ se trabaja (Pago feriado)</span>`;
+                rowHighlight = 'row-peru';
+              }
+
+              return (
+                <tr class={rowHighlight} data-work-type={item.seTrabaja} data-month={item.mesNum - 1}>
+                  <td><strong>{item.fechaDisplay}</strong></td>
+                  <td>
+                    <span class="wii-cell-country">
+                      <span class="wii-flag-tag">🇺🇸</span>
+                      <strong>{item.feriadoUsa}</strong>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="wii-cell-country">
+                      <span class="wii-flag-tag">🇵🇪</span>
+                      <span>{item.feriadoPeru}</span>
+                    </span>
+                  </td>
+                  <td>
+                    <div class="wii-work-status-cell">
+                      <Fragment set:html={badgePill} />
+                      <span class="wii-work-sub">{item.impactoDetalle}</span>
+                    </div>
+                  </td>
+                  <td class="wii-tbl-desc">{item.notaTurista}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       3. MODAL / POPUP DE DETALLE AL HACER CLIC EN UN DÍA DEL CALENDARIO
+       ========================================================================= -->
+  <div class="wii-holiday-modal-backdrop" id="holidayModalBackdrop" style="display: none;">
+    <div class="wii-holiday-modal-card" id="holidayModalCard" role="dialog" aria-modal="true" aria-labelledby="modalDateTitle">
+      <div class="wii-hm-header">
+        <div class="wii-hm-title-row">
+          <span class="wii-hm-flag" id="modalCountryFlag">🇵🇪</span>
+          <div>
+            <span class="wii-hm-country-tag" id="modalCountryTag">Feriado en Perú</span>
+            <h3 class="wii-hm-date" id="modalDateTitle">28 de Julio de 2026</h3>
+          </div>
+        </div>
+        <button type="button" class="wii-hm-close-btn" id="btnModalClose" title="Cerrar ventana (Esc)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="wii-hm-body">
+        <!-- Título del Feriado -->
+        <div class="wii-hm-holiday-name-box">
+          <span class="wii-hm-k">Celebración Oficial:</span>
+          <h4 class="wii-hm-name" id="modalHolidayTitle">Fiestas Patrias de Perú</h4>
+        </div>
+
+        <!-- Por qué se celebra -->
+        <div class="wii-hm-info-row">
+          <span class="wii-hm-k"><i class="fa-solid fa-book-open"></i> ¿Por qué se celebra?</span>
+          <p class="wii-hm-val" id="modalHolidayWhy">Conmemoración de la proclamación de la Independencia del Perú por Don José de San Martín en 1821.</p>
+        </div>
+
+        <!-- Qué significa para tu turno -->
+        <div class="wii-hm-work-box" id="modalWorkBox">
+          <div class="wii-hm-work-status">
+            <span class="wii-hm-status-badge" id="modalWorkStatusBadge">🔴 SÍ se trabaja para EE.UU.</span>
+          </div>
+          <p class="wii-hm-work-detail" id="modalWorkDetail">
+            En EE.UU. es día laboral normal; el asesor remoto en Perú labora su turno habitual (con pago doble/feriado según legislación).
+          </p>
+        </div>
+      </div>
+
+      <div class="wii-hm-footer">
+        <button type="button" class="wii-hm-btn-ok" id="btnModalOk">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

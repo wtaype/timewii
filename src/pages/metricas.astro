@@ -1,0 +1,14 @@
+---
+// src/pages/metricas.astro
+// 📊 Módulo Métricas & CSAT: Calculadora de Metas de Calidad, Simulador de Turno y 4 Tablas para el Asesor
+import Principal from '@core/layouts/Principal.astro';
+import MetricasPage from '../feature/metricas/metricasPage.astro';
+import wii from '../wii.js';
+---
+
+<Principal
+  titulo={`Métricas & Calculadora CSAT • ${wii.app}`}
+  descripcion="Calculadora de meta de CSAT (92% objetivo de calidad), simulador táctil de encuestas en vivo (+1 / -1) y 4 tablas para el asesor"
+>
+  <MetricasPage />
+</Principal>

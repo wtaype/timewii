@@ -32,7 +32,8 @@ export const configurarSistema = {
     geography: true,
     metricas: true,
     eeuu: true,
-    ruleta: true
+    ruleta: true,
+    calculadora: true
   }
 };
 

@@ -36,3 +36,4 @@ export { wiAtajo } from './atajos.js';
 export { wiGaleria, abrirGaleria } from './galeria.js';
 export { wiEditor } from './editor.js';
 export { iniciarGestosSwipe, obtenerRutasActivas, ejecutarSwipe } from './gestos.js';
+export { tituloPro, iniciarTituloPro, iniciarRelojTitulo } from './tituloPro.js';

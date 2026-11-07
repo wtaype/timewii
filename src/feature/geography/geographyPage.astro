@@ -1,0 +1,30 @@
+---
+// src/feature/geography/geographyPage.astro
+// 🗺️ Orquestador Maestro de la Vista /geography: Layout 60% Mapa / 40% Husos Horarios
+// 100% Cero copias gubernamentales · Diseño TimeWii exclusivo, ultra rápido y ergonómico
+import UsaInteractiveMap from './componentes/UsaInteractiveMap.astro';
+import TimezoneSidebar from './componentes/TimezoneSidebar.astro';
+import RapportTable from './componentes/RapportTable.astro';
+import './geography.css';
+---
+
+<div class="wii-geo-container">
+  <!-- 1. SECCIÓN SUPERIOR: 60% MAPA INTERACTIVO / 40% TIMEZONE SIDEBAR -->
+  <section class="wii-geo-top-station" aria-label="Mapa interactivo y husos horarios de EE.UU.">
+    <!-- 60% Lienzo de Mapa Vectorial con Insets y Ciudades Clave -->
+    <UsaInteractiveMap />
+
+    <!-- 40% Panel de Husos Horarios Principales & Hora del Dispositivo -->
+    <TimezoneSidebar />
+  </section>
+
+  <!-- 2. SECCIÓN INFERIOR: DIRECTORIO DE 50 ESTADOS & CIUDADES CLAVE (100%) -->
+  <RapportTable />
+</div>
+
+<script>
+  import { inicializarGeography } from './geography.js';
+
+  inicializarGeography();
+  document.addEventListener('astro:page-load', inicializarGeography);
+</script>

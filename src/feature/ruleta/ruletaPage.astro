@@ -1,0 +1,30 @@
+---
+// src/feature/ruleta/ruletaPage.astro
+// 🎯 Orquestador Maestro de la Vista /ruleta: Super Smart Ruleta Grupal & Sorteos de Equipo
+// Carga desde Excel, autoeliminación de ganadores, orden de exposición y podio de resultados
+import SmartRouletteWheel from './componentes/SmartRouletteWheel.astro';
+import ParticipantsPanel from './componentes/ParticipantsPanel.astro';
+import WinnersTable from './componentes/WinnersTable.astro';
+import './ruleta.css';
+---
+
+<div class="wii-ruleta-container" id="ruletaContainer">
+  <!-- 1. GRID SUPERIOR: RULETA CANVAS (IZQ) & PANEL DE PARTICIPANTES EXCEL (DER) -->
+  <div class="wii-ruleta-grid-top">
+    <!-- Ruleta Grupal -->
+    <SmartRouletteWheel />
+
+    <!-- Panel de Control para Supervisor -->
+    <ParticipantsPanel />
+  </div>
+
+  <!-- 2. SECCIÓN INFERIOR: PODIO Y RESULTADOS DEL SORTEO -->
+  <WinnersTable />
+</div>
+
+<script>
+  import { inicializarRuleta } from './ruleta.js';
+
+  // Inicialización limpia e idempotente en cada carga de página
+  document.addEventListener('astro:page-load', inicializarRuleta);
+</script>

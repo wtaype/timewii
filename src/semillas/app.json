@@ -12,7 +12,8 @@
     { "id": "geography", "href": "/geography", "label": "GEOGRAPHY", "labelCorto": "Geography", "icono": "fa-earth-americas" },
     { "id": "metricas", "href": "/metricas", "label": "MÉTRICAS", "labelCorto": "Métricas", "icono": "fa-chart-pie" },
     { "id": "eeuu", "href": "/eeuu", "label": "EEUU & CULTURA", "labelCorto": "EEUU", "icono": "fa-flag-usa" },
-    { "id": "ruleta", "href": "/ruleta", "label": "RULETA & BREAK", "labelCorto": "Ruleta", "icono": "fa-arrows-rotate" }
+    { "id": "ruleta", "href": "/ruleta", "label": "RULETA & BREAK", "labelCorto": "Ruleta", "icono": "fa-arrows-rotate" },
+    { "id": "calculadora", "href": "/calculadora", "label": "CALCULADORA", "labelCorto": "Calc", "icono": "fa-calculator" }
   ],
   "accionesFooter": [
     { "id": "btnTemaSidebar", "tipo": "tema", "label": "Modo Luz", "icono": "fa-gear" },

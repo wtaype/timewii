@@ -1,0 +1,244 @@
+---
+// src/feature/metricas/componentes/CsatInputCards.astro
+// 🎯 Las 5 Cajas de Calificación CSAT (Estilo Imagen 1): Very dissatisfied, Dissatisfied, Neutral, Satisfied, Very satisfied
+// Steppers táctiles (+ / −), inputs directos y sliders de rango para cálculo ultra fácil y amigable
+---
+
+<section class="wii-csat-ratings-station" aria-label="Entrada de calificaciones CSAT">
+  <!-- Cabecera de la Sección con Atajos Rápidos -->
+  <div class="wii-ratings-header">
+    <div class="wii-ratings-title-group">
+      <div class="wii-ratings-icon">
+        <i class="fa-solid fa-star-half-stroke"></i>
+      </div>
+      <div>
+        <h2 class="wii-ratings-title">Calificaciones de Encuestas CSAT (1★ a 5★)</h2>
+        <p class="wii-ratings-sub">Escribe el número, usa los botones (+ / −) o desliza el rango para calcular al instante</p>
+      </div>
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div class="wii-ratings-actions">
+      <button type="button" class="wii-btn-preset-example" id="btnLoadExample" title="Cargar ejemplo exacto de 12 encuestas (79.17%)">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Ejemplo (12 encuestas)
+      </button>
+      <button type="button" class="wii-btn-reset-ratings" id="btnResetRatings" title="Restablecer todas las encuestas a 0">
+        <i class="fa-solid fa-rotate-left"></i> Limpiar
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid de las 5 Cajas Coloreadas (Idéntico a Imagen 1) -->
+  <div class="wii-csat-cards-grid">
+    <!-- 1. VERY DISSATISFIED (1★) -->
+    <div class="wii-rating-card card-very-dissatisfied">
+      <div class="wii-rc-header">
+        <span class="wii-rc-title">Very dissatisfied</span>
+        <span class="wii-rc-star">1★</span>
+      </div>
+      <div class="wii-rc-body">
+        <div class="wii-rc-stepper">
+          <button type="button" class="wii-rc-btn-step" data-target="v1" data-step="-1" title="Restar -1">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input
+            type="number"
+            id="inputV1"
+            class="wii-rc-input"
+            value="0"
+            min="0"
+            max="999"
+            data-target="v1"
+            aria-label="Cantidad Very dissatisfied"
+          />
+          <button type="button" class="wii-rc-btn-step" data-target="v1" data-step="1" title="Sumar +1">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <!-- Slider de Rango para Mover Fácil -->
+        <input
+          type="range"
+          id="rangeV1"
+          class="wii-rc-range"
+          min="0"
+          max="30"
+          value="0"
+          data-target="v1"
+          title="Deslizar cantidad"
+        />
+        <div class="wii-rc-footer">
+          <span class="wii-rc-pct" id="pctV1">0.00%</span>
+          <span class="wii-rc-pts" id="ptsV1">0 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. DISSATISFIED (2★) -->
+    <div class="wii-rating-card card-dissatisfied">
+      <div class="wii-rc-header">
+        <span class="wii-rc-title">Dissatisfied</span>
+        <span class="wii-rc-star">2★</span>
+      </div>
+      <div class="wii-rc-body">
+        <div class="wii-rc-stepper">
+          <button type="button" class="wii-rc-btn-step" data-target="v2" data-step="-1" title="Restar -1">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input
+            type="number"
+            id="inputV2"
+            class="wii-rc-input"
+            value="1"
+            min="0"
+            max="999"
+            data-target="v2"
+            aria-label="Cantidad Dissatisfied"
+          />
+          <button type="button" class="wii-rc-btn-step" data-target="v2" data-step="1" title="Sumar +1">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <input
+          type="range"
+          id="rangeV2"
+          class="wii-rc-range"
+          min="0"
+          max="30"
+          value="1"
+          data-target="v2"
+          title="Deslizar cantidad"
+        />
+        <div class="wii-rc-footer">
+          <span class="wii-rc-pct" id="pctV2">8.33%</span>
+          <span class="wii-rc-pts" id="ptsV2">2 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. NEUTRAL (3★) -->
+    <div class="wii-rating-card card-neutral">
+      <div class="wii-rc-header">
+        <span class="wii-rc-title">Neutral</span>
+        <span class="wii-rc-star">3★</span>
+      </div>
+      <div class="wii-rc-body">
+        <div class="wii-rc-stepper">
+          <button type="button" class="wii-rc-btn-step" data-target="v3" data-step="-1" title="Restar -1">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input
+            type="number"
+            id="inputV3"
+            class="wii-rc-input"
+            value="1"
+            min="0"
+            max="999"
+            data-target="v3"
+            aria-label="Cantidad Neutral"
+          />
+          <button type="button" class="wii-rc-btn-step" data-target="v3" data-step="1" title="Sumar +1">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <input
+          type="range"
+          id="rangeV3"
+          class="wii-rc-range"
+          min="0"
+          max="30"
+          value="1"
+          data-target="v3"
+          title="Deslizar cantidad"
+        />
+        <div class="wii-rc-footer">
+          <span class="wii-rc-pct" id="pctV3">8.33%</span>
+          <span class="wii-rc-pts" id="ptsV3">3 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SATISFIED (4★) -->
+    <div class="wii-rating-card card-satisfied">
+      <div class="wii-rc-header">
+        <span class="wii-rc-title">Satisfied</span>
+        <span class="wii-rc-star">4★</span>
+      </div>
+      <div class="wii-rc-body">
+        <div class="wii-rc-stepper">
+          <button type="button" class="wii-rc-btn-step" data-target="v4" data-step="-1" title="Restar -1">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input
+            type="number"
+            id="inputV4"
+            class="wii-rc-input"
+            value="5"
+            min="0"
+            max="999"
+            data-target="v4"
+            aria-label="Cantidad Satisfied"
+          />
+          <button type="button" class="wii-rc-btn-step" data-target="v4" data-step="1" title="Sumar +1">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <input
+          type="range"
+          id="rangeV4"
+          class="wii-rc-range"
+          min="0"
+          max="30"
+          value="5"
+          data-target="v4"
+          title="Deslizar cantidad"
+        />
+        <div class="wii-rc-footer">
+          <span class="wii-rc-pct" id="pctV4">41.67%</span>
+          <span class="wii-rc-pts" id="ptsV4">20 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. VERY SATISFIED (5★) -->
+    <div class="wii-rating-card card-very-satisfied">
+      <div class="wii-rc-header">
+        <span class="wii-rc-title">Very satisfied</span>
+        <span class="wii-rc-star">5★</span>
+      </div>
+      <div class="wii-rc-body">
+        <div class="wii-rc-stepper">
+          <button type="button" class="wii-rc-btn-step" data-target="v5" data-step="-1" title="Restar -1">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input
+            type="number"
+            id="inputV5"
+            class="wii-rc-input"
+            value="5"
+            min="0"
+            max="999"
+            data-target="v5"
+            aria-label="Cantidad Very satisfied"
+          />
+          <button type="button" class="wii-rc-btn-step" data-target="v5" data-step="1" title="Sumar +1">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <input
+          type="range"
+          id="rangeV5"
+          class="wii-rc-range"
+          min="0"
+          max="30"
+          value="5"
+          data-target="v5"
+          title="Deslizar cantidad"
+        />
+        <div class="wii-rc-footer">
+          <span class="wii-rc-pct" id="pctV5">41.67%</span>
+          <span class="wii-rc-pts" id="ptsV5">25 pts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

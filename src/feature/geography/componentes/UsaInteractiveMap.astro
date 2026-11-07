@@ -1,0 +1,169 @@
+---
+// src/feature/geography/componentes/UsaInteractiveMap.astro
+// 🗺️ Mapa Vectorial Original de los 50 Estados USA: Interactivo, Ligero y 100% Autónomo
+// Cada estado cuenta con su propio vector SVG con hover dinámico, tooltip con ciudades y población
+import { STATES_DATA } from '@semillas/statesData.js';
+import { US_MAP_PATHS } from '@semillas/usMapSvgData.js';
+import { STATE_LABEL_POSITIONS } from '@semillas/usMapCentroids.js';
+---
+
+<div class="wii-geo-card wii-card-map">
+  <!-- Cabecera del Mapa -->
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-map">
+      <i class="fa-solid fa-map-location-dot"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Mapa Interactivo de los 50 Estados USA</h2>
+      <p class="wii-card-sub">Pasa el cursor por cada estado para ver ciudades, población, huso y curiosidades</p>
+    </div>
+    <div class="wii-map-status-pill">
+      <span class="wii-legend-dot dot-conus"></span> 50 ESTADOS
+    </div>
+  </div>
+
+  <div class="wii-map-viewport-wrapper">
+    <!-- Contenedor del Mapa SVG Propio -->
+    <div class="wii-svg-map-stage" id="usaMapStage">
+      <svg
+        viewBox="0 0 959 593"
+        class="wii-us-custom-svg"
+        id="usaSvgCanvas"
+        preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id="stateGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- Capa de Caminos Vectoriales de Cada Estado -->
+        <g class="wii-states-layer" id="statesPathsGroup">
+          {STATES_DATA.map((st) => {
+            const pathD = US_MAP_PATHS[st.abbr as keyof typeof US_MAP_PATHS] || '';
+            const zoneClass = `zone-${st.zone.toLowerCase()}`;
+            return (
+              <path
+                id={`state-path-${st.abbr}`}
+                class={`wii-geo-state-path ${zoneClass}`}
+                d={pathD}
+                data-abbr={st.abbr}
+                data-state={st.name}
+                data-cap={st.cap}
+                data-cities={st.cities}
+                data-zone={st.zone}
+                data-zip={st.zip}
+                data-pop={st.pop}
+                data-curio={st.curio}
+              />
+            );
+          })}
+        </g>
+
+        <!-- Separadores Visuales de Alaska y Hawaii -->
+        <g class="wii-insets-dividers" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" fill="none">
+          <!-- Marco de Alaska -->
+          <path d="M 0,420 L 260,420 L 260,593" />
+          <!-- Marco de Hawaii -->
+          <path d="M 260,490 L 380,490 L 380,593" />
+        </g>
+
+        <!-- Capa de Etiquetas de Siglas Centradas -->
+        <g class="wii-labels-layer" pointer-events="none">
+          {STATES_DATA.map((st) => {
+            const pos = STATE_LABEL_POSITIONS[st.abbr as keyof typeof STATE_LABEL_POSITIONS];
+            if (!pos) return null;
+            return (
+              <text
+                x={pos.x}
+                y={pos.y}
+                class="wii-geo-state-label"
+                text-anchor="middle"
+                dominant-baseline="central"
+                data-abbr={st.abbr}
+              >
+                {st.abbr}
+              </text>
+            );
+          })}
+        </g>
+      </svg>
+
+      <!-- Badges de Insets de Tiempo en Esquina -->
+      <div class="wii-inset-badge-ak" title="Alaska Standard Time (AKST)">
+        <span class="wii-inset-tag">AK</span>
+        <span class="wii-inset-clock" id="insetClockAK">--:-- --</span>
+      </div>
+      <div class="wii-inset-badge-hi" title="Hawaii Standard Time (HST)">
+        <span class="wii-inset-tag">HI</span>
+        <span class="wii-inset-clock" id="insetClockHI">--:-- --</span>
+      </div>
+
+      <!-- Tooltip Flotante Inteligente con Curiosidades y Ciudades -->
+      <div class="wii-geo-tooltip" id="geoTooltip" style="display: none;">
+        <div class="wii-tt-header">
+          <div class="wii-tt-title-group">
+            <span class="wii-tt-abbr" id="ttAbbr">CA</span>
+            <strong class="wii-tt-name" id="ttName">California</strong>
+          </div>
+          <span class="wii-tt-time" id="ttTime">--:--:-- --</span>
+        </div>
+        <div class="wii-tt-body">
+          <div class="wii-tt-row">
+            <span class="wii-tt-lbl"><i class="fa-solid fa-landmark"></i> Capital:</span>
+            <span class="wii-tt-val" id="ttCap">Sacramento</span>
+          </div>
+          <div class="wii-tt-row">
+            <span class="wii-tt-lbl"><i class="fa-solid fa-city"></i> Ciudades:</span>
+            <span class="wii-tt-val" id="ttCities">Los Angeles, San Francisco, San Diego</span>
+          </div>
+          <div class="wii-tt-row">
+            <span class="wii-tt-lbl"><i class="fa-solid fa-users"></i> Población:</span>
+            <span class="wii-tt-val" id="ttPop">39.0M</span>
+          </div>
+          <div class="wii-tt-row">
+            <span class="wii-tt-lbl"><i class="fa-solid fa-mail-bulk"></i> ZIP Code:</span>
+            <span class="wii-tt-val" id="ttZip">900xx–961xx</span>
+          </div>
+          <div class="wii-tt-curio-box">
+            <i class="fa-solid fa-lightbulb" style="color: #f0c547;"></i>
+            <span id="ttCurio">Potencia económica; Silicon Valley y playas doradas.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Chips de Leyenda y Filtrado Rápido -->
+    <div class="wii-geo-map-legend">
+      <div class="wii-map-legend-pills">
+        <button type="button" class="wii-leg-btn active" data-zone-filter="Todos">
+          <span class="wii-leg-dot dot-all"></span> Todos (50)
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Pacific">
+          <span class="wii-leg-dot dot-pst"></span> Pacific (PST)
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Mountain">
+          <span class="wii-leg-dot dot-mst"></span> Mountain (MST)
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Central">
+          <span class="wii-leg-dot dot-cst"></span> Central (CST)
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Eastern">
+          <span class="wii-leg-dot dot-est"></span> Eastern (EST)
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Alaska">
+          <span class="wii-leg-dot dot-ak"></span> Alaska
+        </button>
+        <button type="button" class="wii-leg-btn" data-zone-filter="Hawaii">
+          <span class="wii-leg-dot dot-hi"></span> Hawaii
+        </button>
+      </div>
+      <div class="wii-geo-tip-inline">
+        <i class="fa-solid fa-sun" style="color: #f0c547;"></i>
+        <span>Arizona (MST) no utiliza horario de verano (sin DST)</span>
+      </div>
+    </div>
+  </div>
+</div>

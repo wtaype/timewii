@@ -1,0 +1,224 @@
+---
+// src/feature/calculadora/componentes/CalculadoraLeft.astro
+// 🧮 Lado Izquierdo (LEFT): Entrada de Cálculos, Teclado Aritmético y Calculadora de Horas/Tiempos
+// 100% Variables de witema.css · Tipografía var(--ff_J) · Ergonómico y accesible
+---
+
+<div class="wii-calc-card wii-calc-left-card">
+  <!-- Cabecera de la Tarjeta Izquierda -->
+  <div class="wii-card-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Calculadora de Operaciones & Tiempos</h2>
+        <p class="wii-card-sub">Aritmética rápida, porcentajes para llamadas y cálculo exacto de horas de turno</p>
+      </div>
+    </div>
+
+    <!-- Selector de Modos de Cálculo -->
+    <div class="wii-calc-mode-tabs" id="calcModeTabs">
+      <button type="button" class="wii-mode-tab active" id="tabAritmetica" data-mode="aritmetica">
+        <i class="fa-solid fa-calculator"></i> Aritmética
+      </button>
+      <button type="button" class="wii-mode-tab" id="tabTiempos" data-mode="tiempos">
+        <i class="fa-solid fa-clock"></i> Horas & Tiempos
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODO 1: CALCULADORA ARITMÉTICA ESTÁNDAR & PORCENTAJES
+       ========================================================================= -->
+  <div class="wii-calc-mode-view" id="viewAritmetica">
+    <!-- Pantalla LCD Digital -->
+    <div class="wii-calc-screen">
+      <div class="wii-screen-top">
+        <span class="wii-calc-mode-indicator"><i class="fa-solid fa-hashtag"></i> MODO ARITMÉTICO</span>
+        <div class="wii-calc-expr" id="calcExpression"></div>
+      </div>
+      <div class="wii-screen-main">
+        <div class="wii-calc-display" id="calcDisplay">0</div>
+      </div>
+    </div>
+
+    <!-- Barra de Chips de Operaciones Rápidas para Asesores -->
+    <div class="wii-quick-chips-bar">
+      <span class="wii-chips-label"><i class="fa-solid fa-bolt"></i> Rápido:</span>
+      <button type="button" class="wii-chip-btn" data-quick="+10%">+10%</button>
+      <button type="button" class="wii-chip-btn" data-quick="+15%">+15%</button>
+      <button type="button" class="wii-chip-btn" data-quick="+20%">+20%</button>
+      <button type="button" class="wii-chip-btn" data-quick="-10%">-10%</button>
+      <button type="button" class="wii-chip-btn" data-quick="-15%">-15%</button>
+      <button type="button" class="wii-chip-btn" data-quick="round">Redondear (2 dec)</button>
+      <button type="button" class="wii-chip-btn" data-quick="int">Entero</button>
+    </div>
+
+    <!-- Teclado Numérico Ergonómico (4 columnas x 5 filas) -->
+    <div class="wii-calc-keypad" id="calcKeypad">
+      <!-- Fila 1 -->
+      <button type="button" class="wii-key wii-key-clear" id="keyAC" data-action="clear" title="Limpiar todo (Esc)">AC</button>
+      <button type="button" class="wii-key wii-key-special" id="keyDel" data-action="delete" title="Borrar último carácter (Backspace)">DEL</button>
+      <button type="button" class="wii-key wii-key-op" data-action="percent" title="Porcentaje (%)">%</button>
+      <button type="button" class="wii-key wii-key-op" data-action="op" data-op="/" title="Dividir (/)">÷</button>
+
+      <!-- Fila 2 -->
+      <button type="button" class="wii-key wii-key-num" data-num="7">7</button>
+      <button type="button" class="wii-key wii-key-num" data-num="8">8</button>
+      <button type="button" class="wii-key wii-key-num" data-num="9">9</button>
+      <button type="button" class="wii-key wii-key-op" data-action="op" data-op="*" title="Multiplicar (*)">×</button>
+
+      <!-- Fila 3 -->
+      <button type="button" class="wii-key wii-key-num" data-num="4">4</button>
+      <button type="button" class="wii-key wii-key-num" data-num="5">5</button>
+      <button type="button" class="wii-key wii-key-num" data-num="6">6</button>
+      <button type="button" class="wii-key wii-key-op" data-action="op" data-op="-" title="Restar (-)">−</button>
+
+      <!-- Fila 4 -->
+      <button type="button" class="wii-key wii-key-num" data-num="1">1</button>
+      <button type="button" class="wii-key wii-key-num" data-num="2">2</button>
+      <button type="button" class="wii-key wii-key-num" data-num="3">3</button>
+      <button type="button" class="wii-key wii-key-op" data-action="op" data-op="+" title="Sumar (+)">+</button>
+
+      <!-- Fila 5 -->
+      <button type="button" class="wii-key wii-key-special" data-action="negate" title="Cambiar signo (±)">±</button>
+      <button type="button" class="wii-key wii-key-num" data-num="0">0</button>
+      <button type="button" class="wii-key wii-key-num" data-num=".">.</button>
+      <button type="button" class="wii-key wii-key-equals" id="keyEquals" data-action="equals" title="Calcular resultado (Enter)">=</button>
+    </div>
+
+    <!-- Atajo de Teclado Físico -->
+    <div class="wii-calc-keyboard-tip">
+      <i class="fa-solid fa-keyboard"></i>
+      <span>Soporte de teclado numérico físico: <strong>0-9</strong>, <strong>+</strong>, <strong>−</strong>, <strong>*</strong>, <strong>/</strong>, <strong>Enter</strong> (=), <strong>Backspace</strong> (DEL) y <strong>Esc</strong> (AC).</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODO 2: CALCULADORA DE HORAS & TIEMPOS DE TURNO
+       ========================================================================= -->
+  <div class="wii-calc-mode-view" id="viewTiempos" style="display: none;">
+    <!-- 1. Diferencia entre Horas (Duración de Turno / Llamada) -->
+    <div class="wii-time-section-box">
+      <div class="wii-time-sec-header">
+        <i class="fa-solid fa-business-time"></i>
+        <span>1. Duración Neta entre Horas (Turno de Trabajo)</span>
+      </div>
+
+      <div class="wii-time-form-grid">
+        <div class="wii-time-field">
+          <label for="timeDiffStart">Hora Inicio:</label>
+          <input type="time" id="timeDiffStart" value="08:30" class="wii-time-input" />
+        </div>
+
+        <div class="wii-time-field">
+          <label for="timeDiffEnd">Hora Fin:</label>
+          <input type="time" id="timeDiffEnd" value="17:15" class="wii-time-input" />
+        </div>
+
+        <div class="wii-time-field">
+          <label for="timeDiffBreak">Descuento Lunch / Break:</label>
+          <select id="timeDiffBreak" class="wii-time-select">
+            <option value="0">0 min (Sin descuento)</option>
+            <option value="15">15 min (Break corto)</option>
+            <option value="30">30 min (Break estándar)</option>
+            <option value="45">45 min</option>
+            <option value="60" selected>60 min (1 Hora Lunch)</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" class="wii-time-btn-calc" id="btnCalcTimeDiff">
+        <i class="fa-solid fa-play"></i> Calcular Duración Neta de Turno
+      </button>
+    </div>
+
+    <!-- 2. Sumar o Restar Bloques de Tiempo -->
+    <div class="wii-time-section-box">
+      <div class="wii-time-sec-header">
+        <i class="fa-solid fa-plus-minus"></i>
+        <span>2. Sumar / Restar Bloques de Tiempo (Llamadas, Hold & Wrap-up)</span>
+      </div>
+
+      <div class="wii-blocks-calc-row">
+        <!-- Bloque A -->
+        <div class="wii-time-block-group">
+          <span class="wii-block-tag">Bloque A</span>
+          <div class="wii-hm-inputs">
+            <input type="number" id="blockAh" min="0" max="99" value="1" placeholder="H" class="wii-num-mini" />
+            <span class="wii-hm-sep">h</span>
+            <input type="number" id="blockAm" min="0" max="59" value="45" placeholder="M" class="wii-num-mini" />
+            <span class="wii-hm-sep">m</span>
+          </div>
+        </div>
+
+        <!-- Operador -->
+        <div class="wii-block-operator-box">
+          <select id="blockOperator" class="wii-op-select">
+            <option value="add">+</option>
+            <option value="sub">−</option>
+          </select>
+        </div>
+
+        <!-- Bloque B -->
+        <div class="wii-time-block-group">
+          <span class="wii-block-tag">Bloque B</span>
+          <div class="wii-hm-inputs">
+            <input type="number" id="blockBh" min="0" max="99" value="0" placeholder="H" class="wii-num-mini" />
+            <span class="wii-hm-sep">h</span>
+            <input type="number" id="blockBm" min="0" max="59" value="35" placeholder="M" class="wii-num-mini" />
+            <span class="wii-hm-sep">m</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="wii-time-btn-calc" id="btnCalcTimeBlocks">
+        <i class="fa-solid fa-calculator"></i> Calcular Tiempo Combinado
+      </button>
+    </div>
+
+    <!-- 3. Convertidor Decimal a Horas:Minutos (Nómina & WFM) -->
+    <div class="wii-time-section-box">
+      <div class="wii-time-sec-header">
+        <i class="fa-solid fa-arrows-left-right"></i>
+        <span>3. Convertidor Decimal ⇄ Horas & Minutos (Planillas / WFM)</span>
+      </div>
+
+      <div class="wii-conv-grid">
+        <div class="wii-conv-col">
+          <label for="convDecimalInput">Horas Decimales (ej. 7.75):</label>
+          <div class="wii-input-with-btn">
+            <input type="number" id="convDecimalInput" step="0.01" min="0" value="7.75" class="wii-time-input" />
+            <button type="button" id="btnConvDecimalToHm" class="wii-conv-mini-btn" title="Convertir a Horas y Minutos">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="wii-conv-col">
+          <label>Horas & Minutos (ej. 7h 45m):</label>
+          <div class="wii-input-with-btn">
+            <div class="wii-hm-inputs">
+              <input type="number" id="convHInput" min="0" value="7" class="wii-num-mini" />
+              <span class="wii-hm-sep">h</span>
+              <input type="number" id="convMInput" min="0" max="59" value="45" class="wii-num-mini" />
+              <span class="wii-hm-sep">m</span>
+            </div>
+            <button type="button" id="btnConvHmToDecimal" class="wii-conv-mini-btn" title="Convertir a Decimal">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presets de Turno Típicos -->
+      <div class="wii-time-presets">
+        <span class="wii-presets-lbl">Turnos típicos:</span>
+        <button type="button" class="wii-preset-chip" data-decimal="7.5">7.5h (7h 30m)</button>
+        <button type="button" class="wii-preset-chip" data-decimal="8.0">8.0h (8h 00m)</button>
+        <button type="button" class="wii-preset-chip" data-decimal="8.5">8.5h (8h 30m)</button>
+      </div>
+    </div>
+  </div>
+</div>

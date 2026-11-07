@@ -1,0 +1,42 @@
+---
+// src/feature/ruleta/componentes/WinnersTable.astro
+// 🏆 Tabla de Resultados & Podio de Ganadores del Sorteo
+---
+
+<div class="wii-ruleta-card wii-card-winners">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-winners">
+      <i class="fa-solid fa-list-ol"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Podio de Ganadores & Resultados del Sorteo</h2>
+      <p class="wii-card-sub">Registro cronológico de participantes seleccionados por la ruleta</p>
+    </div>
+    <div class="wii-winners-header-actions">
+      <button type="button" class="wii-winners-btn btn-danger" id="btnClearWinnersPodium" title="Reiniciar podio de ganadores">
+        <i class="fa-solid fa-rotate-left"></i>
+        <span>Reiniciar Podio</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="wii-winners-body">
+    <div class="wii-table-responsive-wrapper">
+      <table class="wii-custom-table" id="tablaGanadores">
+        <thead>
+          <tr>
+            <th># Orden</th>
+            <th>Hora de Sorteo</th>
+            <th>Participante Seleccionado</th>
+            <th>Motivo del Sorteo</th>
+            <th>Estado en Ruleta</th>
+            <th>Acción Rápida</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyGanadores">
+          <!-- Renderizado dinámico desde ruleta.js -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

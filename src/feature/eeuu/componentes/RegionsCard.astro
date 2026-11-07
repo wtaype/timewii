@@ -1,0 +1,55 @@
+---
+// src/feature/eeuu/componentes/RegionsCard.astro
+// 🗺️ Regiones de EE.UU. comparadas con Ciudades del Perú
+// Vibra, estilo de vida y paralelismos culturales entre las 4 zonas de EE.UU. y regiones peruanas
+import { REGIONS_PERU_DATA } from '@semillas/cultureData.js';
+---
+
+<div class="wii-eeuu-card wii-card-regions">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-regions">
+      <i class="fa-solid fa-earth-americas"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Regiones de EE.UU. comparadas con Ciudades del Perú</h2>
+      <p class="wii-card-sub">Vibra, estilo de vida y paralelismos culturales entre las 4 zonas de EE.UU. y regiones peruanas</p>
+    </div>
+  </div>
+
+  <div class="wii-regions-body">
+    <div class="wii-table-responsive-wrapper">
+      <table class="wii-custom-table" id="tablaRegiones">
+        <thead>
+          <tr>
+            <th>Región de EE.UU.</th>
+            <th>Estados / Ciudades Clave</th>
+            <th>Vibra & Estilo de Vida</th>
+            <th>Paralelo Cultural en Perú</th>
+            <th>Dato Curioso / Nivel Turista</th>
+          </tr>
+        </thead>
+        <tbody>
+          {REGIONS_PERU_DATA.map((item) => (
+            <tr>
+              <td>
+                <span class="wii-cell-country">
+                  <span class="wii-flag-tag">🇺🇸</span>
+                  <strong>{item.regionUsa}</strong>
+                </span>
+              </td>
+              <td><span class="wii-pill-sub">{item.estados}</span></td>
+              <td class="wii-tbl-desc" style="color: var(--tx1);">{item.estiloVida}</td>
+              <td>
+                <span class="wii-cell-country">
+                  <span class="wii-flag-tag">🇵🇪</span>
+                  <strong style="color: #00d2ff;">{item.equivalentePeru}</strong>
+                </span>
+              </td>
+              <td class="wii-tbl-desc">{item.detalleTurista}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

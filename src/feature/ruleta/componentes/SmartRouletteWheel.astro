@@ -1,0 +1,61 @@
+---
+// src/feature/ruleta/componentes/SmartRouletteWheel.astro
+// 🎯 Super Smart Ruleta Grupal (Canvas): Para Sorteos de Equipo, Exposiciones y Premios
+---
+
+<div class="wii-ruleta-card wii-card-wheel">
+  <div class="wii-card-header">
+    <div class="wii-card-icon wii-ico-wheel">
+      <i class="fa-solid fa-arrows-spin"></i>
+    </div>
+    <div class="wii-header-titles">
+      <h2 class="wii-card-title">Super Smart Ruleta de Equipo</h2>
+      <p class="wii-card-sub" id="wheelSubtitle">Sorteos de grupo: define quién expone, presenta o gana dinámicas</p>
+    </div>
+    <div class="wii-wheel-status-badge">
+      <span class="wii-badge-dot"></span>
+      <span id="wheelModeBadge">MODO: EXPOSICIÓN</span>
+    </div>
+  </div>
+
+  <div class="wii-wheel-station">
+    <!-- Contenedor de la Ruleta y Puntero -->
+    <div class="wii-wheel-container">
+      <!-- Puntero Superior -->
+      <div class="wii-wheel-pointer" id="wheelPointer">
+        <i class="fa-solid fa-caret-down"></i>
+      </div>
+
+      <!-- Lienzo Giratorio de la Ruleta (Canvas) -->
+      <div class="wii-wheel-disc" id="wheelDisc">
+        <canvas id="wheelCanvas" width="380" height="380"></canvas>
+      </div>
+
+      <!-- Botón Central de Giro -->
+      <button type="button" class="wii-wheel-center-btn" id="btnSpinWheel" title="¡Girar Ruleta!">
+        <i class="fa-solid fa-rotate"></i>
+        <span>GIRAR</span>
+      </button>
+    </div>
+
+    <!-- Banner / Modal de Anuncio del Ganador -->
+    <div class="wii-winner-announcement" id="winnerAnnouncement" style="display: none;">
+      <div class="wii-winner-trophy">
+        <i class="fa-solid fa-crown" id="winnerIcon"></i>
+      </div>
+      <div class="wii-winner-info">
+        <span class="wii-winner-tag" id="winnerTag">🎉 ¡PARTICIPANTE SELECCIONADO!</span>
+        <h3 class="wii-winner-name" id="winnerName">Wilder Mendoza</h3>
+        <p class="wii-winner-action-desc" id="winnerActionDesc">Le corresponde exponer el tema ante el equipo.</p>
+      </div>
+      <div class="wii-winner-controls">
+        <button type="button" class="wii-btn-winner-action" id="btnSpinAgain">
+          <i class="fa-solid fa-arrows-rotate"></i> Girar Siguiente
+        </button>
+        <button type="button" class="wii-btn-winner-dismiss" id="btnDismissWinner">
+          <i class="fa-solid fa-check"></i> Listo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
