@@ -153,15 +153,16 @@
   filter: brightness(1.22) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
 }
 
-/* Etiquetas Centradas de Siglas */
+/* Etiquetas Centradas de Siglas (Negro y Negrita para Alto Contraste en el Mapa) */
 .wii-geo-state-label {
   font-family: var(--ff_J), sans-serif;
-  font-size: 10.5px;
-  font-weight: 800;
-  fill: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  font-size: 11px;
+  font-weight: 900;
+  fill: #000000;
+  text-shadow: none;
   pointer-events: none;
   user-select: none;
+  letter-spacing: 0.02em;
 }
 
 /* Insets Badges en Esquinas */
@@ -834,7 +835,7 @@
 }
 
 .wii-state-cap {
-  font-size: 0.74rem;
+  font-size: var(--fz_s2);
   color: var(--tx2);
   display: inline-flex;
   align-items: center;
@@ -852,7 +853,7 @@
 }
 
 .wii-cities-text {
-  font-size: 0.74rem;
+  font-size: var(--fz_s2);
   color: var(--tx1);
   line-height: 1.35;
 }
@@ -927,7 +928,7 @@
 }
 
 .wii-codes-text {
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   color: var(--tx2);
   font-family: monospace;
   white-space: nowrap;
