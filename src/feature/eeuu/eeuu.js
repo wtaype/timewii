@@ -287,9 +287,13 @@ export function inicializarEeuu() {
   const container = document.getElementById('eeuuContainer');
   if (!container) return;
 
+  if (container.dataset.bound === 'true') return;
+  container.dataset.bound = 'true';
+
   configurarTabsCategorias();
   configurarCalendarioAnual();
   configurarFiltroFeriados();
+  configurarBuscadorModismos();
 }
 
 // 1. Navegación por Categorías de Tablas
@@ -435,4 +439,47 @@ function configurarFiltroFeriados() {
       });
     });
   });
+}
+
+// 4. Buscador en Tiempo Real de Modismos / Slang
+function configurarBuscadorModismos() {
+  const input = document.getElementById('idiomSearchInput');
+  const clearBtn = document.getElementById('btnClearIdiomSearch');
+  const countBadge = document.getElementById('idiomCountBadge');
+  const rows = document.querySelectorAll('#tbodyModismos .wii-idiom-row');
+
+  if (!input || !rows.length) return;
+
+  function filtrarModismos() {
+    const query = input.value.trim().toLowerCase();
+    let visibles = 0;
+
+    if (clearBtn) {
+      clearBtn.style.display = query ? 'flex' : 'none';
+    }
+
+    rows.forEach(row => {
+      const searchData = row.getAttribute('data-search') || '';
+      if (!query || searchData.includes(query)) {
+        row.style.display = '';
+        visibles++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    if (countBadge) {
+      countBadge.textContent = query ? `${visibles} RESULTADO${visibles === 1 ? '' : 'S'}` : `${rows.length} MODISMOS`;
+    }
+  }
+
+  input.addEventListener('input', filtrarModismos);
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      filtrarModismos();
+      input.focus();
+    });
+  }
 }

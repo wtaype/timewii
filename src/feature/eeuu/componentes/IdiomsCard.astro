@@ -7,21 +7,31 @@ import { IDIOMS_PERU_DATA } from '@semillas/cultureData.js';
 
 <div class="wii-eeuu-card wii-card-idioms">
   <div class="wii-card-header">
-    <div class="wii-card-icon wii-ico-idioms">
-      <i class="fa-solid fa-comments"></i>
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-idioms">
+        <i class="fa-solid fa-comments"></i>
+      </div>
+      <div class="wii-header-titles">
+        <h2 class="wii-card-title">Slang Americano vs Jergas del Perú</h2>
+        <p class="wii-card-sub">Equivalencias directas entre modismos de EE.UU. y modismos peruanos con pronunciación rápida</p>
+      </div>
     </div>
-    <div class="wii-header-titles">
-      <h2 class="wii-card-title">Slang Americano vs Jergas del Perú</h2>
-      <p class="wii-card-sub">Equivalencias directas entre modismos de EE.UU. y modismos peruanos con pronunciación rápida</p>
-    </div>
-    <div class="wii-idiom-search-wrapper">
-      <i class="fa-solid fa-magnifying-glass"></i>
+
+    <!-- Buscador Integrado con Estilo Premium Glass -->
+    <div class="wii-search-box-idioms">
+      <i class="fa-solid fa-magnifying-glass wii-search-ico"></i>
       <input
         type="text"
         id="idiomSearchInput"
-        class="wii-idiom-search-input"
+        class="wii-search-input-idioms"
         placeholder="Buscar modismo (ej. piece, clima, papayita)..."
+        autocomplete="off"
+        spellcheck="false"
       />
+      <button type="button" id="btnClearIdiomSearch" class="wii-search-clear-btn" style="display: none;" title="Limpiar búsqueda">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <span class="wii-search-count-badge" id="idiomCountBadge">{IDIOMS_PERU_DATA.length} MODISMOS</span>
     </div>
   </div>
 

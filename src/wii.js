@@ -13,7 +13,7 @@ export default { id, app, slogan, by, version, linkweb };
 git tag v2 -m "Version v2" ; git push origin v2
 
 ACTUALIZACIÓN AL MAIN PRINCIPAL DEL PROYECTO [MAIN] (2)
-git add . ; git commit -m "Actualizacion Principal v2.10.11" ; git push origin main 
+git add . ; git commit -m "Actualizacion Principal v2.10.12" ; git push origin main 
 
 // REEMPLAZAR TAG DE SEGURIDAD EXISTENTE [TAG REMPLAZO] (3)
 git tag -d v2 ; git tag v2 -m "Version v3 actualizada" ; git push origin v3 --force

@@ -98,15 +98,20 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.8vh;
+  gap: 1vh;
   border-bottom: 1px solid var(--brd);
-  padding-bottom: 0.8vh;
+  padding-bottom: 1vh;
 }
 
 .wii-card-title-group {
   display: flex;
   align-items: center;
-  gap: 0.8vh;
+  gap: 1vh;
+  text-align: left;
+}
+
+.wii-header-titles {
+  text-align: left;
 }
 
 .wii-card-icon {
@@ -130,12 +135,96 @@
   font-weight: 800;
   color: var(--tx1);
   margin: 0;
+  text-align: left;
 }
 
 .wii-card-sub {
   font-size: 0.68rem;
   color: var(--tx3);
   margin: 0.2vh 0 0;
+  text-align: left;
+}
+
+/* ==========================================================================
+   2.1 BUSCADOR PREMIUM DE MODISMOS / SLANG (ESTILO GLASS LOCAL-FIRST)
+   ========================================================================== */
+.wii-search-box-idioms {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8vh;
+  width: 360px;
+  max-width: 100%;
+}
+
+.wii-search-box-idioms .wii-search-ico {
+  position: absolute;
+  left: 12px;
+  color: var(--tx3);
+  font-size: 0.82rem;
+  pointer-events: none;
+  transition: color var(--tr_f);
+}
+
+.wii-search-input-idioms {
+  width: 100%;
+  height: 36px;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: var(--r_s, 0.6vh);
+  padding: 0 32px 0 36px;
+  color: var(--tx1);
+  font-family: inherit;
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color var(--tr_f), box-shadow var(--tr_f), background var(--tr_f);
+}
+
+.wii-search-input-idioms:focus {
+  border-color: #f0c547;
+  background: var(--glass-card, var(--inp));
+  box-shadow: 0 0 0 3px rgba(240, 197, 71, 0.18);
+}
+
+.wii-search-box-idioms:focus-within .wii-search-ico {
+  color: #f0c547;
+}
+
+.wii-search-input-idioms::placeholder {
+  color: var(--tx3);
+  opacity: 0.75;
+}
+
+.wii-search-clear-btn {
+  position: absolute;
+  right: 105px;
+  background: none;
+  border: none;
+  color: var(--tx3);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--tr_f);
+}
+
+.wii-search-clear-btn:hover {
+  color: var(--tx1);
+}
+
+.wii-search-count-badge {
+  background: rgba(240, 197, 71, 0.12);
+  border: 1px solid rgba(240, 197, 71, 0.35);
+  color: #f0c547;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.45vh 0.8vh;
+  border-radius: 0.5vh;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Leyenda de Feriados Solicitada (Azul EE.UU., Rojo Perú, Verde Ambos) */
@@ -674,6 +763,28 @@
 @media (max-width: 680px) {
   .wii-annual-grid-6x2 {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wii-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wii-search-box-idioms {
+    width: 100%;
+    min-width: 100%;
+    margin-top: 0.8vh;
+  }
+
+  .wii-search-clear-btn {
+    right: 90px;
+  }
+
+  .wii-eeuu-nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
