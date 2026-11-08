@@ -1,0 +1,82 @@
+---
+// src/feature/calculadora/componentes/CalculadoraPro.astro
+// ⭐ CALCULADORA PRO: Aritmética avanzada con teclas cómodas, display digital cyan y azul pro
+// Diseño Glassmorphism minimalista (Inspirado en la estética de Mi Cuenta / Img 3) · Cero CSS inline
+---
+
+<div class="wii-calc-card wii-calc-pro-station wii-glass-pro" id="calcProStation">
+  <!-- Cabecera de la Estación Pro -->
+  <div class="wii-card-header wii-tier-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-pro">
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Calculadora Pro</h2>
+        <p class="wii-card-sub">Aritmética científica & display digital cyan neón</p>
+      </div>
+    </div>
+    <div class="wii-tier-badge pro">
+      <i class="fa-solid fa-star"></i> PRO ADVANCED
+    </div>
+  </div>
+
+  <!-- Pantalla LCD Digital Cyan Neón (Estilo Reloj Digital Img 3) -->
+  <div class="wii-pro-screen wii-digital-screen" id="proScreen">
+    <div class="wii-screen-top">
+      <span class="wii-calc-mode-indicator"><i class="fa-solid fa-star"></i> PRO DIGITAL</span>
+      <div class="wii-calc-expr" id="proExpression"></div>
+    </div>
+    <div class="wii-screen-main">
+      <div class="wii-calc-display wii-digital-number" id="proDisplay">0</div>
+    </div>
+  </div>
+
+  <!-- Barra de Funciones Científicas / Avanzadas Pro -->
+  <div class="wii-pro-sci-bar">
+    <button type="button" class="wii-pro-sci-btn" data-pro-sci="sqr" title="Elevar al cuadrado (x²)">x²</button>
+    <button type="button" class="wii-pro-sci-btn" data-pro-sci="sqrt" title="Raíz cuadrada (√)">√x</button>
+    <button type="button" class="wii-pro-sci-btn" data-pro-sci="inv" title="Inverso (1/x)">1/x</button>
+    <button type="button" class="wii-pro-sci-btn" data-pro-sci="pi" title="Número Pi (π)">π</button>
+    <button type="button" class="wii-pro-sci-btn" data-pro-sci="round" title="Redondear a 2 decimales">.00</button>
+  </div>
+
+  <!-- Teclado Numérico Pro Azul Cómodo (4 columnas x 5 filas) -->
+  <div class="wii-pro-keypad" id="proKeypad">
+    <!-- Fila 1 -->
+    <button type="button" class="wii-key-pro wii-key-pro-clear" id="proKeyC" data-pro-action="clear" title="Limpiar pantalla">C</button>
+    <button type="button" class="wii-key-pro wii-key-pro-func" data-pro-action="delete" title="Borrar último dígito">DEL</button>
+    <button type="button" class="wii-key-pro wii-key-pro-func" data-pro-action="percent" title="Porcentaje (%)">%</button>
+    <button type="button" class="wii-key-pro wii-key-pro-op" data-pro-action="op" data-op="/" title="Dividir">÷</button>
+
+    <!-- Fila 2 -->
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="7">7</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="8">8</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="9">9</button>
+    <button type="button" class="wii-key-pro wii-key-pro-op" data-pro-action="op" data-op="*" title="Multiplicar">×</button>
+
+    <!-- Fila 3 -->
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="4">4</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="5">5</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="6">6</button>
+    <button type="button" class="wii-key-pro wii-key-pro-op" data-pro-action="op" data-op="-" title="Restar">−</button>
+
+    <!-- Fila 4 -->
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="1">1</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="2">2</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="3">3</button>
+    <button type="button" class="wii-key-pro wii-key-pro-op" data-pro-action="op" data-op="+" title="Sumar">+</button>
+
+    <!-- Fila 5 -->
+    <button type="button" class="wii-key-pro wii-key-pro-func" data-pro-action="negate" title="Cambiar signo (±)">±</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num="0">0</button>
+    <button type="button" class="wii-key-pro wii-key-pro-num" data-pro-num=".">.</button>
+    <button type="button" class="wii-key-pro wii-key-pro-equals" id="proKeyEquals" data-pro-action="equals" title="Calcular resultado">=</button>
+  </div>
+
+  <!-- Atajo de Teclado Físico -->
+  <div class="wii-calc-keyboard-tip">
+    <i class="fa-solid fa-keyboard"></i>
+    <span>Atajo Pro: <strong>0-9</strong>, <strong>+</strong>, <strong>−</strong>, <strong>*</strong>, <strong>/</strong>, <strong>Enter</strong> (=) y <strong>Esc</strong> (C).</span>
+  </div>
+</div>

@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="wii-lth-badge" id="lthTotalBadge">
-      12 ENCUESTAS REGISTRADAS
+      5 ENCUESTAS REGISTRADAS
     </div>
   </div>
 
@@ -24,104 +24,66 @@
     <table class="wii-legend-table" id="csatLegendTable">
       <thead>
         <tr>
-          <th style="width: 220px;">CALIFICACIÓN (OPCIÓN)</th>
-          <th style="width: 140px;">TIPO DE IMPACTO</th>
-          <th style="width: 150px; text-align: center;">CANTIDAD (VOTOS)</th>
-          <th style="width: 120px; text-align: center;">PORCENTAJE</th>
-          <th style="width: 160px; text-align: center;">PUNTOS OBTENIDOS</th>
-          <th>PESO VISUAL EN CSAT</th>
+          <th class="wii-th-calificacion">CALIFICACIÓN (OPCIÓN)</th>
+          <th class="wii-th-impacto">TIPO DE IMPACTO</th>
+          <th class="wii-th-votos wii-cell-center">CANTIDAD (VOTOS)</th>
+          <th class="wii-th-pct wii-cell-center">PORCENTAJE</th>
+          <th class="wii-th-pts wii-cell-center">PUNTOS OBTENIDOS</th>
+          <th class="wii-th-peso">PESO VISUAL EN CSAT</th>
+        </tr>
+        <!-- Fila de Totales y Resumen Ejecutivo Reubicada al Tope (Fase 1) -->
+        <tr class="wii-ltr-total-row">
+          <td>
+            <strong class="wii-total-badge-label">TOTALES DEL TURNO</strong>
+          </td>
+          <td>
+            <span class="wii-tbl-sub-label">Promedio: <strong id="tblAvgRating">5.00★</strong></span>
+          </td>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-total-val" id="tblTotalSurveys">5</strong>
+          </td>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-total-pct">100.0%</strong>
+          </td>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-total-pts" id="tblTotalPoints">25 / 25 pts</strong>
+          </td>
+          <td>
+            <div class="wii-tbl-final-csat">
+              <span class="wii-final-csat-label">CSAT Score:</span>
+              <strong class="wii-csat-highlight" id="tblFinalCsatScore">100.00%</strong>
+            </div>
+          </td>
         </tr>
       </thead>
       <tbody>
-        <!-- 1. VERY DISSATISFIED (1★) -->
-        <tr class="wii-ltr-row" data-cat="v1">
+        <!-- 5. VERY SATISFIED (5★) [Prioridad 1 en Pantallas] -->
+        <tr class="wii-ltr-row" data-cat="v5">
           <td>
             <div class="wii-opt-cell">
-              <span class="wii-opt-tag tag-v1">1★</span>
-              <strong class="wii-opt-name">Very dissatisfied</strong>
+              <span class="wii-opt-tag tag-v5">5★</span>
+              <strong class="wii-opt-name">Very satisfied</strong>
             </div>
           </td>
           <td>
-            <span class="wii-impact-badge badge-neg">Detonador Alto</span>
+            <span class="wii-impact-badge badge-pos">Promotor Alto</span>
           </td>
-          <td style="text-align: center;">
+          <td class="wii-cell-center">
             <div class="wii-tbl-stepper">
-              <button type="button" class="wii-tbl-step-btn" data-target="v1" data-step="-1">−</button>
-              <span class="wii-tbl-val" id="tblValV1">0</span>
-              <button type="button" class="wii-tbl-step-btn" data-target="v1" data-step="1">+</button>
+              <button type="button" class="wii-tbl-step-btn" data-target="v5" data-step="-1">−</button>
+              <span class="wii-tbl-val" id="tblValV5">5</span>
+              <button type="button" class="wii-tbl-step-btn" data-target="v5" data-step="1">+</button>
             </div>
           </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-pct" id="tblPctV1">0.00%</strong>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-pct" id="tblPctV5">100.0%</strong>
           </td>
-          <td style="text-align: center;">
-            <span class="wii-tbl-pts" id="tblPtsV1">0 × 1★ = 0 pts</span>
+          <td class="wii-cell-center">
+            <span class="wii-tbl-pts" id="tblPtsV5">5 × 5★ = 25 pts</span>
           </td>
           <td>
             <div class="wii-tbl-bar-track">
-              <div class="wii-tbl-bar-fill fill-v1" id="tblFillV1" style="width: 0%;"></div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- 2. DISSATISFIED (2★) -->
-        <tr class="wii-ltr-row" data-cat="v2">
-          <td>
-            <div class="wii-opt-cell">
-              <span class="wii-opt-tag tag-v2">2★</span>
-              <strong class="wii-opt-name">Dissatisfied</strong>
-            </div>
-          </td>
-          <td>
-            <span class="wii-impact-badge badge-neg">Detonador</span>
-          </td>
-          <td style="text-align: center;">
-            <div class="wii-tbl-stepper">
-              <button type="button" class="wii-tbl-step-btn" data-target="v2" data-step="-1">−</button>
-              <span class="wii-tbl-val" id="tblValV2">1</span>
-              <button type="button" class="wii-tbl-step-btn" data-target="v2" data-step="1">+</button>
-            </div>
-          </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-pct" id="tblPctV2">8.33%</strong>
-          </td>
-          <td style="text-align: center;">
-            <span class="wii-tbl-pts" id="tblPtsV2">1 × 2★ = 2 pts</span>
-          </td>
-          <td>
-            <div class="wii-tbl-bar-track">
-              <div class="wii-tbl-bar-fill fill-v2" id="tblFillV2" style="width: 8.33%;"></div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- 3. NEUTRAL (3★) -->
-        <tr class="wii-ltr-row" data-cat="v3">
-          <td>
-            <div class="wii-opt-cell">
-              <span class="wii-opt-tag tag-v3">3★</span>
-              <strong class="wii-opt-name">Neutral</strong>
-            </div>
-          </td>
-          <td>
-            <span class="wii-impact-badge badge-neu">Neutro</span>
-          </td>
-          <td style="text-align: center;">
-            <div class="wii-tbl-stepper">
-              <button type="button" class="wii-tbl-step-btn" data-target="v3" data-step="-1">−</button>
-              <span class="wii-tbl-val" id="tblValV3">1</span>
-              <button type="button" class="wii-tbl-step-btn" data-target="v3" data-step="1">+</button>
-            </div>
-          </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-pct" id="tblPctV3">8.33%</strong>
-          </td>
-          <td style="text-align: center;">
-            <span class="wii-tbl-pts" id="tblPtsV3">1 × 3★ = 3 pts</span>
-          </td>
-          <td>
-            <div class="wii-tbl-bar-track">
-              <div class="wii-tbl-bar-fill fill-v3" id="tblFillV3" style="width: 8.33%;"></div>
+              <div class="wii-tbl-bar-fill fill-v5" id="tblFillV5" style="width: 100%;"></div>
             </div>
           </td>
         </tr>
@@ -137,84 +99,119 @@
           <td>
             <span class="wii-impact-badge badge-pos">Promotor</span>
           </td>
-          <td style="text-align: center;">
+          <td class="wii-cell-center">
             <div class="wii-tbl-stepper">
               <button type="button" class="wii-tbl-step-btn" data-target="v4" data-step="-1">−</button>
-              <span class="wii-tbl-val" id="tblValV4">5</span>
+              <span class="wii-tbl-val" id="tblValV4">0</span>
               <button type="button" class="wii-tbl-step-btn" data-target="v4" data-step="1">+</button>
             </div>
           </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-pct" id="tblPctV4">41.67%</strong>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-pct" id="tblPctV4">0.00%</strong>
           </td>
-          <td style="text-align: center;">
-            <span class="wii-tbl-pts" id="tblPtsV4">5 × 4★ = 20 pts</span>
+          <td class="wii-cell-center">
+            <span class="wii-tbl-pts" id="tblPtsV4">0 × 4★ = 0 pts</span>
           </td>
           <td>
             <div class="wii-tbl-bar-track">
-              <div class="wii-tbl-bar-fill fill-v4" id="tblFillV4" style="width: 41.67%;"></div>
+              <div class="wii-tbl-bar-fill fill-v4" id="tblFillV4" style="width: 0%;"></div>
             </div>
           </td>
         </tr>
 
-        <!-- 5. VERY SATISFIED (5★) -->
-        <tr class="wii-ltr-row" data-cat="v5">
+        <!-- 3. NEUTRAL (3★) -->
+        <tr class="wii-ltr-row" data-cat="v3">
           <td>
             <div class="wii-opt-cell">
-              <span class="wii-opt-tag tag-v5">5★</span>
-              <strong class="wii-opt-name">Very satisfied</strong>
+              <span class="wii-opt-tag tag-v3">3★</span>
+              <strong class="wii-opt-name">Neutral</strong>
             </div>
           </td>
           <td>
-            <span class="wii-impact-badge badge-pos">Promotor Alto</span>
+            <span class="wii-impact-badge badge-neu">Neutro</span>
           </td>
-          <td style="text-align: center;">
+          <td class="wii-cell-center">
             <div class="wii-tbl-stepper">
-              <button type="button" class="wii-tbl-step-btn" data-target="v5" data-step="-1">−</button>
-              <span class="wii-tbl-val" id="tblValV5">5</span>
-              <button type="button" class="wii-tbl-step-btn" data-target="v5" data-step="1">+</button>
+              <button type="button" class="wii-tbl-step-btn" data-target="v3" data-step="-1">−</button>
+              <span class="wii-tbl-val" id="tblValV3">0</span>
+              <button type="button" class="wii-tbl-step-btn" data-target="v3" data-step="1">+</button>
             </div>
           </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-pct" id="tblPctV5">41.67%</strong>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-pct" id="tblPctV3">0.00%</strong>
           </td>
-          <td style="text-align: center;">
-            <span class="wii-tbl-pts" id="tblPtsV5">5 × 5★ = 25 pts</span>
+          <td class="wii-cell-center">
+            <span class="wii-tbl-pts" id="tblPtsV3">0 × 3★ = 0 pts</span>
           </td>
           <td>
             <div class="wii-tbl-bar-track">
-              <div class="wii-tbl-bar-fill fill-v5" id="tblFillV5" style="width: 41.67%;"></div>
+              <div class="wii-tbl-bar-fill fill-v3" id="tblFillV3" style="width: 0%;"></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- 2. DISSATISFIED (2★) -->
+        <tr class="wii-ltr-row" data-cat="v2">
+          <td>
+            <div class="wii-opt-cell">
+              <span class="wii-opt-tag tag-v2">2★</span>
+              <strong class="wii-opt-name">Dissatisfied</strong>
+            </div>
+          </td>
+          <td>
+            <span class="wii-impact-badge badge-neg">Detonador</span>
+          </td>
+          <td class="wii-cell-center">
+            <div class="wii-tbl-stepper">
+              <button type="button" class="wii-tbl-step-btn" data-target="v2" data-step="-1">−</button>
+              <span class="wii-tbl-val" id="tblValV2">0</span>
+              <button type="button" class="wii-tbl-step-btn" data-target="v2" data-step="1">+</button>
+            </div>
+          </td>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-pct" id="tblPctV2">0.00%</strong>
+          </td>
+          <td class="wii-cell-center">
+            <span class="wii-tbl-pts" id="tblPtsV2">0 × 2★ = 0 pts</span>
+          </td>
+          <td>
+            <div class="wii-tbl-bar-track">
+              <div class="wii-tbl-bar-fill fill-v2" id="tblFillV2" style="width: 0%;"></div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- 1. VERY DISSATISFIED (1★) -->
+        <tr class="wii-ltr-row" data-cat="v1">
+          <td>
+            <div class="wii-opt-cell">
+              <span class="wii-opt-tag tag-v1">1★</span>
+              <strong class="wii-opt-name">Very dissatisfied</strong>
+            </div>
+          </td>
+          <td>
+            <span class="wii-impact-badge badge-neg">Detonador Alto</span>
+          </td>
+          <td class="wii-cell-center">
+            <div class="wii-tbl-stepper">
+              <button type="button" class="wii-tbl-step-btn" data-target="v1" data-step="-1">−</button>
+              <span class="wii-tbl-val" id="tblValV1">0</span>
+              <button type="button" class="wii-tbl-step-btn" data-target="v1" data-step="1">+</button>
+            </div>
+          </td>
+          <td class="wii-cell-center">
+            <strong class="wii-tbl-pct" id="tblPctV1">0.00%</strong>
+          </td>
+          <td class="wii-cell-center">
+            <span class="wii-tbl-pts" id="tblPtsV1">0 × 1★ = 0 pts</span>
+          </td>
+          <td>
+            <div class="wii-tbl-bar-track">
+              <div class="wii-tbl-bar-fill fill-v1" id="tblFillV1" style="width: 0%;"></div>
             </div>
           </td>
         </tr>
       </tbody>
-
-      <!-- Fila de Totales y Resumen Ejecutivo -->
-      <tfoot>
-        <tr class="wii-ltr-total-row">
-          <td>
-            <strong>TOTALES DEL TURNO</strong>
-          </td>
-          <td>
-            <span class="wii-tbl-sub-label">Promedio: <strong id="tblAvgRating">4.17★</strong></span>
-          </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-total-val" id="tblTotalSurveys">12</strong>
-          </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-total-pct">100.0%</strong>
-          </td>
-          <td style="text-align: center;">
-            <strong class="wii-tbl-total-pts" id="tblTotalPoints">50 / 60 pts</strong>
-          </td>
-          <td>
-            <div class="wii-tbl-final-csat">
-              <span>CSAT Score:</span>
-              <strong class="wii-csat-highlight" id="tblFinalCsatScore">79.17%</strong>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </div>
 </section>

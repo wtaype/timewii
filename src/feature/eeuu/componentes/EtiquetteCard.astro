@@ -23,6 +23,7 @@ import { CULTURE_COMPARISON_DATA } from '@semillas/cultureData.js';
       <table class="wii-custom-table" id="tablaChoqueCultural">
         <thead>
           <tr>
+            <th class="wii-th-num wii-cell-center">#</th>
             <th>Aspecto Cotidiano</th>
             <th>🇺🇸 En Estados Unidos</th>
             <th>🇵🇪 En Perú</th>
@@ -30,11 +31,14 @@ import { CULTURE_COMPARISON_DATA } from '@semillas/cultureData.js';
           </tr>
         </thead>
         <tbody>
-          {CULTURE_COMPARISON_DATA.map((item) => (
+          {CULTURE_COMPARISON_DATA.map((item, index) => (
             <tr>
+              <td class="wii-cell-center">
+                <span class="wii-tbl-num">{String(index + 1).padStart(2, '0')}</span>
+              </td>
               <td>
                 <div class="wii-tbl-category">
-                  <i class={`fa-solid ${item.icon}`} style="color: var(--mco); font-size: 0.85rem;"></i>
+                  <i class={`fa-solid ${item.icon}`} class="wii-etiquette-ico"></i>
                   <strong>{item.aspecto}</strong>
                 </div>
               </td>
@@ -52,7 +56,7 @@ import { CULTURE_COMPARISON_DATA } from '@semillas/cultureData.js';
               </td>
               <td class="wii-tbl-desc">
                 <span class="wii-culture-tip-pill">
-                  <i class="fa-solid fa-lightbulb" style="color: #f0c547;"></i> {item.diferencia}
+                  <i class="fa-solid fa-lightbulb wii-ico-bulb"></i> {item.diferencia}
                 </span>
               </td>
             </tr>

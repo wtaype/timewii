@@ -1,0 +1,53 @@
+---
+// src/feature/calculadora/componentes/CalculadoraFooter.astro
+// 🌟 HISTORIAL UNIFICADO DE CÁLCULOS: Tabla Glassmorphism con Encabezados <th> y Cero Redundancia
+// 100% Variables de witema.css · Glassmorphism Minimalista · Cero CSS inline · Cero redundancia
+---
+
+<div class="wii-calc-card wii-calc-history-card wii-glass-history" id="calcHistoryCard">
+  <!-- Cabecera del Historial -->
+  <div class="wii-card-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-history">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </div>
+      <div>
+        <h3 class="wii-card-title">Historial Unificado de Cálculos</h3>
+        <p class="wii-card-sub">Registro cronológico descendente con pronunciación en inglés estructurada</p>
+      </div>
+    </div>
+
+    <div class="wii-history-hdr-actions">
+      <span class="wii-history-count-badge" id="historyCounterBadge">0 REGISTROS</span>
+      <button type="button" class="wii-btn-clear-history" id="btnClearHistory" title="Vaciar todo el historial">
+        <i class="fa-solid fa-trash-can"></i> Limpiar Historial
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de Registros Históricos con Encabezados <th> para evitar redundancias -->
+  <div class="wii-history-table-wrapper" id="calcHistoryWrapper">
+    <table class="wii-history-table" id="calcHistoryTable">
+      <thead>
+        <tr>
+          <th class="wii-th-num">#</th>
+          <th class="wii-th-origin">ORIGEN</th>
+          <th class="wii-th-time">HORA</th>
+          <th class="wii-th-op">OPERACIÓN / CÁLCULO</th>
+          <th class="wii-th-spoken">CÓMO SE DICE (EN INGLÉS)</th>
+          <th class="wii-th-actions">ACCIÓN</th>
+        </tr>
+      </thead>
+      <tbody id="calcHistoryList">
+        <!-- Inyectado dinámicamente en orden descendente: <tr> con sus <td> en una sola línea -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Estado Vacío del Historial -->
+  <div class="wii-history-empty" id="calcHistoryEmpty">
+    <i class="fa-solid fa-calculator"></i>
+    <p>Aún no has realizado cálculos en esta sesión.</p>
+    <span>Opera en la Calculadora Pro, VIP o Ultra y presiona '=' para registrar aquí tus cálculos.</span>
+  </div>
+</div>

@@ -60,8 +60,26 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
         <i class="fa-solid fa-calendar-days"></i>
       </div>
       <div>
-        <h2 class="wii-card-title">Calendario Anual 2026: Feriados EE.UU. vs Perú (Vista Completa 6x6)</h2>
-        <p class="wii-card-sub">Haz clic en cualquier día con puntito para ver qué país celebra, por qué y el impacto en tu turno</p>
+        <div class="wii-cal-title-row">
+          <h2 class="wii-card-title">Calendario Anual <span id="calTitleYear">2026</span>: Feriados EE.UU. vs Perú (Vista 6x6)</h2>
+          <!-- Selector Dinámico de Año (Perpetuo) -->
+          <div class="wii-cal-year-controls">
+            <div class="wii-cal-year-nav">
+              <button type="button" class="wii-year-nav-btn" id="btnCalPrevYear" title="Año anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <span class="wii-year-display" id="lblCalCurrentYear">2026</span>
+              <button type="button" class="wii-year-nav-btn" id="btnCalNextYear" title="Año siguiente">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="wii-year-quick-chips" id="yearQuickChips">
+              <button type="button" class="wii-year-chip active" data-year="2026">2026</button>
+              <button type="button" class="wii-year-chip" data-year="2027">2027</button>
+            </div>
+          </div>
+        </div>
+        <p class="wii-card-sub">Pasa el cursor por cualquier día con puntito para ver qué país celebra, por qué y el impacto en tu turno</p>
       </div>
     </div>
 
@@ -86,7 +104,33 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
     <!-- =========================================================================
          1. CALENDARIO ANUAL EN VISTA COMPLETA (6 COLUMNAS ARRIBA Y 6 ABAJO)
          ========================================================================= -->
-    <div class="wii-annual-calendar-box">
+    <div class="wii-annual-calendar-box" id="annualCalendarBox">
+      <!-- Tooltip Flotante Dinámico en Hover (Fase 2 - Estilo Geografía) -->
+      <div class="wii-holiday-tooltip" id="holidayHoverTooltip" aria-hidden="true" style="display: none;">
+        <!-- Barra Superior: País a la Izq y Badge de Turno a la Der -->
+        <div class="wii-htt-top-meta">
+          <div class="wii-htt-country-pill" id="httCountryPill">
+            <span class="wii-htt-flag" id="httCountryFlag">🇺🇸 ⟷ 🇵🇪</span>
+            <span class="wii-htt-country-tag" id="httCountryTag">Ambos Países</span>
+          </div>
+          <span class="wii-htt-badge" id="httWorkBadge">🟢 Descanso Total</span>
+        </div>
+
+        <!-- Contenido Central: Título Oficial & Fecha en Línea Completa -->
+        <div class="wii-htt-main">
+          <h4 class="wii-htt-title" id="httHolidayTitle">New Year’s Day / Año Nuevo</h4>
+          <div class="wii-htt-date-row">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="wii-htt-date" id="httDateDisplay">Jueves, 1 de Enero de 2026</span>
+          </div>
+          <p class="wii-htt-why" id="httHolidayWhy">Celebración universal del inicio del nuevo año calendario con resoluciones personales y reuniones familiares.</p>
+          <div class="wii-htt-work-box">
+            <i class="fa-solid fa-headset"></i>
+            <span id="httWorkDetail">Líneas de atención cerradas en EE.UU. y feriado no laborable en Perú.</span>
+          </div>
+        </div>
+      </div>
+
       <div class="wii-annual-grid-6x2" id="annualCalendarGrid">
         {MESES_INFO.map((mes) => {
           const mesPad = String(mes.num).padStart(2, '0');
@@ -144,7 +188,7 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
                       data-month={mes.num}
                       data-day={dia}
                       data-holiday-key={feriado ? key : undefined}
-                      title={feriado ? `${dia} de ${mes.nombre}: ${feriado.name}` : `${dia} de ${mes.nombre}`}
+                      aria-label={feriado ? `${dia} de ${mes.nombre}: ${feriado.name}` : undefined}
                     >
                       <span class="wii-day-num">{dia}</span>
                       {feriado && <span class:list={['wii-cal-dot', `dot-${feriado.country}`]}></span>}
@@ -178,7 +222,8 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
         <table class="wii-custom-table" id="tablaFeriados">
           <thead>
             <tr>
-              <th style="width: 120px;">FECHA</th>
+              <th class="wii-th-num wii-cell-center">#</th>
+              <th class="wii-th-fecha">FECHA</th>
               <th>🇺🇸 FERIADO EN EE.UU.</th>
               <th>🇵🇪 FERIADO EN PERÚ</th>
               <th>¿SE TRABAJA? / IMPACTO EN ASESOR</th>
@@ -186,7 +231,7 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
             </tr>
           </thead>
           <tbody id="tbodyFeriados">
-            {HOLIDAYS_COMPARISON_DATA.map((item) => {
+            {HOLIDAYS_COMPARISON_DATA.map((item, index) => {
               let badgePill = '';
               let rowHighlight = '';
               if (item.seTrabaja === 'ambos_descanso') {
@@ -202,6 +247,9 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
 
               return (
                 <tr class={rowHighlight} data-work-type={item.seTrabaja} data-month={item.mesNum - 1}>
+                  <td class="wii-cell-center">
+                    <span class="wii-tbl-num">{String(index + 1).padStart(2, '0')}</span>
+                  </td>
                   <td><strong>{item.fechaDisplay}</strong></td>
                   <td>
                     <span class="wii-cell-country">
@@ -227,56 +275,6 @@ const FERIADOS_MAP_2026: Record<string, { country: 'peru' | 'usa' | 'both'; name
             })}
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- =========================================================================
-       3. MODAL / POPUP DE DETALLE AL HACER CLIC EN UN DÍA DEL CALENDARIO
-       ========================================================================= -->
-  <div class="wii-holiday-modal-backdrop" id="holidayModalBackdrop" style="display: none;">
-    <div class="wii-holiday-modal-card" id="holidayModalCard" role="dialog" aria-modal="true" aria-labelledby="modalDateTitle">
-      <div class="wii-hm-header">
-        <div class="wii-hm-title-row">
-          <span class="wii-hm-flag" id="modalCountryFlag">🇵🇪</span>
-          <div>
-            <span class="wii-hm-country-tag" id="modalCountryTag">Feriado en Perú</span>
-            <h3 class="wii-hm-date" id="modalDateTitle">28 de Julio de 2026</h3>
-          </div>
-        </div>
-        <button type="button" class="wii-hm-close-btn" id="btnModalClose" title="Cerrar ventana (Esc)">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="wii-hm-body">
-        <!-- Título del Feriado -->
-        <div class="wii-hm-holiday-name-box">
-          <span class="wii-hm-k">Celebración Oficial:</span>
-          <h4 class="wii-hm-name" id="modalHolidayTitle">Fiestas Patrias de Perú</h4>
-        </div>
-
-        <!-- Por qué se celebra -->
-        <div class="wii-hm-info-row">
-          <span class="wii-hm-k"><i class="fa-solid fa-book-open"></i> ¿Por qué se celebra?</span>
-          <p class="wii-hm-val" id="modalHolidayWhy">Conmemoración de la proclamación de la Independencia del Perú por Don José de San Martín en 1821.</p>
-        </div>
-
-        <!-- Qué significa para tu turno -->
-        <div class="wii-hm-work-box" id="modalWorkBox">
-          <div class="wii-hm-work-status">
-            <span class="wii-hm-status-badge" id="modalWorkStatusBadge">🔴 SÍ se trabaja para EE.UU.</span>
-          </div>
-          <p class="wii-hm-work-detail" id="modalWorkDetail">
-            En EE.UU. es día laboral normal; el asesor remoto en Perú labora su turno habitual (con pago doble/feriado según legislación).
-          </p>
-        </div>
-      </div>
-
-      <div class="wii-hm-footer">
-        <button type="button" class="wii-hm-btn-ok" id="btnModalOk">
-          Entendido
-        </button>
       </div>
     </div>
   </div>

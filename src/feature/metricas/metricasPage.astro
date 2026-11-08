@@ -22,6 +22,8 @@ import './metricas.css';
 <script>
   import { inicializarMetricas } from './metricas.js';
 
-  inicializarMetricas();
   document.addEventListener('astro:page-load', inicializarMetricas);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    inicializarMetricas();
+  }
 </script>

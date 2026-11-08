@@ -23,6 +23,7 @@ import { REGIONS_PERU_DATA } from '@semillas/cultureData.js';
       <table class="wii-custom-table" id="tablaRegiones">
         <thead>
           <tr>
+            <th class="wii-th-num wii-cell-center">#</th>
             <th>Región de EE.UU.</th>
             <th>Estados / Ciudades Clave</th>
             <th>Vibra & Estilo de Vida</th>
@@ -31,8 +32,11 @@ import { REGIONS_PERU_DATA } from '@semillas/cultureData.js';
           </tr>
         </thead>
         <tbody>
-          {REGIONS_PERU_DATA.map((item) => (
+          {REGIONS_PERU_DATA.map((item, index) => (
             <tr>
+              <td class="wii-cell-center">
+                <span class="wii-tbl-num">{String(index + 1).padStart(2, '0')}</span>
+              </td>
               <td>
                 <span class="wii-cell-country">
                   <span class="wii-flag-tag">🇺🇸</span>
@@ -40,11 +44,11 @@ import { REGIONS_PERU_DATA } from '@semillas/cultureData.js';
                 </span>
               </td>
               <td><span class="wii-pill-sub">{item.estados}</span></td>
-              <td class="wii-tbl-desc" style="color: var(--tx1);">{item.estiloVida}</td>
+              <td class="wii-tbl-desc wii-tx-bright">{item.estiloVida}</td>
               <td>
                 <span class="wii-cell-country">
                   <span class="wii-flag-tag">🇵🇪</span>
-                  <strong style="color: #00d2ff;">{item.equivalentePeru}</strong>
+                  <strong class="wii-tx-cyan">{item.equivalentePeru}</strong>
                 </span>
               </td>
               <td class="wii-tbl-desc">{item.detalleTurista}</td>

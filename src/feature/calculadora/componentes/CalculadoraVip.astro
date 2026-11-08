@@ -1,0 +1,73 @@
+---
+// src/feature/calculadora/componentes/CalculadoraVip.astro
+// 👑 CALCULADORA VIP: Estilo clásico dark con teclas cómodas, display digital y operadores naranja
+// Diseño Glassmorphism minimalista (Inspirado en la estética de Mi Cuenta / Img 3) · Cero CSS inline
+---
+
+<div class="wii-calc-card wii-calc-vip-station wii-glass-vip" id="calcVipStation">
+  <!-- Cabecera de la Estación VIP -->
+  <div class="wii-card-header wii-tier-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-vip">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Calculadora VIP</h2>
+        <p class="wii-card-sub">Dark clásico táctil & display digital fluorescente</p>
+      </div>
+    </div>
+    <div class="wii-tier-badge vip">
+      <i class="fa-solid fa-crown"></i> VIP CLASSIC
+    </div>
+  </div>
+
+  <!-- Pantalla LCD Digital Glass Fluorescente (Estilo Reloj Digital Img 3) -->
+  <div class="wii-vip-screen wii-digital-screen" id="vipScreen">
+    <div class="wii-screen-top">
+      <span class="wii-calc-mode-indicator"><i class="fa-solid fa-crown"></i> VIP DIGITAL</span>
+      <div class="wii-calc-expr" id="vipExpression"></div>
+    </div>
+    <div class="wii-screen-main">
+      <div class="wii-calc-display wii-digital-number" id="vipDisplay">0</div>
+    </div>
+  </div>
+
+  <!-- Teclado Clásico Dark Cómodo (4 columnas x 5 filas que expanden verticalmente) -->
+  <div class="wii-vip-keypad" id="vipKeypad">
+    <!-- Fila 1 -->
+    <button type="button" class="wii-key-vip wii-key-vip-func" id="vipKeyAC" data-vip-action="clear" title="Limpiar todo (Esc)">AC</button>
+    <button type="button" class="wii-key-vip wii-key-vip-func" data-vip-action="negate" title="Cambiar signo (±)">±</button>
+    <button type="button" class="wii-key-vip wii-key-vip-func" data-vip-action="percent" title="Porcentaje (%)">%</button>
+    <button type="button" class="wii-key-vip wii-key-vip-op" data-vip-action="op" data-op="/" title="Dividir (/)">÷</button>
+
+    <!-- Fila 2 -->
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="7">7</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="8">8</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="9">9</button>
+    <button type="button" class="wii-key-vip wii-key-vip-op" data-vip-action="op" data-op="*" title="Multiplicar (*)">×</button>
+
+    <!-- Fila 3 -->
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="4">4</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="5">5</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="6">6</button>
+    <button type="button" class="wii-key-vip wii-key-vip-op" data-vip-action="op" data-op="-" title="Restar (-)">−</button>
+
+    <!-- Fila 4 -->
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="1">1</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="2">2</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num="3">3</button>
+    <button type="button" class="wii-key-vip wii-key-vip-op" data-vip-action="op" data-op="+" title="Sumar (+)">+</button>
+
+    <!-- Fila 5 -->
+    <button type="button" class="wii-key-vip wii-key-vip-num wii-key-vip-zero" data-vip-num="0">0</button>
+    <button type="button" class="wii-key-vip wii-key-vip-num" data-vip-num=".">.</button>
+    <button type="button" class="wii-key-vip wii-key-vip-del" data-vip-action="delete" title="Borrar último dígito (Backspace)">DEL</button>
+    <button type="button" class="wii-key-vip wii-key-vip-op wii-key-vip-equals" id="vipKeyEquals" data-vip-action="equals" title="Calcular resultado (Enter)">=</button>
+  </div>
+
+  <!-- Atajo de Teclado Físico -->
+  <div class="wii-calc-keyboard-tip">
+    <i class="fa-solid fa-keyboard"></i>
+    <span>Teclado físico: <strong>0-9</strong>, <strong>+</strong>, <strong>−</strong>, <strong>*</strong>, <strong>/</strong>, <strong>Enter</strong> (=) y <strong>Esc</strong> (AC).</span>
+  </div>
+</div>

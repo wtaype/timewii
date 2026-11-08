@@ -10,11 +10,11 @@
     </div>
     <div class="wii-header-titles">
       <h2 class="wii-card-title">Super Smart Ruleta de Equipo</h2>
-      <p class="wii-card-sub" id="wheelSubtitle">Sorteos de grupo: define quién expone, presenta o gana dinámicas</p>
+      <p class="wii-card-sub" id="wheelSubtitle">Sorteos de grupo: selecciona al ganador de dinámicas o premios del equipo</p>
     </div>
     <div class="wii-wheel-status-badge">
       <span class="wii-badge-dot"></span>
-      <span id="wheelModeBadge">MODO: EXPOSICIÓN</span>
+      <span id="wheelModeBadge">MODO: GANADOR PREMIO</span>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
 
       <!-- Lienzo Giratorio de la Ruleta (Canvas) -->
       <div class="wii-wheel-disc" id="wheelDisc">
-        <canvas id="wheelCanvas" width="380" height="380"></canvas>
+        <canvas id="wheelCanvas" width="440" height="440"></canvas>
       </div>
 
       <!-- Botón Central de Giro -->
@@ -39,14 +39,14 @@
     </div>
 
     <!-- Banner / Modal de Anuncio del Ganador -->
-    <div class="wii-winner-announcement" id="winnerAnnouncement" style="display: none;">
+    <div class="wii-winner-announcement wii-hidden" id="winnerAnnouncement">
       <div class="wii-winner-trophy">
-        <i class="fa-solid fa-crown" id="winnerIcon"></i>
+        <i class="fa-solid fa-trophy" id="winnerIcon"></i>
       </div>
       <div class="wii-winner-info">
-        <span class="wii-winner-tag" id="winnerTag">🎉 ¡PARTICIPANTE SELECCIONADO!</span>
+        <span class="wii-winner-tag" id="winnerTag">🏆 ¡GANADOR DEL PREMIO!</span>
         <h3 class="wii-winner-name" id="winnerName">Wilder Mendoza</h3>
-        <p class="wii-winner-action-desc" id="winnerActionDesc">Le corresponde exponer el tema ante el equipo.</p>
+        <p class="wii-winner-action-desc" id="winnerActionDesc">¡Felicidades! Ganador de la dinámica de equipo.</p>
       </div>
       <div class="wii-winner-controls">
         <button type="button" class="wii-btn-winner-action" id="btnSpinAgain">

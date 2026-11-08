@@ -53,7 +53,7 @@
           stroke-width="22"
           stroke-linecap="round"
           stroke-dasharray="345.5"
-          stroke-dashoffset="72"
+          stroke-dashoffset="0"
         />
 
         <!-- Marcas numéricas 0, 50, 100 (Estilo Imagen 1) -->
@@ -62,7 +62,7 @@
         <text x="268" y="156" class="wii-gauge-tick-text" text-anchor="start">100</text>
 
         <!-- Aguja Indicadora (Needle) con Centro y Giro Dinámico -->
-        <g id="gaugeNeedleGroup" transform="translate(150, 150) rotate(52.5)">
+        <g id="gaugeNeedleGroup" transform="translate(150, 150) rotate(90)">
           <!-- Sombra de la aguja -->
           <polygon points="-5,0 0,-102 5,0" fill="#0088cc" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))" />
           <circle cx="0" cy="0" r="14" fill="#0088cc" />
@@ -70,11 +70,11 @@
         </g>
       </svg>
 
-      <!-- Texto del Puntaje Central (CSAT score 79.17) -->
+      <!-- Texto del Puntaje Central (CSAT score 100.00) -->
       <div class="wii-gauge-score-display">
         <span class="wii-score-label">CSAT score</span>
-        <strong class="wii-score-value" id="csatScoreDisplay">79.17</strong>
-        <span class="wii-score-badge" id="csatScoreBadge">EN RANGO (79.2%)</span>
+        <strong class="wii-score-value" id="csatScoreDisplay">100.00</strong>
+        <span class="wii-score-badge badge-good" id="csatScoreBadge">OBJETIVO CUMPLIDO (100.0%)</span>
       </div>
     </div>
 
@@ -82,10 +82,10 @@
     <div class="wii-distribution-section">
       <div class="wii-dist-bar-track">
         <div class="wii-dist-seg seg-v1" id="segBarV1" style="width: 0%;" title="Very dissatisfied: 0.00%"></div>
-        <div class="wii-dist-seg seg-v2" id="segBarV2" style="width: 8.33%;" title="Dissatisfied: 8.33%"></div>
-        <div class="wii-dist-seg seg-v3" id="segBarV3" style="width: 8.33%;" title="Neutral: 8.33%"></div>
-        <div class="wii-dist-seg seg-v4" id="segBarV4" style="width: 41.67%;" title="Satisfied: 41.67%"></div>
-        <div class="wii-dist-seg seg-v5" id="segBarV5" style="width: 41.67%;" title="Very satisfied: 41.67%"></div>
+        <div class="wii-dist-seg seg-v2" id="segBarV2" style="width: 0%;" title="Dissatisfied: 0.00%"></div>
+        <div class="wii-dist-seg seg-v3" id="segBarV3" style="width: 0%;" title="Neutral: 0.00%"></div>
+        <div class="wii-dist-seg seg-v4" id="segBarV4" style="width: 0%;" title="Satisfied: 0.00%"></div>
+        <div class="wii-dist-seg seg-v5" id="segBarV5" style="width: 100%;" title="Very satisfied: 100.00%"></div>
       </div>
 
       <!-- Leyenda con Puntos de Color y Porcentajes (Estilo Imagen 1) -->
@@ -96,19 +96,19 @@
         </div>
         <div class="wii-legend-item">
           <span class="wii-dot dot-v2"></span>
-          <span class="wii-leg-txt" id="legTxtV2">8.33% Dissatisfied</span>
+          <span class="wii-leg-txt" id="legTxtV2">0.00% Dissatisfied</span>
         </div>
         <div class="wii-legend-item">
           <span class="wii-dot dot-v3"></span>
-          <span class="wii-leg-txt" id="legTxtV3">8.33% Neutral</span>
+          <span class="wii-leg-txt" id="legTxtV3">0.00% Neutral</span>
         </div>
         <div class="wii-legend-item">
           <span class="wii-dot dot-v4"></span>
-          <span class="wii-leg-txt" id="legTxtV4">41.67% Satisfied</span>
+          <span class="wii-leg-txt" id="legTxtV4">0.00% Satisfied</span>
         </div>
         <div class="wii-legend-item">
           <span class="wii-dot dot-v5"></span>
-          <span class="wii-leg-txt" id="legTxtV5">41.67% Very satisfied</span>
+          <span class="wii-leg-txt" id="legTxtV5">100.00% Very satisfied</span>
         </div>
       </div>
     </div>
@@ -121,60 +121,108 @@
         <i class="fa-solid fa-bullseye" style="color: var(--ok, #00e676);"></i>
         <h3 class="wii-goal-title">Tu Meta CSAT & Diagnóstico</h3>
       </div>
-      <span class="wii-goal-current-meta" id="txtCurrentMetaBadge">Meta: 85.0%</span>
+      <span class="wii-goal-current-meta" id="txtCurrentMetaBadge">Meta: 92.0%</span>
     </div>
 
-    <!-- Slider de Meta Fácil de Mover -->
+    <!-- Controles de Meta: Steppers Directos, Input Amigable, Slider y Presets -->
     <div class="wii-goal-slider-box">
       <div class="wii-slider-labels">
-        <span>Ajustar Meta:</span>
-        <strong id="txtSliderMetaVal">85%</strong>
+        <span class="wii-meta-control-title">
+          <i class="fa-solid fa-sliders"></i> Ajustar Meta:
+        </span>
+        <div class="wii-meta-stepper-wrap">
+          <button type="button" class="wii-meta-step-btn" id="btnMetaDec" title="Disminuir meta (-1%)">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <div class="wii-meta-input-box">
+            <input
+              type="number"
+              id="inputMetaDirect"
+              class="wii-meta-direct-input"
+              min="50"
+              max="100"
+              value="92"
+              step="1"
+              aria-label="Porcentaje de meta CSAT"
+            />
+            <span class="wii-meta-pct-sign">%</span>
+          </div>
+          <button type="button" class="wii-meta-step-btn" id="btnMetaInc" title="Aumentar meta (+1%)">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
       </div>
+
       <input
         type="range"
         id="goalRangeSlider"
         class="wii-goal-range"
-        min="60"
-        max="98"
+        min="50"
+        max="100"
         step="1"
-        value="85"
+        value="92"
         title="Desliza para cambiar tu meta CSAT"
       />
+
       <div class="wii-goal-presets">
         <button type="button" class="wii-preset-chip" data-goal="80">80%</button>
-        <button type="button" class="wii-preset-chip active" data-goal="85">85%</button>
+        <button type="button" class="wii-preset-chip" data-goal="85">85%</button>
         <button type="button" class="wii-preset-chip" data-goal="90">90%</button>
-        <button type="button" class="wii-preset-chip" data-goal="92">92% (Objetivo)</button>
+        <button type="button" class="wii-preset-chip active" data-goal="92">92% (Objetivo)</button>
         <button type="button" class="wii-preset-chip" data-goal="95">95%</button>
       </div>
     </div>
 
-    <!-- Diagnóstico Claro y Directo (Sin confusiones) -->
+    <!-- Diagnóstico Claro, Amplio y con Altura Óptima -->
     <div class="wii-goal-diagnostic-box" id="goalDiagnosticBox">
-      <div class="wii-diag-header">
-        <span class="wii-diag-status-pill" id="diagStatusPill">
-          <i class="fa-solid fa-clock-rotate-left"></i> A 5 encuestas del objetivo
-        </span>
-        <span class="wii-diag-gap" id="diagGapLabel">-5.83% para alcanzar 85%</span>
+      <!-- 1. Hero Banner Prominente: Faltantes Grandes o Felicitación -->
+      <div class="wii-diag-hero-banner banner-achieved" id="diagHeroBanner">
+        <div class="wii-dh-icon" id="diagHeroIcon">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div class="wii-dh-content">
+          <div class="wii-dh-headline" id="diagHeroHeadline">
+            ¡Objetivo Cumplido! 🎉
+          </div>
+          <div class="wii-dh-sub" id="diagHeroSub">
+            +8.00% sobre tu meta de 92.0%
+          </div>
+        </div>
+        <div class="wii-dh-stat-box" id="diagHeroStatBox">
+          <span class="wii-dh-stat-num" id="diagHeroStatNum">100%</span>
+          <span class="wii-dh-stat-lbl" id="diagHeroStatLbl">CSAT Score</span>
+        </div>
       </div>
 
+      <!-- 2. Mensaje Explicativo Dinámico y Motivacional -->
       <div class="wii-diag-message" id="diagMessageText">
-        Necesitas <strong>5 encuestas consecutivas de 5★</strong> para alcanzar o superar tu meta de 85.0%.
+        🎉 ¡Excelente trabajo! Tienes un CSAT perfecto de <strong>100.00%</strong>. Estás brindando una atención excepcional a tus clientes. 🚀✨ ¡A mantener ese nivel estelar!
       </div>
 
-      <!-- Métricas Clave del Turno -->
+      <!-- 3. Métricas Clave del Turno (Cajas Amplias con Tipografía Grande y Amigable) -->
       <div class="wii-diag-metrics-grid">
         <div class="wii-diag-metric-cell">
-          <span class="wii-dm-lbl">Total Encuestas:</span>
-          <strong class="wii-dm-val" id="diagTotalSurveys">12</strong>
+          <div class="wii-dm-header">
+            <i class="fa-solid fa-clipboard-check wii-dm-ic"></i>
+            <span class="wii-dm-lbl">Total Encuestas</span>
+          </div>
+          <strong class="wii-dm-val" id="diagTotalSurveys">5</strong>
         </div>
+
         <div class="wii-diag-metric-cell">
-          <span class="wii-dm-lbl">Puntos Obtenidos:</span>
-          <strong class="wii-dm-val" id="diagTotalPoints">50 / 60 pts</strong>
+          <div class="wii-dm-header">
+            <i class="fa-solid fa-award wii-dm-ic"></i>
+            <span class="wii-dm-lbl">Puntos Obtenidos</span>
+          </div>
+          <strong class="wii-dm-val" id="diagTotalPoints">25 / 25 pts</strong>
         </div>
+
         <div class="wii-diag-metric-cell">
-          <span class="wii-dm-lbl">Tolerancia Detonadores:</span>
-          <strong class="wii-dm-val" id="diagTolerance">0 adicionales</strong>
+          <div class="wii-dm-header">
+            <i class="fa-solid fa-shield-halved wii-dm-ic"></i>
+            <span class="wii-dm-lbl">Tolerancia Detonadores</span>
+          </div>
+          <strong class="wii-dm-val" id="diagTolerance">1 adicional</strong>
         </div>
       </div>
     </div>

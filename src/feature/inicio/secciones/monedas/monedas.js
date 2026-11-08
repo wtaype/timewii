@@ -1,5 +1,5 @@
 // src/feature/inicio/secciones/monedas/monedas.js
-// 💵 Controlador de Monedas & Copagos: Pronunciación 100% Formal en Dólares (USD)
+// 💵 Controlador de Monedas & Tarifas: Pronunciación 100% Formal en Dólares (USD)
 
 import { MONEDAS_DATA, monedaAInglesFormal } from '@semillas/numbersMoneyData.js';
 
@@ -26,7 +26,7 @@ export function initMonedas() {
     }
   }
 
-  function renderCopayGrid() {
+  function renderTarifasGrid() {
     grid.innerHTML = '';
     MONEDAS_DATA.forEach(item => {
       const pill = document.createElement('div');
@@ -54,7 +54,7 @@ export function initMonedas() {
   });
 
   // Render inicial
-  renderCopayGrid();
+  renderTarifasGrid();
   updateMoneyReader();
 }
 

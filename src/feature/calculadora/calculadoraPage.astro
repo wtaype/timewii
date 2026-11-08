@@ -1,21 +1,29 @@
 ---
 // src/feature/calculadora/calculadoraPage.astro
-// 🧮 Orquestador Maestro de la Vista /calculadora: Layout Split (Left Entrada / Right Resultados)
+// 🧮 Orquestador Maestro de la Vista /calculadora: 3 Calculadoras (VIP Clásica / Pro Azul / Ultra WiTema) + Footer Unificado
 // 100% Variables de witema.css · Tipografía var(--ff_J) · Cero dependencias externas
-import CalculadoraLeft from './componentes/CalculadoraLeft.astro';
-import CalculadoraRight from './componentes/CalculadoraRight.astro';
+import CalculadoraVip from './componentes/CalculadoraVip.astro';
+import CalculadoraPro from './componentes/CalculadoraPro.astro';
+import CalculadoraUltra from './componentes/CalculadoraUltra.astro';
+import CalculadoraFooter from './componentes/CalculadoraFooter.astro';
 import './calculadora.css';
 ---
 
-<div class="wii-calc-container" aria-label="Estación de Calculadora y Tiempos">
-  <!-- Layout Dividido: Left (Cálculo) y Right (Resultados & Desglose) -->
-  <div class="wii-calc-grid">
-    <!-- LADO IZQUIERDO: Teclado y Entrada de Cálculos -->
-    <CalculadoraLeft />
+<div class="wii-calc-container" aria-label="Estación de 3 Calculadoras y Tiempos">
+  <!-- TRIO STATION: Fila Superior con 3 Calculadoras (1° Pro / 2° VIP / 3° Ultra) -->
+  <div class="wii-calc-trio-grid">
+    <!-- 1. CALCULADORA PRO (Aritmética Científica & Cyan Neón) -->
+    <CalculadoraPro />
 
-    <!-- LADO DERECHO: Resultados en Vivo, Análisis e Historial -->
-    <CalculadoraRight />
+    <!-- 2. CALCULADORA VIP (Clásica Dark & Teclas Naranja) -->
+    <CalculadoraVip />
+
+    <!-- 3. CALCULADORA ULTRA (WiTema, Descuentos, Divisas Soles/Dólares & WFM) -->
+    <CalculadoraUltra />
   </div>
+
+  <!-- FOOTER UNIFICADO: Fila Inferior con Desglose en Vivo & Historial Correlativo -->
+  <CalculadoraFooter />
 </div>
 
 <script>

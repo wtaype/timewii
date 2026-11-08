@@ -138,6 +138,87 @@
   text-align: left;
 }
 
+/* Selector Dinámico de Año (Perpetuo) */
+.wii-cal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1vh;
+  flex-wrap: wrap;
+}
+
+.wii-cal-year-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6vh;
+}
+
+.wii-cal-year-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2vh;
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.5vh;
+  padding: 0.2vh 0.4vh;
+}
+
+.wii-year-nav-btn {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  color: var(--tx3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  transition: all 0.12s ease;
+  border-radius: 0.3vh;
+}
+
+.wii-year-nav-btn:hover {
+  color: var(--mco);
+  background: rgba(229, 69, 84, 0.12);
+}
+
+.wii-year-display {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: var(--tx1);
+  padding: 0 0.4vh;
+}
+
+.wii-year-quick-chips {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vh;
+}
+
+.wii-year-chip {
+  background: var(--inp);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  color: var(--tx3);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.25vh 0.6vh;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.wii-year-chip:hover {
+  color: var(--tx1);
+  border-color: var(--tx3);
+}
+
+.wii-year-chip.active {
+  background: rgba(0, 136, 255, 0.15);
+  border-color: #0088ff;
+  color: #0088ff;
+}
+
 .wii-card-sub {
   font-size: 0.68rem;
   color: var(--tx3);
@@ -271,6 +352,7 @@
   border-radius: 0.8vh;
   padding: 1vh;
   overflow-x: auto;
+  position: relative; /* Contenedor de referencia para el tooltip flotante */
 }
 
 .wii-annual-grid-6x2 {
@@ -421,191 +503,141 @@
 }
 
 /* ==========================================================================
-   4. MODAL / POPUP DE DETALLE AL HACER CLIC
+   4. TOOLTIP FLOTANTE DINÁMICO EN HOVER (FASE 2 - ESTILO GEOGRAFÍA)
    ========================================================================== */
-.wii-holiday-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(5px);
-  padding: 1.5vh;
-}
-
-.wii-holiday-modal-card {
+.wii-holiday-tooltip {
+  position: absolute;
+  pointer-events: none;
   background: var(--wb);
-  border: 1px solid var(--brd);
-  border-radius: 1vh;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--mco);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 16px rgba(229, 69, 84, 0.25);
+  border-radius: 0.9vh;
+  padding: 1.1vh 1.3vh;
+  z-index: 100;
+  width: 320px;
+  max-width: 340px;
+  font-size: 0.74rem;
+  backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  animation: modalPopIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 0.7vh;
+  animation: tooltipFadeIn 0.12s ease;
 }
 
-@keyframes modalPopIn {
-  from { opacity: 0; transform: scale(0.92); }
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
   to   { opacity: 1; transform: scale(1); }
 }
 
-.wii-hm-header {
-  padding: 1.2vh 1.4vh;
+/* Fila Superior: País a la Izq y Badge a la Der */
+.wii-htt-top-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--brd);
-  background: var(--inp);
-}
-
-.wii-hm-title-row {
-  display: flex;
-  align-items: center;
   gap: 0.8vh;
+  border-bottom: 1px solid var(--brd);
+  padding-bottom: 0.6vh;
 }
 
-.wii-hm-flag {
-  font-size: 1.5rem;
-}
-
-.wii-hm-country-tag {
+.wii-htt-country-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vh;
+  padding: 0.2vh 0.6vh;
+  border-radius: 0.4vh;
   font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  display: inline-block;
 }
 
-.tag-peru    { color: #e53935; }
-.tag-usa     { color: #0088ff; }
-.tag-both    { color: var(--ok, #00e676); }
-.tag-regular { color: var(--tx3); }
+.wii-htt-country-pill.pill-peru    { background: rgba(229, 57, 53, 0.12); color: #e53935; border: 1px solid rgba(229, 57, 53, 0.3); }
+.wii-htt-country-pill.pill-usa     { background: rgba(0, 136, 255, 0.12); color: #0088ff; border: 1px solid rgba(0, 136, 255, 0.3); }
+.wii-htt-country-pill.pill-both    { background: rgba(0, 230, 118, 0.12); color: var(--ok, #00e676); border: 1px solid rgba(0, 230, 118, 0.3); }
+.wii-htt-country-pill.pill-regular { background: var(--inp); color: var(--tx2); border: 1px solid var(--brd); }
 
-.wii-hm-date {
-  font-size: 1rem;
-  font-weight: 900;
-  color: var(--tx1);
-  margin: 0.1vh 0 0;
+.wii-htt-flag {
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
-.wii-hm-close-btn {
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  border: 1px solid var(--brd);
-  border-radius: 0.5vh;
-  color: var(--tx3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  transition: all 0.15s ease;
+.wii-htt-country-tag {
+  line-height: 1;
 }
 
-.wii-hm-close-btn:hover {
-  border-color: var(--mco);
-  color: var(--mco);
-}
-
-.wii-hm-body {
-  padding: 1.2vh 1.4vh;
-  display: flex;
-  flex-direction: column;
-  gap: 1vh;
-}
-
-.wii-hm-holiday-name-box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2vh;
-}
-
-.wii-hm-k {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--tx3);
-  display: flex;
-  align-items: center;
-  gap: 0.4vh;
-}
-
-.wii-hm-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--mco);
-  margin: 0;
-}
-
-.wii-hm-info-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2vh;
-}
-
-.wii-hm-val {
-  font-size: 0.76rem;
-  color: var(--tx2);
-  line-height: 1.35;
-  margin: 0;
-}
-
-.wii-hm-work-box {
-  background: var(--inp);
-  border: 1px solid var(--brd);
-  border-radius: 0.6vh;
-  padding: 0.8vh 1vh;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4vh;
-}
-
-.wii-hm-status-badge {
-  font-size: 0.72rem;
+.wii-htt-badge {
+  font-size: 0.62rem;
   font-weight: 800;
   padding: 0.25vh 0.6vh;
   border-radius: 0.4vh;
-  display: inline-block;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.badge-peru    { background: rgba(229, 57, 53, 0.15); color: #e53935; border: 1px solid rgba(229, 57, 53, 0.35); }
-.badge-usa     { background: rgba(0, 136, 255, 0.15); color: #0088ff; border: 1px solid rgba(0, 136, 255, 0.35); }
-.badge-both    { background: rgba(0, 230, 118, 0.15); color: var(--ok, #00e676); border: 1px solid rgba(0, 230, 118, 0.35); }
-.badge-regular { background: var(--wb); color: var(--tx2); border: 1px solid var(--brd); }
+.wii-htt-badge.badge-peru    { background: rgba(229, 57, 53, 0.18); color: #ff5252; border: 1px solid rgba(229, 57, 53, 0.4); }
+.wii-htt-badge.badge-usa     { background: rgba(0, 136, 255, 0.18); color: #40a9ff; border: 1px solid rgba(0, 136, 255, 0.4); }
+.wii-htt-badge.badge-both    { background: rgba(0, 230, 118, 0.18); color: var(--ok, #00e676); border: 1px solid rgba(0, 230, 118, 0.4); }
+.wii-htt-badge.badge-regular { background: var(--inp); color: var(--tx2); border: 1px solid var(--brd); }
 
-.wii-hm-work-detail {
-  font-size: 0.74rem;
-  color: var(--tx2);
-  line-height: 1.35;
-  margin: 0;
-}
-
-.wii-hm-footer {
-  padding: 0.8vh 1.4vh;
+/* Bloque Principal del Contenido */
+.wii-htt-main {
   display: flex;
-  justify-content: flex-end;
-  border-top: 1px solid var(--brd);
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.wii-htt-title {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--tx1);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.wii-htt-date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+  font-size: 0.72rem;
+  color: var(--tx3);
+  font-weight: 600;
+}
+
+.wii-htt-date-row i {
+  color: var(--mco);
+  font-size: 0.74rem;
+}
+
+.wii-htt-date {
+  color: var(--tx2);
+}
+
+.wii-htt-why {
+  font-size: 0.72rem;
+  color: var(--tx2);
+  line-height: 1.38;
+  margin: 0.2vh 0 0;
+}
+
+.wii-htt-work-box {
   background: var(--inp);
-}
-
-.wii-hm-btn-ok {
-  background: var(--mco);
-  color: #ffffff;
-  border: none;
+  border: 1px solid var(--brd);
   border-radius: 0.5vh;
-  padding: 0.5vh 1.4vh;
-  font-size: 0.76rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  padding: 0.6vh 0.8vh;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5vh;
+  font-size: 0.7rem;
+  color: var(--tx2);
+  line-height: 1.32;
+  margin-top: 0.2vh;
 }
 
-.wii-hm-btn-ok:hover {
-  filter: brightness(1.1);
+.wii-htt-work-box i {
+  color: var(--mco);
+  margin-top: 2px;
+  flex-shrink: 0;
+  font-size: 0.78rem;
 }
 
 /* ==========================================================================
@@ -691,6 +723,61 @@
   position: sticky;
   top: 0;
   z-index: 5;
+}
+
+/* Columna Correlativa # y Clases Modulares (Fase 3 - 0 CSS Inline) */
+.wii-th-num {
+  width: 46px;
+  min-width: 46px;
+  max-width: 50px;
+}
+
+.wii-th-fecha {
+  width: 120px;
+  min-width: 110px;
+}
+
+.wii-cell-center {
+  text-align: center;
+}
+
+.wii-tbl-num {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--tx3);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--brd);
+  border-radius: 0.4vh;
+  padding: 0.15vh 0.5vh;
+  line-height: 1.2;
+}
+
+tr:hover .wii-tbl-num {
+  color: var(--mco);
+  border-color: rgba(229, 69, 84, 0.35);
+}
+
+.wii-etiquette-ico {
+  color: var(--mco);
+  font-size: 0.85rem;
+}
+
+.wii-ico-bulb {
+  color: #f0c547;
+}
+
+.wii-tx-ok {
+  color: var(--ok, #00e676);
+}
+
+.wii-tx-bright {
+  color: var(--tx1);
+}
+
+.wii-tx-cyan {
+  color: #00d2ff;
 }
 
 .wii-custom-table td {

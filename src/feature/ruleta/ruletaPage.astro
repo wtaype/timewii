@@ -25,6 +25,11 @@ import './ruleta.css';
 <script>
   import { inicializarRuleta } from './ruleta.js';
 
-  // Inicialización limpia e idempotente en cada carga de página
+  // Inicialización limpia e idempotente (compatible con navegación ClientRouter y refresh directo)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarRuleta);
+  } else {
+    inicializarRuleta();
+  }
   document.addEventListener('astro:page-load', inicializarRuleta);
 </script>

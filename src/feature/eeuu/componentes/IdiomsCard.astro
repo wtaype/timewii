@@ -40,6 +40,7 @@ import { IDIOMS_PERU_DATA } from '@semillas/cultureData.js';
       <table class="wii-custom-table" id="tablaModismos">
         <thead>
           <tr>
+            <th class="wii-th-num wii-cell-center">#</th>
             <th>Slang en EE.UU.</th>
             <th>Pronunciación Rápida</th>
             <th>Jerga Equivalente en Perú</th>
@@ -48,8 +49,11 @@ import { IDIOMS_PERU_DATA } from '@semillas/cultureData.js';
           </tr>
         </thead>
         <tbody id="tbodyModismos">
-          {IDIOMS_PERU_DATA.map((item) => (
+          {IDIOMS_PERU_DATA.map((item, index) => (
             <tr class="wii-idiom-row" data-search={`${item.slangUsa} ${item.jergaPeru} ${item.significado}`.toLowerCase()}>
+              <td class="wii-cell-center">
+                <span class="wii-tbl-num">{String(index + 1).padStart(2, '0')}</span>
+              </td>
               <td>
                 <span class="wii-cell-country">
                   <span class="wii-flag-tag">🇺🇸</span>
@@ -62,7 +66,7 @@ import { IDIOMS_PERU_DATA } from '@semillas/cultureData.js';
               <td>
                 <span class="wii-cell-country">
                   <span class="wii-flag-tag">🇵🇪</span>
-                  <strong style="color: var(--ok, #00e676);">{item.jergaPeru}</strong>
+                  <strong class="wii-tx-ok">{item.jergaPeru}</strong>
                 </span>
               </td>
               <td>

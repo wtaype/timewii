@@ -3,7 +3,7 @@ export const id = 'timewii';
 export const app = 'TimeWii';
 export const slogan = 'Smart tools for you';
 export const by = '@wilder.taype';
-export const version = '1.0.0';
+export const version = '2.10.14';
 export const versionName = 'v2';
 export const linkweb = 'https://timewii.vercel.app';
 
@@ -13,7 +13,7 @@ export default { id, app, slogan, by, version, linkweb };
 git tag v2 -m "Version v2" ; git push origin v2
 
 ACTUALIZACIÓN AL MAIN PRINCIPAL DEL PROYECTO [MAIN] (2)
-git add . ; git commit -m "Actualizacion Principal v2.10.13" ; git push origin main 
+git add . ; git commit -m "Actualizacion Principal v2.10.14" ; git push origin main 
 
 // REEMPLAZAR TAG DE SEGURIDAD EXISTENTE [TAG REMPLAZO] (3)
 git tag -d v2 ; git tag v2 -m "Version v3 actualizada" ; git push origin v3 --force

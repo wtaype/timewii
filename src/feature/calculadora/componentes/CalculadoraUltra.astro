@@ -1,0 +1,94 @@
+---
+// src/feature/calculadora/componentes/CalculadoraUltra.astro
+// ⚡ CALCULADORA ULTRA: Teclado táctil interactivo con Descuentos de Producto, % directo y Divisas Soles ⇄ Dólares (T.C. Manual)
+// Diseño Glassmorphism minimalista (Inspirado en la estética de Mi Cuenta / Img 3) · Cero CSS inline · Cero tabs
+---
+
+<div class="wii-calc-card wii-calc-ultra-station wii-glass-ultra" id="calcUltraStation">
+  <!-- Cabecera de la Estación Ultra -->
+  <div class="wii-card-header wii-tier-header">
+    <div class="wii-card-title-group">
+      <div class="wii-card-icon wii-ico-ultra">
+        <i class="fa-solid fa-bolt"></i>
+      </div>
+      <div>
+        <h2 class="wii-card-title">Calculadora Ultra</h2>
+        <p class="wii-card-sub">Descuentos de producto, % y divisas Soles ⇄ Dólares</p>
+      </div>
+    </div>
+    <div class="wii-tier-badge ultra">
+      <i class="fa-solid fa-bolt"></i> ULTRA SMART
+    </div>
+  </div>
+
+  <!-- Pantalla LCD Digital Ultra (Coral / Carmesí Neón) -->
+  <div class="wii-ultra-screen wii-digital-screen" id="ultraScreen">
+    <div class="wii-screen-top">
+      <span class="wii-calc-mode-indicator"><i class="fa-solid fa-bolt"></i> ULTRA DIGITAL</span>
+      <div class="wii-calc-expr" id="ultraExpression"></div>
+    </div>
+    <div class="wii-screen-main">
+      <div class="wii-calc-display wii-digital-number" id="ultraDisplay">0</div>
+    </div>
+  </div>
+
+  <!-- Barra Superior: Chips Rápidos & Tasa de Cambio Preferencial de Dólar -->
+  <div class="wii-ultra-top-control-bar">
+    <div class="wii-ultra-chips-group">
+      <span class="wii-chips-label"><i class="fa-solid fa-percent"></i> Desc:</span>
+      <button type="button" class="wii-chip-btn" data-ultra-quick-desc="10">10%</button>
+      <button type="button" class="wii-chip-btn" data-ultra-quick-desc="15">15%</button>
+      <button type="button" class="wii-chip-btn" data-ultra-quick-desc="20">20%</button>
+      <button type="button" class="wii-chip-btn" data-ultra-quick-desc="25">25%</button>
+      <button type="button" class="wii-chip-btn" data-ultra-quick-desc="50">50%</button>
+    </div>
+
+    <!-- Tasa de Cambio de Preferencia (Editable Manual, Default 3.45) -->
+    <div class="wii-ultra-rate-box">
+      <label for="ultraExchangeRate" title="Tasa de cambio manual (1 USD = S/ X)">
+        <i class="fa-solid fa-sliders"></i> T.C.:
+      </label>
+      <input type="number" id="ultraExchangeRate" step="0.01" value="3.45" class="wii-ultra-tc-input" title="Ingresa tu tasa preferencial de dólar" />
+      <span class="wii-ultra-tc-tag">S/</span>
+    </div>
+  </div>
+
+  <!-- Teclado Táctil Ultra Cómodo (4 columnas x 5 filas) -->
+  <div class="wii-ultra-keypad" id="ultraKeypad">
+    <!-- Fila 1: AC, Porcentaje xx% de xx, Descuento xx% dsct xx y Botón TC en mayúsculas -->
+    <button type="button" class="wii-key-ultra wii-key-ultra-clear" id="ultraKeyC" data-ultra-action="clear" title="Limpiar todo (AC)">AC</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-spec wii-key-ultra-action" data-ultra-action="pct_de" title="Calcular el X% de un número (ej. 20% de 100)">xx% de xx</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-spec wii-key-ultra-action" data-ultra-action="desc" title="Descuento de producto: Precio - Descuento (ej. 69.90 dscto 20% = 55.92)">xx% dsct xx</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-tc-btn wii-key-ultra-action-tc" id="ultraKeyTc" data-ultra-action="focus_tc" title="Ir a Tasa de Cambio preferencial (T.C.)">TC</button>
+
+    <!-- Fila 2: 7, 8, 9 & Conversión Soles a Dólares -->
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="7">7</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="8">8</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="9">9</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-currency wii-key-ultra-action" data-ultra-action="to_usd" title="Convertir Soles a Dólares (s/ a $)">s/ a $</button>
+
+    <!-- Fila 3: 4, 5, 6 & Conversión Dólares a Soles -->
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="4">4</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="5">5</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="6">6</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-currency wii-key-ultra-action" data-ultra-action="to_pen" title="Convertir Dólares a Soles ($ a s/)">$ a s/</button>
+
+    <!-- Fila 4: 1, 2, 3 & Suma -->
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="1">1</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="2">2</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="3">3</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-op" data-ultra-action="op" data-op="+" title="Sumar (+)">+</button>
+
+    <!-- Fila 5: Punto a la izquierda, 0 al medio, Resta a la derecha & Igual Grande -->
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num=".">.</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-num" data-ultra-num="0">0</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-op" data-ultra-action="op" data-op="-" title="Restar (−)">−</button>
+    <button type="button" class="wii-key-ultra wii-key-ultra-equals" id="ultraKeyEquals" data-ultra-action="equals" title="Calcular resultado y registrar en Historial">=</button>
+  </div>
+
+  <!-- Atajo de Teclado Físico -->
+  <div class="wii-calc-keyboard-tip">
+    <i class="fa-solid fa-bolt"></i>
+    <span>Teclas Ultra: <strong>xx% de xx</strong>, <strong>xx% dsct xx</strong>, <strong>TC</strong> (Tasa de cambio), <strong>s/ a $</strong>, <strong>$ a s/</strong>, <strong>=</strong> (calcular).</span>
+  </div>
+</div>

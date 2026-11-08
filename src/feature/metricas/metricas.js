@@ -2,17 +2,17 @@
 // 📊 Motor de Cálculo CSAT Visual e Interactivo (Inspirado exactamente en la Imagen 1)
 // Soporta Escala Likert Normalizada (1-5★ = 79.17%), Top 2 Box, Velocímetro SVG y Tabla de Leyenda
 
-const STORAGE_KEY = 'timewii_csat_v2_data';
+const STORAGE_KEY = 'timewii_csat_v4_data';
 
-// Estado por defecto (Ejemplo exacto de la Imagen 1 del usuario)
+// Estado por defecto (Ejemplo de 5 encuestas 5★ Very satisfied = 100%, Meta 92%)
 const estadoDefecto = {
   v1: 0, // Very dissatisfied (1★)
-  v2: 1, // Dissatisfied (2★)
-  v3: 1, // Neutral (3★)
-  v4: 5, // Satisfied (4★)
+  v2: 0, // Dissatisfied (2★)
+  v3: 0, // Neutral (3★)
+  v4: 0, // Satisfied (4★)
   v5: 5, // Very satisfied (5★)
-  meta: 85, // Meta CSAT en porcentaje
-  formula: 'likert' // 'likert' (79.17%) o 'top2' (83.33%)
+  meta: 92, // Meta CSAT en porcentaje por defecto (Objetivo 92%)
+  formula: 'likert' // 'likert' o 'top2'
 };
 
 let estado = { ...estadoDefecto };
@@ -29,7 +29,7 @@ function cargarEstado() {
         v3: Math.max(0, Number(p.v3) || 0),
         v4: Math.max(0, Number(p.v4) || 0),
         v5: Math.max(0, Number(p.v5) || 0),
-        meta: Math.min(100, Math.max(50, Number(p.meta) || 85)),
+        meta: Math.min(100, Math.max(50, Number(p.meta) || 92)),
         formula: p.formula === 'top2' ? 'top2' : 'likert'
       };
       return;
@@ -214,12 +214,12 @@ function actualizarInterfaz() {
 
   // 4. Panel de Control de Meta & Diagnóstico
   const metaBadge = document.getElementById('txtCurrentMetaBadge');
-  const sliderVal = document.getElementById('txtSliderMetaVal');
   const goalRange = document.getElementById('goalRangeSlider');
+  const inputMeta = document.getElementById('inputMetaDirect');
 
   if (metaBadge) metaBadge.textContent = `Meta: ${meta.toFixed(1)}%`;
-  if (sliderVal) sliderVal.textContent = `${meta}%`;
   if (goalRange && document.activeElement !== goalRange) goalRange.value = meta;
+  if (inputMeta && document.activeElement !== inputMeta) inputMeta.value = meta;
 
   // Presets de Meta Activos
   document.querySelectorAll('.wii-preset-chip[data-goal]').forEach((chip) => {
@@ -227,9 +227,13 @@ function actualizarInterfaz() {
     chip.classList.toggle('active', g === meta);
   });
 
-  // Diagnóstico
-  const statusPill = document.getElementById('diagStatusPill');
-  const gapLabel = document.getElementById('diagGapLabel');
+  // Hero Banner de Diagnóstico y Mensaje Motivacional
+  const heroBanner = document.getElementById('diagHeroBanner');
+  const heroIcon = document.getElementById('diagHeroIcon');
+  const heroHeadline = document.getElementById('diagHeroHeadline');
+  const heroSub = document.getElementById('diagHeroSub');
+  const heroStatNum = document.getElementById('diagHeroStatNum');
+  const heroStatLbl = document.getElementById('diagHeroStatLbl');
   const diagMsg = document.getElementById('diagMessageText');
   const diagTotSurveys = document.getElementById('diagTotalSurveys');
   const diagTotPoints = document.getElementById('diagTotalPoints');
@@ -239,22 +243,45 @@ function actualizarInterfaz() {
   if (diagTotPoints) diagTotPoints.textContent = `${m.sumPts} / ${m.total * 5} pts`;
   if (diagTol) diagTol.textContent = `${m.tolerance} adicional${m.tolerance === 1 ? '' : 'es'}`;
 
-  if (statusPill && gapLabel && diagMsg) {
+  if (heroBanner && diagMsg) {
     if (m.total === 0) {
-      statusPill.innerHTML = '<i class="fa-solid fa-circle-info"></i> Esperando encuestas';
-      statusPill.className = 'wii-diag-status-pill';
-      gapLabel.textContent = `Meta configurada: ${meta}%`;
-      diagMsg.innerHTML = 'Ingresa las calificaciones de tu turno para proyectar tu CSAT Score.';
+      heroBanner.className = 'wii-diag-hero-banner banner-waiting';
+      if (heroIcon) heroIcon.innerHTML = '<i class="fa-solid fa-sparkles"></i>';
+      if (heroHeadline) heroHeadline.innerHTML = '✨ Esperando Primeras Encuestas';
+      if (heroSub) heroSub.textContent = `Meta configurada en ${meta.toFixed(1)}%`;
+      if (heroStatNum) heroStatNum.textContent = '0';
+      if (heroStatLbl) heroStatLbl.textContent = 'Encuestas';
+      diagMsg.innerHTML = `Ingresa las calificaciones de tu turno para proyectar tu CSAT Score hacia la meta de <strong>${meta}%</strong>. ¡Mucho éxito en tu jornada! 🚀`;
     } else if (m.activeScore >= meta) {
-      statusPill.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Objetivo cumplido!';
-      statusPill.className = 'wii-diag-status-pill badge-good';
-      gapLabel.textContent = `+${m.gap.toFixed(2)}% sobre la meta (${meta}%)`;
-      diagMsg.innerHTML = `¡Excelente desempeño! Tu CSAT actual es de <strong>${m.activeScore.toFixed(2)}%</strong>, superando la meta de ${meta}%. Puedes recibir hasta <strong>${m.tolerance} encuesta(s) negativa(s)</strong> sin caer de tu objetivo.`;
+      heroBanner.className = 'wii-diag-hero-banner banner-achieved';
+      if (heroIcon) heroIcon.innerHTML = '<i class="fa-solid fa-trophy"></i>';
+      if (heroStatNum) heroStatNum.textContent = `${m.activeScore.toFixed(1)}%`;
+      if (heroStatLbl) heroStatLbl.textContent = '¡Superado!';
+
+      if (m.activeScore === 100) {
+        if (heroHeadline) heroHeadline.innerHTML = '¡Puntaje Perfecto 100%! 🎉';
+        if (heroSub) heroSub.textContent = `+${m.gap.toFixed(2)}% sobre tu meta de ${meta.toFixed(1)}%`;
+        diagMsg.innerHTML = `🎉 ¡Increíble desempeño! Tienes un CSAT impecable de <strong>100.00%</strong>. Tus clientes están fascinados con tu atención. 🛡️ Tienes colchón para recibir hasta <strong>${m.tolerance} encuesta(s) detonadora(s)</strong> sin caer de tu meta de ${meta}%. ¡A seguir brillando! ✨`;
+      } else {
+        if (heroHeadline) heroHeadline.innerHTML = '¡Objetivo Cumplido con Éxito! 🎉';
+        if (heroSub) heroSub.textContent = `+${m.gap.toFixed(2)}% sobre tu meta de ${meta.toFixed(1)}%`;
+        diagMsg.innerHTML = `👏 ¡Excelente trabajo! Tu CSAT actual es de <strong>${m.activeScore.toFixed(2)}%</strong>, superando con creces tu meta del ${meta}%. 🛡️ Puedes recibir hasta <strong>${m.tolerance} encuesta(s) menor(es)</strong> manteniendo tu objetivo seguro. ¡A seguir con todo! 🚀`;
+      }
     } else {
-      statusPill.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> A ${m.needed} encuesta(s) 5★`;
-      statusPill.className = 'wii-diag-status-pill badge-warn';
-      gapLabel.textContent = `${m.gap.toFixed(2)}% para alcanzar ${meta}%`;
-      diagMsg.innerHTML = `Necesitas <strong>${m.needed} encuestas consecutivas de 5★</strong> para alcanzar o superar tu meta de ${meta.toFixed(1)}%.`;
+      heroBanner.className = 'wii-diag-hero-banner banner-pending';
+      if (heroIcon) heroIcon.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
+      if (heroHeadline) {
+        heroHeadline.innerHTML = `🎯 Te faltan <strong>${m.needed}</strong> encuesta${m.needed === 1 ? '' : 's'} de 5★`;
+      }
+      if (heroSub) heroSub.textContent = `${m.gap.toFixed(2)}% para alcanzar tu meta de ${meta.toFixed(1)}%`;
+      if (heroStatNum) heroStatNum.textContent = `${m.needed}`;
+      if (heroStatLbl) heroStatLbl.textContent = '5★ Necesarias';
+
+      if (m.needed <= 2) {
+        diagMsg.innerHTML = `🔥 ¡Estás a un pasito de lograrlo! Solo necesitas <strong>${m.needed} encuesta${m.needed === 1 ? '' : 's'} consecutiva${m.needed === 1 ? '' : 's'} de 5★</strong> para asegurar tu meta de ${meta.toFixed(1)}%. ¡A dar el 100% en tu próxima llamada y lo conquistas! 💪⭐`;
+      } else {
+        diagMsg.innerHTML = `💪 ¡Ánimo que cada llamada es una oportunidad de oro! Necesitas <strong>${m.needed} encuestas consecutivas de 5★</strong> para alcanzar o superar tu meta de ${meta.toFixed(1)}%. ¡Conecta con el cliente, brinda tu mejor atención y sumamos ese 5★! ⭐🚀`;
+      }
     }
   }
 
@@ -297,27 +324,37 @@ function actualizarInterfaz() {
 }
 
 // =============================================================================
-// INICIALIZACIÓN DE EVENTOS
+// INICIALIZACIÓN DE EVENTOS CON GUARDA DE CICLO DE VIDA (0 FUGAS DE MEMORIA)
 // =============================================================================
 export function inicializarMetricas() {
   const container = document.getElementById('metricasContainer');
   if (!container) return;
 
   cargarEstado();
+  actualizarInterfaz();
 
-  // 1. Eventos en Cajas de Entrada (Steppers y Sliders)
-  container.querySelectorAll('.wii-rc-btn-step, .wii-tbl-step-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-target');
-      const step = Number(btn.getAttribute('data-step') || '1');
-      if (target && estado[target] !== undefined) {
-        estado[target] = Math.max(0, estado[target] + step);
-        actualizarInterfaz();
-      }
-    });
+  // Guarda estricta: Si ya está enlazado en este ciclo de vida del DOM, no duplicar listeners
+  if (container.dataset.bound === 'true') {
+    return;
+  }
+  container.dataset.bound = 'true';
+
+  // 1. Delegación de Eventos para Steppers (+ y - en Cajas Superiores y Tabla de Leyenda)
+  container.addEventListener('click', (e) => {
+    const btn = e.target.closest('.wii-rc-btn-step, .wii-tbl-step-btn');
+    if (!btn) return;
+
+    e.preventDefault();
+    const target = btn.getAttribute('data-target');
+    const step = Number(btn.getAttribute('data-step') || '1');
+
+    if (target && estado[target] !== undefined) {
+      estado[target] = Math.max(0, estado[target] + step);
+      actualizarInterfaz();
+    }
   });
 
-  // Inputs numéricos directos
+  // Inputs numéricos directos y sliders
   ['1', '2', '3', '4', '5'].forEach((k) => {
     const input = document.getElementById(`inputV${k}`);
     if (input) {
@@ -338,11 +375,39 @@ export function inicializarMetricas() {
     }
   });
 
-  // 2. Control de Meta (Slider y Chips)
+  // 2. Control de Meta (Slider, Steppers, Input Directo y Chips)
   const goalSlider = document.getElementById('goalRangeSlider');
   if (goalSlider) {
     goalSlider.addEventListener('input', () => {
       estado.meta = Number(goalSlider.value);
+      actualizarInterfaz();
+    });
+  }
+
+  const inputMeta = document.getElementById('inputMetaDirect');
+  if (inputMeta) {
+    inputMeta.addEventListener('input', () => {
+      const val = Math.min(100, Math.max(50, Number(inputMeta.value) || 50));
+      estado.meta = val;
+      actualizarInterfaz();
+    });
+    inputMeta.addEventListener('blur', () => {
+      inputMeta.value = estado.meta;
+    });
+  }
+
+  const btnMetaDec = document.getElementById('btnMetaDec');
+  if (btnMetaDec) {
+    btnMetaDec.addEventListener('click', () => {
+      estado.meta = Math.max(50, estado.meta - 1);
+      actualizarInterfaz();
+    });
+  }
+
+  const btnMetaInc = document.getElementById('btnMetaInc');
+  if (btnMetaInc) {
+    btnMetaInc.addEventListener('click', () => {
+      estado.meta = Math.min(100, estado.meta + 1);
       actualizarInterfaz();
     });
   }
@@ -362,16 +427,16 @@ export function inicializarMetricas() {
     });
   });
 
-  // 4. Botones de Acción (Ejemplo 12 Encuestas & Reset)
+  // 4. Botones de Acción (Ejemplo 5 Encuestas 5★ & Reset)
   const btnExample = document.getElementById('btnLoadExample');
   if (btnExample) {
     btnExample.addEventListener('click', () => {
       estado.v1 = 0;
-      estado.v2 = 1;
-      estado.v3 = 1;
-      estado.v4 = 5;
+      estado.v2 = 0;
+      estado.v3 = 0;
+      estado.v4 = 0;
       estado.v5 = 5;
-      estado.meta = 85;
+      estado.meta = 92;
       estado.formula = 'likert';
       actualizarInterfaz();
     });
@@ -388,7 +453,4 @@ export function inicializarMetricas() {
       actualizarInterfaz();
     });
   }
-
-  // Render inicial
-  actualizarInterfaz();
 }

@@ -104,13 +104,13 @@ export const NUMEROS_DATA = [
   { num: "30", en: "Thirty", tip: "Suministro estándar de 30 días" }
 ];
 
-// 10 Copagos Clave Más Utilizados en Llamadas
+// 10 Tarifas y Montos Clave Más Utilizados en Llamadas
 export const MONEDAS_DATA = [
   { monto: "$0.00", enFormal: "Zero dollars / Free", contexto: "Tarifa estándar básica" },
-  { monto: "$1.45", enFormal: "One dollar and forty-five cents", contexto: "Copago de tarifa reducida" },
-  { monto: "$4.30", enFormal: "Four dollars and thirty cents", contexto: "Copago regular básico" },
-  { monto: "$5.30", enFormal: "Five dollars and thirty cents", contexto: "Copago frecuente habitual" },
-  { monto: "$5.60", enFormal: "Five dollars and sixty cents", contexto: "Copago con ajuste de red" },
+  { monto: "$1.45", enFormal: "One dollar and forty-five cents", contexto: "Tarifa reducida básica" },
+  { monto: "$4.30", enFormal: "Four dollars and thirty cents", contexto: "Tarifa regular básica" },
+  { monto: "$5.30", enFormal: "Five dollars and thirty cents", contexto: "Tarifa frecuente habitual" },
+  { monto: "$5.60", enFormal: "Five dollars and sixty cents", contexto: "Tarifa con ajuste estándar" },
   { monto: "$9.85", enFormal: "Nine dollars and eighty-five cents", contexto: "Tarifa preferencial" },
   { monto: "$11.20", enFormal: "Eleven dollars and twenty cents", contexto: "Tarifa preferida Nivel 2" },
   { monto: "$35.00", enFormal: "Thirty-five dollars", contexto: "Tope mensual estándar" },

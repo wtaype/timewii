@@ -1,23 +1,40 @@
 // src/feature/calculadora/calculadora.js
-// 🧮 Motor de Cálculo Aritmético, Conversión de Inglés Hablado y Horas de Turno
+// 🧮 Motor de Cálculo de 3 Estaciones (Pro Azul / VIP Clásica / Ultra WiTema) & Historial Unificado
 // 100% Cero latencia · Local-First · Soporte de teclado físico · Persistencia en localStorage
+import { Mensaje, wiConfirmar } from '../../core/widev/widev.js';
 
-let currentInput = '0';
-let previousInput = null;
-let activeOperator = null;
-let waitingForSecondOperand = false;
-let activeResultVal = 0;
-let activeResultType = 'ARITMÉTICA';
+// =============================================================================
+// ESTADO GLOBAL: PRO (1), VIP (2) Y ULTRA (3)
+// =============================================================================
+let proInput = '0';
+let proPrev = null;
+let proOp = null;
+let proWaiting = false;
+let proLastExpr = '';
 
-const STORAGE_KEY_HISTORY = 'timewii_calc_history';
-const MAX_HISTORY_ITEMS = 15;
+let vipInput = '0';
+let vipPrev = null;
+let vipOp = null;
+let vipWaiting = false;
+let vipLastExpr = '';
+
+let ultraInput = '0';
+let ultraPrev = null;
+let ultraOp = null; // '+', '-', 'desc', 'pct_de', 'to_pen', 'to_usd'
+let ultraWaiting = false;
+let ultraLastExpr = '';
+
+let ultimaEstacionActiva = 'pro'; // 'pro', 'vip', 'ultra' (Pro primero)
+
+const STORAGE_KEY_HISTORY = 'timewii_calc_history_v4';
+const MAX_HISTORY_ITEMS = 30;
 
 // =============================================================================
 // 1. CONVERTIDOR DE NÚMEROS A PALABRAS EN INGLÉS (USA SPOKEN ENGLISH)
 // =============================================================================
 function numeroAIngles(num) {
-  if (isNaN(num)) return 'Zero';
-  if (num === 0) return 'Zero';
+  if (isNaN(num)) return 'Zero dollars';
+  if (num === 0) return 'Zero dollars';
 
   const ones = [
     '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
@@ -53,10 +70,6 @@ function numeroAIngles(num) {
   const intPart = Math.floor(absNum);
   const cents = Math.round((absNum - intPart) * 100);
 
-  if (intPart === 0 && cents > 0) {
-    return `${isNeg ? 'Minus ' : ''}${cents}/100`;
-  }
-
   let words = '';
   let temp = intPart;
   let scaleIndex = 0;
@@ -75,77 +88,77 @@ function numeroAIngles(num) {
   if (!words) words = 'Zero';
   if (isNeg) words = 'Minus ' + words;
 
+  const dollarUnit = intPart === 1 ? 'dollar' : 'dollars';
+
   if (cents > 0) {
-    words += ` and ${cents}/100`;
+    const centsText = convertGroup(cents).toLowerCase();
+    const centUnit = cents === 1 ? 'cent' : 'cents';
+    return `${words} ${dollarUnit} and ${centsText} ${centUnit}`;
   }
 
-  return words;
+  return `${words} ${dollarUnit}`;
 }
 
 // =============================================================================
 // 2. FORMATEADORES NUMÉRICOS & DE MONEDA
 // =============================================================================
 function formatearNumero(val) {
-  if (isNaN(val)) return '0';
+  if (isNaN(val) || val === '' || val === null) return '0';
   const parts = val.toString().split('.');
   parts[0] = Number(parts[0]).toLocaleString('en-US');
   return parts.join('.');
 }
 
-function formatearMoneda(val) {
-  if (isNaN(val)) return '$0.00 USD';
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(val) + ' USD';
-}
-
 function ahoraFormateado() {
-  return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
 
 // =============================================================================
-// 3. INICIALIZADOR PRINCIPAL DE LA CALCULADORA
+// 3. INICIALIZADOR PRINCIPAL
 // =============================================================================
 export function inicializarCalculadora() {
-  const display = document.getElementById('calcDisplay');
-  const expr = document.getElementById('calcExpression');
-  if (!display) return;
+  const container = document.getElementById('calcVipStation') || document.getElementById('calcProStation');
+  if (!container) return;
 
-  // Restaurar estado inicial si no estaba vinculado
-  if (!display.dataset.bound) {
-    currentInput = '0';
-    previousInput = null;
-    activeOperator = null;
-    waitingForSecondOperand = false;
+  // Restaurar estado si no está vinculado
+  if (container.dataset.bound !== 'true') {
+    proInput = '0';
+    proPrev = null;
+    proOp = null;
+    proWaiting = false;
+    proLastExpr = '';
+
+    vipInput = '0';
+    vipPrev = null;
+    vipOp = null;
+    vipWaiting = false;
+    vipLastExpr = '';
+
+    ultraInput = '0';
+    ultraPrev = null;
+    ultraOp = null;
+    ultraWaiting = false;
+    ultraLastExpr = '';
   }
-  actualizarDisplay();
+
+  actualizarProDisplay();
+  actualizarVipDisplay();
+  actualizarUltraDisplay();
 
   // Cargar historial persistido
   cargarHistorial();
 
-  // Evitar vincular múltiples veces los event listeners en el DOM (previene dígitos duplicados como '99')
-  if (display.dataset.bound === 'true') {
+  // Guarda contra doble vinculación en Astro
+  if (container.dataset.bound === 'true') {
     return;
   }
-  display.dataset.bound = 'true';
+  container.dataset.bound = 'true';
 
-  // Configurar tabs de modo
-  configurarModoTabs();
-
-  // Configurar botones del teclado numérico
-  configurarKeypad();
-
-  // Configurar chips rápidos
-  configurarQuickChips();
-
-  // Configurar eventos de cálculo de Horas y Tiempos
-  configurarCalculadoraTiempos();
-
-  // Configurar reuso de resultado y limpieza de historial
-  configurarAccionesResultado();
+  // Configuración de Estaciones
+  configurarProStation();
+  configurarVipStation();
+  configurarUltraStation();
+  configurarFooterUnificado();
 
   // Atajos de teclado físico
   document.removeEventListener('keydown', manejarTecladoFisico);
@@ -153,102 +166,649 @@ export function inicializarCalculadora() {
 }
 
 // =============================================================================
-// 4. MODO TABS: ARITMÉTICA VS HORAS & TIEMPOS
+// 4. ESTACIÓN 1: CALCULADORA PRO (AZUL GOOGLE PRO - 1ERA POSICIÓN)
 // =============================================================================
-function configurarModoTabs() {
-  const tabArit = document.getElementById('tabAritmetica');
-  const tabTiempos = document.getElementById('tabTiempos');
-  const viewArit = document.getElementById('viewAritmetica');
-  const viewTiempos = document.getElementById('viewTiempos');
-  const dgArit = document.getElementById('desgloseAritmetico');
-  const dgTiempo = document.getElementById('desgloseTiempo');
+function actualizarProDisplay() {
+  const display = document.getElementById('proDisplay');
+  const expr = document.getElementById('proExpression');
 
-  if (!tabArit || !tabTiempos || !viewArit || !viewTiempos) return;
-
-  tabArit.addEventListener('click', () => {
-    tabArit.classList.add('active');
-    tabTiempos.classList.remove('active');
-    viewArit.style.display = 'block';
-    viewTiempos.style.display = 'none';
-
-    if (activeResultType === 'ARITMÉTICA') {
-      if (dgArit) dgArit.style.display = 'block';
-      if (dgTiempo) dgTiempo.style.display = 'none';
-    }
-  });
-
-  tabTiempos.addEventListener('click', () => {
-    tabTiempos.classList.add('active');
-    tabArit.classList.remove('active');
-    viewTiempos.style.display = 'block';
-    viewArit.style.display = 'none';
-
-    if (activeResultType !== 'ARITMÉTICA') {
-      if (dgArit) dgArit.style.display = 'none';
-      if (dgTiempo) dgTiempo.style.display = 'block';
-    }
-  });
-}
-
-// =============================================================================
-// 5. TECLADO NUMÉRICO & OPERACIONES ARITMÉTICAS
-// =============================================================================
-function actualizarDisplay() {
-  const display = document.getElementById('calcDisplay');
-  const expr = document.getElementById('calcExpression');
   if (display) {
-    display.textContent = formatearNumero(currentInput);
+    display.textContent = formatearNumero(proInput);
   }
   if (expr) {
-    if (previousInput !== null && activeOperator) {
-      const opSign = activeOperator === '*' ? '×' : activeOperator === '/' ? '÷' : activeOperator;
-      expr.textContent = `${formatearNumero(previousInput)} ${opSign}`;
+    if (proPrev !== null && proOp) {
+      const opSign = proOp === '*' ? '×' : proOp === '/' ? '÷' : proOp;
+      if (!proWaiting && proInput !== '0') {
+        expr.textContent = `${formatearNumero(proPrev)} ${opSign} ${formatearNumero(proInput)}`;
+      } else {
+        expr.textContent = `${formatearNumero(proPrev)} ${opSign}`;
+      }
+    } else if (proLastExpr) {
+      expr.textContent = proLastExpr;
     } else {
       expr.textContent = '';
     }
   }
 }
 
-function introducirDigito(digito) {
-  if (waitingForSecondOperand) {
-    currentInput = digito === '.' ? '0.' : digito;
-    waitingForSecondOperand = false;
+function proIntroducirDigito(digito) {
+  ultimaEstacionActiva = 'pro';
+  if (proWaiting) {
+    proInput = digito === '.' ? '0.' : digito;
+    proWaiting = false;
   } else {
-    if (digito === '.') {
-      if (!currentInput.includes('.')) {
-        currentInput += '.';
+    if (proLastExpr && proPrev === null && !proOp) {
+      proInput = digito === '.' ? '0.' : digito;
+      proLastExpr = '';
+    } else if (digito === '.') {
+      if (!proInput.includes('.')) {
+        proInput += '.';
       }
     } else {
-      currentInput = currentInput === '0' ? digito : currentInput + digito;
+      proInput = proInput === '0' ? digito : proInput + digito;
     }
   }
-  actualizarDisplay();
+  actualizarProDisplay();
 }
 
-function manejarOperador(sigteOperador) {
-  const inputValue = parseFloat(currentInput);
+function proManejarOperador(sigteOperador) {
+  ultimaEstacionActiva = 'pro';
+  proLastExpr = '';
+  const val = parseFloat(proInput);
 
-  if (activeOperator && waitingForSecondOperand) {
-    activeOperator = sigteOperador;
-    actualizarDisplay();
+  if (proOp && proWaiting) {
+    proOp = sigteOperador;
+    actualizarProDisplay();
     return;
   }
 
-  if (previousInput === null && !isNaN(inputValue)) {
-    previousInput = inputValue;
-  } else if (activeOperator) {
-    const result = realizarOperacion(previousInput, inputValue, activeOperator);
-    currentInput = `${parseFloat(result.toFixed(7))}`;
-    previousInput = result;
-    sincronizarResultadoAritmetico(result);
+  if (proPrev === null && !isNaN(val)) {
+    proPrev = val;
+  } else if (proOp) {
+    const res = calcularAritmetica(proPrev, val, proOp);
+    proInput = `${parseFloat(res.toFixed(7))}`;
+    proPrev = res;
   }
 
-  waitingForSecondOperand = true;
-  activeOperator = sigteOperador;
-  actualizarDisplay();
+  proWaiting = true;
+  proOp = sigteOperador;
+  actualizarProDisplay();
 }
 
-function realizarOperacion(prev, curr, op) {
+function proEjecutarIgual() {
+  ultimaEstacionActiva = 'pro';
+  if (proOp === null || proPrev === null) return;
+
+  const curr = parseFloat(proInput);
+  const prev = proPrev;
+  const op = proOp;
+  const res = calcularAritmetica(prev, curr, op);
+  const cleanRes = parseFloat(res.toFixed(7));
+
+  const opSign = op === '*' ? '×' : op === '/' ? '÷' : op;
+  const exprStr = `${formatearNumero(prev)} ${opSign} ${formatearNumero(curr)}`;
+  const opHist = `${exprStr} = ${formatearNumero(cleanRes)}`;
+
+  proInput = `${cleanRes}`;
+  proLastExpr = `${exprStr} =`;
+  proPrev = null;
+  proOp = null;
+  proWaiting = false;
+
+  actualizarProDisplay();
+  guardarEnHistorial(opHist, cleanRes, 'pro', 'ARITMÉTICA', cleanRes);
+}
+
+function proLimpiar() {
+  proInput = '0';
+  proPrev = null;
+  proOp = null;
+  proWaiting = false;
+  proLastExpr = '';
+  actualizarProDisplay();
+}
+
+function proBorrarUltimo() {
+  if (proWaiting) return;
+  if (proInput.length > 1) {
+    proInput = proInput.slice(0, -1);
+  } else {
+    proInput = '0';
+  }
+  actualizarProDisplay();
+}
+
+function configurarProStation() {
+  const keypad = document.getElementById('proKeypad');
+  if (keypad) {
+    keypad.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      if (btn.hasAttribute('data-pro-num')) {
+        proIntroducirDigito(btn.getAttribute('data-pro-num'));
+      } else if (btn.getAttribute('data-pro-action') === 'op') {
+        proManejarOperador(btn.getAttribute('data-op'));
+      } else if (btn.getAttribute('data-pro-action') === 'equals') {
+        proEjecutarIgual();
+      } else if (btn.getAttribute('data-pro-action') === 'clear') {
+        proLimpiar();
+      } else if (btn.getAttribute('data-pro-action') === 'delete') {
+        proBorrarUltimo();
+      } else if (btn.getAttribute('data-pro-action') === 'percent') {
+        const curr = parseFloat(proInput);
+        if (!isNaN(curr)) {
+          proInput = `${curr / 100}`;
+          actualizarProDisplay();
+        }
+      } else if (btn.getAttribute('data-pro-action') === 'negate') {
+        const val = parseFloat(proInput);
+        if (val !== 0 && !isNaN(val)) {
+          proInput = `${val * -1}`;
+          actualizarProDisplay();
+        }
+      }
+    });
+  }
+
+  // Barra de Funciones Científicas Pro
+  const sciBtns = document.querySelectorAll('[data-pro-sci]');
+  sciBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      ultimaEstacionActiva = 'pro';
+      const sci = btn.getAttribute('data-pro-sci');
+      const val = parseFloat(proInput);
+      if (isNaN(val)) return;
+
+      let res = val;
+      let label = '';
+
+      switch (sci) {
+        case 'sqr':
+          res = Math.pow(val, 2);
+          label = `(${formatearNumero(val)})²`;
+          break;
+        case 'sqrt':
+          res = val >= 0 ? Math.sqrt(val) : 0;
+          label = `√(${formatearNumero(val)})`;
+          break;
+        case 'inv':
+          res = val !== 0 ? 1 / val : 0;
+          label = `1/(${formatearNumero(val)})`;
+          break;
+        case 'pi':
+          res = Math.PI;
+          label = `Constante π`;
+          break;
+        case 'round':
+          res = Math.round(val * 100) / 100;
+          label = `Redondeo .00 (${formatearNumero(val)})`;
+          break;
+      }
+
+      const resLimpio = parseFloat(res.toFixed(6));
+      proInput = `${resLimpio}`;
+      proLastExpr = `${label} =`;
+      actualizarProDisplay();
+      guardarEnHistorial(`${label} = ${resLimpio}`, resLimpio, 'pro', 'CIENTÍFICA', resLimpio);
+    });
+  });
+}
+
+// =============================================================================
+// 5. ESTACIÓN 2: CALCULADORA VIP (CLÁSICA DARK & NARANJA - 2DA POSICIÓN)
+// =============================================================================
+function actualizarVipDisplay() {
+  const display = document.getElementById('vipDisplay');
+  const expr = document.getElementById('vipExpression');
+  const keyAC = document.getElementById('vipKeyAC');
+
+  if (display) {
+    display.textContent = formatearNumero(vipInput);
+  }
+  if (expr) {
+    if (vipPrev !== null && vipOp) {
+      const opSign = vipOp === '*' ? '×' : vipOp === '/' ? '÷' : vipOp;
+      if (!vipWaiting && vipInput !== '0') {
+        expr.textContent = `${formatearNumero(vipPrev)} ${opSign} ${formatearNumero(vipInput)}`;
+      } else {
+        expr.textContent = `${formatearNumero(vipPrev)} ${opSign}`;
+      }
+    } else if (vipLastExpr) {
+      expr.textContent = vipLastExpr;
+    } else {
+      expr.textContent = '';
+    }
+  }
+  if (keyAC) {
+    keyAC.textContent = (vipInput !== '0' || vipPrev !== null || vipLastExpr !== '') ? 'C' : 'AC';
+  }
+}
+
+function vipIntroducirDigito(digito) {
+  ultimaEstacionActiva = 'vip';
+  if (vipWaiting) {
+    vipInput = digito === '.' ? '0.' : digito;
+    vipWaiting = false;
+  } else {
+    if (vipLastExpr && vipPrev === null && !vipOp) {
+      vipInput = digito === '.' ? '0.' : digito;
+      vipLastExpr = '';
+    } else if (digito === '.') {
+      if (!vipInput.includes('.')) {
+        vipInput += '.';
+      }
+    } else {
+      vipInput = vipInput === '0' ? digito : vipInput + digito;
+    }
+  }
+  actualizarVipDisplay();
+}
+
+function vipManejarOperador(sigteOperador) {
+  ultimaEstacionActiva = 'vip';
+  vipLastExpr = '';
+  const val = parseFloat(vipInput);
+
+  if (vipOp && vipWaiting) {
+    vipOp = sigteOperador;
+    actualizarVipDisplay();
+    return;
+  }
+
+  if (vipPrev === null && !isNaN(val)) {
+    vipPrev = val;
+  } else if (vipOp) {
+    const res = calcularAritmetica(vipPrev, val, vipOp);
+    vipInput = `${parseFloat(res.toFixed(7))}`;
+    vipPrev = res;
+  }
+
+  vipWaiting = true;
+  vipOp = sigteOperador;
+  actualizarVipDisplay();
+}
+
+function vipEjecutarIgual() {
+  ultimaEstacionActiva = 'vip';
+  if (vipOp === null || vipPrev === null) return;
+
+  const curr = parseFloat(vipInput);
+  const prev = vipPrev;
+  const op = vipOp;
+  const res = calcularAritmetica(prev, curr, op);
+  const cleanRes = parseFloat(res.toFixed(7));
+
+  const opSign = op === '*' ? '×' : op === '/' ? '÷' : op;
+  const exprStr = `${formatearNumero(prev)} ${opSign} ${formatearNumero(curr)}`;
+  const opHist = `${exprStr} = ${formatearNumero(cleanRes)}`;
+
+  vipInput = `${cleanRes}`;
+  vipLastExpr = `${exprStr} =`;
+  vipPrev = null;
+  vipOp = null;
+  vipWaiting = false;
+
+  actualizarVipDisplay();
+  guardarEnHistorial(opHist, cleanRes, 'vip', 'ARITMÉTICA', cleanRes);
+}
+
+function vipLimpiar() {
+  vipInput = '0';
+  vipPrev = null;
+  vipOp = null;
+  vipWaiting = false;
+  vipLastExpr = '';
+  actualizarVipDisplay();
+}
+
+function vipBorrarUltimo() {
+  if (vipWaiting) return;
+  if (vipInput.length > 1) {
+    vipInput = vipInput.slice(0, -1);
+  } else {
+    vipInput = '0';
+  }
+  actualizarVipDisplay();
+}
+
+function vipPorcentaje() {
+  const curr = parseFloat(vipInput);
+  if (isNaN(curr)) return;
+
+  if (vipPrev !== null && (vipOp === '+' || vipOp === '-')) {
+    const pctVal = (vipPrev * curr) / 100;
+    vipInput = `${pctVal}`;
+  } else {
+    vipInput = `${curr / 100}`;
+  }
+  actualizarVipDisplay();
+}
+
+function vipCambiarSigno() {
+  const val = parseFloat(vipInput);
+  if (val !== 0 && !isNaN(val)) {
+    vipInput = `${val * -1}`;
+    actualizarVipDisplay();
+  }
+}
+
+function configurarVipStation() {
+  const keypad = document.getElementById('vipKeypad');
+  if (keypad) {
+    keypad.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      if (btn.hasAttribute('data-vip-num')) {
+        vipIntroducirDigito(btn.getAttribute('data-vip-num'));
+      } else if (btn.getAttribute('data-vip-action') === 'op') {
+        vipManejarOperador(btn.getAttribute('data-op'));
+      } else if (btn.getAttribute('data-vip-action') === 'equals') {
+        vipEjecutarIgual();
+      } else if (btn.getAttribute('data-vip-action') === 'clear') {
+        vipLimpiar();
+      } else if (btn.getAttribute('data-vip-action') === 'delete') {
+        vipBorrarUltimo();
+      } else if (btn.getAttribute('data-vip-action') === 'percent') {
+        vipPorcentaje();
+      } else if (btn.getAttribute('data-vip-action') === 'negate') {
+        vipCambiarSigno();
+      }
+    });
+  }
+}
+
+// =============================================================================
+// 6. ESTACIÓN 3: CALCULADORA ULTRA (TECLADO TÁCTIL, DESCUENTOS & DIVISAS)
+// =============================================================================
+function obtenerUltraTC() {
+  const inRate = document.getElementById('ultraExchangeRate');
+  let tc = parseFloat(inRate?.value || '3.45');
+  if (isNaN(tc) || tc <= 0) tc = 3.45;
+  return tc;
+}
+
+function actualizarUltraDisplay() {
+  const display = document.getElementById('ultraDisplay');
+  const expr = document.getElementById('ultraExpression');
+  const keyC = document.getElementById('ultraKeyC');
+
+  if (display) {
+    display.textContent = formatearNumero(ultraInput);
+  }
+  if (expr) {
+    if (ultraPrev !== null && ultraOp) {
+      const tc = obtenerUltraTC();
+      if (ultraOp === 'desc') {
+        expr.textContent = `${formatearNumero(ultraPrev)}% dscto ${ultraWaiting ? '...' : formatearNumero(ultraInput)}`;
+      } else if (ultraOp === 'pct_de') {
+        expr.textContent = `${formatearNumero(ultraPrev)}% de ${ultraWaiting ? '...' : formatearNumero(ultraInput)}`;
+      } else if (ultraOp === 'to_pen') {
+        expr.textContent = `$ ${formatearNumero(ultraPrev)} a s/ Soles es =`;
+      } else if (ultraOp === 'to_usd') {
+        expr.textContent = `S/ ${formatearNumero(ultraPrev)} a $ Dólares es =`;
+      } else {
+        const opSign = ultraOp === '*' ? '×' : ultraOp === '/' ? '÷' : ultraOp;
+        if (!ultraWaiting && ultraInput !== '0') {
+          expr.textContent = `${formatearNumero(ultraPrev)} ${opSign} ${formatearNumero(ultraInput)}`;
+        } else {
+          expr.textContent = `${formatearNumero(ultraPrev)} ${opSign}`;
+        }
+      }
+    } else if (ultraLastExpr) {
+      expr.textContent = ultraLastExpr;
+    } else {
+      expr.textContent = '';
+    }
+  }
+  if (keyC) {
+    keyC.textContent = (ultraInput !== '0' || ultraPrev !== null || ultraLastExpr !== '') ? 'C' : 'AC';
+  }
+}
+
+function ultraIntroducirDigito(digito) {
+  ultimaEstacionActiva = 'ultra';
+  if (ultraWaiting) {
+    ultraInput = digito === '.' ? '0.' : digito;
+    ultraWaiting = false;
+  } else {
+    if (ultraLastExpr && ultraPrev === null && !ultraOp) {
+      ultraInput = digito === '.' ? '0.' : digito;
+      ultraLastExpr = '';
+    } else if (digito === '.') {
+      if (!ultraInput.includes('.')) {
+        ultraInput += '.';
+      }
+    } else {
+      ultraInput = ultraInput === '0' ? digito : ultraInput + digito;
+    }
+  }
+  actualizarUltraDisplay();
+}
+
+function ultraManejarOperador(op) {
+  ultimaEstacionActiva = 'ultra';
+  ultraLastExpr = '';
+  const val = parseFloat(ultraInput);
+
+  if (ultraOp && ultraWaiting) {
+    ultraOp = op;
+    actualizarUltraDisplay();
+    return;
+  }
+
+  if (ultraPrev === null && !isNaN(val)) {
+    ultraPrev = val;
+  } else if (ultraOp) {
+    const res = calcularAritmetica(ultraPrev, val, ultraOp);
+    ultraInput = `${parseFloat(res.toFixed(7))}`;
+    ultraPrev = res;
+  }
+
+  ultraWaiting = true;
+  ultraOp = op;
+  actualizarUltraDisplay();
+}
+
+function ultraManejarEspecial(accion) {
+  ultimaEstacionActiva = 'ultra';
+  ultraLastExpr = '';
+  const val = parseFloat(ultraInput) || 0;
+
+  if (accion === 'pct_de') {
+    // Ejemplo: 20 -> "xx% de xx" -> 100 -> "=" => 20% de 100 es 20
+    ultraPrev = val;
+    ultraOp = 'pct_de';
+    ultraWaiting = true;
+    actualizarUltraDisplay();
+  } else if (accion === 'desc') {
+    // Ejemplo: 69.90 -> "xx% dsct xx" -> 20 -> "=" => 69.90 dscto 20% es 55.92 (Ahorro: 13.98)
+    ultraPrev = val;
+    ultraOp = 'desc';
+    ultraWaiting = true;
+    actualizarUltraDisplay();
+  } else if (accion === 'to_pen') {
+    // Ejemplo: 10 -> "$ a S/" -> "=" => 10 Dólares son 34.50 Soles (T.C. 3.45)
+    // No emite Mensaje() invasivo y no cambia display hasta presionar '='
+    ultraPrev = val;
+    ultraOp = 'to_pen';
+    ultraWaiting = true;
+    actualizarUltraDisplay();
+  } else if (accion === 'to_usd') {
+    // Ejemplo: 34.50 -> "S/ a $" -> "=" => 34.50 Soles son 10.00 Dólares (T.C. 3.45)
+    // No emite Mensaje() invasivo y no cambia display hasta presionar '='
+    ultraPrev = val;
+    ultraOp = 'to_usd';
+    ultraWaiting = true;
+    actualizarUltraDisplay();
+  }
+}
+
+function ultraEjecutarIgual() {
+  ultimaEstacionActiva = 'ultra';
+  if (ultraOp === null || ultraPrev === null) return;
+
+  const curr = parseFloat(ultraInput) || 0;
+  const prev = ultraPrev;
+  const op = ultraOp;
+  const tc = obtenerUltraTC();
+
+  let res = 0;
+  let operacionHist = '';
+  let customSpoken = '';
+  let tipoHist = 'ULTRA';
+
+  if (op === 'desc') {
+    const pct = prev;
+    const precio = curr;
+    const ahorro = parseFloat(((precio * pct) / 100).toFixed(2));
+    const pagas = parseFloat(Math.max(0, precio - ahorro).toFixed(2));
+
+    res = ahorro;
+    operacionHist = `${formatearNumero(pct)}% dscto ${formatearNumero(precio)} es ${ahorro} (pagar: ${pagas})`;
+    customSpoken = `${numeroAIngles(ahorro)}`;
+    tipoHist = 'DESCUENTO';
+    ultraLastExpr = `${formatearNumero(pct)}% dscto ${formatearNumero(precio)} =`;
+    Mensaje(`Descuento: $${ahorro} | Total a pagar: $${pagas}`, 'exito');
+  } else if (op === 'pct_de') {
+    const pct = prev;
+    const base = curr;
+    const calc = parseFloat(((pct * base) / 100).toFixed(4));
+
+    res = calc;
+    operacionHist = `${formatearNumero(pct)}% de ${formatearNumero(base)} es ${calc}`;
+    customSpoken = `${numeroAIngles(calc)}`;
+    tipoHist = 'PORCENTAJE';
+    ultraLastExpr = `${formatearNumero(pct)}% de ${formatearNumero(base)} =`;
+    Mensaje(`${pct}% de ${base} es ${calc}`, 'info');
+  } else if (op === 'to_pen') {
+    const usd = prev;
+    const penStr = (usd * tc).toFixed(2);
+    const penNum = parseFloat(penStr);
+
+    res = penStr;
+    operacionHist = `$ ${formatearNumero(usd)} a s/ Soles es = ${penStr}`;
+    customSpoken = `${numeroAIngles(penNum).replace(' dollars', ' soles').replace(' dollar', ' sol')}`;
+    tipoHist = 'DIVISAS';
+    ultraLastExpr = `$ ${formatearNumero(usd)} a s/ Soles es =`;
+    Mensaje(`$ ${formatearNumero(usd)} = S/ ${penStr} Soles`, 'exito');
+  } else if (op === 'to_usd') {
+    const pen = prev;
+    const usdStr = (pen / tc).toFixed(2);
+    const usdNum = parseFloat(usdStr);
+
+    res = usdStr;
+    operacionHist = `S/ ${formatearNumero(pen)} a $ Dólares es = ${usdStr}`;
+    customSpoken = `${numeroAIngles(usdNum)}`;
+    tipoHist = 'DIVISAS';
+    ultraLastExpr = `S/ ${formatearNumero(pen)} a $ Dólares es =`;
+    Mensaje(`S/ ${formatearNumero(pen)} = $ ${usdStr} Dólares`, 'exito');
+  } else {
+    res = parseFloat(calcularAritmetica(prev, curr, op).toFixed(7));
+    const opSign = op === '*' ? '×' : op === '/' ? '÷' : op;
+    const exprStr = `${formatearNumero(prev)} ${opSign} ${formatearNumero(curr)}`;
+    operacionHist = `${exprStr} = ${res}`;
+    customSpoken = `${numeroAIngles(res)}`;
+    ultraLastExpr = `${exprStr} =`;
+  }
+
+  ultraInput = `${res}`;
+  ultraPrev = null;
+  ultraOp = null;
+  ultraWaiting = false;
+
+  actualizarUltraDisplay();
+  // GUARDAR EN HISTORIAL SOLO AL PRESIONAR '='
+  guardarEnHistorial(operacionHist, res, 'ultra', tipoHist, res, customSpoken);
+}
+
+function ultraLimpiar() {
+  ultraInput = '0';
+  ultraPrev = null;
+  ultraOp = null;
+  ultraWaiting = false;
+  ultraLastExpr = '';
+  actualizarUltraDisplay();
+}
+
+function ultraBorrarUltimo() {
+  if (ultraWaiting) return;
+  if (ultraInput.length > 1) {
+    ultraInput = ultraInput.slice(0, -1);
+  } else {
+    ultraInput = '0';
+  }
+  actualizarUltraDisplay();
+}
+
+function configurarUltraStation() {
+  const keypad = document.getElementById('ultraKeypad');
+  if (keypad) {
+    keypad.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      if (btn.hasAttribute('data-ultra-num')) {
+        ultraIntroducirDigito(btn.getAttribute('data-ultra-num'));
+      } else if (btn.getAttribute('data-ultra-action') === 'op') {
+        ultraManejarOperador(btn.getAttribute('data-op'));
+      } else if (btn.getAttribute('data-ultra-action') === 'equals') {
+        ultraEjecutarIgual();
+      } else if (btn.getAttribute('data-ultra-action') === 'clear') {
+        ultraLimpiar();
+      } else if (btn.getAttribute('data-ultra-action') === 'delete') {
+        ultraBorrarUltimo();
+      } else if (btn.getAttribute('data-ultra-action') === 'focus_tc') {
+        const tcInput = document.getElementById('ultraExchangeRate');
+        if (tcInput) {
+          tcInput.focus();
+          tcInput.select();
+        }
+      } else if (['pct_de', 'desc', 'to_pen', 'to_usd'].includes(btn.getAttribute('data-ultra-action'))) {
+        ultraManejarEspecial(btn.getAttribute('data-ultra-action'));
+      }
+    });
+  }
+
+  // Chips Rápidos de % de Descuento (10%, 15%, 20%, 25%, 50%)
+  const quickChips = document.querySelectorAll('[data-ultra-quick-desc]');
+  quickChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      ultimaEstacionActiva = 'ultra';
+      const pct = parseFloat(chip.getAttribute('data-ultra-quick-desc') || '10');
+      const val = parseFloat(ultraInput) || 0;
+
+      if (val === 0 && ultraPrev === null) {
+        Mensaje('Ingresa primero el precio del producto y luego presiona el chip de descuento', 'alerta');
+        return;
+      }
+
+      if (ultraPrev === null) {
+        ultraPrev = val;
+      }
+      ultraOp = 'desc';
+      ultraInput = `${pct}`;
+      ultraWaiting = false;
+      actualizarUltraDisplay();
+      Mensaje(`Descuento de ${pct}% seleccionado. Presiona '=' para calcular y guardar.`, 'info');
+    });
+  });
+
+  // Tasa de cambio input
+  const tcInput = document.getElementById('ultraExchangeRate');
+  if (tcInput) {
+    tcInput.addEventListener('change', () => {
+      const tc = obtenerUltraTC();
+      Mensaje(`Tasa preferencial de dólar fijada en S/ ${tc.toFixed(2)}`, 'info');
+    });
+  }
+}
+
+// =============================================================================
+// 7. MOTOR MATEMÁTICO COMPARTIDO
+// =============================================================================
+function calcularAritmetica(prev, curr, op) {
   switch (op) {
     case '+': return prev + curr;
     case '-': return prev - curr;
@@ -258,418 +818,62 @@ function realizarOperacion(prev, curr, op) {
   }
 }
 
-function ejecutarIgual() {
-  if (activeOperator === null || previousInput === null) return;
-
-  const curr = parseFloat(currentInput);
-  const prev = previousInput;
-  const op = activeOperator;
-  const result = realizarOperacion(prev, curr, op);
-  const cleanResult = parseFloat(result.toFixed(7));
-
-  const opSign = op === '*' ? '×' : op === '/' ? '÷' : op;
-  const expressionStr = `${formatearNumero(prev)} ${opSign} ${formatearNumero(curr)}`;
-
-  currentInput = `${cleanResult}`;
-  previousInput = null;
-  activeOperator = null;
-  waitingForSecondOperand = false;
-
-  actualizarDisplay();
-  sincronizarResultadoAritmetico(cleanResult, expressionStr);
-  guardarEnHistorial(expressionStr, cleanResult, 'ARITMÉTICA');
-}
-
-function limpiarTodo() {
-  currentInput = '0';
-  previousInput = null;
-  activeOperator = null;
-  waitingForSecondOperand = false;
-  actualizarDisplay();
-}
-
-function borrarUltimo() {
-  if (waitingForSecondOperand) return;
-  if (currentInput.length > 1) {
-    currentInput = currentInput.slice(0, -1);
-  } else {
-    currentInput = '0';
-  }
-  actualizarDisplay();
-}
-
-function aplicarPorcentaje() {
-  const curr = parseFloat(currentInput);
-  if (isNaN(curr)) return;
-
-  if (previousInput !== null && (activeOperator === '+' || activeOperator === '-')) {
-    // e.g. 100 + 10% = 10 (10% de 100)
-    const pctVal = (previousInput * curr) / 100;
-    currentInput = `${pctVal}`;
-  } else {
-    currentInput = `${curr / 100}`;
-  }
-  actualizarDisplay();
-}
-
-function cambiarSigno() {
-  const val = parseFloat(currentInput);
-  if (val !== 0 && !isNaN(val)) {
-    currentInput = `${val * -1}`;
-    actualizarDisplay();
-  }
-}
-
-function configurarKeypad() {
-  const keypad = document.getElementById('calcKeypad');
-  if (!keypad || keypad.dataset.bound === 'true') return;
-  keypad.dataset.bound = 'true';
-
-  keypad.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-
-    if (btn.hasAttribute('data-num')) {
-      introducirDigito(btn.getAttribute('data-num'));
-    } else if (btn.getAttribute('data-action') === 'op') {
-      manejarOperador(btn.getAttribute('data-op'));
-    } else if (btn.getAttribute('data-action') === 'equals') {
-      ejecutarIgual();
-    } else if (btn.getAttribute('data-action') === 'clear') {
-      limpiarTodo();
-    } else if (btn.getAttribute('data-action') === 'delete') {
-      borrarUltimo();
-    } else if (btn.getAttribute('data-action') === 'percent') {
-      aplicarPorcentaje();
-    } else if (btn.getAttribute('data-action') === 'negate') {
-      cambiarSigno();
-    }
-  });
-}
-
-// Chips rápidos (+10%, +15%, +20%, etc.)
-function configurarQuickChips() {
-  const chips = document.querySelectorAll('.wii-chip-btn[data-quick]');
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const q = chip.getAttribute('data-quick');
-      const val = parseFloat(currentInput);
-      if (isNaN(val)) return;
-
-      let nuevoVal = val;
-      let labelOp = '';
-
-      switch (q) {
-        case '+10%': nuevoVal = val * 1.10; labelOp = `${formatearNumero(val)} + 10%`; break;
-        case '+15%': nuevoVal = val * 1.15; labelOp = `${formatearNumero(val)} + 15%`; break;
-        case '+20%': nuevoVal = val * 1.20; labelOp = `${formatearNumero(val)} + 20%`; break;
-        case '-10%': nuevoVal = val * 0.90; labelOp = `${formatearNumero(val)} − 10%`; break;
-        case '-15%': nuevoVal = val * 0.85; labelOp = `${formatearNumero(val)} − 15%`; break;
-        case 'round': nuevoVal = Math.round(val * 100) / 100; labelOp = `Redondeo (${formatearNumero(val)})`; break;
-        case 'int': nuevoVal = Math.round(val); labelOp = `Entero (${formatearNumero(val)})`; break;
-      }
-
-      const resLimpio = parseFloat(nuevoVal.toFixed(4));
-      currentInput = `${resLimpio}`;
-      actualizarDisplay();
-      sincronizarResultadoAritmetico(resLimpio, labelOp);
-      guardarEnHistorial(labelOp, resLimpio, 'ARITMÉTICA');
-    });
-  });
-}
-
-// Atajos de Teclado Físico
-function manejarTecladoFisico(e) {
-  // Ignorar si el foco está en un input de texto o tiempo
-  const activeTag = document.activeElement?.tagName?.toLowerCase();
-  if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
-    return;
-  }
-
-  const key = e.key;
-  if (/^[0-9]$/.test(key)) {
-    e.preventDefault();
-    introducirDigito(key);
-  } else if (key === '.') {
-    e.preventDefault();
-    introducirDigito('.');
-  } else if (key === '+' || key === '-' || key === '*' || key === '/') {
-    e.preventDefault();
-    manejarOperador(key);
-  } else if (key === 'Enter' || key === '=') {
-    e.preventDefault();
-    ejecutarIgual();
-  } else if (key === 'Backspace') {
-    e.preventDefault();
-    borrarUltimo();
-  } else if (key === 'Escape') {
-    e.preventDefault();
-    limpiarTodo();
-  }
-}
-
 // =============================================================================
-// 6. SINCRONIZACIÓN DE RESULTADOS & ANÁLISIS EN PANEL DERECHO
+// 8. FOOTER UNIFICADO: CONFIGURACIÓN
 // =============================================================================
-function sincronizarResultadoAritmetico(num, exprStr = '') {
-  activeResultVal = num;
-  activeResultType = 'ARITMÉTICA';
-
-  const pill = document.getElementById('resTypePill');
-  const hero = document.getElementById('resHeroVal');
-  const ts = document.getElementById('resTimestamp');
-  const dgArit = document.getElementById('desgloseAritmetico');
-  const dgTiempo = document.getElementById('desgloseTiempo');
-
-  if (pill) pill.textContent = 'ARITMÉTICA';
-  if (hero) hero.textContent = formatearNumero(num);
-  if (ts) ts.textContent = `Calculado a las ${ahoraFormateado()}`;
-
-  // Mostrar desglose aritmético
-  if (dgArit) dgArit.style.display = 'block';
-  if (dgTiempo) dgTiempo.style.display = 'none';
-
-  // Desglose Moneda
-  const txtMoneda = document.getElementById('txtResMoneda');
-  if (txtMoneda) txtMoneda.textContent = formatearMoneda(num);
-
-  // Desglose Inglés Hablado
-  const txtIngles = document.getElementById('txtResIngles');
-  if (txtIngles) txtIngles.textContent = numeroAIngles(num);
-
-  // Desglose Propinas / Recargos (+10%, +15%, +20%)
-  const d10 = num * 0.10;
-  const d15 = num * 0.15;
-  const d20 = num * 0.20;
-
-  const t10d = document.getElementById('txtTip10Delta');
-  const t10t = document.getElementById('txtTip10Total');
-  const t15d = document.getElementById('txtTip15Delta');
-  const t15t = document.getElementById('txtTip15Total');
-  const t20d = document.getElementById('txtTip20Delta');
-  const t20t = document.getElementById('txtTip20Total');
-
-  if (t10d) t10d.textContent = `+${formatearMoneda(d10).replace(' USD', '')}`;
-  if (t10t) t10t.textContent = formatearMoneda(num + d10);
-
-  if (t15d) t15d.textContent = `+${formatearMoneda(d15).replace(' USD', '')}`;
-  if (t15t) t15t.textContent = formatearMoneda(num + d15);
-
-  if (t20d) t20d.textContent = `+${formatearMoneda(d20).replace(' USD', '')}`;
-  if (t20t) t20t.textContent = formatearMoneda(num + d20);
-}
-
-function sincronizarResultadoTiempo(horas, minutos, totalMinutos, tituloTipo = 'TIEMPO DE TURNO') {
-  activeResultVal = totalMinutos;
-  activeResultType = tituloTipo;
-
-  const pill = document.getElementById('resTypePill');
-  const hero = document.getElementById('resHeroVal');
-  const ts = document.getElementById('resTimestamp');
-  const dgArit = document.getElementById('desgloseAritmetico');
-  const dgTiempo = document.getElementById('desgloseTiempo');
-
-  if (pill) pill.textContent = tituloTipo;
-  if (hero) hero.textContent = `${horas}h ${minutos < 10 ? '0' : ''}${minutos}m`;
-  if (ts) ts.textContent = `Calculado a las ${ahoraFormateado()}`;
-
-  // Mostrar desglose de tiempo
-  if (dgArit) dgArit.style.display = 'none';
-  if (dgTiempo) dgTiempo.style.display = 'block';
-
-  const decimalVal = (totalMinutos / 60).toFixed(2);
-
-  const txtHm = document.getElementById('txtTimeHm');
-  const txtDec = document.getElementById('txtTimeDecimal');
-  const txtMin = document.getElementById('txtTimeMinutos');
-
-  if (txtHm) txtHm.textContent = `${horas}h ${minutos < 10 ? '0' : ''}${minutos}m`;
-  if (txtDec) txtDec.textContent = `${decimalVal} hrs`;
-  if (txtMin) txtMin.textContent = `${totalMinutos.toLocaleString('en-US')} mins`;
-
-  // Progreso de jornada estándar de 8 horas (480 minutos)
-  const baseJornadaMin = 480;
-  const pctJornada = Math.round((totalMinutos / baseJornadaMin) * 100);
-  const fillWidth = Math.min(100, Math.max(0, pctJornada));
-
-  const shiftPct = document.getElementById('txtShiftPct');
-  const shiftFill = document.getElementById('shiftProgFill');
-  const shiftMeta = document.getElementById('txtShiftMeta');
-
-  if (shiftPct) shiftPct.textContent = `${pctJornada}%`;
-  if (shiftFill) shiftFill.style.width = `${fillWidth}%`;
-
-  if (shiftMeta) {
-    if (totalMinutos >= baseJornadaMin) {
-      const extraMin = totalMinutos - baseJornadaMin;
-      const extraH = Math.floor(extraMin / 60);
-      const extraM = extraMin % 60;
-      shiftMeta.textContent = `✅ Jornada completa de 8h cumplida (+${extraH}h ${extraM}m overtime)`;
-    } else {
-      const faltanMin = baseJornadaMin - totalMinutos;
-      const faltanH = Math.floor(faltanMin / 60);
-      const faltanM = faltanMin % 60;
-      shiftMeta.textContent = `Faltan ${faltanH}h ${faltanM}m para completar las 8 horas reglamentarias`;
-    }
-  }
-}
-
-// =============================================================================
-// 7. CALCULADORA DE HORAS & TIEMPOS DE TURNO
-// =============================================================================
-function configurarCalculadoraTiempos() {
-  // A. Duración neta entre horas (Turno)
-  const btnDiff = document.getElementById('btnCalcTimeDiff');
-  if (btnDiff) {
-    btnDiff.addEventListener('click', () => {
-      const startStr = document.getElementById('timeDiffStart')?.value || '08:30';
-      const endStr   = document.getElementById('timeDiffEnd')?.value || '17:15';
-      const breakMin = parseInt(document.getElementById('timeDiffBreak')?.value || '60', 10);
-
-      const [sh, sm] = startStr.split(':').map(Number);
-      const [eh, em] = endStr.split(':').map(Number);
-
-      let startMin = sh * 60 + sm;
-      let endMin = eh * 60 + em;
-
-      // Si termina al día siguiente (turno nocturno)
-      if (endMin < startMin) {
-        endMin += 24 * 60;
-      }
-
-      let diffNetMin = (endMin - startMin) - breakMin;
-      if (diffNetMin < 0) diffNetMin = 0;
-
-      const h = Math.floor(diffNetMin / 60);
-      const m = diffNetMin % 60;
-
-      const exprStr = `Turno: ${startStr} a ${endStr} (−${breakMin}m break)`;
-      sincronizarResultadoTiempo(h, m, diffNetMin, 'DURACIÓN TURNO');
-      guardarEnHistorial(exprStr, `${h}h ${m < 10 ? '0' : ''}${m}m`, 'TIEMPO TURNO', diffNetMin);
-    });
-  }
-
-  // B. Sumar o restar bloques de tiempo
-  const btnBlocks = document.getElementById('btnCalcTimeBlocks');
-  if (btnBlocks) {
-    btnBlocks.addEventListener('click', () => {
-      const ah = parseInt(document.getElementById('blockAh')?.value || '0', 10);
-      const am = parseInt(document.getElementById('blockAm')?.value || '0', 10);
-      const bh = parseInt(document.getElementById('blockBh')?.value || '0', 10);
-      const bm = parseInt(document.getElementById('blockBm')?.value || '0', 10);
-      const op = document.getElementById('blockOperator')?.value || 'add';
-
-      const minA = ah * 60 + am;
-      const minB = bh * 60 + bm;
-
-      let totMin = op === 'add' ? (minA + minB) : (minA - minB);
-      if (totMin < 0) totMin = 0;
-
-      const h = Math.floor(totMin / 60);
-      const m = totMin % 60;
-
-      const opSign = op === 'add' ? '+' : '−';
-      const exprStr = `${ah}h ${am}m ${opSign} ${bh}h ${bm}m`;
-
-      sincronizarResultadoTiempo(h, m, totMin, 'SUMA DE TIEMPOS');
-      guardarEnHistorial(exprStr, `${h}h ${m < 10 ? '0' : ''}${m}m`, 'SUMA TIEMPOS', totMin);
-    });
-  }
-
-  // C. Convertidor Decimal a Horas:Minutos
-  const btnDecToHm = document.getElementById('btnConvDecimalToHm');
-  if (btnDecToHm) {
-    btnDecToHm.addEventListener('click', () => {
-      const dec = parseFloat(document.getElementById('convDecimalInput')?.value || '0');
-      const totMin = Math.round(dec * 60);
-      const h = Math.floor(totMin / 60);
-      const m = totMin % 60;
-
-      const inH = document.getElementById('convHInput');
-      const inM = document.getElementById('convMInput');
-      if (inH) inH.value = h;
-      if (inM) inM.value = m;
-
-      const exprStr = `Conversión: ${dec} hrs decimales`;
-      sincronizarResultadoTiempo(h, m, totMin, 'CONVERSIÓN TIEMPO');
-      guardarEnHistorial(exprStr, `${h}h ${m < 10 ? '0' : ''}${m}m`, 'CONVERSIÓN', totMin);
-    });
-  }
-
-  // C. Convertidor Horas:Minutos a Decimal
-  const btnHmToDec = document.getElementById('btnConvHmToDecimal');
-  if (btnHmToDec) {
-    btnHmToDec.addEventListener('click', () => {
-      const h = parseInt(document.getElementById('convHInput')?.value || '0', 10);
-      const m = parseInt(document.getElementById('convMInput')?.value || '0', 10);
-      const totMin = h * 60 + m;
-      const dec = parseFloat((totMin / 60).toFixed(2));
-
-      const inDec = document.getElementById('convDecimalInput');
-      if (inDec) inDec.value = dec;
-
-      const exprStr = `Conversión: ${h}h ${m}m`;
-      sincronizarResultadoTiempo(h, m, totMin, 'CONVERSIÓN TIEMPO');
-      guardarEnHistorial(exprStr, `${dec} hrs`, 'CONVERSIÓN', totMin);
-    });
-  }
-
-  // Presets de Turnos (7.5h, 8.0h, 8.5h)
-  const presets = document.querySelectorAll('.wii-preset-chip[data-decimal]');
-  presets.forEach(p => {
-    p.addEventListener('click', () => {
-      const dec = parseFloat(p.getAttribute('data-decimal') || '8.0');
-      const inDec = document.getElementById('convDecimalInput');
-      if (inDec) {
-        inDec.value = dec;
-        btnDecToHm?.click();
-      }
-    });
-  });
-}
-
-// =============================================================================
-// 8. ACCIONES DE RESULTADO (REUSAR EN PANTALLA) & HISTORIAL
-// =============================================================================
-function configurarAccionesResultado() {
-  const btnReuse = document.getElementById('btnReuseResult');
-  if (btnReuse) {
-    btnReuse.addEventListener('click', () => {
-      if (activeResultType === 'ARITMÉTICA') {
-        currentInput = `${activeResultVal}`;
-        actualizarDisplay();
-      } else {
-        // En tiempo, cargar horas en el display aritmético
-        const hoursDecimal = (activeResultVal / 60).toFixed(2);
-        currentInput = `${parseFloat(hoursDecimal)}`;
-        actualizarDisplay();
-      }
-      // Cambiar al tab de aritmética
-      document.getElementById('tabAritmetica')?.click();
-    });
-  }
-
+function configurarFooterUnificado() {
   const btnClearHist = document.getElementById('btnClearHistory');
   if (btnClearHist) {
-    btnClearHist.addEventListener('click', () => {
-      localStorage.removeItem(STORAGE_KEY_HISTORY);
-      renderizarHistorial([]);
+    btnClearHist.addEventListener('click', async () => {
+      const list = JSON.parse(localStorage.getItem(STORAGE_KEY_HISTORY) || '[]');
+      if (list.length === 0) {
+        Mensaje('El historial ya está vacío', 'info');
+        return;
+      }
+
+      const confirmado = await wiConfirmar('¿Estás seguro de que deseas vaciar todos los registros del historial?', {
+        titulo: 'Vaciar Historial',
+        tipo: 'danger',
+        siTexto: 'Sí, vaciar',
+        noTexto: 'Cancelar'
+      });
+
+      if (confirmado) {
+        localStorage.removeItem(STORAGE_KEY_HISTORY);
+        renderizarHistorial([]);
+        Mensaje('Historial vaciado correctamente', 'info');
+      }
     });
   }
 }
 
-function guardarEnHistorial(expresion, resultado, tipo, numVal = null) {
+// =============================================================================
+// 9. HISTORIAL UNIFICADO CON PRONUNCIACIÓN ("CÓMO SE DICE") & LOCALSTORAGE
+// =============================================================================
+function guardarEnHistorial(expresion, resultado, origen, tipo, numVal = null, customSpoken = null) {
   try {
     const list = JSON.parse(localStorage.getItem(STORAGE_KEY_HISTORY) || '[]');
+
+    let comoSeDice = '';
+    if (customSpoken) {
+      comoSeDice = customSpoken;
+    } else {
+      const rawNum = typeof numVal === 'number' ? numVal : parseFloat(resultado);
+      comoSeDice = numeroAIngles(rawNum);
+    }
+
     const nuevoRegistro = {
       id: Date.now(),
       expresion: expresion || `${resultado}`,
       resultado: `${resultado}`,
-      tipo,
+      comoSeDice,
+      origen: origen || 'pro',
+      tipo: tipo || 'ARITMÉTICA',
       hora: ahoraFormateado(),
       val: numVal !== null ? numVal : resultado
     };
 
+    // Orden descendente (el más reciente siempre primero arriba)
     list.unshift(nuevoRegistro);
     if (list.length > MAX_HISTORY_ITEMS) {
       list.pop();
@@ -692,6 +896,7 @@ function cargarHistorial() {
 function renderizarHistorial(list) {
   const container = document.getElementById('calcHistoryList');
   const empty = document.getElementById('calcHistoryEmpty');
+  const wrapper = document.getElementById('calcHistoryWrapper');
   const counter = document.getElementById('historyCounterBadge');
 
   if (!container || !empty) return;
@@ -702,51 +907,150 @@ function renderizarHistorial(list) {
 
   if (list.length === 0) {
     container.innerHTML = '';
-    empty.style.display = 'flex';
+    empty.classList.remove('wii-hidden');
+    if (wrapper) wrapper.classList.add('wii-hidden');
     return;
   }
 
-  empty.style.display = 'none';
-  container.innerHTML = list.map(item => `
-    <div class="wii-hist-item" data-id="${item.id}" data-val="${item.val}">
-      <div class="wii-hist-meta">
-        <span class="wii-hist-type">${item.tipo}</span>
-        <span class="wii-hist-time">${item.hora}</span>
-      </div>
-      <div class="wii-hist-body">
-        <div class="wii-hist-expr">${item.expresion}</div>
-        <div class="wii-hist-res">= ${item.resultado}</div>
-      </div>
-      <div class="wii-hist-actions">
-        <button type="button" class="wii-hist-btn-load" data-action="load" title="Cargar este resultado">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <button type="button" class="wii-hist-btn-del" data-action="delete" title="Eliminar registro">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-    </div>
-  `).join('');
+  empty.classList.add('wii-hidden');
+  if (wrapper) wrapper.classList.remove('wii-hidden');
 
-  // Eventos de delegación en la lista
+  container.innerHTML = list.map((item, index) => {
+    const numCorrelativo = list.length - index;
+    const correlativo = `#${String(numCorrelativo).padStart(3, '0')}`;
+    let originBadge = '';
+
+    if (item.origen === 'vip') {
+      originBadge = `<span class="wii-badge-origin vip"><i class="fa-solid fa-crown"></i> VIP</span>`;
+    } else if (item.origen === 'pro') {
+      originBadge = `<span class="wii-badge-origin pro"><i class="fa-solid fa-star"></i> Pro</span>`;
+    } else {
+      originBadge = `<span class="wii-badge-origin ultra"><i class="fa-solid fa-bolt"></i> Ultra</span>`;
+    }
+
+    return `
+      <tr class="wii-hist-row" data-id="${item.id}">
+        <td class="wii-td-num"><span class="wii-hist-num">${correlativo}</span></td>
+        <td class="wii-td-origin">${originBadge}</td>
+        <td class="wii-td-time"><span class="wii-hist-time">${item.hora}</span></td>
+        <td class="wii-td-op"><strong class="wii-hist-op-text">${item.expresion}</strong></td>
+        <td class="wii-td-spoken"><span class="wii-hist-spoken-text">${item.comoSeDice || ''}</span></td>
+        <td class="wii-td-actions">
+          <div class="wii-hist-action-btns">
+            <button type="button" class="wii-btn-hist-edit" data-action="edit" title="Cargar y reutilizar en Calculadora ${item.origen.toUpperCase()}">
+              <i class="fa-solid fa-pencil"></i>
+            </button>
+            <button type="button" class="wii-btn-hist-del" data-action="delete" title="Eliminar este cálculo">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Delegación de eventos en tabla de historial (Eliminar & Reutilizar con lápiz ✏️)
   container.onclick = (e) => {
-    const btn = e.target.closest('button');
+    const btn = e.target.closest('button[data-action]');
     if (!btn) return;
 
-    const row = btn.closest('.wii-hist-item');
+    const row = btn.closest('tr.wii-hist-row');
     if (!row) return;
 
     const id = parseInt(row.getAttribute('data-id') || '0', 10);
-    const val = row.getAttribute('data-val');
+    const item = list.find(it => it.id === id);
+    if (!item) return;
 
-    if (btn.getAttribute('data-action') === 'load') {
-      currentInput = val || '0';
-      actualizarDisplay();
-      document.getElementById('tabAritmetica')?.click();
-    } else if (btn.getAttribute('data-action') === 'delete') {
+    const action = btn.getAttribute('data-action');
+
+    if (action === 'delete') {
       const filtrado = list.filter(it => it.id !== id);
       localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(filtrado));
       renderizarHistorial(filtrado);
+      Mensaje('Cálculo eliminado del historial', 'info');
+    } else if (action === 'edit') {
+      // Reutilizar y cargar el valor en la calculadora correspondiente
+      const origen = item.origen || 'pro';
+      const numStr = `${item.val}`;
+
+      if (origen === 'vip') {
+        ultimaEstacionActiva = 'vip';
+        vipInput = numStr;
+        vipPrev = null;
+        vipOp = null;
+        vipWaiting = false;
+        vipLastExpr = item.expresion;
+        actualizarVipDisplay();
+        Mensaje(`Cálculo cargado en Calculadora VIP (${item.val})`, 'exito');
+      } else if (origen === 'ultra') {
+        ultimaEstacionActiva = 'ultra';
+        ultraInput = numStr;
+        ultraPrev = null;
+        ultraOp = null;
+        ultraWaiting = false;
+        ultraLastExpr = item.expresion;
+        actualizarUltraDisplay();
+        Mensaje(`Cálculo cargado en Calculadora Ultra (${item.val})`, 'exito');
+      } else {
+        ultimaEstacionActiva = 'pro';
+        proInput = numStr;
+        proPrev = null;
+        proOp = null;
+        proWaiting = false;
+        proLastExpr = item.expresion;
+        actualizarProDisplay();
+        Mensaje(`Cálculo cargado en Calculadora Pro (${item.val})`, 'exito');
+      }
     }
   };
+}
+
+// =============================================================================
+// 10. MANEJO DE TECLADO FÍSICO
+// =============================================================================
+function manejarTecladoFisico(e) {
+  const activeTag = document.activeElement?.tagName?.toLowerCase();
+  if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+    return;
+  }
+
+  const key = e.key;
+  const isVip = ultimaEstacionActiva === 'vip';
+  const isUltra = ultimaEstacionActiva === 'ultra';
+
+  if (/^[0-9]$/.test(key)) {
+    e.preventDefault();
+    if (isUltra) ultraIntroducirDigito(key);
+    else if (isVip) vipIntroducirDigito(key);
+    else proIntroducirDigito(key);
+  } else if (key === '.') {
+    e.preventDefault();
+    if (isUltra) ultraIntroducirDigito('.');
+    else if (isVip) vipIntroducirDigito('.');
+    else proIntroducirDigito('.');
+  } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+    e.preventDefault();
+    if (isUltra) {
+      if (key === '+' || key === '-') ultraManejarOperador(key);
+    } else if (isVip) {
+      vipManejarOperador(key);
+    } else {
+      proManejarOperador(key);
+    }
+  } else if (key === 'Enter' || key === '=') {
+    e.preventDefault();
+    if (isUltra) ultraEjecutarIgual();
+    else if (isVip) vipEjecutarIgual();
+    else proEjecutarIgual();
+  } else if (key === 'Backspace') {
+    e.preventDefault();
+    if (isUltra) ultraBorrarUltimo();
+    else if (isVip) vipBorrarUltimo();
+    else proBorrarUltimo();
+  } else if (key === 'Escape') {
+    e.preventDefault();
+    if (isUltra) ultraLimpiar();
+    else if (isVip) vipLimpiar();
+    else proLimpiar();
+  }
 }

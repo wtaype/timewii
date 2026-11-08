@@ -1,287 +1,290 @@
 // src/feature/eeuu/eeuu.js
-// 🇺🇸 vs 🇵🇪 Lógica del Calendario Anual 6x6, Modal Interactivo y Filtros Laborales
+// 🇺🇸 vs 🇵🇪 Lógica del Calendario Anual 6x6 Perpetuo y Dinámico, Tooltip Flotante y Filtros Laborales
 // 100% Cero latencia · Local-First · Idempotente y compatible con Astro ClientRouter
 
 import { HOLIDAYS_COMPARISON_DATA } from '@semillas/cultureData.js';
-
-// Base de Datos Detallada de Feriados para el Modal Interactivo (2026)
-const DETALLES_FERIADOS = {
-  '01-01': {
-    dateDisplay: 'Jueves, 1 de Enero de 2026',
-    country: 'both',
-    countryLabel: 'Ambos Países (EE.UU. y Perú)',
-    countryFlag: '🇺🇸 ⟷ 🇵🇪',
-    title: 'New Year’s Day / Año Nuevo',
-    why: 'Celebración universal del inicio del nuevo año calendario con resoluciones personales, reuniones y celebraciones familiares.',
-    workImpact: '🟢 Descanso Total General',
-    workDetail: 'Líneas de atención cerradas en EE.UU. y feriado no laborable en Perú. Descanso absoluto para todos los equipos.'
-  },
-  '01-19': {
-    dateDisplay: 'Lunes, 19 de Enero de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Martin Luther King Jr. Day',
-    why: 'Homenaje al líder histórico de los derechos civiles en EE.UU., promotor de la igualdad, la justicia racial y el servicio comunitario.',
-    workImpact: '🔵 Día Libre Campaña USA',
-    workDetail: 'Feriado federal en EE.UU. Bancos, bolsa y oficinas gubernamentales cerradas. Líneas de atención cerradas o volumen mínimo.'
-  },
-  '02-16': {
-    dateDisplay: 'Lunes, 16 de Febrero de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Presidents’ Day (Washington’s Birthday)',
-    why: 'Conmemoración del natalicio de George Washington y Abraham Lincoln, celebrando el legado democrático de los líderes de EE.UU.',
-    workImpact: '🔵 Día Libre / Bajo Flujo USA',
-    workDetail: 'Feriado federal en EE.UU. Operaciones comerciales operan con personal mínimo o descanso de campaña.'
-  },
-  '04-02': {
-    dateDisplay: 'Jueves, 2 de Abril de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Jueves Santo',
-    why: 'Conmemoración cristiana solemne de la Última Cena y el lavado de pies. Tradición de recogimiento y viaje a provincias en Perú.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es día hábil regular. El asesor en Perú labora su turno habitual (con pago doble/feriado según legislación peruana).'
-  },
-  '04-03': {
-    dateDisplay: 'Viernes, 3 de Abril de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Viernes Santo',
-    why: 'Conmemoración de la crucifixión de Jesús. Tradición popular en Perú de recorrer las 7 iglesias y comer pescado.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Campañas americanas continúan operando con normalidad total. Asesores remotos atienden en su jornada estándar con pago de feriado.'
-  },
-  '05-01': {
-    dateDisplay: 'Viernes, 1 de Mayo de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Día Internacional de los Trabajadores',
-    why: 'Conmemoración mundial de las reivindicaciones laborales y la jornada de 8 horas (en EE.UU. el día del trabajo se celebra en septiembre).',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'EE.UU. no observa feriado el 1 de mayo. Clientes llaman habitualmente; se abona el recargo legal correspondiente.'
-  },
-  '05-25': {
-    dateDisplay: 'Lunes, 25 de Mayo de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Memorial Day (Día de los Caídos)',
-    why: 'Homenaje solemne a los militares que dieron su vida por EE.UU. Marca el inicio festivo del verano americano con parrilladas familiares.',
-    workImpact: '🔵 Día Libre Total USA',
-    workDetail: 'Cierre total de operaciones en EE.UU. La gran mayoría de campañas de soporte y ventas descansan.'
-  },
-  '06-07': {
-    dateDisplay: 'Domingo, 7 de Junio de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Día de la Bandera y Batalla de Arica',
-    why: 'Conmemoración del heroísmo de Francisco Bolognesi y Alfonso Ugarte en la defensa patriótica de Arica en 1880.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Feriado nacional en el Perú. Si el asesor tiene turno dominical programado, labora con la compensación de feriado.'
-  },
-  '06-19': {
-    dateDisplay: 'Viernes, 19 de Junio de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Juneteenth National Independence Day',
-    why: 'Celebración de la emancipación de los esclavos afroamericanos en Texas (1865). Feriado federal de libertad y cultura comunitaria.',
-    workImpact: '🔵 Día Libre Campaña USA',
-    workDetail: 'Feriado federal oficial en EE.UU. Bancos e instituciones cerradas; líneas telefónicas con tráfico mínimo o cerradas.'
-  },
-  '06-29': {
-    dateDisplay: 'Lunes, 29 de Junio de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Día de San Pedro y San Pablo',
-    why: 'Festividad patronal de los apóstoles y día del pescador en Perú; tradición de procesión marítima en los muelles de Chorrillos y el Callao.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es día regular sin restricciones. Asesor en Perú labora con el beneficio salarial de feriado.'
-  },
-  '07-04': {
-    dateDisplay: 'Sábado, 4 de Julio de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Independence Day (4th of July)',
-    why: 'Máxima fiesta nacional de EE.UU.; proclamación de la Independencia en 1776 celebrada con picnics, parrilladas y espectáculos pirotécnicos.',
-    workImpact: '🔵 Día Libre Campaña USA',
-    workDetail: 'Cierre total de operaciones en EE.UU. Sin servicio de llamadas en campañas americanas.'
-  },
-  '07-23': {
-    dateDisplay: 'Jueves, 23 de Julio de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Día de la Fuerza Aérea del Perú (FAP)',
-    why: 'Homenaje a la inmolación del héroe nacional José Abelardo Quiñones en la batalla de Quebrada Seca (1941).',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Feriado en Perú pero jornada hábil completa en EE.UU. Tráfico de llamadas estándar.'
-  },
-  '07-28': {
-    dateDisplay: 'Martes, 28 de Julio de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Fiestas Patrias del Perú (Independencia)',
-    why: 'Celebración cumbre de la Independencia proclamada por Don José de San Martín en 1821; mensaje a la nación y comidas típicas criollas.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es día laborable normal. Campañas remotas continúan activas y se paga feriado oficial según legislación peruana.'
-  },
-  '07-29': {
-    dateDisplay: 'Miércoles, 29 de Julio de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Fiestas Patrias del Perú (Gran Parada Militar)',
-    why: 'Segundo día de Fiestas Patrias en honor a las Fuerzas Armadas y Policía Nacional con el tradicional desfile militar en Lima.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Jornada comercial estándar en EE.UU. Operación activa con remuneración de feriado.'
-  },
-  '08-06': {
-    dateDisplay: 'Jueves, 6 de Agosto de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Batalla de Junín',
-    why: 'Conmemoración del triunfo de las fuerzas patriotas en 1824 que aceleró la independencia de América del Sur.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Feriado en Perú; en EE.UU. día normal de atención.'
-  },
-  '08-30': {
-    dateDisplay: 'Domingo, 30 de Agosto de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Santa Rosa de Lima',
-    why: 'Festividad de la primera santa de América y patrona de la Policía Nacional; cartas de devoción en el Pozo de los Deseos.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Feriado religioso en Perú; turnos dominicales hacia EE.UU. operan con normalidad.'
-  },
-  '09-07': {
-    dateDisplay: 'Lunes, 7 de Septiembre de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Labor Day (Día del Trabajo en EE.UU.)',
-    why: 'Reconocimiento nacional a la fuerza laboral de EE.UU. Marca el final de la temporada estival americana y el retorno escolar.',
-    workImpact: '🔵 Día Libre Campaña USA',
-    workDetail: 'Cierre total de operaciones y atención telefónica en EE.UU. Descanso para campañas de servicio al cliente.'
-  },
-  '10-08': {
-    dateDisplay: 'Jueves, 8 de Octubre de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Combate de Angamos',
-    why: 'Homenaje al Gran Almirante Miguel Grau Seminario y la tripulación del Huáscar por su patriotismo y caballerosidad en 1879.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es día hábil ordinario. Asesor remoto labora con la compensación de feriado de ley.'
-  },
-  '10-12': {
-    dateDisplay: 'Lunes, 12 de Octubre de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Columbus Day / Indigenous Peoples’ Day',
-    why: 'Feriado federal en EE.UU. que conmemora el arribo de Colón a América y honra la cultura y resiliencia de los pueblos indígenas.',
-    workImpact: '🔵 Bajo Flujo / Día Libre USA',
-    workDetail: 'Cierres bancarios e institucionales en EE.UU. Llamadas moderadas a bajas; muchas campañas descansan.'
-  },
-  '10-31': {
-    dateDisplay: 'Sábado, 31 de Octubre de 2026',
-    country: 'both',
-    countryLabel: 'Festividad en Ambos Países',
-    countryFlag: '🇺🇸 ⟷ 🇵🇪',
-    title: 'Halloween & Día de la Canción Criolla',
-    why: 'Noche de dulces y disfraces ("Trick or Treat") en EE.UU. y homenaje a la música criolla con guitarra y cajón en peñas del Perú.',
-    workImpact: '⚪ Día Laborable Festivo',
-    workDetail: 'Ambos países laboran sus horarios normales; ambiente festivo durante la tarde y noche.'
-  },
-  '11-01': {
-    dateDisplay: 'Domingo, 1 de Noviembre de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Día de Todos los Santos',
-    why: 'Tradición solemne en honor a los difuntos; visitas masivas a los camposantos y consumo de la tradicional tanta wawa en Perú.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es día ordinario; turnos de soporte operan con normalidad.'
-  },
-  '11-11': {
-    dateDisplay: 'Miércoles, 11 de Noviembre de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Veterans Day (Día de los Veteranos)',
-    why: 'Homenaje solemne a los veteranos militares vivos de las Fuerzas Armadas de EE.UU. Minuto de silencio oficial a las 11:00 AM.',
-    workImpact: '🔵 Día Libre / Bajo Flujo USA',
-    workDetail: 'Feriado federal en EE.UU. Bancos y correo postal cerrados; volumen de llamadas reducido.'
-  },
-  '11-26': {
-    dateDisplay: 'Jueves, 26 de Noviembre de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Thanksgiving Day (Acción de Gracias)',
-    why: 'La fiesta familiar más emblemática de EE.UU.; reunión con pavo al horno, gratitud y partidos de fútbol americano de la NFL.',
-    workImpact: '🔵 Día Libre Total USA',
-    workDetail: 'Cierre total de operaciones en EE.UU. Ninguna campaña opera; día libre absoluto.'
-  },
-  '11-27': {
-    dateDisplay: 'Viernes, 27 de Noviembre de 2026',
-    country: 'usa',
-    countryLabel: 'Estados Unidos (EE.UU.)',
-    countryFlag: '🇺🇸',
-    title: 'Black Friday (Viernes Negro)',
-    why: 'El día de descuentos comerciales más intenso del año en EE.UU., dando inicio a las compras navideñas masivas.',
-    workImpact: '⚪ Alto Flujo en Campañas USA',
-    workDetail: 'Día laboral de máxima demanda en cuentas de retail, envíos y pagos en EE.UU.'
-  },
-  '12-08': {
-    dateDisplay: 'Martes, 8 de Diciembre de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Inmaculada Concepción',
-    why: 'Festividad católica tradicional en Perú dedicada a la Virgen María y temporada de primeras comuniones.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'En EE.UU. es temporada alta de comercio navideño. Asesor atiende con pago de feriado de ley.'
-  },
-  '12-09': {
-    dateDisplay: 'Miércoles, 9 de Diciembre de 2026',
-    country: 'peru',
-    countryLabel: 'Perú',
-    countryFlag: '🇵🇪',
-    title: 'Batalla de Ayacucho',
-    why: 'Conmemoración de la victoria libertaria en la Pampa de la Quinua (1824) comandada por Antonio José de Sucre que selló la independencia sudamericana.',
-    workImpact: '🔴 SÍ se trabaja para EE.UU.',
-    workDetail: 'Feriado oficial en Perú. EE.UU. opera en jornada estándar.'
-  },
-  '12-25': {
-    dateDisplay: 'Viernes, 25 de Diciembre de 2026',
-    country: 'both',
-    countryLabel: 'Ambos Países (EE.UU. y Perú)',
-    countryFlag: '🇺🇸 ⟷ 🇵🇪',
-    title: 'Christmas Day / Navidad',
-    why: 'Celebración universal del nacimiento de Jesús con regalos, cena navideña y unión familiar en todo el mundo.',
-    workImpact: '🟢 Descanso Total General',
-    workDetail: 'Cierre total de operaciones en EE.UU. y feriado no laborable en Perú. Descanso absoluto para todos los trabajadores.'
-  }
-};
 
 const NOMBRES_MESES = [
   '', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
   'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 ];
+
+const DIAS_SEMANA_NOMBRES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+// =============================================================================
+// ALGORITMOS MATEMÁTICOS PERPETUOS DE CALENDARIO & DÍAS MÓVILES
+// =============================================================================
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+// N-ésimo día de la semana de un mes (ej. 3er lunes = n=3, dayOfWeek=1)
+function getNthDayOfMonth(year, month, dayOfWeek, n) {
+  let date = new Date(year, month - 1, 1);
+  let count = 0;
+  while (date.getMonth() === month - 1) {
+    if (date.getDay() === dayOfWeek) {
+      count++;
+      if (count === n) return date.getDate();
+    }
+    date.setDate(date.getDate() + 1);
+  }
+  return 1;
+}
+
+// Último día de la semana de un mes (ej. último lunes de mayo)
+function getLastDayOfWeekOfMonth(year, month, dayOfWeek) {
+  let date = new Date(year, month, 0);
+  while (date.getDay() !== dayOfWeek) {
+    date.setDate(date.getDate() - 1);
+  }
+  return date.getDate();
+}
+
+// Algoritmo Canónico de Pascua (Meeus/Jones/Butcher) para Jueves y Viernes Santo de cualquier año
+function calcularSemanaSanta(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const mes = Math.floor((h + l - 7 * m + 114) / 31);
+  const dia = ((h + l - 7 * m + 114) % 31) + 1;
+
+  const domingoPascua = new Date(year, mes - 1, dia);
+  const juevesSanto = new Date(domingoPascua);
+  juevesSanto.setDate(domingoPascua.getDate() - 3);
+  const viernesSanto = new Date(domingoPascua);
+  viernesSanto.setDate(domingoPascua.getDate() - 2);
+
+  return {
+    jueves: { mes: juevesSanto.getMonth() + 1, dia: juevesSanto.getDate() },
+    viernes: { mes: viernesSanto.getMonth() + 1, dia: viernesSanto.getDate() }
+  };
+}
+
+function formatearFechaEspanol(year, mes, dia) {
+  const fecha = new Date(year, mes - 1, dia);
+  const nombreDia = DIAS_SEMANA_NOMBRES[fecha.getDay()];
+  const nombreMes = NOMBRES_MESES[mes];
+  return `${nombreDia}, ${dia} de ${nombreMes} de ${year}`;
+}
+
+// Generador Perpetuo de la Base de Datos de Feriados para cualquier Año
+function generarDetallesFeriados(year) {
+  const feriados = {};
+
+  function agregar(mes, dia, country, countryLabel, countryFlag, title, why, workImpact, workDetail) {
+    const key = `${pad2(mes)}-${pad2(dia)}`;
+    feriados[key] = {
+      dateDisplay: formatearFechaEspanol(year, mes, dia),
+      country,
+      countryLabel,
+      countryFlag,
+      title,
+      why,
+      workImpact,
+      workDetail
+    };
+  }
+
+  // --- 1. FERIADOS FIJOS (Universal anual) ---
+  agregar(1, 1, 'both', 'Ambos Países (EE.UU. y Perú)', '🇺🇸 ⟷ 🇵🇪',
+    'New Year’s Day / Año Nuevo',
+    'Celebración universal del inicio del nuevo año calendario con resoluciones personales y reuniones familiares.',
+    '🟢 Descanso Total General',
+    'Líneas de atención cerradas en EE.UU. y feriado no laborable en Perú. Descanso absoluto para todos los equipos.');
+
+  agregar(5, 1, 'peru', 'Perú', '🇵🇪',
+    'Día Internacional de los Trabajadores',
+    'Conmemoración mundial de las reivindicaciones laborales y la jornada de 8 horas (en EE.UU. se celebra en septiembre).',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'EE.UU. no observa feriado el 1 de mayo. Clientes llaman habitualmente; se abona el recargo legal correspondiente.');
+
+  agregar(6, 7, 'peru', 'Perú', '🇵🇪',
+    'Día de la Bandera y Batalla de Arica',
+    'Homenaje patriótico al heroísmo de Francisco Bolognesi y Alfonso Ugarte en 1880.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Feriado nacional en el Perú. Turnos remotos hacia campañas americanas laboran con pago de ley.');
+
+  agregar(6, 19, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Juneteenth National Independence Day',
+    'Celebración de la emancipación de los esclavos afroamericanos en Texas (1865). Feriado federal de libertad y comunidad.',
+    '🔵 Día Libre Campaña USA',
+    'Feriado federal oficial en EE.UU. Bancos e instituciones cerradas; líneas con tráfico mínimo o cerradas.');
+
+  agregar(6, 29, 'peru', 'Perú', '🇵🇪',
+    'Día de San Pedro y San Pablo',
+    'Festividad patronal de los apóstoles y día del pescador en Perú; tradición de procesión marítima.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. es día regular sin restricciones. Asesor en Perú labora con el beneficio salarial de feriado.');
+
+  agregar(7, 4, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Independence Day (4th of July)',
+    'Máxima fiesta nacional de EE.UU.; proclamación de la Independencia en 1776 con parrilladas y fuegos artificiales.',
+    '🔵 Día Libre Campaña USA',
+    'Cierre total de operaciones en EE.UU. Sin servicio de llamadas en campañas americanas.');
+
+  agregar(7, 23, 'peru', 'Perú', '🇵🇪',
+    'Día de la Fuerza Aérea del Perú (FAP)',
+    'Homenaje a la inmolación del héroe nacional José Abelardo Quiñones en la batalla de Quebrada Seca (1941).',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Feriado en Perú pero jornada hábil completa en EE.UU. Tráfico de llamadas estándar.');
+
+  agregar(7, 28, 'peru', 'Perú', '🇵🇪',
+    'Fiestas Patrias del Perú (Independencia)',
+    'Celebración cumbre de la Independencia proclamada por Don José de San Martín en 1821.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. es día laborable normal. Campañas remotas continúan activas y se paga feriado de ley.');
+
+  agregar(7, 29, 'peru', 'Perú', '🇵🇪',
+    'Fiestas Patrias del Perú (Gran Parada Militar)',
+    'Segundo día de Fiestas Patrias en honor a las Fuerzas Armadas y Policía Nacional con desfile en Lima.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Jornada comercial estándar en EE.UU. Operación activa con remuneración de feriado.');
+
+  agregar(8, 6, 'peru', 'Perú', '🇵🇪',
+    'Batalla de Junín',
+    'Conmemoración del triunfo de las fuerzas patriotas en 1824 que aceleró la independencia de América del Sur.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Feriado en Perú; en EE.UU. día normal de atención.');
+
+  agregar(8, 30, 'peru', 'Perú', '🇵🇪',
+    'Santa Rosa de Lima',
+    'Festividad de la primera santa de América y patrona de la Policía Nacional; cartas en el Pozo de los Deseos.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Feriado religioso en Perú; turnos hacia EE.UU. operan con normalidad.');
+
+  agregar(10, 8, 'peru', 'Perú', '🇵🇪',
+    'Combate de Angamos',
+    'Homenaje al heroísmo del Gran Almirante Miguel Grau y la tripulación del monitor Huáscar en 1879.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. es día laboral regular. El asesor atiende con compensación salarial de feriado.');
+
+  agregar(10, 31, 'both', 'Ambos Países (EE.UU. y Perú)', '🇺🇸 ⟷ 🇵🇪',
+    'Halloween / Día de la Canción Criolla',
+    'Día festivo dual: disfraces y dulces en EE.UU. combinados con música criolla y marinera en el Perú.',
+    '⚪ Jornada Regular con Alta Vibra',
+    'No es feriado oficial bancario pero tiene alto dinamismo en interacciones y preguntas con clientes.');
+
+  agregar(11, 1, 'peru', 'Perú', '🇵🇪',
+    'Día de Todos los Santos',
+    'Tradición familiar de visitar cementerios, colocar flores y compartir tantawawas en provincias peruanas.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. la banca y comercio operan en su jornada normal. Se remunera feriado de ley.');
+
+  agregar(11, 11, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Veterans Day (Día de los Veteranos)',
+    'Homenaje solemne a los veteranos militares vivos de las Fuerzas Armadas de EE.UU. con minuto de silencio oficial.',
+    '🔵 Día Libre / Bajo Flujo USA',
+    'Feriado federal en EE.UU. Bancos y correo postal cerrados; volumen de llamadas reducido.');
+
+  agregar(12, 8, 'peru', 'Perú', '🇵🇪',
+    'Inmaculada Concepción',
+    'Festividad católica tradicional en Perú dedicada a la Virgen María y temporada de primeras comuniones.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. es temporada alta de comercio navideño. Asesor atiende con pago de feriado de ley.');
+
+  agregar(12, 9, 'peru', 'Perú', '🇵🇪',
+    'Batalla de Ayacucho',
+    'Conmemoración de la victoria libertaria en la Pampa de la Quinua (1824) comandada por Antonio José de Sucre.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Feriado oficial en Perú. EE.UU. opera en jornada estándar.');
+
+  agregar(12, 25, 'both', 'Ambos Países (EE.UU. y Perú)', '🇺🇸 ⟷ 🇵🇪',
+    'Christmas Day / Navidad',
+    'Celebración universal del nacimiento de Jesús con regalos, cena navideña y unión familiar.',
+    '🟢 Descanso Total General',
+    'Cierre total de operaciones en EE.UU. y feriado no laborable en Perú. Descanso absoluto general.');
+
+  // --- 2. FERIADOS MÓVILES (Calculados matemáticamente según el año) ---
+  // A. Martin Luther King Jr. Day (3er lunes de Enero)
+  const diaMlk = getNthDayOfMonth(year, 1, 1, 3);
+  agregar(1, diaMlk, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Martin Luther King Jr. Day',
+    'Homenaje al líder histórico de los derechos civiles en EE.UU., promotor de la igualdad y la justicia social.',
+    '🔵 Día Libre Campaña USA',
+    'Feriado federal en EE.UU. Bancos, bolsa y entes públicos cerrados. Líneas de atención cerradas o volumen mínimo.');
+
+  // B. Presidents’ Day (3er lunes de Febrero)
+  const diaPres = getNthDayOfMonth(year, 2, 1, 3);
+  agregar(2, diaPres, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Presidents’ Day (Washington’s Birthday)',
+    'Conmemoración del natalicio de George Washington y Abraham Lincoln, celebrando la democracia de EE.UU.',
+    '🔵 Día Libre / Bajo Flujo USA',
+    'Feriado federal en EE.UU. Operaciones comerciales operan con personal mínimo o descanso de campaña.');
+
+  // C. Semana Santa en Perú (Jueves y Viernes Santo)
+  const { jueves, viernes } = calcularSemanaSanta(year);
+  agregar(jueves.mes, jueves.dia, 'peru', 'Perú', '🇵🇪',
+    'Jueves Santo',
+    'Conmemoración solemne de la Última Cena y el lavado de pies. Tradición de viaje y recogimiento en Perú.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'En EE.UU. es día hábil regular. El asesor en Perú labora su turno habitual (con pago de feriado de ley).');
+
+  agregar(viernes.mes, viernes.dia, 'peru', 'Perú', '🇵🇪',
+    'Viernes Santo',
+    'Conmemoración de la crucifixión de Jesús. Tradición popular en Perú de recorrer las 7 iglesias y comer pescado.',
+    '🔴 SÍ se trabaja para EE.UU.',
+    'Campañas americanas continúan operando con normalidad total. Asesores remotos atienden con pago de feriado.');
+
+  // D. Memorial Day (Último lunes de Mayo)
+  const diaMem = getLastDayOfWeekOfMonth(year, 5, 1);
+  agregar(5, diaMem, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Memorial Day (Día de los Caídos)',
+    'Homenaje solemne a los militares caídos de EE.UU. Marca el inicio festivo del verano americano.',
+    '🔵 Día Libre Total USA',
+    'Cierre total de operaciones en EE.UU. La gran mayoría de campañas de soporte y ventas descansan.');
+
+  // E. Labor Day EE.UU. (1er lunes de Septiembre)
+  const diaLabor = getNthDayOfMonth(year, 9, 1, 1);
+  agregar(9, diaLabor, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Labor Day (Día del Trabajo en EE.UU.)',
+    'Reconocimiento nacional a la fuerza laboral de EE.UU. Marca el final del verano americano y el retorno escolar.',
+    '🔵 Día Libre Campaña USA',
+    'Cierre total de operaciones y atención telefónica en EE.UU. Descanso para campañas de servicio al cliente.');
+
+  // F. Columbus Day / Indigenous Peoples’ Day (2do lunes de Octubre)
+  const diaCol = getNthDayOfMonth(year, 10, 1, 2);
+  agregar(10, diaCol, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Columbus Day / Indigenous Peoples’ Day',
+    'Feriado federal en EE.UU. que honra la historia americana y la cultura de los pueblos indígenas.',
+    '🔵 Bajo Flujo / Día Libre USA',
+    'Cierres bancarios e institucionales en EE.UU. Llamadas moderadas a bajas; muchas campañas descansan.');
+
+  // G. Thanksgiving Day (4to jueves de Noviembre)
+  const diaThx = getNthDayOfMonth(year, 11, 4, 4);
+  agregar(11, diaThx, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Thanksgiving Day (Acción de Gracias)',
+    'La fiesta familiar más emblemática de EE.UU.; reunión con pavo al horno, gratitud y partidos de la NFL.',
+    '🔵 Día Libre Total USA',
+    'Cierre total de operaciones en EE.UU. Ninguna campaña opera; día libre absoluto.');
+
+  // H. Black Friday (Viernes siguiente a Thanksgiving)
+  const diaBf = diaThx + 1;
+  agregar(11, diaBf, 'usa', 'Estados Unidos (EE.UU.)', '🇺🇸',
+    'Black Friday (Viernes Negro)',
+    'El día de descuentos comerciales más intenso del año en EE.UU., dando inicio a las compras navideñas masivas.',
+    '⚪ Alto Flujo en Campañas USA',
+    'Día laboral de máxima demanda en cuentas de retail, envíos y pagos en EE.UU.');
+
+  return feriados;
+}
+
+// =============================================================================
+// ESTADO Y RENDERIZADO DEL CALENDARIO DINÁMICO
+// =============================================================================
+
+let anioActivo = 2026;
+let feriadosActivos = generarDetallesFeriados(anioActivo);
 
 export function inicializarEeuu() {
   const container = document.getElementById('eeuuContainer');
@@ -327,94 +330,206 @@ function configurarTabsCategorias() {
   });
 }
 
-// 2. Calendario Anual 6x6 e Interactividad al Clic
+// 2. Calendario Anual Perpetuo & Tooltip en Hover
 function configurarCalendarioAnual() {
+  const calBox = document.getElementById('annualCalendarBox') || document.querySelector('.wii-annual-calendar-box');
   const grid = document.getElementById('annualCalendarGrid');
-  const backdrop = document.getElementById('holidayModalBackdrop');
-  const card = document.getElementById('holidayModalCard');
-  const btnClose = document.getElementById('btnModalClose');
-  const btnOk = document.getElementById('btnModalOk');
+  const tooltip = document.getElementById('holidayHoverTooltip');
 
-  if (!grid || !backdrop) return;
+  if (!calBox || !grid || !tooltip) return;
 
-  function abrirModalFeriado(fechaKey, mes, dia) {
-    const data = DETALLES_FERIADOS[fechaKey];
+  const titleYear = document.getElementById('calTitleYear');
+  const lblYear = document.getElementById('lblCalCurrentYear');
+  const btnPrev = document.getElementById('btnCalPrevYear');
+  const btnNext = document.getElementById('btnCalNextYear');
+  const quickChips = document.querySelectorAll('.wii-year-chip[data-year]');
 
-    const flagEl = document.getElementById('modalCountryFlag');
-    const tagEl = document.getElementById('modalCountryTag');
-    const dateEl = document.getElementById('modalDateTitle');
-    const titleEl = document.getElementById('modalHolidayTitle');
-    const whyEl = document.getElementById('modalHolidayWhy');
-    const statusEl = document.getElementById('modalWorkStatusBadge');
-    const detailEl = document.getElementById('modalWorkDetail');
+  const countryPill = document.getElementById('httCountryPill');
+  const flagEl = document.getElementById('httCountryFlag');
+  const tagEl = document.getElementById('httCountryTag');
+  const dateEl = document.getElementById('httDateDisplay');
+  const badgeEl = document.getElementById('httWorkBadge');
+  const titleEl = document.getElementById('httHolidayTitle');
+  const whyEl = document.getElementById('httHolidayWhy');
+  const detailEl = document.getElementById('httWorkDetail');
 
-    if (data) {
-      if (flagEl) flagEl.textContent = data.countryFlag;
-      if (tagEl) {
-        tagEl.textContent = data.countryLabel;
-        tagEl.className = `wii-hm-country-tag tag-${data.country}`;
-      }
-      if (dateEl) dateEl.textContent = data.dateDisplay;
-      if (titleEl) titleEl.textContent = data.title;
-      if (whyEl) whyEl.textContent = data.why;
-      if (statusEl) {
-        statusEl.textContent = data.workImpact;
-        statusEl.className = `wii-hm-status-badge badge-${data.country}`;
-      }
-      if (detailEl) detailEl.textContent = data.workDetail;
-    } else {
-      // Día regular sin feriado
-      const nombreMes = NOMBRES_MESES[mes] || '';
-      if (flagEl) flagEl.textContent = '📅';
-      if (tagEl) {
-        tagEl.textContent = 'Día Laboral Regular';
-        tagEl.className = 'wii-hm-country-tag tag-regular';
-      }
-      if (dateEl) dateEl.textContent = `${dia} de ${nombreMes} de 2026`;
-      if (titleEl) titleEl.textContent = 'Jornada Laboral Regular';
-      if (whyEl) whyEl.textContent = `No hay feriado oficial registrado en EE.UU. ni en Perú para el ${dia} de ${nombreMes}.`;
-      if (statusEl) {
-        statusEl.textContent = '⚪ Turno Normal';
-        statusEl.className = 'wii-hm-status-badge badge-regular';
-      }
-      if (detailEl) detailEl.textContent = 'Operaciones y líneas de atención en horario comercial habitual en ambos países.';
-    }
-
-    backdrop.style.display = 'flex';
+  function ocultarTooltip() {
+    tooltip.style.display = 'none';
   }
 
-  function cerrarModal() {
-    backdrop.style.display = 'none';
+  // Renderizar la cuadrícula completa de los 12 meses matemáticamente
+  function renderizarCuadriculaAnual(year) {
+    anioActivo = year;
+    feriadosActivos = generarDetallesFeriados(year);
+
+    if (titleYear) titleYear.textContent = year;
+    if (lblYear) lblYear.textContent = year;
+
+    quickChips.forEach(chip => {
+      chip.classList.toggle('active', Number(chip.getAttribute('data-year')) === year);
+    });
+
+    let html = '';
+
+    for (let m = 1; m <= 12; m++) {
+      const mesPad = pad2(m);
+      const nombreMes = NOMBRES_MESES[m];
+      const totalDias = new Date(year, m, 0).getDate();
+      // Lunes = 0, Domingo = 6
+      const diaSemana1 = new Date(year, m - 1, 1).getDay();
+      const offset = (diaSemana1 + 6) % 7;
+
+      // Contar feriados en este mes
+      const feriadosDelMes = Object.keys(feriadosActivos).filter(k => k.startsWith(mesPad));
+      const totalFeriados = feriadosDelMes.length;
+
+      html += `
+        <div class="wii-month-mini-card" data-month-num="${m}">
+          <div class="wii-mm-header">
+            <span class="wii-mm-name">${nombreMes}</span>
+            ${totalFeriados > 0 ? `<span class="wii-mm-badge">${totalFeriados} feriado${totalFeriados === 1 ? '' : 's'}</span>` : ''}
+          </div>
+
+          <div class="wii-mm-weekdays">
+            <span>L</span>
+            <span>M</span>
+            <span>M</span>
+            <span>J</span>
+            <span>V</span>
+            <span>S</span>
+            <span>D</span>
+          </div>
+
+          <div class="wii-mm-days">
+      `;
+
+      // Celdas vacías
+      for (let o = 0; o < offset; o++) {
+        html += `<div class="wii-mm-day is-empty"></div>`;
+      }
+
+      // Días del mes
+      for (let d = 1; d <= totalDias; d++) {
+        const diaPad = pad2(d);
+        const key = `${mesPad}-${diaPad}`;
+        const feriado = feriadosActivos[key];
+
+        if (feriado) {
+          html += `
+            <button
+              type="button"
+              class="wii-mm-day has-holiday holiday-${feriado.country}"
+              data-date="${year}-${key}"
+              data-month="${m}"
+              data-day="${d}"
+              data-holiday-key="${key}"
+              aria-label="${d} de ${nombreMes}: ${feriado.title}"
+            >
+              <span class="wii-day-num">${d}</span>
+              <span class="wii-cal-dot dot-${feriado.country}"></span>
+            </button>
+          `;
+        } else {
+          html += `
+            <button
+              type="button"
+              class="wii-mm-day"
+              data-date="${year}-${key}"
+              data-month="${m}"
+              data-day="${d}"
+              aria-label="${d} de ${nombreMes}"
+            >
+              <span class="wii-day-num">${d}</span>
+            </button>
+          `;
+        }
+      }
+
+      html += `
+          </div>
+        </div>
+      `;
+    }
+
+    grid.innerHTML = html;
   }
 
-  // Delegación de clic en las celdas de días
-  grid.addEventListener('click', (e) => {
-    const btn = e.target.closest('.wii-mm-day:not(.is-empty)');
-    if (!btn) return;
+  // Controles de Cambio de Año
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      renderizarCuadriculaAnual(anioActivo - 1);
+    });
+  }
 
-    const key = btn.getAttribute('data-holiday-key') || '';
-    const mes = parseInt(btn.getAttribute('data-month') || '1', 10);
-    const dia = parseInt(btn.getAttribute('data-day') || '1', 10);
-    const fechaKey = key || `${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      renderizarCuadriculaAnual(anioActivo + 1);
+    });
+  }
 
-    abrirModalFeriado(fechaKey, mes, dia);
+  quickChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const targetYear = Number(chip.getAttribute('data-year'));
+      if (targetYear && targetYear !== anioActivo) {
+        renderizarCuadriculaAnual(targetYear);
+      }
+    });
   });
 
-  // Eventos de cierre
-  if (btnClose) btnClose.addEventListener('click', cerrarModal);
-  if (btnOk) btnOk.addEventListener('click', cerrarModal);
+  // Seguimiento del cursor sobre el calendario para Tooltip Hover
+  grid.addEventListener('mousemove', (e) => {
+    const dayBtn = e.target.closest('.wii-mm-day.has-holiday, .wii-mm-day[data-holiday-key]');
 
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) {
-      cerrarModal();
+    if (dayBtn) {
+      const key = dayBtn.getAttribute('data-holiday-key') || '';
+      const data = feriadosActivos[key];
+
+      if (data) {
+        if (flagEl) flagEl.textContent = data.countryFlag;
+        if (tagEl) tagEl.textContent = data.countryLabel;
+        if (countryPill) {
+          countryPill.className = `wii-htt-country-pill pill-${data.country}`;
+        }
+        if (badgeEl) {
+          badgeEl.textContent = data.workImpact;
+          badgeEl.className = `wii-htt-badge badge-${data.country}`;
+        }
+        if (titleEl) titleEl.textContent = data.title;
+        if (dateEl) dateEl.textContent = data.dateDisplay;
+        if (whyEl) whyEl.textContent = data.why;
+        if (detailEl) detailEl.textContent = data.workDetail;
+
+        // Mostrar y posicionar el tooltip
+        tooltip.style.display = 'flex';
+
+        const rect = calBox.getBoundingClientRect();
+        const ttWidth = 320;
+        const ttHeight = 160;
+
+        let x = e.clientX - rect.left + 14;
+        let y = e.clientY - rect.top + 14;
+
+        if (x + ttWidth > rect.width) {
+          x = e.clientX - rect.left - ttWidth - 12;
+        }
+        if (y + ttHeight > rect.height) {
+          y = e.clientY - rect.top - ttHeight - 12;
+        }
+
+        tooltip.style.left = `${Math.max(8, x)}px`;
+        tooltip.style.top = `${Math.max(8, y)}px`;
+        return;
+      }
     }
+
+    ocultarTooltip();
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && backdrop.style.display === 'flex') {
-      cerrarModal();
-    }
-  });
+  grid.addEventListener('mouseleave', ocultarTooltip);
+  calBox.addEventListener('mouseleave', ocultarTooltip);
+
+  // Inicialización: aseguramos que el calendario esté renderizado para el año activo
+  renderizarCuadriculaAnual(anioActivo);
 }
 
 // 3. Filtro de Feriados en la Tabla Inferior
