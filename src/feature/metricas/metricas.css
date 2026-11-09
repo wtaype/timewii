@@ -51,18 +51,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: var(--fz_m1);
 }
 
 .wii-ratings-title {
-  font-size: 1rem;
+  font-size: var(--fz_m1);
   font-weight: 800;
   color: var(--tx1);
   margin: 0;
 }
 
 .wii-ratings-sub {
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   color: var(--tx3);
   margin: 0.2vh 0 0;
 }
@@ -79,7 +79,7 @@
   color: #f0c547;
   border-radius: 0.5vh;
   padding: 0.4vh 0.8vh;
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
@@ -99,7 +99,7 @@
   color: var(--tx2);
   border-radius: 0.5vh;
   padding: 0.4vh 0.8vh;
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
@@ -140,11 +140,11 @@
   align-items: center;
   color: #ffffff;
   font-weight: 800;
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
 }
 
 .wii-rc-star {
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   background: rgba(0, 0, 0, 0.25);
   padding: 0.15vh 0.4vh;
   border-radius: 0.3vh;
@@ -186,7 +186,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   transition: all 0.12s ease;
 }
 
@@ -202,7 +202,7 @@
   background: transparent;
   text-align: center;
   font-family: monospace;
-  font-size: 1.15rem;
+  font-size: var(--fz_m3);
   font-weight: 900;
   color: var(--tx1);
   outline: none;
@@ -227,7 +227,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   border-top: 1px solid var(--brd);
   padding-top: 0.4vh;
 }
@@ -282,7 +282,7 @@
 
 .wii-speedo-title,
 .wii-goal-title {
-  font-size: 0.95rem;
+  font-size: var(--fz_m1);
   font-weight: 800;
   color: var(--tx1);
   margin: 0;
@@ -302,7 +302,7 @@
   border: none;
   border-radius: 0.4vh;
   padding: 0.25vh 0.6vh;
-  font-size: 0.65rem;
+  font-size: var(--fz_s1);
   font-weight: 700;
   color: var(--tx2);
   cursor: pointer;
@@ -334,7 +334,7 @@
 
 .wii-gauge-tick-text {
   font-family: var(--ff_J), sans-serif;
-  font-size: 14px;
+  font-size: var(--fz_m);
   font-weight: 800;
   fill: var(--tx3);
 }
@@ -356,7 +356,7 @@
 }
 
 .wii-score-label {
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   color: var(--tx3);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -364,7 +364,7 @@
 
 .wii-score-value {
   font-family: monospace;
-  font-size: 2.2rem;
+  font-size: var(--fz_l2);
   font-weight: 900;
   color: var(--tx1);
   letter-spacing: 0.02em;
@@ -373,7 +373,7 @@
 
 .wii-score-badge {
   margin-top: 0.3vh;
-  font-size: 0.65rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   padding: 0.25vh 0.6vh;
   border-radius: 0.4vh;
@@ -430,7 +430,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4vh;
-  font-size: 0.64rem;
+  font-size: var(--fz_s1);
   color: var(--tx2);
 }
 
@@ -452,7 +452,7 @@
   background: rgba(0, 230, 118, 0.12);
   border: 1px solid var(--ok, #00e676);
   color: var(--ok, #00e676);
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   padding: 0.25vh 0.6vh;
   border-radius: 0.4vh;
@@ -476,7 +476,7 @@
 }
 
 .wii-meta-control-title {
-  font-size: 0.78rem;
+  font-size: var(--fz_s3);
   font-weight: 800;
   color: var(--tx1);
   display: inline-flex;
@@ -497,7 +497,7 @@
   border: 1px solid var(--brd);
   background: var(--wb);
   color: var(--tx1);
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   font-weight: 800;
   display: inline-flex;
   align-items: center;
@@ -525,7 +525,7 @@
 .wii-meta-direct-input {
   width: 32px;
   font-family: var(--ff_J, Poppins);
-  font-size: 0.82rem;
+  font-size: var(--fz_s4);
   font-weight: 800;
   color: var(--tx1);
   background: transparent;
@@ -542,7 +542,7 @@
 }
 
 .wii-meta-pct-sign {
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   font-weight: 800;
   color: var(--tx2);
 }
@@ -564,7 +564,7 @@
   border: 1px solid var(--brd);
   border-radius: 0.4vh;
   padding: 0.3vh 0.7vh;
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   font-weight: 700;
   color: var(--tx2);
   cursor: pointer;
@@ -630,7 +630,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
+  font-size: var(--fz_m4);
   flex-shrink: 0;
 }
 
@@ -660,7 +660,7 @@
 }
 
 .wii-dh-headline {
-  font-size: 1.02rem;
+  font-size: var(--fz_m2);
   font-weight: 900;
   color: var(--tx1);
   letter-spacing: -0.01em;
@@ -668,7 +668,7 @@
 }
 
 .wii-dh-sub {
-  font-size: 0.74rem;
+  font-size: var(--fz_s2);
   font-weight: 700;
   color: var(--tx2);
 }
@@ -702,7 +702,7 @@
 .wii-dh-stat-num {
   display: block;
   font-family: var(--ff_J, Poppins);
-  font-size: 1.2rem;
+  font-size: var(--fz_m4);
   font-weight: 900;
   line-height: 1.1;
   color: var(--tx1);
@@ -718,7 +718,7 @@
 
 .wii-dh-stat-lbl {
   display: block;
-  font-size: 0.58rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   text-transform: uppercase;
   color: var(--tx3);
@@ -728,7 +728,7 @@
 
 /* Mensaje Motivacional Amplio */
 .wii-diag-message {
-  font-size: 0.82rem;
+  font-size: var(--fz_s4);
   color: var(--tx2);
   line-height: 1.45;
   padding: 0.2vh 0.4vh;
@@ -772,12 +772,12 @@
 }
 
 .wii-dm-ic {
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   color: var(--mco);
 }
 
 .wii-dm-lbl {
-  font-size: 0.64rem;
+  font-size: var(--fz_s1);
   color: var(--tx3);
   font-weight: 700;
   text-transform: uppercase;
@@ -786,7 +786,7 @@
 
 .wii-dm-val {
   font-family: var(--ff_J, Poppins);
-  font-size: 1.05rem;
+  font-size: var(--fz_m2);
   font-weight: 900;
   color: var(--tx1);
   line-height: 1.2;
@@ -830,18 +830,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: var(--fz_m1);
 }
 
 .wii-lth-title {
-  font-size: 1rem;
+  font-size: var(--fz_m1);
   font-weight: 800;
   color: var(--tx1);
   margin: 0;
 }
 
 .wii-lth-sub {
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   color: var(--tx3);
   margin: 0.2vh 0 0;
 }
@@ -850,7 +850,7 @@
   background: rgba(0, 230, 118, 0.12);
   border: 1px solid var(--ok, #00e676);
   color: var(--ok, #00e676);
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   padding: 0.3vh 0.6vh;
   border-radius: 0.4vh;
@@ -866,13 +866,13 @@
   width: 100%;
   min-width: 820px;
   border-collapse: collapse;
-  font-size: 0.78rem;
+  font-size: var(--fz_s3);
 }
 
 .wii-legend-table th {
   background: var(--inp);
   padding: 0.7vh 1vh;
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   color: var(--tx3);
   text-transform: uppercase;
@@ -910,7 +910,7 @@
 }
 
 .wii-opt-tag {
-  font-size: 0.68rem;
+  font-size: var(--fz_s1);
   font-weight: 800;
   padding: 0.2vh 0.5vh;
   border-radius: 0.4vh;
@@ -924,12 +924,12 @@
 .tag-v5 { background: #00796b; }
 
 .wii-opt-name {
-  font-size: 0.82rem;
+  font-size: var(--fz_s4);
   color: var(--tx1);
 }
 
 .wii-impact-badge {
-  font-size: 0.64rem;
+  font-size: var(--fz_s1);
   font-weight: 700;
   padding: 0.2vh 0.5vh;
   border-radius: 0.4vh;
@@ -955,7 +955,7 @@
   color: var(--tx2);
   cursor: pointer;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: var(--fz_m);
   transition: all 0.1s ease;
 }
 
@@ -968,20 +968,20 @@
   min-width: 32px;
   text-align: center;
   font-family: monospace;
-  font-size: 0.85rem;
+  font-size: var(--fz_m);
   font-weight: 800;
   color: var(--tx1);
 }
 
 .wii-tbl-pct {
   font-family: monospace;
-  font-size: 0.8rem;
+  font-size: var(--fz_s4);
   color: var(--tx1);
 }
 
 .wii-tbl-pts {
   font-family: monospace;
-  font-size: 0.74rem;
+  font-size: var(--fz_s2);
   color: var(--tx2);
 }
 
@@ -1011,25 +1011,25 @@
   background: rgba(255, 255, 255, 0.035);
   padding: 0.85vh 1vh;
   border-bottom: 2px solid var(--brd);
-  font-size: 0.8rem;
+  font-size: var(--fz_s4);
   vertical-align: middle;
 }
 
 .wii-total-badge-label {
-  font-size: 0.82rem;
+  font-size: var(--fz_s4);
   font-weight: 900;
   color: var(--tx1);
   letter-spacing: 0.03em;
 }
 
 .wii-final-csat-label {
-  font-size: 0.74rem;
+  font-size: var(--fz_s2);
   font-weight: 700;
   color: var(--tx2);
 }
 
 .wii-tbl-sub-label {
-  font-size: 0.72rem;
+  font-size: var(--fz_s2);
   color: var(--tx3);
 }
 
@@ -1037,7 +1037,7 @@
 .wii-tbl-total-pct,
 .wii-tbl-total-pts {
   font-family: monospace;
-  font-size: 0.88rem;
+  font-size: var(--fz_m);
   font-weight: 900;
   color: var(--tx1);
 }
@@ -1050,7 +1050,7 @@
 
 .wii-csat-highlight {
   font-family: monospace;
-  font-size: 1.05rem;
+  font-size: var(--fz_m2);
   font-weight: 900;
   color: var(--ok, #00e676);
   background: rgba(0, 230, 118, 0.12);

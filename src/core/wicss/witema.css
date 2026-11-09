@@ -51,256 +51,256 @@
   --wa:      #25d366;
   --wa_hover:#1ebd5b;
   --white:   #ffffff;
-  --noche:   #0e0617;
-  --luz:     #fcf9fe;
+  --noche:   #080e1a;
+  --luz:     #f0f2f5;
 }
 
 /* ============================================================ */
-/* ☀️ TEMA LUZ (LIGHT) - MODERNO & LUMINOSO                     */
+/* ☀️ TEMA LUZ (LIGHT) - FACEBOOK CLEAN & MODERNO              */
 /* ============================================================ */
 :root[data-theme="luz"] {
   /* 1. Lienzos y Superficies */
-  --bg:                  #fcf9fe;
-  --bg1:                 #fcf9fe;
+  --bg:                  #f0f2f5;
+  --bg1:                 #f0f2f5;
   --bg2:                 #ffffff;
-  --bg3:                 #f8f2fc;
-  --bg4:                 rgba(60, 16, 83, 0.05);
-  --bg5:                 rgba(60, 16, 83, 0.10);
-  --bg-body:             #fcf9fe;
-  --bg_body:             #fcf9fe;
-  --mesh-bg:             radial-gradient(at 0% 0%, #faedf9 0px, transparent 55%), 
-                         radial-gradient(at 100% 0%, #f3e8ff 0px, transparent 55%), 
-                         radial-gradient(at 50% 100%, #faf5ff 0px, transparent 55%), 
-                         #fcf9fe;
+  --bg3:                 #e7f3ff;
+  --bg4:                 rgba(24, 119, 242, 0.05);
+  --bg5:                 rgba(24, 119, 242, 0.10);
+  --bg-body:             #f0f2f5;
+  --bg_body:             #f0f2f5;
+  --mesh-bg:             radial-gradient(at 0% 0%, #e7f3ff 0px, transparent 55%), 
+                         radial-gradient(at 100% 0%, #ebf5ff 0px, transparent 55%), 
+                         radial-gradient(at 50% 100%, #f0f2f5 0px, transparent 55%), 
+                         #f0f2f5;
   --wb:                  #ffffff;
   --surface:             #ffffff;
   --bg-surface:          #ffffff;
-  --raised:              rgba(60, 16, 83, 0.05);
-  --bg-surface-elevated: rgba(60, 16, 83, 0.05);
+  --raised:              rgba(24, 119, 242, 0.05);
+  --bg-surface-elevated: rgba(24, 119, 242, 0.05);
   --bg-card:             rgba(255, 255, 255, 0.98);
   --bg_card:             rgba(255, 255, 255, 0.98);
-  --bg-card-hover:       rgba(250, 245, 255, 0.99);
-  --bg_card_hv:          rgba(250, 245, 255, 0.99);
-  --bg-subtle:           rgba(228, 0, 124, 0.05);
-  --line:                #ede4f5;
-  --brd:                 rgba(60, 16, 83, 0.12);
-  --border:              rgba(60, 16, 83, 0.12);
-  --border-card:         rgba(60, 16, 83, 0.12);
-  --border_card:         rgba(60, 16, 83, 0.12);
+  --bg-card-hover:       rgba(240, 245, 255, 0.99);
+  --bg_card_hv:          rgba(240, 245, 255, 0.99);
+  --bg-subtle:           rgba(24, 119, 242, 0.06);
+  --line:                #e4e6eb;
+  --brd:                 #d8dadf;
+  --border:              #d8dadf;
+  --border-card:         #d8dadf;
+  --border_card:         #d8dadf;
   --border-light:        rgba(255, 255, 255, 0.90);
-  --border-accent:       rgba(228, 0, 124, 0.35);
-  --border_accent:       rgba(228, 0, 124, 0.35);
+  --border-accent:       rgba(24, 119, 242, 0.35);
+  --border_accent:       rgba(24, 119, 242, 0.35);
 
   /* 2. Tipografía y Textos */
-  --tx:                  #25093a;
-  --tx1:                 #25093a;
-  --tx2:                 #3b1c54;
-  --tx3:                 #735b88;
+  --tx:                  #050505;
+  --tx1:                 #050505;
+  --tx2:                 #1c1e21;
+  --tx3:                 #65676b;
   --txa:                 #ffffff;
-  --txe:                 #e4007c;
-  --ink:                 #25093a;
-  --muted:               #735b88;
-  --text-main:           #3b1c54;
-  --text_main:           #3b1c54;
-  --text-muted:          #735b88;
-  --text_muted:          #735b88;
-  --text-bright:         #25093a;
+  --txe:                 #1877f2;
+  --ink:                 #050505;
+  --muted:               #65676b;
+  --text-main:           #1c1e21;
+  --text_main:           #1c1e21;
+  --text-muted:          #65676b;
+  --text_muted:          #65676b;
+  --text-bright:         #050505;
 
-  /* 3. Colores de Identidad y Marca */
-  --mco:                 #e4007c;
-  --mco-hover:           #c8006d;
-  --mco-light:           rgba(228, 0, 124, 0.10);
-  --mco-glow:            rgba(228, 0, 124, 0.25);
-  --mbg:                 rgba(228, 0, 124, 0.10);
-  --p_v1:                #e4007c;
-  --p_v2:                #7928ca;
-  --primary:             #e4007c;
-  --primary-hover:       #c8006d;
-  --primary_hv:          #c8006d;
-  --brand-primary:       #e4007c;
-  --brand-primary-hover: #c8006d;
-  --brand-soft:          rgba(228, 0, 124, 0.10);
-  --brand-accent:        #7928ca;
-  --brand-accent-soft:   rgba(121, 40, 202, 0.12);
+  /* 3. Colores de Identidad y Marca (Facebook Blue Moderno) */
+  --mco:                 #1877f2;
+  --mco-hover:           #166fe5;
+  --mco-light:           rgba(24, 119, 242, 0.10);
+  --mco-glow:            rgba(24, 119, 242, 0.25);
+  --mbg:                 rgba(24, 119, 242, 0.10);
+  --p_v1:                #1877f2;
+  --p_v2:                #0866ff;
+  --primary:             #1877f2;
+  --primary-hover:       #166fe5;
+  --primary_hv:          #166fe5;
+  --brand-primary:       #1877f2;
+  --brand-primary-hover: #166fe5;
+  --brand-soft:          rgba(24, 119, 242, 0.10);
+  --brand-accent:        #0866ff;
+  --brand-accent-soft:   rgba(8, 102, 255, 0.12);
   --brand-teal:          #059669;
-  --brand-blue:          #4f46e5;
-  --brand-blue-hover:    #4338ca;
-  --brand-sky:           #ede9fe;
-  --brand-sky-hover:     #ddd6fe;
+  --brand-blue:          #1877f2;
+  --brand-blue-hover:    #166fe5;
+  --brand-sky:           #e7f3ff;
+  --brand-sky-hover:     #dbeafe;
   --brand-orange:        #ea580c;
   --brand-orange-hover:  #c2410c;
-  --accent:              #7928ca;
-  --accent-hover:        #5b21b6;
-  --accent_hv:           #7928ca;
+  --accent:              #0866ff;
+  --accent-hover:        #0055d4;
+  --accent_hv:           #0866ff;
   --accent-cyan:         #0284c7;
   --accent-gold:         #d97706;
   --accent-emerald:      #10b981;
-  --gold-vip-bg:         linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5d0fe 100%);
-  --gold-vip-border:     rgba(228, 0, 124, 0.35);
-  --gradient-primary:    linear-gradient(135deg, #3c1053 0%, #e4007c 100%);
-  --gradient-btn:        linear-gradient(90deg, #5e178e 0%, #e4007c 100%);
-  --gradient-card:       linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 245, 255, 0.95) 100%);
-  --bt:                  #e4007c;
-  --hv:                  #c8006d;
-  --hva:                 #7928ca;
+  --gold-vip-bg:         linear-gradient(135deg, #f0f7ff 0%, #e0effe 50%, #bae6fd 100%);
+  --gold-vip-border:     rgba(24, 119, 242, 0.35);
+  --gradient-primary:    linear-gradient(135deg, #0e2a47 0%, #1877f2 100%);
+  --gradient-btn:        linear-gradient(90deg, #166fe5 0%, #1877f2 100%);
+  --gradient-card:       linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 245, 255, 0.95) 100%);
+  --bt:                  #1877f2;
+  --hv:                  #166fe5;
+  --hva:                 #0866ff;
 
   /* 4. Inputs, Formularios y Diálogos */
-  --inp:                 #fbf7fd;
-  --input-bg:            #fbf7fd;
-  --inp_brd:             rgba(60, 16, 83, 0.18);
+  --inp:                 #f0f2f5;
+  --input-bg:            #f0f2f5;
+  --inp_brd:             #ced0d4;
   --modal-bg:            #ffffff;
   --modal_bg:            #ffffff;
   --modal_card:          #ffffff;
 
   /* 5. Cabeceras, Vidrio (Glass), Dock y Sombras */
-  --header-bg:           rgba(255, 255, 255, 0.92);
-  --header_bg:           rgba(255, 255, 255, 0.92);
-  --topbar-bg:           linear-gradient(90deg, #3c1053 0%, #7928ca 50%, #e4007c 100%);
-  --topbar_bg:           linear-gradient(90deg, #3c1053 0%, #7928ca 50%, #e4007c 100%);
+  --header-bg:           rgba(255, 255, 255, 0.94);
+  --header_bg:           rgba(255, 255, 255, 0.94);
+  --topbar-bg:           linear-gradient(90deg, #0e1e38 0%, #1877f2 100%);
+  --topbar_bg:           linear-gradient(90deg, #0e1e38 0%, #1877f2 100%);
   --topbar-text:         #ffffff;
   --glass-surface:       rgba(255, 255, 255, 0.90);
   --glass-card:          rgba(255, 255, 255, 0.96);
   --glass-card-hover:    rgba(255, 255, 255, 0.99);
-  --glass-raised:        rgba(60, 16, 83, 0.05);
+  --glass-raised:        rgba(24, 119, 242, 0.05);
   --glass-dock:          rgba(255, 255, 255, 0.96);
   --glass-bg:            rgba(255, 255, 255, 0.92);
   --glass_bg:            rgba(255, 255, 255, 0.92);
-  --glass-brd:           rgba(60, 16, 83, 0.14);
-  --glass_brd:           rgba(60, 16, 83, 0.14);
-  --glass-shd:           0 10px 32px 0 rgba(60, 16, 83, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-  --glass_shd:           0 10px 32px 0 rgba(60, 16, 83, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-brd:           #d8dadf;
+  --glass_brd:           #d8dadf;
+  --glass-shd:           0 10px 32px 0 rgba(0, 0, 0, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+  --glass_shd:           0 10px 32px 0 rgba(0, 0, 0, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
   --glass-blur:          20px;
-  --shadow-sm:           0 2px 10px rgba(37, 9, 58, 0.04);
-  --shadow-glass:        0 8px 24px rgba(60, 16, 83, 0.08), 0 1px 3px rgba(37, 9, 58, 0.04);
-  --shadow-vip:          0 12px 32px rgba(228, 0, 124, 0.18);
-  --shadow-card:         0 0.8vh 2.5vh rgba(60, 16, 83, 0.08);
-  --shd_card:            0 0.8vh 2.5vh rgba(60, 16, 83, 0.08);
-  --shadow-hover:        0 1.5vh 4vh rgba(228, 0, 124, 0.16);
-  --shd_hover:           0 1.5vh 4vh rgba(228, 0, 124, 0.16);
-  --shadow-xl:           0 15px 35px rgba(60, 16, 83, 0.10);
+  --shadow-sm:           0 2px 10px rgba(0, 0, 0, 0.04);
+  --shadow-glass:        0 8px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-vip:          0 12px 32px rgba(24, 119, 242, 0.18);
+  --shadow-card:         0 0.8vh 2.5vh rgba(0, 0, 0, 0.06);
+  --shd_card:            0 0.8vh 2.5vh rgba(0, 0, 0, 0.06);
+  --shadow-hover:        0 1.5vh 4vh rgba(24, 119, 242, 0.16);
+  --shd_hover:           0 1.5vh 4vh rgba(24, 119, 242, 0.16);
+  --shadow-xl:           0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 /* ============================================================ */
-/* 🌙 TEMA NOCHE (DARK) - MEDIANOCHE & VIBRANTE                */
+/* 🌙 TEMA NOCHE (DARK) - AZUL MARINO PROFUNDO (NAVY MIDNIGHT)  */
 /* ============================================================ */
 :root[data-theme="noche"] {
-  /* 1. Lienzos y Superficies */
-  --bg:                  #0e0617;
-  --bg1:                 #0e0617;
-  --bg2:                 #140921;
-  --bg3:                 #1a0e2a;
-  --bg4:                 rgba(45, 17, 74, 0.70);
-  --bg5:                 rgba(60, 20, 95, 0.80);
-  --bg-body:             #0e0617;
-  --bg_body:             #0e0617;
-  --mesh-bg:             radial-gradient(at 0% 0%, #2e0854 0px, transparent 55%), 
-                         radial-gradient(at 100% 0%, #1f0b38 0px, transparent 55%), 
-                         radial-gradient(at 50% 100%, #140921 0px, transparent 50%), 
-                         #0e0617;
-  --wb:                  #140921;
-  --surface:             #140921;
-  --bg-surface:          #140921;
-  --raised:              rgba(45, 17, 74, 0.74);
-  --bg-surface-elevated: rgba(45, 17, 74, 0.74);
-  --bg-card:             rgba(26, 14, 42, 0.95);
-  --bg_card:             rgba(26, 14, 42, 0.95);
-  --bg-card-hover:       rgba(36, 20, 59, 0.98);
-  --bg_card_hv:          rgba(36, 20, 59, 0.98);
-  --bg-subtle:           rgba(255, 0, 127, 0.08);
-  --line:                #2d1347;
-  --brd:                 rgba(255, 0, 127, 0.20);
-  --border:              rgba(255, 0, 127, 0.20);
-  --border-card:         rgba(255, 0, 127, 0.20);
-  --border_card:         rgba(255, 0, 127, 0.20);
+  /* 1. Lienzos y Superficies Navy */
+  --bg:                  #080e1a;
+  --bg1:                 #080e1a;
+  --bg2:                 #0e182a;
+  --bg3:                 #142239;
+  --bg4:                 rgba(20, 34, 57, 0.70);
+  --bg5:                 rgba(24, 42, 70, 0.80);
+  --bg-body:             #080e1a;
+  --bg_body:             #080e1a;
+  --mesh-bg:             radial-gradient(at 0% 0%, #0e2038 0px, transparent 55%), 
+                         radial-gradient(at 100% 0%, #0b192e 0px, transparent 55%), 
+                         radial-gradient(at 50% 100%, #0e182a 0px, transparent 50%), 
+                         #080e1a;
+  --wb:                  #0e182a;
+  --surface:             #0e182a;
+  --bg-surface:          #0e182a;
+  --raised:              rgba(20, 34, 57, 0.74);
+  --bg-surface-elevated: rgba(20, 34, 57, 0.74);
+  --bg-card:             rgba(14, 24, 42, 0.95);
+  --bg_card:             rgba(14, 24, 42, 0.95);
+  --bg-card-hover:       rgba(20, 34, 57, 0.98);
+  --bg_card_hv:          rgba(20, 34, 57, 0.98);
+  --bg-subtle:           rgba(24, 119, 242, 0.08);
+  --line:                rgba(59, 130, 246, 0.14);
+  --brd:                 rgba(59, 130, 246, 0.18);
+  --border:              rgba(59, 130, 246, 0.18);
+  --border-card:         rgba(59, 130, 246, 0.18);
+  --border_card:         rgba(59, 130, 246, 0.18);
   --border-light:        rgba(255, 255, 255, 0.08);
-  --border-accent:       rgba(255, 0, 127, 0.50);
-  --border_accent:       rgba(255, 0, 127, 0.50);
+  --border-accent:       rgba(24, 119, 242, 0.45);
+  --border_accent:       rgba(24, 119, 242, 0.45);
 
   /* 2. Tipografía y Textos */
-  --tx:                  #ffffff;
-  --tx1:                 #ffffff;
-  --tx2:                 #f1e8f8;
-  --tx3:                 #b6a3cc;
-  --txa:                 #0e0617;
-  --txe:                 #ff007f;
-  --ink:                 #ffffff;
-  --muted:               #b6a3cc;
-  --text-main:           #f1e8f8;
-  --text_main:           #f1e8f8;
-  --text-muted:          #b6a3cc;
-  --text_muted:          #b6a3cc;
+  --tx:                  #f0f4fc;
+  --tx1:                 #f0f4fc;
+  --tx2:                 #cbd5e1;
+  --tx3:                 #94a3b8;
+  --txa:                 #080e1a;
+  --txe:                 #38bdf8;
+  --ink:                 #f0f4fc;
+  --muted:               #94a3b8;
+  --text-main:           #f0f4fc;
+  --text_main:           #f0f4fc;
+  --text-muted:          #94a3b8;
+  --text_muted:          #94a3b8;
   --text-bright:         #ffffff;
 
-  /* 3. Colores de Identidad y Marca */
-  --mco:                 #ff007f;
-  --mco-hover:           #e4007c;
-  --mco-light:           rgba(255, 0, 127, 0.16);
-  --mco-glow:            rgba(255, 0, 127, 0.40);
-  --mbg:                 rgba(255, 0, 127, 0.16);
-  --p_v1:                #ff007f;
-  --p_v2:                #9d4edd;
-  --primary:             #ff007f;
-  --primary-hover:       #e4007c;
-  --primary_hv:          #e4007c;
-  --brand-primary:       #ff007f;
-  --brand-primary-hover: #e4007c;
-  --brand-soft:          rgba(255, 0, 127, 0.16);
-  --brand-accent:        #9d4edd;
-  --brand-accent-soft:   rgba(157, 78, 221, 0.20);
+  /* 3. Colores de Identidad y Marca (Facebook Blue Moderno) */
+  --mco:                 #1877f2;
+  --mco-hover:           #166fe5;
+  --mco-light:           rgba(24, 119, 242, 0.16);
+  --mco-glow:            rgba(24, 119, 242, 0.40);
+  --mbg:                 rgba(24, 119, 242, 0.16);
+  --p_v1:                #1877f2;
+  --p_v2:                #38bdf8;
+  --primary:             #1877f2;
+  --primary-hover:       #166fe5;
+  --primary_hv:          #166fe5;
+  --brand-primary:       #1877f2;
+  --brand-primary-hover: #166fe5;
+  --brand-soft:          rgba(24, 119, 242, 0.16);
+  --brand-accent:        #38bdf8;
+  --brand-accent-soft:   rgba(56, 189, 248, 0.20);
   --brand-teal:          #10b981;
-  --brand-blue:          #6366f1;
-  --brand-sky:           #a5b4fc;
-  --brand-sky-hover:     #818cf8;
+  --brand-blue:          #1877f2;
+  --brand-sky:           #93c5fd;
+  --brand-sky-hover:     #60a5fa;
   --brand-orange:        #f97316;
   --brand-orange-hover:  #ea580c;
-  --accent:              #9d4edd;
-  --accent-hover:        #7928ca;
-  --accent_hv:           #9d4edd;
+  --accent:              #38bdf8;
+  --accent-hover:        #0284c7;
+  --accent_hv:           #38bdf8;
   --accent-cyan:         #38bdf8;
   --accent-gold:         #f59e0b;
   --accent-emerald:      #34d399;
-  --gold-vip-bg:         linear-gradient(135deg, rgba(46, 11, 74, 0.95) 0%, rgba(26, 14, 42, 0.95) 100%);
-  --gold-vip-border:     rgba(255, 0, 127, 0.40);
-  --gradient-primary:    linear-gradient(135deg, #4a1570 0%, #ff007f 100%);
-  --gradient-btn:        linear-gradient(90deg, #7928ca 0%, #ff007f 100%);
-  --gradient-card:       linear-gradient(135deg, rgba(36, 17, 59, 0.95) 0%, rgba(26, 14, 42, 0.95) 100%);
-  --bt:                  #ff007f;
-  --hv:                  #e4007c;
-  --hva:                 #9d4edd;
+  --gold-vip-bg:         linear-gradient(135deg, rgba(14, 32, 56, 0.95) 0%, rgba(14, 24, 42, 0.95) 100%);
+  --gold-vip-border:     rgba(59, 130, 246, 0.35);
+  --gradient-primary:    linear-gradient(135deg, #0e1e38 0%, #1877f2 100%);
+  --gradient-btn:        linear-gradient(90deg, #0e2a52 0%, #1877f2 100%);
+  --gradient-card:       linear-gradient(135deg, rgba(14, 24, 42, 0.95) 0%, rgba(20, 34, 57, 0.95) 100%);
+  --bt:                  #1877f2;
+  --hv:                  #166fe5;
+  --hva:                 #38bdf8;
 
   /* 4. Inputs, Formularios y Diálogos */
-  --inp:                 #1c102e;
-  --input-bg:            #1c102e;
-  --inp_brd:             rgba(255, 0, 127, 0.25);
-  --modal-bg:            #140921;
-  --modal_bg:            #140921;
-  --modal_card:          #140921;
+  --inp:                 #0b1322;
+  --input-bg:            #0b1322;
+  --inp_brd:             rgba(59, 130, 246, 0.25);
+  --modal-bg:            #0e182a;
+  --modal_bg:            #0e182a;
+  --modal_card:          #0e182a;
 
   /* 5. Cabeceras, Vidrio (Glass), Dock y Sombras */
-  --header-bg:           rgba(14, 6, 23, 0.92);
-  --header_bg:           rgba(14, 6, 23, 0.92);
-  --topbar-bg:           linear-gradient(90deg, #3c1053 0%, #5e178e 50%, #ff007f 100%);
-  --topbar_bg:           linear-gradient(90deg, #3c1053 0%, #5e178e 50%, #ff007f 100%);
+  --header-bg:           rgba(8, 14, 26, 0.92);
+  --header_bg:           rgba(8, 14, 26, 0.92);
+  --topbar-bg:           linear-gradient(90deg, #080e1a 0%, #0e2447 50%, #1877f2 100%);
+  --topbar_bg:           linear-gradient(90deg, #080e1a 0%, #0e2447 50%, #1877f2 100%);
   --topbar-text:         #ffffff;
-  --glass-surface:       rgba(20, 9, 33, 0.88);
-  --glass-card:          rgba(26, 14, 42, 0.88);
-  --glass-card-hover:    rgba(36, 20, 59, 0.95);
-  --glass-raised:        rgba(45, 17, 74, 0.74);
-  --glass-dock:          rgba(20, 9, 33, 0.97);
-  --glass-bg:            rgba(26, 14, 42, 0.88);
-  --glass_bg:            rgba(26, 14, 42, 0.88);
-  --glass-brd:           rgba(255, 0, 127, 0.22);
-  --glass_brd:           rgba(255, 0, 127, 0.22);
-  --glass-shd:           0 12px 36px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 0, 127, 0.20);
-  --glass_shd:           0 12px 36px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 0, 127, 0.20);
+  --glass-surface:       rgba(14, 24, 42, 0.88);
+  --glass-card:          rgba(14, 24, 42, 0.88);
+  --glass-card-hover:    rgba(20, 34, 57, 0.95);
+  --glass-raised:        rgba(20, 34, 57, 0.74);
+  --glass-dock:          rgba(14, 24, 42, 0.97);
+  --glass-bg:            rgba(14, 24, 42, 0.88);
+  --glass_bg:            rgba(14, 24, 42, 0.88);
+  --glass-brd:           rgba(59, 130, 246, 0.22);
+  --glass_brd:           rgba(59, 130, 246, 0.22);
+  --glass-shd:           0 12px 36px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(59, 130, 246, 0.20);
+  --glass_shd:           0 12px 36px 0 rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(59, 130, 246, 0.20);
   --glass-blur:          24px;
   --shadow-sm:           0 2px 10px rgba(0, 0, 0, 0.35);
   --shadow-glass:        0 12px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --shadow-vip:          0 16px 44px rgba(255, 0, 127, 0.25);
+  --shadow-vip:          0 16px 44px rgba(24, 119, 242, 0.25);
   --shadow-card:         0 1vh 3vh rgba(0, 0, 0, 0.55);
   --shd_card:            0 1vh 3vh rgba(0, 0, 0, 0.55);
-  --shadow-hover:        0 1.8vh 4.5vh rgba(255, 0, 127, 0.25);
-  --shd_hover:           0 1.8vh 4.5vh rgba(255, 0, 127, 0.25);
+  --shadow-hover:        0 1.8vh 4.5vh rgba(24, 119, 242, 0.25);
+  --shd_hover:           0 1.8vh 4.5vh rgba(24, 119, 242, 0.25);
   --shadow-xl:           0 20px 40px rgba(0, 0, 0, 0.70);
 }
 

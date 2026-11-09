@@ -28,7 +28,7 @@
   },
   "tema": {
     "defecto": "noche",
-    "colorLuz": "#fcf9fe",
-    "colorNoche": "#0e0617"
+    "colorLuz": "#f0f2f5",
+    "colorNoche": "#080e1a"
   }
 }

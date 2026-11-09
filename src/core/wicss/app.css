@@ -30,7 +30,7 @@ body {
   background-attachment: fixed;
   color: var(--tx2, var(--text-main));
   line-height: 1.5;
-  font-size: 14.5px;
+  font-size: var(--fz_m);
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
@@ -294,7 +294,7 @@ img {
 
 .btn-compact {
   padding: 0.6rem 1rem !important;
-  font-size: 0.82rem !important;
+  font-size: var(--fz_s4) !important;
 }
 
 /* 6. PILL GROUPS (SWITCHER IDIOMA Y FILTROS) */
@@ -312,7 +312,7 @@ img {
   border: none;
   color: var(--text-muted);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   cursor: pointer;
@@ -1006,7 +1006,7 @@ img {
 }
 
 .drawer-user-badge {
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   color: var(--primary);
   font-weight: 600;
 }
@@ -1203,7 +1203,7 @@ img {
 
 .footer-nav-list li i {
   color: var(--brand-orange);
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
 }
 
 .footer-nav-list a {
@@ -1294,7 +1294,7 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   font-weight: 700;
   color: var(--accent-emerald);
 }
@@ -1397,7 +1397,7 @@ img {
 }
 
 .district-time {
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   color: var(--brand-orange);
   font-weight: 700;
 }
@@ -1462,7 +1462,7 @@ img {
     white-space: nowrap;
   }
   .topbar-phone-link {
-    font-size: 0.75rem;
+    font-size: var(--fz_s3);
     white-space: nowrap;
   }
   .header-brand-title {
@@ -1542,7 +1542,7 @@ img {
 .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
 
 .text-xxs { font-size: 0.68rem; }
-.text-xs { font-size: 0.75rem; }
+.text-xs { font-size: var(--fz_s3); }
 .text-sm { font-size: 0.875rem; }
 .text-base { font-size: 1rem; }
 .text-lg { font-size: 1.125rem; }
@@ -2767,7 +2767,7 @@ body.wii-modal-open {
   border: 1px solid var(--border-card);
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: var(--fz_s3);
   font-family: inherit;
   font-weight: 700;
   color: var(--tx1);
